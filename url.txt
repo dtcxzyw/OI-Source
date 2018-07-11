@@ -1,0 +1,94 @@
+莫比乌斯反演 http://blog.csdn.net/acdreamers/article/details/8542292
+积性函数 http://blog.csdn.net/skywalkert/article/details/50500009
+purfer序列 http://www.cnblogs.com/zhj5chengfeng/archive/2013/08/23/3278557.html
+狄利克雷卷积 https://ruanx.pw/post/%E7%8B%84%E5%88%A9%E5%85%8B%E9%9B%B7%E5%8D%B7%E7%A7%AF.html
+zzq's blog http://www.cnblogs.com/zzqsblog/
+BSGS http://blog.csdn.net/Clove_unique/article/details/50740412
+2-SAT https://wenku.baidu.com/view/afd6c436a32d7375a41780f2.html
+旋转卡壳 https://blog.csdn.net/acmaker
+Simpson积分 http://blog.csdn.net/fengzhizi76506/article/details/54848920
+斜率优化 https://www.cnblogs.com/MashiroSky/p/6009685.html
+积性函数前缀和 http://blog.csdn.net/skywalkert/article/details/50500009
+傅里叶变换 http://blog.miskcoo.com/2015/04/polynomial-multiplication-and-fast-fourier-transform
+省选算法 http://hzwer.com/1234.html
+分块 http://hzwer.com/8053.html
+最大权闭合子图 http://blog.csdn.net/q610376681/article/details/52268346
+O(n)筛逆元 http://blog.miskcoo.com/2014/09/linear-find-all-invert
+虚树 https://www.cnblogs.com/zzqsblog/p/5560645.html
+斯坦纳树 http://blog.csdn.net/gzh1992n/article/details/9119543
+左偏树 http://blog.csdn.net/theprinceofelf/article/details/7247454
+斜堆 http://blog.csdn.net/coderhuhy/article/details/44223311
+OI数据库 http://oierdb.com/oier_db/
+funny http://abowman.com/google-modules/ball-clock/ http://abowman.com/google-modules/hamster/
+exkmp http://blog.csdn.net/hello_sheep/article/details/77059496
+zkw's blog https://artofproblemsolving.com/community/c1368
+杜教筛 https://www.cnblogs.com/zzqsblog/p/5461392.html
+SG函数 http://blog.csdn.net/strangedbly/article/details/51137432
+组合博弈 http://blog.csdn.net/luomingjun12315/article/details/45479073
+省选模板 http://www.cnblogs.com/lidaxin/p/5354305.html
+集训队论文 http://www.cnblogs.com/lidaxin/articles/5099461.html
+集训队作业 http://www.tsinsen.com/resources.page
+splay https://www.luogu.org/blog/user19027/solution-p3369
+Mychael's blog http://www.cnblogs.com/Mychael/default.html?page=1
+线性基 https://blog.sengxian.com/algorithms/linear-basis
+高斯消元 http://blog.csdn.net/fromatp/article/details/53966305
+优秀文章 http://www.cnblogs.com/yyy2015c01/p/8457795.html
+AHOI2009 mincut 结论 http://blog.csdn.net/nlj1999/article/details/50310755
+底层优化 http://www.doc88.com/p-1197280421746.html
+APIO2016 烟火表演 http://blog.csdn.net/u014609452/article/details/52347062
+hzwer's blog http://hzwer.com/
+线性基 https://blog.sengxian.com/algorithms/linear-basis
+nimk游戏 http://blog.csdn.net/kele52he/article/details/77248940
+LCT http://blog.csdn.net/saramanda/article/details/55253627 http://www.cnblogs.com/zwfymqz/p/8972914.html
+BSGS http://lzkovo.com/oi/2018/03/07/BSGS%E5%92%8C%E6%89%A9%E5%B1%95BSGS-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/
+扩展欧拉定理 http://blog.csdn.net/ez_yww/article/details/76176970
+多重背包单调队列优化 https://www.cnblogs.com/JoeFan/p/4165956.html
+01分数规划 http://blog.csdn.net/hhaile/article/details/8883652
+manacher https://www.61mon.com/index.php/archives/181/
+组合数取模 http://blog.csdn.net/skywalkert/article/details/52553048
+【国家集训队】礼物 https://www.cnblogs.com/JYYHH/p/8458500.html
+CRT https://www.cnblogs.com/MashiroSky/p/5918158.html
+半平面交 http://blog.csdn.net/cqbzwja/article/details/51038598
+vfk's blog http://vfleaking.blog.163.com/
+Pollard_rho https://blog.csdn.net/maxichu/article/details/45459533
+生成函数 http://www.wutianqi.com/?p=596
+马同学高等数学 https://www.matongxue.com/madocs/228.html#/madoc
+NOI2011 兔农 https://www.cnblogs.com/outerform/p/5921810.html
+HocRiser's blog http://www.cnblogs.com/HocRiser/p/8207295.html
+博弈论 http://www.xqbase.com/computer.htm
+曼哈顿距离下最小生成树 https://blog.csdn.net/OrpineX/article/details/7377959
+Min_25筛 http://www.cnblogs.com/zzqsblog/p/8302815.html
+ZJOI2018 历史 https://blog.csdn.net/benoble_/article/details/79706461
+有向图生成树计数：去掉根所在行列，换主元时*-1（行列式性质）
+rqy's blog https://rqy.moe/
+latex 教程 https://blog.csdn.net/u014630987/article/details/70156489
+博弈游戏的各种经典模型 http://www.cnblogs.com/Randolph87/p/5804798.html
+myy's blog http://matthew99.blog.uoj.ac/
+回文树 https://blog.csdn.net/u013368721/article/details/42100363
+可持久化左偏树维护k短路 https://blog.csdn.net/litble/article/details/79171311 P2413
+圆方树 https://blog.csdn.net/oi_konnyaku/article/details/79367422 http://immortalco.blog.uoj.ac/blog/1955
+矩阵递推优化 http://www.cnblogs.com/Troywar/p/9078013.html
+三维凸包-增量法 https://www.cnblogs.com/-sunshine/archive/2012/08/25/2656794.html
+快速凸包算法 https://www.cnblogs.com/Booble/archive/2011/03/10/1980089.html
+FFT/NTT 专题 http://blog.miskcoo.com/tag/fft
+FFT/NTT http://blog.miskcoo.com/2015/04/polynomial-multiplication-and-fast-fourier-transform#i-18
+NTT https://www.cnblogs.com/candy99/p/6641972.html
+拉格朗日乘数法 https://blog.csdn.net/ACdreamers/article/details/41413445
+多项式求逆 http://blog.miskcoo.com/2015/05/polynomial-inverse#mjx-eqn-eqn1
+双连通分量 https://blog.csdn.net/hi_just_do_it/article/details/74637399
+多项式除法 http://blog.miskcoo.com/2015/05/polynomial-division
+MTT https://blog.csdn.net/samjia2000/article/details/65661468
+任意模数NTT http://www.yhzq-blog.cc/%E4%BB%BB%E6%84%8F%E6%A8%A1%E6%95%B0ntt%E6%80%BB%E7%BB%93/
+fhqtreap http://www.yhzq-blog.cc/fhq-treap%E6%80%BB%E7%BB%93/ https://blog.csdn.net/weixin_42562050/article/details/80933967
+猫锟的blog http://immortalco.blog.uoj.ac
+多项式高级操作 https://www.cnblogs.com/joyouth/p/5604618.html https://blog.csdn.net/semiwaker/article/details/73251486
+FWT https://blog.csdn.net/xuanandting/article/details/70991372
+SBT https://blog.csdn.net/murmured/article/details/17029131
+treap https://blog.csdn.net/acdreamers/article/details/11309971
+rand seed=seed*48271%2147483647
+扩展lucas https://www.cnblogs.com/candy99/p/6637629.html
+可持久化trie https://www.cnblogs.com/y7070/p/5000471.html
+rqy's blog https://rqy.moe/
+数学公式 http://www.cnblogs.com/zerolt/p/9281380.html
+平面图性质 E<3V-6
+
