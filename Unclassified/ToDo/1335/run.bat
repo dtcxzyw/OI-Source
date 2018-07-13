@@ -1,0 +1,1 @@
+1335.exe <input/train2.in >output/train2.out

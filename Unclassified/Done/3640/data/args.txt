@@ -1,0 +1,8 @@
+Floyd 1 101 0 1
+SPFA2 2 100 1050 10
+Floyd 3 101 0 1
+Dijkstra 4 16
+SPFA2 5 300 345 10
+Dijkstra 6 16
+Gamble 7 75 1501
+Gamble 8 500 1501

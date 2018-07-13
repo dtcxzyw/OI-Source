@@ -1,0 +1,1 @@
+4639 <input/compiler10.in >output/compiler10.out

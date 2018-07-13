@@ -1,0 +1,4 @@
+(Fn+1,Fn)  (p,1) (Fn+2,Fn+1) 
+(Fn,Fn-1)  (q,0) (Fn+1,Fn)
+base = (a3,a2) * mul^(n-2)
+       (a2,a1)
