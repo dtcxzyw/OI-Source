@@ -6,7 +6,8 @@
 	],
 	"settings": {
 		"files.associations": {
-			"cstdio": "cpp"
+			"cstdio": "cpp",
+			"valarray": "cpp"
 		}
 	}
 }
