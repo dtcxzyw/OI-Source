@@ -25,6 +25,40 @@ void addEdge(int u, int v) {
     E[cnt].to = v, E[cnt].next = last[u];
     last[u] = cnt;
 }
+int st[size << 1][19], id[size], depth[size], scnt = 0, w[size], wsum = 0;
+Int64 base = 0;
+int DFS(int u, int p, int d) {
+    int sw = w[u];
+    st[++scnt][0] = depth[u] = d;
+    id[u] = scnt;
+    for (int i = last[u]; i; i = E[i].next) {
+        int v = E[i].to;
+        if (p != v) {
+            sw += DFS(v, u, d + 1);
+            st[++scnt][0] = d;
+        }
+    }
+    base += sw * asInt64(wsum - sw);
+    return sw;
+}
+int lg[size << 1];
+void buildST() {
+    DFS(1, 0, 0);
+    lg[1] = 0;
+    for (int i = 2; i <= scnt; ++i)
+        lg[i] = lg[i >> 1] + 1;
+    for (int i = 1; i <= 18; ++i) {
+        int end = scnt - (1 << i) + 1, off = 1 << (i - 1);
+        for (int j = 1; j <= end; ++j)
+            st[j][i] = std::min(st[j][i - 1], st[j + off][i - 1]);
+    }
+}
+int dis(int u, int v) {
+    int l = id[u], r = id[v];
+    if (l > r) std::swap(l, r);
+    int k = lg[r - l + 1];
+    return depth[u] + depth[v] - (std::min(st[l][k], st[r - (1 << k) + 1][k]) << 1);
+}
 int tot, csiz, crt, siz[size];
 bool vis[size] = {};
 int getRoot(int u, int p) {
@@ -44,11 +78,9 @@ int getRoot(int u, int p) {
         crt = u;
     }
 }
-int fa[size], w[size], sum[size];
-Int64 sum2[size] = {};
+int fa[size];
 void divide(int u) {
     vis[u] = true;
-    sum[u] = w[u];
     for (int i = last[u]; i; i = E[i].next) {
         int v = E[i].to;
         if (!vis[v]) {
@@ -56,28 +88,29 @@ void divide(int u) {
             getRoot(v, 0);
             fa[crt] = u;
             divide(crt);
-            sum[u] += sum[crt];
-            sum2[u] += sum2[crt] + asInt64(sum[crt]) * sum[crt];
         }
     }
 }
+Int64 diss[size] = {}, disf[size] = {};
+int sum[size] = {};
 void add(int u, int delta) {
-    Int64 sumd = (2LL * sum[u] + delta) * delta;
     sum[u] += delta;
+    int src = u;
     while (fa[u]) {
-        sum2[fa[u]] += sumd;
-        sumd += (2LL * sum[fa[u]] + delta) * delta;
+        Int64 d = dis(src, fa[u]);
+        Int64 val = d * delta;
+        diss[fa[u]] += val;
+        disf[u] += val;
         sum[fa[u]] += delta;
         u = fa[u];
     }
 }
-Int64 wsum = 0;
-Int64 query(int u) {
-    Int64 res = sum2[u];
+Int64 calc(int u) {
+    Int64 res = diss[u];
+    int src = u;
     while (fa[u]) {
-        res += sum2[fa[u]] - (sum2[u] + asInt64(sum[u]) * sum[u]);
-        Int64 psiz = wsum - sum[u];
-        res += psiz * psiz;
+        Int64 d = dis(src, fa[u]);
+        res += (diss[fa[u]] - disf[u]) + d * (sum[fa[u]] - sum[u]);
         u = fa[u];
     }
     return res;
@@ -98,18 +131,21 @@ int main() {
     tot = n, csiz = 1 << 30;
     getRoot(1, 0);
     divide(crt);
+    buildST();
+    for (int i = 1; i <= n; ++i)
+        add(i, w[i]);
     while (q--) {
         int op = read();
         if (op == 1) {
             int u = read();
-            int val = read();
-            int delta = val - w[u];
+            int v = read();
+            int delta = v - w[u];
+            w[u] = v;
+            base += delta * calc(u);
             wsum += delta;
             add(u, delta);
-            w[u] = val;
-        } else {
-            printf("%lld\n", wsum * wsum + query(read()));
-        }
+        } else
+            printf("%lld\n", wsum * (calc(read()) + wsum) - base);
     }
     return 0;
 }
