@@ -91,4 +91,4 @@ rand seed=seed*48271%2147483647
 rqy's blog https://rqy.moe/
 数学公式 http://www.cnblogs.com/zerolt/p/9281380.html
 平面图性质 E<3V-6
-
+实序列离散傅里叶变换 http://blog.miskcoo.com/2018/01/real-dft
