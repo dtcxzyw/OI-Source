@@ -50,7 +50,7 @@ void NTT(int n, int *A, int *w) {
         int m = i >> 1, fac = tot / i;
         for (int j = 0; j < n; j += i)
             for (int k = 0; k < m; ++k) {
-                int t = asInt64(A[j + m + k])×w[k * fac] % mod;
+                int t = asInt64(A[j + m + k]) * w[k * fac] % mod;
                 A[j + m + k] = sub(A[j + k], t);
                 A[j + k] = add(A[j + k], t);
             }

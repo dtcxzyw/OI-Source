@@ -67,7 +67,7 @@ myy's blog http://matthew99.blog.uoj.ac/
 回文树 https://blog.csdn.net/u013368721/article/details/42100363
 可持久化左偏树维护k短路 https://blog.csdn.net/litble/article/details/79171311 P2413
 圆方树 https://blog.csdn.net/oi_konnyaku/article/details/79367422 http://immortalco.blog.uoj.ac/blog/1955
-矩阵递推优化 http://www.cnblogs.com/Troywar/p/9078013.html
+常系数齐次线性递推 https://www.luogu.org/problemnew/solution/P4723
 三维凸包-增量法 https://www.cnblogs.com/-sunshine/archive/2012/08/25/2656794.html
 快速凸包算法 https://www.cnblogs.com/Booble/archive/2011/03/10/1980089.html
 FFT/NTT 专题 http://blog.miskcoo.com/tag/fft
@@ -90,5 +90,12 @@ rand seed=seed*48271%2147483647
 可持久化trie https://www.cnblogs.com/y7070/p/5000471.html
 rqy's blog https://rqy.moe/
 数学公式 http://www.cnblogs.com/zerolt/p/9281380.html
+点分治 https://blog.csdn.net/qq_39553725/article/details/77542223
+总结 https://www.cnblogs.com/MashiroSky/p/6354265.html
+扩展埃拉托斯特尼筛法 https://www.cnblogs.com/Troywar/p/9071300.html
+ST-RMQ=O(1)LCA
+dsu on tree https://blog.csdn.net/qaq__qaq/article/details/53455462
+阶梯博弈 https://blog.csdn.net/qq_30241305/article/details/51956518
+可持久化并查集 https://blog.csdn.net/lemonoil/article/details/57085830
 平面图性质 E<3V-6
 实序列离散傅里叶变换 http://blog.miskcoo.com/2018/01/real-dft
