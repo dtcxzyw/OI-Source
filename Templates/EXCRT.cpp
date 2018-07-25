@@ -1,8 +1,9 @@
 //P4777
 #include <cstdio>
 typedef long long Int64;
-int read() {
-    int res = 0, c;
+Int64 read() {
+    Int64 res = 0;
+    int c;
     do
         c = getchar();
     while (c < '0' || c > '9');
