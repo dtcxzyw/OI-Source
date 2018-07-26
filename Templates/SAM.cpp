@@ -1,3 +1,4 @@
+//P3975
 #include <cstdio>
 const int size = 500005, maxS = size * 2;
 struct SAM {
