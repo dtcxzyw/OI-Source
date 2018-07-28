@@ -10,7 +10,11 @@
 			"valarray": "cpp",
 			"complex": "cpp",
 			"cmath": "cpp",
-			"algorithm": "cpp"
+			"algorithm": "cpp",
+			"*.tcc": "cpp",
+			"deque": "cpp",
+			"vector": "cpp",
+			"list": "cpp"
 		}
 	}
 }
