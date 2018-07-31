@@ -6,7 +6,8 @@
         "${file}",
         "-o",
         "bin/${fileBasenameNoExtension}.out",
-        "-Wall"
+        "-Wall",
+        "-std=c++11"
     ],
     "problemMatcher": {
         "owner": "cpp",
