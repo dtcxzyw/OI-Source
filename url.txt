@@ -101,3 +101,7 @@ dsu on tree https://blog.csdn.net/qaq__qaq/article/details/53455462
 实序列离散傅里叶变换 http://blog.miskcoo.com/2018/01/real-dft
 Miller-Rabin+Pollard-Rho https://www.cnblogs.com/Doggu/p/MillerRabin_PollardRho.html?utm_source=itdadao&utm_medium=referral
 泰勒展开 https://wenku.baidu.com/view/eceecf25c5da50e2524d7ff1.html
+网络流模型 https://www.cnblogs.com/hyl2000/p/6618519.html
+https://blog.csdn.net/hbhcy98/article/details/51202000
+DAG最小路径覆盖 https://www.cnblogs.com/justPassBy/p/5369930.html
+二分图 http://dsqiu.iteye.com/blog/1689505
