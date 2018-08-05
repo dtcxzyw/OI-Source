@@ -105,3 +105,6 @@ Miller-Rabin+Pollard-Rho https://www.cnblogs.com/Doggu/p/MillerRabin_PollardRho.
 https://blog.csdn.net/hbhcy98/article/details/51202000
 DAG最小路径覆盖 https://www.cnblogs.com/justPassBy/p/5369930.html
 二分图 http://dsqiu.iteye.com/blog/1689505
+最大权闭合子图输出方案：最后一次增广是可访问到的节点
+NOI2008 志愿者招募 https://blog.csdn.net/FZHvampire/article/details/50889187
+2-SAT直接输出方案 https://www.cnblogs.com/TheRoadToTheGold/p/8436948.html#_label1
