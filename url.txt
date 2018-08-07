@@ -14,7 +14,7 @@ Simpson积分 http://blog.csdn.net/fengzhizi76506/article/details/54848920
 分块 http://hzwer.com/8053.html
 最大权闭合子图 http://blog.csdn.net/q610376681/article/details/52268346
 O(n)筛逆元 http://blog.miskcoo.com/2014/09/linear-find-all-invert
-虚树 https://www.cnblogs.com/zzqsblog/p/5560645.html
+虚树 https://www.cnblogs.com/Michael-Li/p/8763242.html
 斯坦纳树 http://blog.csdn.net/gzh1992n/article/details/9119543
 左偏树 http://blog.csdn.net/theprinceofelf/article/details/7247454
 斜堆 http://blog.csdn.net/coderhuhy/article/details/44223311
@@ -93,7 +93,7 @@ rqy's blog https://rqy.moe/
 点分治 https://blog.csdn.net/qq_39553725/article/details/77542223
 总结 https://www.cnblogs.com/MashiroSky/p/6354265.html
 扩展埃拉托斯特尼筛法 https://www.cnblogs.com/Troywar/p/9071300.html
-ST-RMQ=O(1)LCA
+ST-RMQ=O(1)LCA https://blog.csdn.net/stone41123/article/details/79695232
 dsu on tree https://blog.csdn.net/qaq__qaq/article/details/53455462
 阶梯博弈 https://blog.csdn.net/qq_30241305/article/details/51956518
 可持久化并查集 https://blog.csdn.net/lemonoil/article/details/57085830
@@ -108,3 +108,5 @@ DAG最小路径覆盖 https://www.cnblogs.com/justPassBy/p/5369930.html
 最大权闭合子图输出方案：最后一次增广是可访问到的节点
 NOI2008 志愿者招募 https://blog.csdn.net/FZHvampire/article/details/50889187
 2-SAT直接输出方案 https://www.cnblogs.com/TheRoadToTheGold/p/8436948.html#_label1
+生成函数 https://rqy.moe/%E7%AE%97%E6%B3%95/generating-function/#more
+矩阵求逆 https://www.cnblogs.com/secret114/p/4204316.html
