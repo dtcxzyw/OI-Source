@@ -39,7 +39,9 @@ APIO2016 烟火表演 http://blog.csdn.net/u014609452/article/details/52347062
 hzwer's blog http://hzwer.com/
 线性基 https://blog.sengxian.com/algorithms/linear-basis
 nimk游戏 http://blog.csdn.net/kele52he/article/details/77248940
-LCT http://blog.csdn.net/saramanda/article/details/55253627 http://www.cnblogs.com/zwfymqz/p/8972914.html
+LCT http://blog.csdn.net/saramanda/article/details/55253627
+ http://www.cnblogs.com/zwfymqz/p/8972914.html
+ https://www.cnblogs.com/candy99/p/6271344.html
 BSGS http://lzkovo.com/oi/2018/03/07/BSGS%E5%92%8C%E6%89%A9%E5%B1%95BSGS-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/
 扩展欧拉定理 http://blog.csdn.net/ez_yww/article/details/76176970
 多重背包单调队列优化 https://www.cnblogs.com/JoeFan/p/4165956.html
@@ -105,7 +107,7 @@ Miller-Rabin+Pollard-Rho https://www.cnblogs.com/Doggu/p/MillerRabin_PollardRho.
 https://blog.csdn.net/hbhcy98/article/details/51202000
 DAG最小路径覆盖 https://www.cnblogs.com/justPassBy/p/5369930.html
 二分图 http://dsqiu.iteye.com/blog/1689505
-最大权闭合子图输出方案：最后一次增广是可访问到的节点
+最大权闭合子图输出方案：最后一次增广时可访问到的节点
 NOI2008 志愿者招募 https://blog.csdn.net/FZHvampire/article/details/50889187
 2-SAT直接输出方案 https://www.cnblogs.com/TheRoadToTheGold/p/8436948.html#_label1
 生成函数 https://rqy.moe/%E7%AE%97%E6%B3%95/generating-function/#more
