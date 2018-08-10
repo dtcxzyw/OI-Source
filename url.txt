@@ -112,3 +112,4 @@ NOI2008 志愿者招募 https://blog.csdn.net/FZHvampire/article/details/5088918
 2-SAT直接输出方案 https://www.cnblogs.com/TheRoadToTheGold/p/8436948.html#_label1
 生成函数 https://rqy.moe/%E7%AE%97%E6%B3%95/generating-function/#more
 矩阵求逆 https://www.cnblogs.com/secret114/p/4204316.html
+长链剖分 https://www.cnblogs.com/meowww/p/6403515.html

@@ -68,23 +68,28 @@ void splay(int u) {
 }
 void access(int u) {
     int v = 0;
-    do {
+    while (u) {
         splay(u);
         rs = v;
         update(u);
         v = u;
         u = T[u].p;
-    } while (u);
+    }
 }
 void makeRoot(int u) {
     access(u);
     splay(u);
     T[u].rev ^= 1;
+    pushDown(u);
 }
 int find(int u) {
     access(u);
     splay(u);
-    while (ls) u = ls;
+    pushDown(u);
+    while (ls) {
+        u = ls;
+        pushDown(u);
+    }
     return u;
 }
 void link(int u, int v) {
