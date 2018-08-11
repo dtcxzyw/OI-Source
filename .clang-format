@@ -34,3 +34,7 @@ AlignTrailingComments: true
 
 #括号后加空格
 SpaceAfterCStyleCast: true
+
+AccessModifierOffset:	-4
+
+NamespaceIndentation:	All
