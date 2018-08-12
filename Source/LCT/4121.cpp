@@ -1,3 +1,4 @@
+//TODO:4121
 #include <algorithm>
 #include <cstdio>
 int read() {
@@ -11,11 +12,18 @@ int read() {
     }
     return res;
 }
-const int size = 50005;
+bool getState() {
+    int c;
+    do
+        c = getchar();
+    while (c != '0' && c != '1');
+    return c == '1';
+}
+const int maxn = 205, size = maxn * maxn;
 struct Node {
-    int mini, val, p, c[2];
+    int p, c[2];
     bool rev;
-} T[size * 5];
+} T[size];
 int getPos(int u) {
     return u == T[T[u].p].c[1];
 }
@@ -33,11 +41,7 @@ void pushDown(int u) {
         T[u].rev = false;
     }
 }
-int choose(int u, int v) {
-    return T[u].val < T[v].val ? u : v;
-}
 void update(int u) {
-    T[u].mini = choose(choose(T[ls].mini, T[rs].mini), u);
 }
 void connect(int u, int p, int c) {
     T[u].p = p;
@@ -91,67 +95,55 @@ void split(int u, int v) {
     access(v);
     splay(v);
 }
-void link(int u, int v) {
-    split(u, v);
-    T[u].p = v;
-}
 void cut(int u, int v) {
     split(u, v);
     T[u].p = T[v].c[0] = 0;
     update(v);
 }
-int query(int u, int v) {
-    split(u, v);
-    return T[v].mini;
-}
-struct Edge {
-    int u, v, w;
-    bool operator<(const Edge &rhs) const {
-        return w < rhs.w;
-    }
-} E[size * 4];
-int fa[size];
 int find(int u) {
-    return fa[u] == u ? u : fa[u] = find(fa[u]);
+    access(u);
+    splay(u);
+    pushDown(u);
+    while (ls) {
+        u = ls;
+        pushDown(u);
+    }
+    return u;
 }
-bool flag[size * 4] = {};
-int main() {
-    int n = read();
-    int m = read();
-    for (int i = 1; i <= n; ++i) fa[i] = i;
-    for (int i = 1; i <= m; ++i) {
-        E[i].u = read();
-        E[i].v = read();
-        E[i].w = read();
-    }
-    for (int i = 0; i <= n; ++i) {
-        T[i].val = 1 << 30;
-        T[i].mini = i;
-    }
-    std::sort(E + 1, E + m + 1);
-    int ans = 1 << 30, last = n - 1, beg = 1;
-    for (int i = 1; i <= m; ++i) {
-        int u = E[i].u, v = E[i].v;
-        if (u == v) continue;
-        int fu = find(u), fv = find(v);
-        if (fu == fv) {
-            int e = query(u, v);
-            int eid = e - n;
-            cut(e, E[eid].u);
-            cut(e, E[eid].v);
-            flag[eid] = false;
-            while (!flag[beg]) ++beg;
-        } else {
-            fa[fu] = fv;
-            --last;
+bool map[size][size];
+int n;
+int getId(int i, int j) {
+    return n * i + j;
+}
+void link(int x1, int y1, int x2, int y2, int &cntW, int &cntB) {
+    if (map[x1][y1] == map[x2][y2]) {
+        int idu = getId(x1, y1), idv = getId(x2, y2);
+        makeRoot(idu);
+        if (find(idv) != idu) {
+            T[idu].p = idv;
+            --(map[x1][y1] ? cntB : cntW);
         }
-        flag[i] = true;
-        int id = i + n;
-        T[id].mini = id, T[id].val = E[i].w;
-        link(u, id);
-        link(v, id);
-        if (last == 0) ans = std::min(ans, E[i].w - E[beg].w);
     }
-    printf("%d\n", ans);
+}
+int main() {
+    n = read();
+    int cntW, cntB = 0;
+    for (int i = 1; i <= n; ++i)
+        for (int j = 1; j <= n; ++j) {
+            map[i][j] = getState();
+            cntB += map[i][j];
+        }
+    cntW = n * n - cntB;
+    for (int i = 1; i <= n; ++i)
+        for (int j = 1; j <= n; ++j) {
+            if (i != n) link(i, j, i + 1, j, cntW, cntB);
+            if (j != n) link(i, j, i, j + 1, cntW, cntB);
+        }
+    int m = read();
+    while (m--) {
+        int x = read();
+        int y = read();
+        map[x][y] ^= 1;
+    }
     return 0;
 }

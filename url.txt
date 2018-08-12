@@ -17,6 +17,7 @@ O(n)筛逆元 http://blog.miskcoo.com/2014/09/linear-find-all-invert
 虚树 https://www.cnblogs.com/Michael-Li/p/8763242.html
 斯坦纳树 http://blog.csdn.net/gzh1992n/article/details/9119543
 左偏树 http://blog.csdn.net/theprinceofelf/article/details/7247454
+ https://wenku.baidu.com/view/25a2fb85ec3a87c24028c4b5.html
 斜堆 http://blog.csdn.net/coderhuhy/article/details/44223311
 OI数据库 http://oierdb.com/oier_db/
 funny http://abowman.com/google-modules/ball-clock/ http://abowman.com/google-modules/hamster/
@@ -68,7 +69,7 @@ latex 教程 https://blog.csdn.net/u014630987/article/details/70156489
 myy's blog http://matthew99.blog.uoj.ac/
 回文树 https://blog.csdn.net/u013368721/article/details/42100363
 可持久化左偏树维护k短路 https://blog.csdn.net/litble/article/details/79171311 P2413
-圆方树 https://blog.csdn.net/oi_konnyaku/article/details/79367422 http://immortalco.blog.uoj.ac/blog/1955
+圆方树 http://immortalco.blog.uoj.ac/blog/1955
 常系数齐次线性递推 https://www.luogu.org/problemnew/solution/P4723
 三维凸包-增量法 https://www.cnblogs.com/-sunshine/archive/2012/08/25/2656794.html
 快速凸包算法 https://www.cnblogs.com/Booble/archive/2011/03/10/1980089.html
@@ -77,7 +78,8 @@ FFT/NTT http://blog.miskcoo.com/2015/04/polynomial-multiplication-and-fast-fouri
 NTT https://www.cnblogs.com/candy99/p/6641972.html
 拉格朗日乘数法 https://blog.csdn.net/ACdreamers/article/details/41413445
 多项式求逆 http://blog.miskcoo.com/2015/05/polynomial-inverse#mjx-eqn-eqn1
-双连通分量 https://blog.csdn.net/hi_just_do_it/article/details/74637399
+割点 桥 https://blog.csdn.net/fuyukai/article/details/51039788
+双连通分量 https://blog.csdn.net/fuyukai/article/details/51303292
 多项式除法 http://blog.miskcoo.com/2015/05/polynomial-division
 MTT https://blog.csdn.net/samjia2000/article/details/65661468
 任意模数NTT http://www.yhzq-blog.cc/%E4%BB%BB%E6%84%8F%E6%A8%A1%E6%95%B0ntt%E6%80%BB%E7%BB%93/
@@ -114,3 +116,6 @@ NOI2008 志愿者招募 https://blog.csdn.net/FZHvampire/article/details/5088918
 矩阵求逆 https://www.cnblogs.com/secret114/p/4204316.html
 长链剖分 https://www.cnblogs.com/meowww/p/6403515.html
 动态最小生成树 https://www.cnblogs.com/BLADEVIL/p/3512644.html
+线段树分治 https://www.cnblogs.com/flashhu/p/9404225.html
+仙人掌 https://blog.csdn.net/zhangche0526/article/details/71879985#%E4%BB%99%E4%BA%BA%E6%8E%8C%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95
+k短路 https://www.cnblogs.com/yyf0309/p/8438849.html
