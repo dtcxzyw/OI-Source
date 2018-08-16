@@ -1,38 +1,64 @@
-// TODO:3207
-#include <algorithm>
 #include <cstdio>
-typedef long long Int64;
-#define asInt64(x) static_cast<Int64>(x)
+#include <cstring>
 const int size = 100005;
-int cnt[size << 2], div, rem;
-#define ls l, m, id << 1
-#define rs m + 1, r, id << 1 | 1
-void build(int l, int r, int id) {
-    if(l == r)
-        cnt[id] = div + (l <= rem);
-    else {
-        int m = (l + r) >> 1;
-        build(ls);
-        build(rs);
-        cnt[id] = std::max(cnt[id << 1], cnt[id << 1 | 1]);
-    }
+int add(int a, int b, int p) {
+    a += b;
+    return a < p ? a : a - p;
 }
-int pos[size];
-Int64 foo() {
+int pos[size], fa[size];
+int find(int u) {
+    return fa[u] == u ? u : fa[u] = find(fa[u]);
+}
+void merge(int u, int v) {
+    u = find(u), v = find(v);
+    if(u != v)
+        fa[u] = v;
+}
+bool flag[size];
+int foo() {
     int n, s, q, p, m, d;
     scanf("%d%d%d%d%d%d", &n, &s, &q, &p, &m, &d);
-    div = n / d, rem = n % d;
-    build(0, d - 1, 1);
-    Int64 c = 0;
+    for(int i = 0; i < n; ++i)
+        fa[i] = i;
+    memset(flag, 0, n);
+    pos[0] = s;
+    flag[s] = true;
+    d %= n;
+    merge(s, add(s, d, n));
+    long long c = 0;
     for(int i = 1; i < n; ++i) {
         c = (c * q + p) % m;
+        int now = c % n;
+        while(flag[find(now)]) {
+            ++now;
+            if(now == n)
+                now = 0;
+        }
+        int x = find(now);
+        flag[x] = true;
+        pos[i] = x;
+        merge(x, add(x, d, n));
     }
-    return 0;
+    memset(flag, 0, n);
+    int ans = 0;
+    for(int i = 0; i < n; ++i)
+        if(!flag[i]) {
+            int c = i, cnt = 0;
+            bool old = flag[0];
+            while(!flag[c]) {
+                flag[c] = true;
+                ++cnt;
+                c = pos[c];
+            }
+            if(cnt > 1)
+                ans += cnt + (flag[0] == old ? 1 : -1);
+        }
+    return ans;
 }
 int main() {
     int t;
     scanf("%d", &t);
     while(t--)
-        printf("%lld\n", foo());
+        printf("%d\n", foo());
     return 0;
 }
