@@ -120,3 +120,6 @@ NOI2008 志愿者招募 https://blog.csdn.net/FZHvampire/article/details/5088918
 仙人掌 https://blog.csdn.net/zhangche0526/article/details/71879985#%E4%BB%99%E4%BA%BA%E6%8E%8C%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95
 k短路 https://www.cnblogs.com/yyf0309/p/8438849.html
 有上下界网络流 https://www.cnblogs.com/liu-runda/p/6262832.html
+https://www.cnblogs.com/nietzsche-oier/p/8185805.html
+后缀数组 https://www.cnblogs.com/victorique/p/8480093.html
+SAM构建SA https://blog.csdn.net/u013632138/article/details/52737595
