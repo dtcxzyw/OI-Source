@@ -69,7 +69,6 @@ latex 教程 https://blog.csdn.net/u014630987/article/details/70156489
 myy's blog http://matthew99.blog.uoj.ac/
 回文树 https://blog.csdn.net/u013368721/article/details/42100363
 可持久化左偏树维护k短路 https://blog.csdn.net/litble/article/details/79171311 P2413
-圆方树 http://immortalco.blog.uoj.ac/blog/1955
 常系数齐次线性递推 https://www.luogu.org/problemnew/solution/P4723
 三维凸包-增量法 https://www.cnblogs.com/-sunshine/archive/2012/08/25/2656794.html
 快速凸包算法 https://www.cnblogs.com/Booble/archive/2011/03/10/1980089.html
@@ -123,3 +122,7 @@ k短路 https://www.cnblogs.com/yyf0309/p/8438849.html
 https://www.cnblogs.com/nietzsche-oier/p/8185805.html
 后缀数组 https://www.cnblogs.com/victorique/p/8480093.html
 SAM构建SA https://blog.csdn.net/u013632138/article/details/52737595
+SAM https://blog.csdn.net/wmdcstdio/article/details/44780707
+圆方树 https://www.cnblogs.com/cjyyb/p/9098400.html
+http://immortalco.blog.uoj.ac/blog/1955
+杂项 https://blog.csdn.net/YxuanwKeith/article/details/67640768
