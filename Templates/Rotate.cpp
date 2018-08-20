@@ -1,4 +1,4 @@
-// TODO:3187
+// P3187
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
@@ -60,7 +60,7 @@ int convex(int n) {
 struct Angle {
     FT x, y, angle;
     Angle() : angle(1e10) {}
-    Angle(FT x, FT y) : x(x), y(y), angle(atan2(x, y)) {}
+    Angle(FT x, FT y) : x(x), y(y), angle(atan2(y, x)) {}
     bool operator<(const Angle& rhs) const {
         return angle < rhs.angle;
     }
@@ -80,7 +80,7 @@ struct Line {
         if(nxt == n)
             nxt = 0;
         Vec delta = V[nxt] - V[base];
-        return Angle(cross(dir, delta), dot(dir, delta));
+        return Angle(dot(dir, delta), cross(dir, delta));
     }
     void rotate(const Angle& angle, int n) {
         int nxt = base + 1;
@@ -124,7 +124,7 @@ int main() {
     L[3] = Line(minX, Vec(0.0, -1.0));
     memcpy(res, L, sizeof(L));
     FT ans = area(res);
-    while(cross(L[1].dir, Vec(0.0, 1.0)) >= 0.0) {
+    while(L[0].dir.x >= 0.0) {
         Angle angle;
         for(int i = 0; i < 4; ++i)
             angle = std::min(angle, L[i].calcAngle(n));
@@ -146,7 +146,7 @@ int main() {
             beg = i;
     for(int i = 0; i < 4; ++i) {
         int id = (i + beg) % 4;
-        printf("%.5lf %.5lf\n", resP[id].x, resP[id].y);
+        printf("%.5lf %.5lf\n", resP[id].x + eps, resP[id].y + eps);
     }
     return 0;
 }
