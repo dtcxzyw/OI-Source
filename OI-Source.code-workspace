@@ -63,7 +63,8 @@
 			"typeindex": "cpp",
 			"typeinfo": "cpp",
 			"utility": "cpp",
-			"cstdbool": "cpp"
+			"cstdbool": "cpp",
+			"set": "cpp"
 		}
 	}
 }
