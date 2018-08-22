@@ -118,6 +118,7 @@ NOI2008 志愿者招募 https://blog.csdn.net/FZHvampire/article/details/5088918
 线段树分治 https://www.cnblogs.com/flashhu/p/9404225.html
 仙人掌 https://blog.csdn.net/zhangche0526/article/details/71879985#%E4%BB%99%E4%BA%BA%E6%8E%8C%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95
 k短路 https://www.cnblogs.com/yyf0309/p/8438849.html
+https://blog.csdn.net/u013368721/article/details/52983102
 有上下界网络流 https://www.cnblogs.com/liu-runda/p/6262832.html
 https://www.cnblogs.com/nietzsche-oier/p/8185805.html
 后缀数组 https://www.cnblogs.com/victorique/p/8480093.html
@@ -126,3 +127,9 @@ SAM https://blog.csdn.net/wmdcstdio/article/details/44780707
 圆方树 https://www.cnblogs.com/cjyyb/p/9098400.html
 http://immortalco.blog.uoj.ac/blog/1955
 杂项 https://blog.csdn.net/YxuanwKeith/article/details/67640768
+[JSOI2008]最小生成树计数 最小生成树的两个性质：
+(1)不同的最小生成树中,每种权值的边出现的个数是确定的
+(2)不同的生成树中,某一种权值的边连接完成后,形成的联通块状态是一样的
+最小圆覆盖 https://www.cnblogs.com/mypsq/p/4348151.html
+计算几何总结 https://blog.csdn.net/clover_hxy/article/details/53966405
+回文自动机 https://blog.csdn.net/u013368721/article/details/42100363
