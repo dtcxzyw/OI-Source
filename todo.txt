@@ -1,13 +1,15 @@
 Learn
-带上下界网络流
-线段树分治
 生成函数
-多项式高级算法
-purfer编码
-调和级数
-卡特兰数
-斯特林数
 后缀数组
+
+Advance
 带花树
+多项式高级算法
+多项式多点求值、插值
+线段树分治
+HLPP
+线性递推
+min_25筛
+Berlekamp-Massey
 
 Review
