@@ -124,6 +124,7 @@ k短路 https://blog.csdn.net/litble/article/details/79171311
 有上下界网络流 https://www.cnblogs.com/liu-runda/p/6262832.html
 https://www.cnblogs.com/nietzsche-oier/p/8185805.html
 后缀数组 https://www.cnblogs.com/victorique/p/8480093.html
+https://www.cnblogs.com/ECJTUACM-873284962/p/6618870.html
 SAM构建SA https://blog.csdn.net/u013632138/article/details/52737595
 SAM https://blog.csdn.net/wmdcstdio/article/details/44780707
 圆方树 https://www.cnblogs.com/cjyyb/p/9098400.html

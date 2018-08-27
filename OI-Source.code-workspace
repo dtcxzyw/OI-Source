@@ -65,6 +65,58 @@
 			"utility": "cpp",
 			"cstdbool": "cpp",
 			"set": "cpp"
-		}
+		},
+		"latex-workshop.chktex.enabled": true,
+		"latex-workshop.intellisense.citation.maxfilesizeMB": 128,
+		"latex-workshop.latex.outputDir": "./../latex/",
+		"latex-workshop.latex.recipes": [
+			{
+				"name": "xelatex",
+				"tools": [
+					"xelatex"
+				]
+			},
+			{
+				"name": "xe->bib->xe->xe",
+				"tools": [
+					"xelatex",
+					"bibtex",
+					"xelatex",
+					"xelatex"
+				]
+			}
+		],
+		"latex-workshop.latex.tools": [
+			{
+				"name": "xelatex",
+				"command": "xelatex",
+				"args": [
+					"-synctex=1",
+					"-interaction=nonstopmode",
+					"-file-line-error",
+					"-output-directory=./../latex",
+					"Main.tex"
+				]
+			},
+			{
+				"name": "pdflatex",
+				"command": "pdflatex",
+				"args": [
+					"-synctex=1",
+					"-interaction=nonstopmode",
+					"-file-line-error",
+					"-output-directory=./../latex",
+					"Main.tex"
+				]
+			},
+			{
+				"name": "bibtex",
+				"command": "bibtex",
+				"args": [
+					"Main"
+				]
+			}
+		],
+		"latex-workshop.view.pdf.viewer": "tab",
 	}
 }

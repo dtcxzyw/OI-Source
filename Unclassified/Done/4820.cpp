@@ -1,11 +1,15 @@
-// TODO:4820
+#include <cmath>
 #include <cstdio>
-typedef __int128 Int128;
+const double r = 0.57721566490153286060651209;
 int main() {
     long long n, m;
     scanf("%lld%lld", &n, &m);
-    Int128 base = static_cast<Int128>(n) * m;
-    Int128 ans = base / (n + 1);
-    printf("%d\n", base % (n + 1) ? ans : ans - 1);
+    double base = m / 2.0, sum = 0.0;
+    if(n <= 10000) {
+        for(int i = 1; i <= n; ++i)
+            sum += base / i;
+    } else
+        sum = base * (log(n + 1.0) + r);
+    printf("%d\n", static_cast<int>(sum - 1e-10));
     return 0;
 }
