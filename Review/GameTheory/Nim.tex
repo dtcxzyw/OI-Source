@@ -1,1 +1,92 @@
 \section{Nim系列游戏}
+
+\subsection{Nim游戏}
+
+普通Nim游戏的定义：
+有两个玩家轮流从许多堆中移除对象。在每个回合中，玩家选择一个非空的堆，可以移除任何数量
+的对象，但至少移除一个对象。无法操作的玩家为败者。
+
+此类游戏可看做是Bash游戏的特殊化。
+
+\begin{Theorem}
+	$SG_{Nim}(x)=x$
+\end{Theorem}
+
+证明略。
+
+\subsection{Bash游戏}
+
+Bash游戏与普通Nim游戏的区别是增加了每次最多移除k个对象的限制。
+
+\begin{Theorem}
+	$SG_{Bash}(x)=x~mod~(k+1)$
+\end{Theorem}
+
+证明略。
+
+\subsection{NimK游戏}
+
+NimK游戏与普通Nim游戏的区别是每次可以从不超过k个堆中移除任意数目对象。
+
+\begin{Theorem}\label{NimK}
+	将每堆对象的数目拆位，若每位上1的个数mod(k+1)均为0，则必败，反之必胜。
+\end{Theorem}
+
+记忆：普通Nim游戏可理解为mod 2的情况。
+
+算法正确性证明：
+
+
+
+定理~\ref{NimK}得证。
+
+\subsection{Anti Nim}
+
+不能操作的玩家胜利。
+
+\begin{Theorem}\label{AntiNim}
+	先手必胜当且仅当满足以下条件之一：
+	\begin{enumerate}
+		\item $SG(x)=0$ 且所有堆的对象数都为1
+		\item $SG(x)\not=0$ 且至少有一堆对象数大于1
+	\end{enumerate}
+
+\end{Theorem}
+
+证明：
+定义对象数为1的叫A堆，大于1的叫B堆。
+
+\begin{enumerate}
+	\item 若所有堆均为A堆,则奇数堆先手必败，反之必胜。
+	\item 若B堆数等于1，显然$SG(x)\not=0$，则可根据堆的总数确定取该堆的数目，
+	      使下一状态为情况1的奇数堆，所以先手必胜。
+	\item 若B堆数大于1，则
+	      \begin{enumerate}
+		      \item 若$SG(x)=0$，则必须留下超过2个B堆并使$SG(x')\not=0$，否则会使
+		            对方进入情况2的必胜态。
+		      \item 若$SG(x)\not=0$，则根据Nim游戏的理论（必胜态->必败态），存在一种方法转移至情况3的子情况1。
+	      \end{enumerate}
+	      若玩家处于情况3的子情况2中，则可以在有限次回合内使对方无法转移至子情况2，
+	      因此该状态为必胜态。
+\end{enumerate}
+
+定理~\ref{AntiNim}得证。
+
+\subsection{阶梯博弈（Staircase Nim）}
+
+
+\subsubsection{例题}
+
+Luogu P3480 [POI2009]KAM-Pebbles\footnote{\url{https://www.luogu.org/problemnew/show/P3480}}
+
+对于这题可将原条件通过差分转换为阶梯博弈模型（$A_i \geq A_i-1 \Leftrightarrow
+	A_i-A_i-1 \geq 0$）。
+
+\lstinputlisting[title=Luogu P3480]{Source/'Game Theory'/3480.cpp}
+
+出题灵感：Anti BashK游戏
+
+以上内容参考了forezxl\footnote{anti-Nim游戏（反Nim游戏）简介
+	\url{https://blog.csdn.net/a1799342217/article/details/78274410}}和
+hehedad\footnote{关于nimk类型博弈的详细理解与解释
+	\url{https://blog.csdn.net/chenshibo17/article/details/79783523}}的博客。

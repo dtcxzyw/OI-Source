@@ -64,9 +64,9 @@
 			"typeinfo": "cpp",
 			"utility": "cpp",
 			"cstdbool": "cpp",
-			"set": "cpp"
+			"set": "cpp",
+			"climits": "cpp"
 		},
-		"latex-workshop.chktex.enabled": true,
 		"latex-workshop.intellisense.citation.maxfilesizeMB": 128,
 		"latex-workshop.latex.outputDir": "./../latex/",
 		"latex-workshop.latex.recipes": [
@@ -117,6 +117,6 @@
 				]
 			}
 		],
-		"latex-workshop.view.pdf.viewer": "tab",
+		"latex-workshop.view.pdf.viewer": "tab"
 	}
 }

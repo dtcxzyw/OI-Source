@@ -1,17 +1,52 @@
-\documentclass{book}
+\documentclass[UTF8,AutoFakeBold]{book}
 \usepackage{xeCJK}
 \setCJKmainfont{SimSun}
 \usepackage[english]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    columns=fixed,
+    frame=none,
+    backgroundcolor=\color[RGB]{255,255,255},
+    keywordstyle=\color[RGB]{40,40,255},
+    commentstyle=\it\color[RGB]{0,96,96},
+    stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+    showstringspaces=false,
+    escapeinside='',
+    language=c++,
+    morekeywords={alignas,continute,friend,register,true,alignof,decltype,goto,
+    reinterpret_cast,try,asm,defult,if,return,typedef,auto,delete,inline,short,
+    typeid,bool,do,int,signed,typename,break,double,long,sizeof,union,case,
+    dynamic_cast,mutable,static,unsigned,catch,else,namespace,static_assert,using,
+    char,enum,new,static_cast,virtual,char16_t,char32_t,explict,noexcept,struct,
+    void,export,nullptr,switch,volatile,class,extern,operator,template,wchar_t,
+    const,false,private,this,while,constexpr,float,protected,thread_local,
+    const_cast,for,public,throw}
+}
 \usepackage{makeidx}
 \usepackage{amssymb}
 \usepackage{amsmath}
+\usepackage[hyperfootnotes=true]{hyperref}
+\usepackage{tabularx}
+\usepackage{url}
 \pagestyle{headings}
+\newtheorem{Theorem}{定理}[chapter]
+\newtheorem{Lemma}{引理}[chapter]
+\newtheorem{Character}{性质}[chapter]
 \begin{document}
 \title{OI知识点复习笔记}
 \author{dtcxzyw}
 \maketitle
+\frontmatter
+\begin{center}
+    \Huge 前言
+\end{center}
+本人写复习笔记的目的有两个：
+\begin{itemize}
+	\item 系统地复习知识点并挖掘一些有用的性质。
+	\item 学会使用\LaTeX{}。
+\end{itemize}
 \tableofcontents
 \mainmatter{}
 \include{GameTheory/GameTheory}

@@ -34,3 +34,4 @@
 #Binary
 /bin
 /latex
+*.log

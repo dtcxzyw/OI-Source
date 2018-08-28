@@ -27,6 +27,7 @@ exkmp http://blog.csdn.net/hello_sheep/article/details/77059496
 zkw's blog https://artofproblemsolving.com/community/c1368
 杜教筛 https://www.cnblogs.com/zzqsblog/p/5461392.html
 SG函数 http://blog.csdn.net/strangedbly/article/details/51137432
+https://blog.csdn.net/PhilipsWeng/article/details/48395375
 组合博弈 http://blog.csdn.net/luomingjun12315/article/details/45479073
 省选模板 http://www.cnblogs.com/lidaxin/p/5354305.html
 集训队论文 http://www.cnblogs.com/lidaxin/articles/5099461.html
@@ -138,3 +139,4 @@ http://immortalco.blog.uoj.ac/blog/1955
 回文自动机 https://blog.csdn.net/u013368721/article/details/42100363
 卡特兰数 https://blog.csdn.net/wu_tongtong/article/details/78161211
 斯特林数 https://www.cnblogs.com/owenyu/p/6724661.html
+LATEX https://www.cnblogs.com/jingwhale/p/4250296.html
