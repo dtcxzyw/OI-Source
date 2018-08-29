@@ -1,0 +1,34 @@
+\section{最大流}
+\subsection{Dinic算法}
+\index{D!Dinic}
+个人比较喜欢使用Dinic算法（因为我只会这个）。
+
+Dinic的计算流程如下：
+\begin{enumerate}
+	\item BFS建分层图；
+	\item DFS找增广路。
+\end{enumerate}
+
+附上板子：
+\lstinputlisting[title=Dinic]{Source/Source/'Network Flows'/2764.cpp}
+
+算法正确性证明：
+
+算法时间复杂度$O(n^2m)$,证明：
+
+\subsubsection{优化}
+\begin{itemize}
+	\item 当前弧优化：
+	\item 记录无法增广的点，避免重复计算。
+	\item (玄学)BFS找到一条增广路就退出，无法解释。
+\end{itemize}
+
+\subsection{ISAP算法}
+\index{I!ISAP}
+留坑待补。
+\index{TODO!ISAP算法}
+\subsection{HLPP算法}
+\index{H!HLPP}
+留坑待补。
+\index{TODO!HLPP算法}
+\subsection{最大流与最小割}

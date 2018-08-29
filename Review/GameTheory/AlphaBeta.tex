@@ -1,1 +1,79 @@
 \section{Alpha-Beta剪枝}
+
+\subsection{Min-Max搜索}
+
+\index{M!Min-Max Search}
+
+核心在于搜索出对双方来说最好的操作。在实践中可以将对手的最优估价函数取反，
+这样可以避免写区分双方的复杂代码。
+
+伪代码如下：
+\begin{lstlisting}[title=Min-Max Search]
+    int DFS(State s) {
+        if(s.end())return s.eval();
+        else {
+            int res=-inf;
+            for(auto nxt:s)
+                res = std::max(res,-DFS(nxt));
+            return res;
+        }
+    }
+\end{lstlisting}
+
+\subsubsection{例题}
+
+Luogu P4363 [九省联考2018]一双木棋chess
+\footnote{\url{https://www.luogu.org/problemnew/show/P4363}}
+
+状压后DFS即可，需要记忆化搜索。
+
+\lstinputlisting[title=Luogu P4363]{Source/Unclassified/Done/4363.cpp}
+
+\subsection{Alpha-Beta剪枝}
+
+\index{A!Alpha-Beta Search}
+
+Min-Max搜索运行时需要检查整棵博弈树，而Alpha-Beta能够抛弃掉一些显然不是最优的子树，
+提高搜索速度。核心思想是当你已经可以明确这个操作已经得不到更优解时，就不需要再搜下去了。
+
+设$\alpha$为当前搜索到的下界，$\beta$为上界。
+
+伪代码如下：
+\begin{lstlisting}[title=Alpha-Beta 剪枝]
+    int DFS(State s,int alpha,int beta) {
+        if(s.end())return s.eval();
+        else {
+            for(auto nxt:s) {
+                int val = -DFS(nxt,-beta,-alpha);// 1
+                if(val >= beta)// 2
+                    return beta;
+                if(val > alpha)
+                    alpha = val;
+            }
+            return alpha;
+        }
+    }
+    int res = DFS(init,-inf,inf);
+\end{lstlisting}
+
+Alpha-Beta剪枝与Min-Max搜索的区别有二：
+
+\begin{enumerate}
+    \item 对于对手来说，权值是相反数，因此$\alpha'=-\beta,\beta'=-\alpha$。
+    \item $val$会更新$\alpha$的值,所以$val>=\beta$等价于$\alpha>\beta$,
+    已没有继续搜索的必要（对手要么只能接受$-\beta$,要么可以避开这条路径（因为
+    $\beta$值是由上一层节点递归计算同级节点得到的结果，决定权在上级)）。
+\end{enumerate}
+
+Alpha-Beta的效率严重依赖于搜索顺序：
+
+\begin{itemize}
+	\item 在最坏情况下（无法剪枝），该算法与Min-Max搜索相同，效率极低。
+	\item 在最优情况下（每次都从最优着法开始搜索），每层的搜索分支达到$\sqrt{n}$，因此搜索
+	      深度可以达到原来的两倍。
+\end{itemize}
+
+分支规模大小待证明。\index{TODO!Alpha-Beta分支规模大小}
+
+以上内容参考了象棋百科全书\footnote{计算机博弈 - 象棋百科全书
+	\url{http://www.xqbase.com/computer.htm}}

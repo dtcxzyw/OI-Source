@@ -5,8 +5,8 @@ int read() {
     int res = 0, c;
     do
         c = getchar();
-    while (c < '0' || c > '9');
-    while ('0' <= c && c <= '9') {
+    while(c < '0' || c > '9');
+    while('0' <= c && c <= '9') {
         res = res * 10 + c - '0';
         c = getchar();
     }
@@ -34,11 +34,11 @@ bool BFS(int siz) {
     int b = 0, e = 1;
     q[0] = S;
     d[S] = 1;
-    while (b != e) {
+    while(b != e) {
         int u = q[b++];
-        for (int i = last[u]; i; i = E[i].nxt) {
+        for(int i = last[u]; i; i = E[i].nxt) {
             int v = E[i].to;
-            if (E[i].f && d[v] == 0) {
+            if(E[i].f && d[v] == 0) {
                 d[v] = d[u] + 1;
                 q[e++] = v;
             }
@@ -49,12 +49,14 @@ bool BFS(int siz) {
 int n, now[size], nxt[size];
 bool flag[size] = {};
 int DFS(int u, int f) {
-    if (u == T || f == 0) return f;
+    if(u == T || f == 0)
+        return f;
     int res = 0, k;
-    for (int &i = now[u]; i; i = E[i].nxt) {
+    for(int& i = now[u]; i; i = E[i].nxt) {
         int v = E[i].to;
-        if (d[v] == d[u] + 1 && (k = DFS(v, std::min(E[i].f, f)))) {
-            if (u <= n && v > n) {
+        if(d[v] == d[u] + 1 &&
+           (k = DFS(v, std::min(E[i].f, f)))) {
+            if(u <= n && v > n) {
                 nxt[u] = v - n;
                 flag[v - n] = true;
             }
@@ -62,15 +64,17 @@ int DFS(int u, int f) {
             E[i ^ 1].f += k;
             f -= k;
             res += k;
-            if (f == 0) break;
+            if(f == 0)
+                break;
         }
     }
-    if (res == 0) d[u] = -1;
+    if(res == 0)
+        d[u] = -1;
     return res;
 }
 int dinic(int siz) {
     int res = 0;
-    while (BFS(siz)) {
+    while(BFS(siz)) {
         memcpy(now, last, sizeof(int) * siz);
         res += DFS(S, inf);
     }
@@ -79,24 +83,25 @@ int dinic(int siz) {
 int main() {
     n = read();
     int m = read();
-    while (m--) {
+    while(m--) {
         int u = read();
         int v = read();
         addEdge(u, v + n, inf);
     }
     T = 2 * n + 1;
-    for (int i = 1; i <= n; ++i) {
+    for(int i = 1; i <= n; ++i) {
         addEdge(S, i, 1);
         addEdge(i + n, T, 1);
     }
     int res = n - dinic(T + 1);
-    for (int i = 1; i <= n; ++i) {
-        if (flag[i]) continue;
+    for(int i = 1; i <= n; ++i) {
+        if(flag[i])
+            continue;
         int u = i;
         do {
             printf("%d ", u);
             u = nxt[u];
-        } while (u);
+        } while(u);
         putchar('\n');
     }
     printf("%d\n", res);

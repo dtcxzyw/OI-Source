@@ -71,17 +71,16 @@
 		"latex-workshop.latex.outputDir": "./../latex/",
 		"latex-workshop.latex.recipes": [
 			{
-				"name": "xelatex",
+				"name": "preview",
 				"tools": [
-					"xelatex"
+					"xelatex",
 				]
 			},
 			{
-				"name": "xe->bib->xe->xe",
+				"name": "complete",
 				"tools": [
 					"xelatex",
-					"bibtex",
-					"xelatex",
+					"makeindex",
 					"xelatex"
 				]
 			}
@@ -114,6 +113,13 @@
 				"command": "bibtex",
 				"args": [
 					"Main"
+				]
+			},
+			{
+				"name": "makeindex",
+				"command": "makeindex",
+				"args": [
+					"../latex/Main.idx"
 				]
 			}
 		],

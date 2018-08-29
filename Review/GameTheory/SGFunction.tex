@@ -1,7 +1,9 @@
 \section{SG函数与SG定理}
 
 \subsection{适用范围}
-一切Impartial Combinatorial Games都等价于Nim游戏，可以使用SG函数解决。
+
+一切Impartial Combinatorial Games都等价于Nim游戏，可以使用SG函数
+解决。\index{I!ICG游戏}
 
 该类游戏拥有如下特征：\footnote{参见 Impartial game - Wikipedia
 	\url{https://en.wikipedia.org/wiki/Impartial_game}}
@@ -22,30 +24,30 @@
 接下来给出必胜点和必败点的定义（前提是双方均采用最优策略）：
 
 \begin{itemize}
-	\item 必胜点（N-Position）：处于该状态的玩家必胜
-	\item 必败点（P-Position）：处于该状态的玩家必败
+	\item 必胜点（N-Position）：处于该状态的玩家必胜\index{N!N-Position}
+	\item 必败点（P-Position）：处于该状态的玩家必败\index{P!P-Position}
 \end{itemize}
 
 必胜点与必败点有如下性质：
 
 \begin{itemize}
-	\item \begin{Character}
-		终结点为必败点
-	\end{Character}
-	\item \begin{Character}
-		必败点的下一状态必然为必胜点（某玩家必败，等价于无论他如何操作都使另一
-	    玩家必胜）
-	\end{Character}
-	\item \begin{Character}
-		从必胜点出发至少有一种方式进入必败点（该玩家的最优策略就是使状态转移到
-	    必败点）
-	\end{Character}
+	\item \begin{character}
+		      终结点为必败点
+	      \end{character}
+	\item \begin{character}
+		      必败点的下一状态必然为必胜点（某玩家必败，等价于无论他如何操作都使另一
+		      玩家必胜）
+	      \end{character}
+	\item \begin{character}
+		      从必胜点出发至少有一种方式进入必败点（该玩家的最优策略就是使状态转移到
+		      必败点）
+	      \end{character}
 \end{itemize}
 
 要判断哪个玩家必胜，只要使用SG函数和SG定理计算出先手所在状态（即初始状态）是必胜点
 还是必败点即可。
 
-SG函数的定义如下：$SG(x)=mex(S(x))$
+SG函数的定义如下：$SG(x)=mex(S(x))$\index{S!SpragueGrundy Function}
 
 其中$S(x)$是状态x的后继状态的SG函数值的集合，$mex(S)$是没有出现在集合$S$中的最
 小非负整数。
@@ -56,10 +58,12 @@ SG函数的定义如下：$SG(x)=mex(S(x))$
 
 \subsection{SG定理}
 
-\begin{Theorem}[SpragueGrundy Theorem A]
+\index{S!SpragueGrundy Theorem}
+
+\begin{theorem}[SpragueGrundy Theorem A]
 	\bfseries 假设当某玩家无法操作时，该玩家失败。\mdseries
 	若$SG(x)=0$，则该状态为必败态，否则为必胜态。
-\end{Theorem}
+\end{theorem}
 
 归纳证明：假设该定理对状态x后继的状态成立，则
 
@@ -70,9 +74,9 @@ SG函数的定义如下：$SG(x)=mex(S(x))$
 	      必胜态，所以$x$为必败态。
 \end{itemize}
 
-\begin{Theorem}[SpragueGrundy Theorem B]\label{SGB}
+\begin{theorem}[SpragueGrundy Theorem B]\label{SGB}
 	游戏的SG函数值等于各子游戏函数值的Nim和（即xor和）。
-\end{Theorem}
+\end{theorem}
 
 设$S_X$为$X$后继状态的集合，$b=SG(X_1)\oplus \ldots \oplus SG(X_N)$。
 
@@ -80,9 +84,9 @@ SG函数的定义如下：$SG(x)=mex(S(x))$
 
 \begin{enumerate}
 	\item
-	      \begin{Lemma}\label{SGBL1}
+	      \begin{lemma}\label{SGBL1}
 		      $\forall_{a\in N,a<b},\exists_{X'\in S_X},SG(X')=a$
-	      \end{Lemma}
+	      \end{lemma}
 
 	      归纳证明：首先假设该引理对子游戏成立。
 
@@ -98,9 +102,9 @@ SG函数的定义如下：$SG(x)=mex(S(x))$
 	      因为$X_1,\ldots,X_i',\ldots,X_N\in S_X$，所以引理~\ref{SGBL1}得证。
 
 	\item
-	      \begin{Lemma}\label{SGBL2}
+	      \begin{lemma}\label{SGBL2}
 		      $\forall_{X'\in S_X},SG(X')\not=b$
-	      \end{Lemma}
+	      \end{lemma}
 
 	      反证法：假设SG定理对子状态成立（这里貌似不严谨），\\且$\exists_{X' \in S_X},SG(X')=b$。
 
@@ -122,4 +126,4 @@ Luogu P2575 高手过招\footnote{\url{https://www.luogu.org/problemnew/show/P25
 每行棋子可视为一个子游戏，状压后使用DFS计算SG函数值，然后利用定理~\ref{SGB}计算整个
 游戏的SG函数值即可。
 
-\lstinputlisting[title=Luogu P2575]{Source/'Game Theory'/2575.cpp}
+\lstinputlisting[title=Luogu P2575]{Source/Source/'Game Theory'/2575.cpp}

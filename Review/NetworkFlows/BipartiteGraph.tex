@@ -1,0 +1,120 @@
+\section{二分图}
+\subsection{二分图的定义及其性质}
+\index{B!Bipartite Graph}
+二分图的顶点可分为两个集合，每条边的端点分别属于这两个集合。
+\subsection{二分图判定}
+\begin{character}
+	二分图中不存在奇环。
+\end{character}
+如果存在奇环，则必有一条边的端点属于同一集合。
+所以可以使用DFS染色来判定二分图，遇到矛盾则退出。
+
+\lstinputlisting[title=BGJudge.cpp]{NetworkFlows/BGJudge.cpp}
+
+\subsection{二分图最大匹配}
+
+\subsubsection{匈牙利算法}
+\index{H!Hungarian Algorithm}
+
+匈牙利算法的主要步骤就是遍历左集合的每一个顶点，使得其尽可能找到一个匹配。
+要为该顶点找到一个匹配，首先遍历边，如果右顶点已经有匹配，则递归尝试让该
+匹配点重新找一个匹配，如果右顶点无匹配或者更换匹配成功，则这条边是一个匹配。
+
+原则：有机会上，没机会创造机会也要上。
+\footnote{Dark\_Scope 趣写算法系列之--匈牙利算法
+	\url{https://blog.csdn.net/dark\_scope/article/details/8880547}}
+
+感性的算法的正确性证明：每次递归时匹配数只增不减，且递归有权修改整个联通块
+的着色情况。（似乎并没有什么说服力）。
+
+\index{TODO!匈牙利算法标准描述与正确性证明}
+
+\subsubsection{Hopcroft–Karp Algorithm}
+\index{H!Hopcroft–Karp Algorithm}
+暂时先坑着。
+\index{TODO!Hopcroft–Karp算法}
+
+\subsubsection{例题}
+
+Luogu P1129 [ZJOI2007]矩阵游戏
+\footnote{\url{https://www.luogu.org/problemnew/show/P1129}}
+
+首先用二分图最大匹配找到n个不同行且不同列的黑格子（置换矩阵P），然后就可以操作得到
+目标矩阵（单位矩阵I）了。
+
+\lstinputlisting[title=Luogu P1129]{Source/Unclassified/Done/1129.cpp}
+
+\subsection{二分图最大权匹配 Kuhn-Munkras Algorithm}
+\index{K!Kuhn-Munkras Algorithm}
+先用费用流做吧，暂时先坑着。
+\index{TODO!Kuhn-Munkras算法}
+\subsection{二分图常见模型}
+
+\subsubsection{最小点覆盖}
+
+\index{K!Kőnig's theorem}
+\begin{theorem}[Kőnig's Theorem]
+	最小点覆盖数=最大匹配数。
+\end{theorem}
+
+使用反证法证明：如果有一条边两端顶点都不在最大匹配上，那么这条边可以进入最大匹配
+成为一个更大的匹配边集，所以与最大匹配的假设矛盾。
+
+\subsubsection{最大独立集}
+
+设最大独立集为$U$,顶点集合为$V$，最大匹配边集为$M$
+
+\begin{theorem}
+	$|U|=|V|-|M|$
+\end{theorem}
+
+证明：
+
+\begin{enumerate}
+	\item \begin{lemma}
+		      $|U|\leq |V|-|M|$
+          \end{lemma}
+          因为每个匹配中有一个点不在集合$U$中，所以$|U|\leq |V|-|M|$。
+	\item \begin{lemma}
+		      $|U|\geq |V|-|M|$
+          \end{lemma}
+          首先点集去掉最大匹配覆盖的点集后为独立集，即$|U|\geq |V|-2*|M|$。
+          若存在边$(u,v)\in M$,且存在边$(u,a),(v,b)$,点$a$和点$b$都不被
+          覆盖,则：
+          \begin{itemize}
+              \item 若存在$(a,b)$，则有加入边$(a,b)$后有更大的匹配；
+              \item 若不存在$(a,b)$,则使用边$(u,a),(v,b)$代替$(u,v)$后
+              有更大的匹配。
+          \end{itemize}
+          因此从最大匹配的每个匹配中选择同一边的点放入独立集中将不会与其他节点相连
+          （匹配中的点不相连且不与匹配外的点相连）。
+          所以$|U|\geq |V|-2*|M|+|M|=|V|-|M|$。
+\end{enumerate}
+
+综上所述$|U|=|V|-|M|$。
+
+\subsubsection{DAG最小路径覆盖}
+
+\paragraph{最小不相交路径覆盖}
+
+将顶点拆成左右两点，若存在边$u->v$则连边$Lu->Rv$,求二分图最大匹配。
+
+\begin{theorem}
+	最小路径覆盖数=顶点数-二分图最大匹配数。
+\end{theorem}
+
+证明：二分图中每增加一个匹配，就意味着减少一条路径。
+
+\paragraph{最小可相交路径覆盖}
+
+先用Floyd求出传递闭包，转化为最小不相交路径覆盖问题。
+
+证明：如果要从a走到b，直接连边即可，这样就可以避开中间点的限制。
+
+以上内容参考了罗茜\footnote{二分图详解及总结
+	\url{https://www.cnblogs.com/alihenaixiao/p/4695298.html}},
+justPassBy\footnote{有向无环图（DAG）的最小路径覆盖
+	\url{https://www.cnblogs.com/justPassBy/p/5369930.html}}和
+不可不戒\footnote{二分图:最大独立集\&最大匹配\&最小顶点覆盖
+	\url{https://blog.csdn.net/lezg\_bkbj/article/details/9872189}}
+的博客。

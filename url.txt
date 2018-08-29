@@ -140,3 +140,4 @@ http://immortalco.blog.uoj.ac/blog/1955
 卡特兰数 https://blog.csdn.net/wu_tongtong/article/details/78161211
 斯特林数 https://www.cnblogs.com/owenyu/p/6724661.html
 LATEX https://www.cnblogs.com/jingwhale/p/4250296.html
+latex宏包 http://www.ctex.org/documents/packages/
