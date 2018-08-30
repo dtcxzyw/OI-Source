@@ -141,3 +141,5 @@ http://immortalco.blog.uoj.ac/blog/1955
 斯特林数 https://www.cnblogs.com/owenyu/p/6724661.html
 LATEX https://www.cnblogs.com/jingwhale/p/4250296.html
 latex宏包 http://www.ctex.org/documents/packages/
+点定位 http://blog.miskcoo.com/2015/05/planar-graph-dual-and-point-locate
+CF优秀文章 http://codeforces.com/blog/entry/57282

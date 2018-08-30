@@ -1,4 +1,4 @@
-\documentclass[UTF8,AutoFakeBold]{book}
+\documentclass[a4paper,UTF8,AutoFakeBold]{book}
 \usepackage{xeCJK}
 \setCJKmainfont{SimSun}
 \usepackage[english]{babel}
@@ -53,10 +53,12 @@
 当前共\pageref{LastPage}页。
 \tableofcontents
 \mainmatter{}
-\include{GameTheory/GameTheory}
-\include{NetworkFlows/NetworkFlows}
+\input{GameTheory/GameTheory}
+\input{NetworkFlows/NetworkFlows}
+\input{DataStructure/DataStructure}
 \appendix
 \printindex
+\input{Bib.tex}
 \backmatter{
 	\begin{center}
 		\Huge 后记

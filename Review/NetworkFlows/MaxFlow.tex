@@ -5,23 +5,66 @@
 
 Dinic的计算流程如下：
 \begin{enumerate}
-	\item BFS建分层图；
-	\item DFS找增广路。
+	\item BFS建分层图，若找不到增广路则退出；
+	\item DFS在分层图上找增广路并修改流量,重复步骤1。
 \end{enumerate}
 
 附上板子：
 \lstinputlisting[title=Dinic]{Source/Source/'Network Flows'/2764.cpp}
 
-算法正确性证明：
+时间复杂度证明：
 
-算法时间复杂度$O(n^2m)$,证明：
+\begin{enumerate}
+	\item \begin{lemma}
+		Dinic每次BFS后的阻塞流层数是递增的（即$d[t]$递增）。
+	\end{lemma}
+	\item 每次BFS的时间复杂度为$O(E)$。
+	\item 每次DFS的时间复杂度为$O(VE)$。
+\end{enumerate}
 
+因此算法的时间复杂度为$O(V^2E)$。
+
+在容量均为1的图上，Dinic的时间复杂度为$O(min \{ V^\frac{2}{3},E^\frac{1}{2} \} E)$,
+证明：
+
+留坑待填，参见\cite{NFTGC}。
+
+做二分图最大匹配时Dinic跑得飞快，时间复杂度$O(\sqrt V E)$，证明：
+
+留坑待填，参见\cite{DSNA}。
+
+\index{TODO!特殊图下Dinic的时间复杂度证明}
+
+时间复杂度证明源自Wikipedia-EN\footnote{
+	Dinic's algorithm - Wikipedia
+	\url{https://en.wikipedia.org/wiki/Dinic\%27s\_algorithm}}以及
+	permui的博客\footnote{ 最大流算法-ISAP - permui
+		\url{https://www.cnblogs.com/owenyu/p/6852664.html}}
 \subsubsection{优化}
 \begin{itemize}
-	\item 当前弧优化：
-	\item 记录无法增广的点，避免重复计算。
-	\item (玄学)BFS找到一条增广路就退出，无法解释。
+	\item 当前弧优化：每次从未遍历的边开始遍历，减少重复计算（就算前面的边没满，
+	      下一次还可以增广）。
+	\item 记录无法增广的点（将其深度设为-1），避免重复计算。
+	\item （玄学，未测试）BFS找到一条增广路就退出，无法解释。
+	\item 若图为分层图，在Dinic之前贪心预流（依旧玄学，未测试）：
+	      \begin{enumerate}
+		      \item 从$s$开始逐层递推，计算能够流出节点$i$的流量$out[i]$；
+		      \item 从$t$开始逐层倒推，计算每条边的实际流量。
+	      \end{enumerate}
+	      代码：
+
+	      \lstinputlisting[title=PreFlow]{NetworkFlows/PreFlow.cpp}
+
+	      该方法源自沐阳的博客。
+	      \footnote{ZOJ-2364 Data Transmission 分层图阻塞流 Dinic+贪心预流 - 沐阳
+		      \url{https://www.cnblogs.com/Lyush/p/3204099.html}}
 \end{itemize}
+
+\subsubsection{当Dinic遇上LCT}
+
+\index{D!Dinic with LCT}
+留坑待补。
+\index{TODO!Dinic with LCT}
 
 \subsection{ISAP算法}
 \index{I!ISAP}
@@ -32,3 +75,23 @@ Dinic的计算流程如下：
 留坑待补。
 \index{TODO!HLPP算法}
 \subsection{最大流与最小割}
+
+\index{M!Max-flow min-cut theorem}
+\begin{theorem}[Max-flow min-cut theorem]\label{MFMCT}
+	最大流=最小割。
+\end{theorem}
+
+证明：
+\begin{itemize}
+	\item
+	\begin{lemma}
+		最大流$\leq$最小割。
+	\end{lemma}
+	由于流量被割边所限制，所以最大流$\leq$任意割，所以最大流$\leq$最小割。
+	\item
+	\begin{lemma}
+		最大流$\geq$最小割。
+	\end{lemma}
+	证明：跑完最大流后残量网络内$s$与$t$不连通，所以得到了一个割，
+	即最大流$\geq$最小割。
+\end{itemize}

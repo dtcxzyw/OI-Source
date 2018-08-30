@@ -81,6 +81,7 @@
 				"tools": [
 					"xelatex",
 					"makeindex",
+					"xelatex",
 					"xelatex"
 				]
 			}
@@ -95,24 +96,6 @@
 					"-file-line-error",
 					"-output-directory=./../latex",
 					"Main.tex"
-				]
-			},
-			{
-				"name": "pdflatex",
-				"command": "pdflatex",
-				"args": [
-					"-synctex=1",
-					"-interaction=nonstopmode",
-					"-file-line-error",
-					"-output-directory=./../latex",
-					"Main.tex"
-				]
-			},
-			{
-				"name": "bibtex",
-				"command": "bibtex",
-				"args": [
-					"Main"
 				]
 			},
 			{

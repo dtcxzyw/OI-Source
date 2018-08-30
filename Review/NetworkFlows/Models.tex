@@ -1,1 +1,75 @@
 \section{常见网络流/最小割模型}
+\subsection{平面图转对偶图}
+
+平面图与对偶图的定义：
+\begin{itemize}
+	\item 平面图（Planar Graph）：在平面上画出来可以使边与边只在顶点上相交的图。
+	      \index{P!Planar Graph}
+	\item 对偶图（Dual Graph）：将平面图的每条边两边的区域连边而成的新平面图。
+	      \index{D!Dual Graph}
+\end{itemize}
+
+记平面图$G$的对偶图为$G^*$，平面集合为$P_G$。
+
+对偶图$G^*$有两个性质：
+\begin{itemize}
+	\item
+	      \begin{character}
+		      $G^*$中的环对应$G$中的一个割。
+	      \end{character}
+	\item
+	      \begin{character}
+		      $|P_G|=|V_{G^*}|,|E_G|=|E_{G^*}|$
+	      \end{character}
+\end{itemize}
+
+实际应用时，首先连接$(s,t)$使得外部平面被分为两个平面，以获得源汇点$s',t'$（同时连
+到一个点上并没有什么用），然后按照定义建图即可（注意不要加入边$s',t'$）。
+
+那么$s,t$的最小割=$s'->t'$的最短路(即拆点前的最小环)，时间复杂度降低不少。
+
+\subsubsection{例题}
+
+Luogu P4001 [BJOI2006]狼抓兔子\footnote{【P4001】[BJOI2006]狼抓兔子 - 洛谷
+\url{https://www.luogu.org/problemnew/show/P4001}}
+
+根据定理~\ref{MFMCT}转换为求最大流，将右上角当做起点，右下角当做终点，然后使用上述
+方法连边即可。
+
+\lstinputlisting[title=Luogu P4001]{Source/Unclassified/Done/4001.cpp}
+
+\subsection{最大权闭合子图}
+
+$S$向非负权点连容量为权值的边，负权点向$T$连容量为权值相反数的边，如果选择点$u$必须
+选择点$v$,就从$u$向$v$连容量为$\infty$的边。
+
+答案=正权值之和-最小割。
+
+简单理解：如果割去正权点的权值，则说明舍弃该正权点，权值从答案中扣除；如果割去负权点
+的权值，则说明选择之前的正权点并从答案扣除该负权值。
+
+严格的正确性证明待补充。\index{TODO!最大权闭合子图算法的正确性}
+
+\subsubsection{板子}
+
+Luogu P4174 [NOI2006]最大获利\footnote{【P4174】[NOI2006]最大获利 - 洛谷
+\url{https://www.luogu.org/problemnew/show/P4174}}
+
+\lstinputlisting[title=Luogu P4174]{Source/Source/'Network Flows'/4174.cpp}
+
+\subsubsection{输出方案}
+
+\begin{theorem}
+    Dinic最后一次增广时可访问到的点就是最终方案。
+\end{theorem}
+
+简单理解：最后一次增广后BFS必然找不到增广路，此时割掉的边无法继续增广，对应的点无法被
+访问到，剩余的点就是最终方案了。
+
+上述内容参考了appgle\footnote{网络流算法基本模型 - appgle
+	\url{https://www.cnblogs.com/hyl2000/p/6618519.html}}，
+MaxMercer\footnote{关于平面图到对偶图的转化 \\
+	\url{https://blog.csdn.net/MaxMercer/article/details/77976666}}和
+Cold\_Chair\footnote{网络流——最大权闭合子图 \\
+	\url{https://blog.csdn.net/Cold\_Chair/article/details/52841351}}
+的博客。
