@@ -1,3 +1,215 @@
 \section{平衡二叉树}
-\subsection{FHQTreap}
-\subsection{splay}
+\subsection{FHQTreap}\label{FHQTreap}
+\index{F!FHQTreap}
+FHQTreap是一种比较好写的平衡二叉树，虽然效率不太高
+（不如子节~\ref{splay}\\的splay），但其易于理解，不需要旋转，
+且对可持久化友好。
+FHQTreap的使用基于两个基本操作：split与merge。
+
+对于二叉搜索树的操作，由于FHQTreap本来就能够满足二叉搜索树的定义
+，因此操作方法相同（在对效率要求不高的情况下灵活地使用split和merge
+还可以减少代码量）。
+
+对于序列操作，使用子节~\ref{split}所述的splitKth即可完成区间提取。
+
+\subsubsection{split}\label{split}
+
+split函数的作用是将一棵树按照权值或位置划分成两棵子树。
+
+\begin{itemize}
+\item
+按位置划分：$split(rt,k,x,y)$表示将以$rt$为根的树分为以$x$为根的
+左子树和以$y$为根的右子树，其中左子树内的节点是原树的前$k$个,需要维护
+每个节点的子树大小$siz$。
+
+代码如下：
+\begin{lstlisting}[title=splitKth]
+    void split(int u,int k,int& x,int& y) {
+        if(u) {
+            push(u);
+            int lsiz=T[T[u].ls].siz;
+            //`决定当节点u为第k个时被分到哪棵子树`
+            if(k<=lsiz) {
+                y=u;
+                split(T[u].ls,k,x,T[u].ls);
+            }
+            else{
+                x=u;
+                split(T[u].rs,k-lsiz-1,T[u].rs,y);
+            }
+            update(u);
+        }
+        else x=y=0;
+    }
+\end{lstlisting}
+\item
+按权值划分：$split(rt,k,x,y)$表示将以$rt$为根的树分为以$x$为根的
+左子树和以$y$为根的右子树，其中左子树内的节点值均小于等于$k$。
+
+代码如下：
+\begin{lstlisting}[title=splitKey]
+    void split(int u,int k,int& x,int& y) {
+        if(u) {
+            push(u);
+            //`=决定当T[u].val==k时被分到哪棵子树`
+            if(T[u].val<=k) {
+
+                x=u;
+                split(T[u].rs,k,T[u].rs,y);
+            }
+            else{
+                y=u;
+                split(T[u].ls,k,x,T[u].ls);
+            }
+            update(u);
+        }
+        else x=y=0;
+    }
+\end{lstlisting}
+\end{itemize}
+
+根据树的实际意义（二叉搜索树还是序列）以及实际需要来决定使用哪种split。
+
+\subsubsection{merge}
+
+merge将两棵树按照左右顺序（中序遍历）合并。
+和treap一样，merge使用随机权重来保持树的平衡。
+
+代码如下：
+
+\begin{lstlisting}[title=merge]
+    int merge(int u,int v) {
+        if(u && v) {
+            if(T[u].pri<T[v].pri) {
+                push(u);
+                T[u].rs=megre(T[u].rs,v);
+                update(u);
+                return u;
+            }
+            else{
+                push(v);
+                T[v].ls=merge(u,T[v].ls);
+                update(v);
+                return v;
+            }
+        }
+        return u|v;
+    }
+\end{lstlisting}
+
+\subsubsection{指示权重的伪随机数生成器}\label{WRG}
+
+显然FHQTreap也是一个Treap，所以需要一个表现良好的伪随机数生成器
+来指示该节点的权。
+
+最易于实现的伪随机数生成算法就是线性同余法(LCG)了。
+\index{L!Linear Congruential\\ Generator}
+C++11中<random>的$std::linear\_congruential\_engine$给出
+了两组预置的参数：
+\begin{itemize}
+    \item $minstd\_rand0:(a=16807, c=0, m=2147483647)$
+
+    Discovered in 1969 by Lewis, Goodman and Miller, adopted as
+    "Minimal standard" in 1988 by Park and Miller.
+    \item $minstd\_rand:(a=48271, c=0, m=2147483647)$
+
+    Newer "Minimum standard", recommended by Park, Miller, and Stockmeyer in 1993.
+
+\end{itemize}
+
+通常选择第2个即$a=48271$，代码如下：
+
+\begin{lstlisting}[title=minstd\_rand]
+int getRand() {
+    static int seed = 347;
+    return seed = seed * 48271LL % 2147483647;
+}
+\end{lstlisting}
+
+现在来试试说明它的优越性：
+
+\begin{itemize}
+    \item 根据节~\ref{PrimitiveRoot}所述，如果$g$是模数$P$的一个原根，
+    则$g$的幂模$P$可以取到$[1,P-1]$内的每一个数，且循环周期长度为$P-1$。
+    由于2147483647是梅森素数，所以它一定存在原根。
+    下列程序可证明48271是2147483647的一个原根：
+    \lstinputlisting[title=RandomTestA.cpp]{DataStructure/RandomTestA.cpp}
+    \item 48271可以较早地使int溢出，从而避免出现$a$过小而导致``锯齿波''。
+    下列程序可证明48271可以满足OI考试的需要：
+    程序输出minc=7884 maxc=8515 except=8192 s2=88.492，可见数据还是蛮均匀的。
+\end{itemize}
+
+参见cppreference\footnote{
+    \url{https://en.cppreference.com/w/cpp/numeric/random/
+    linear\_congruential\_engine}}与
+    Wikipedia-EN\footnote{
+    \url{https://en.wikipedia.org/wiki/Linear\_congruential\_generator}}。
+
+如果需要更均匀的随机数，可以使用如下方案（质量从低到高）：
+\begin{enumerate}
+    \item 使用比LCG更好的梅森旋转算法
+    \footnote{std::mersenne\_twister\_engine - cppreference.com
+    \url{https://en.cppreference.com/w/cpp/numeric/random/
+    mersenne\_twister\_engine}}；
+    \item Intel指令集内置RDRAND；
+    \item 使用由一些机构提供的真随机数生成器SDK，如\url{https://www.random.org/}；
+    \item 在需要蒙特卡洛采样的场合使用低差异序列如Halton，Sobol等。
+\end{enumerate}
+
+\subsection{splay}\label{splay}
+\index{S!splay}
+
+由于Treap做LCT复杂度多一个log（而且我还看不懂），所以还是学一下好了。
+
+splay主要由$rotate$和$splay$函数组成：
+
+\subsubsection{rotate}
+
+$rotate(u)$表示将节点$u$旋转到$u$的父亲上。
+
+在实践中可使用$connect(u,p,c)$把节点$u$挂到节点$p$的位置$c$下,$getPos(u)$获得
+节点$u$相对于父亲的位置。
+
+代码如下：
+
+\index{TODO!rotate-push}
+
+\begin{lstlisting}[title=rotate]
+int getPos(int u) {
+    return u == T[T[u].p].c[1];
+}
+void connect(int u, int p, int c) {
+    T[u].p = p;
+    T[p].c[c] = u;
+}
+void rotate(int u) {
+    int ku = getPos(u);
+    int p = T[u].p;
+    int kp = getPos(p);
+    int pp = T[p].p;
+    int t = T[u].c[ku ^ 1];
+    T[u].p = pp;
+    if (!isRoot(p))
+        connect(u, pp, kp);
+    connect(t, p, ku);
+    connect(p, u, ku ^ 1);
+    update(p);
+    update(u);
+}
+\end{lstlisting}
+
+\subsubsection{splay}
+
+\subsubsection{具体应用}
+
+对于二叉搜索树的操作，同子节~\ref{FHQTreap}相同，直接用二叉搜索树的
+操作即可。
+
+对于序列操作，可使用splay来提取区间：
+
+\begin{enumerate}
+    \item
+\end{enumerate}
+
+上述内容参考了自为风月马前卒的博客\footnote{splay详解（一） - 自为风月马前卒
+\url{http://www.cnblogs.com/zwfymqz/p/7896036.html}}。

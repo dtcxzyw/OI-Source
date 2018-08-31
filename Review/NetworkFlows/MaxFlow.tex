@@ -84,14 +84,16 @@ Dinic的计算流程如下：
 证明：
 \begin{itemize}
 	\item
-	\begin{lemma}
+	\begin{lemma}\label{MCA}
 		最大流$\leq$最小割。
 	\end{lemma}
 	由于流量被割边所限制，所以最大流$\leq$任意割，所以最大流$\leq$最小割。
 	\item
-	\begin{lemma}
+	\begin{lemma}\label{MCB}
 		最大流$\geq$最小割。
 	\end{lemma}
 	证明：跑完最大流后残量网络内$s$与$t$不连通，所以得到了一个割，
 	即最大流$\geq$最小割。
 \end{itemize}
+
+结合引理~\ref{MCA}与~\ref{MCB}可得最大流=最小割。

@@ -1,0 +1,33 @@
+\section{划分树}
+划分树是一种类似于线段树但很少使用的数据结构，用来求解区间第k大问题，可用
+主席树代替，权当了解。
+\subsection{构建}
+和线段树类似，将每一段区间在下一层分为两个子区间，即以这段区间的中位数将区
+间内的数划分为左右两部分，并且同一边的数之间相对次数不变。为了支持查询，还
+需要记录区间内每一个数及之前的数有多少个划分到左区间中。
+\subsubsection{注意事项}
+\begin{itemize}
+    \item 由于每一层都只有n个数，所以只要每一层开n个数的数组即可，记$A[d]$为
+    第$d$层的划分情况，$cnt[d][i]$为第$d$层的第$i$个数及同区间之前的数有多
+    少个数进入了左子树。
+    \item 中位数可预先对数组排序获得，记排序后数组为$B$。
+    \item 注意有多个中位数的情况（否则左区间的数将覆盖到右区间的存储区域上）。
+\end{itemize}
+\subsection{查询}
+
+\begin{enumerate}
+    \item 当到达叶子节点时直接返回$A[d][i]$或$B[i]$。
+    \item 利用$cnt$数组差分可以查询到$[l,r]$之间有多少数进入了左子树，
+    决定往哪棵子树走。
+    \item 根据$cnt$数组重新计算目标范围在下一层的区间，递归查询。
+\end{enumerate}
+
+\subsection{板子}
+
+SP3946 MKTHNUM - K-th Number
+
+\lstinputlisting[title=PartitionedTree.cpp]
+{DataStructure/PartitionedTree.cpp}
+
+以上内容参考了hchlqlz\footnote{划分树讲解 - hchlqlz
+\url{https://www.cnblogs.com/hchlqlz-oj-mrj/p/5744308.html}}的博客。

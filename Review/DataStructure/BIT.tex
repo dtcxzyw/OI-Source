@@ -1,6 +1,19 @@
 \section{树状数组}
 \subsection{标号管辖范围}
 
+画图可发现,节点$i$保存的是$[i-lowbit(i)+1,i]$的和。在修改时，$+lowbit(i)$会使自
+己移动到父节点。在查询时$-lowbit(i)$会使自己向前移动$lowbit(i)$位，离开自己的管辖
+范围，移动到管辖范围前的更高层的节点。
+
+\subsection{线性预处理}
+
+\begin{lstlisting}[title=LinearBuild]
+    for(int i=1;i<=n;++i) {
+        int j=i+(i&-i);
+        if(j<=n)A[j]+=A[i];
+    }
+\end{lstlisting}
+
 \subsection{lowbit函数原理}
 
 lowbit函数定义为：$lowbit(i)=i\&-i$。
