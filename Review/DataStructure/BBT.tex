@@ -167,12 +167,12 @@ splay主要由$rotate$和$splay$函数组成：
 
 $rotate(u)$表示将节点$u$旋转到$u$的父亲上。
 
+
+
 在实践中可使用$connect(u,p,c)$把节点$u$挂到节点$p$的位置$c$下,$getPos(u)$获得
 节点$u$相对于父亲的位置。
 
 代码如下：
-
-\index{TODO!rotate-push}
 
 \begin{lstlisting}[title=rotate]
 int getPos(int u) {
