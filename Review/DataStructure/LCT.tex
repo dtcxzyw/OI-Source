@@ -1,4 +1,148 @@
 \section{动态树}
+\index{L!Link-Cut Tree}
 \subsection{常规操作}
+动态树是一堆splay组成的森林，主要以$access$和$makeRoot$操作为基础，
+可以实现$link,cut,split,find$等功能。
+LCT的splay用来维护以深度为关键字的重链信息。
+
+\subsubsection{splay部分}
+与常规splay的不同之处在于LCT中的splay的根也是有父亲的，指向另一棵splay的
+节点，因此使用工具函数$isRoot(u)$来判断节点$u$是不是splay的根。为了实现LCT
+的$access$功能，需要维护区间翻转。
+
+\begin{lstlisting}[title=splay]
+int getPos(int u) {
+    return u == T[T[u].p].c[1];
+}
+bool isRoot(int u) {
+    int p = T[u].p;
+    return T[p].c[0] != u && T[p].c[1] != u;
+}
+#define ls T[u].c[0]
+#define rs T[u].c[1]
+void pushDown(int u) {
+    if (T[u].rev) {
+        std::swap(ls, rs);
+        T[ls].rev ^= 1;
+        T[rs].rev ^= 1;
+        T[u].rev = false;
+    }
+}
+void update(int u);
+void connect(int u, int p, int c) {
+    T[u].p = p;
+    T[p].c[c] = u;
+}
+void rotate(int u) {
+    int ku = getPos(u);
+    int p = T[u].p;
+    int kp = getPos(p);
+    int pp = T[p].p;
+    int t = T[u].c[ku ^ 1];
+    T[u].p = pp;
+    if (!isRoot(p))
+        connect(u, pp, kp);
+    connect(t, p, ku);
+    connect(p, u, ku ^ 1);
+    update(p);
+    update(u);
+}
+void push(int u) {
+    if (!isRoot(u)) push(T[u].p);
+    pushDown(u);
+}
+void splay(int u) {
+    push(u);
+    while (!isRoot(u)) {
+        int p = T[u].p;
+        if (!isRoot(p))
+            rotate((getPos(u) == getPos(p)) ? p : u);
+        rotate(u);
+    }
+}
+\end{lstlisting}
+\subsubsection{access}
+$access(u)$的功能是使节点$u$与其LCT的根在同一棵$splay$内，
+此时节点$u$是根节点重链中深度最大的点（已经和原来到儿子的重链断开）。
+
+具体操作如下：
+
+\begin{enumerate}
+    \item 将节点$u$翻转到其所在$splay$的根；
+    \item 断开节点$u$到其右儿子的重链，更新节点$u$;
+    \item 跳到节点$u$的父亲节点，并翻转其至根；
+    \item 把以$u$为根的链挂到父节点上，该操作自动断开原来的重链，更新；
+    \item 重复步骤3合并重链直至合并到根节点为止。
+\end{enumerate}
+
+代码：
+\begin{lstlisting}[title=access]
+void access(u) {
+    int v = 0;
+    while (u) {
+        splay(u);
+        rs = v;
+        update(u);
+        v = u;
+        u = T[u].p;
+    }
+}
+\end{lstlisting}
+
+\subsubsection{makeRoot}
+$makeRoot(u)$的功能是把节点$u$翻转为整棵LCT的根。
+
+具体操作如下：
+
+\begin{enumerate}
+    \item 打通节点$u$到根节点的路径,并使节点$u$成为splay的根；
+    \item 由于节点$u$是splay中深度最大的节点，翻转整棵splay后就可以使
+    节点$u$成为根了。
+\end{enumerate}
+
+代码：
+
+\begin{lstlisting}[title=makeRoot]
+void makeRoot(int u) {
+    access(u);
+    splay(u);
+    T[u].rev ^= 1;
+    pushDown(u);
+}
+\end{lstlisting}
+\subsubsection{split}
+若要提取$u-v$的路径,$makeRoot(u),access(v),splay(v)$后，节点$v$的子树
+就保存了$u-v$的路径信息。
+\subsubsection{find}\label{LCTFind}
+首先$access(u),splay(u)$让$u$成为LCT根所在的splay的根。
+然后查询splay的最小节点就是根节点（注意推送翻转标记）。
+\subsubsection{link}
+$makeRoot(u)$后使$T[u].p=v$即可，注意原来的连通性检测。
+\subsubsection{cut}
+
+\begin{itemize}
+    \item 若保证$u,v$连接，则split后令$T[u].p=T[v].c[0]=0$即可
+    （节点$v$深度最大，因此只需和左子树断开），注意要更新节点$v$。
+    \item 若不保证$u,v$连接，则在$makeRoot(u)$后检查以下条件：
+    \begin{itemize}
+        \item 节点$v$所在LCT的根是$u$；
+        \item 节点$u$的父亲是$v$(执行完$find(v)$后节点$v$已经是
+        节点$u$的splay的根)；
+        \item 节点$v$的左儿子是$u$；
+        \item 节点$u$没有右儿子（若有则说明$u-v$中有其他节点）。
+    \end{itemize}
+    由于$find(v)$隐含了$access(v),splay(v)$,所以直接
+    $T[u].p=T[v].c[0]=0$即可。
+\end{itemize}
+
+以上内容参考了Saramanda的博客\footnote{
+    LCT（Link-Cut Tree）详解（蒟蒻自留地）
+    \url{https://blog.csdn.net/saramanda/article/details/55253627}}。
+
 \subsection{技巧}
-\subsubsection{DSU代替连通性检测}
+\subsubsection{DSU优化连通性检测}
+如果可以保证同一连通块内的点不会再次分离，可以使用本章~\ref{DSU}节所述的
+并查集代替~\ref{LCTFind}中昂贵的$find$。
+\subsubsection{使用access进行从某节点到根的路径的染色}
+参见[SDOI2017]树点涂色\footnote{【P3703】[SDOI2017]树点涂色 - 洛谷
+    \url{https://www.luogu.org/problemnew/show/P3703}}。

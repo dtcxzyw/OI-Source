@@ -17,13 +17,13 @@ FHQTreap的使用基于两个基本操作：split与merge。
 split函数的作用是将一棵树按照权值或位置划分成两棵子树。
 
 \begin{itemize}
-\item
-按位置划分：$split(rt,k,x,y)$表示将以$rt$为根的树分为以$x$为根的
-左子树和以$y$为根的右子树，其中左子树内的节点是原树的前$k$个,需要维护
-每个节点的子树大小$siz$。
+	\item
+	      按位置划分：$split(rt,k,x,y)$表示将以$rt$为根的树分为以$x$为根的
+	      左子树和以$y$为根的右子树，其中左子树内的节点是原树的前$k$个,需要维护
+	      每个节点的子树大小$siz$。
 
-代码如下：
-\begin{lstlisting}[title=splitKth]
+	      代码如下：
+	      \begin{lstlisting}[title=splitKth]
     void split(int u,int k,int& x,int& y) {
         if(u) {
             push(u);
@@ -42,12 +42,12 @@ split函数的作用是将一棵树按照权值或位置划分成两棵子树。
         else x=y=0;
     }
 \end{lstlisting}
-\item
-按权值划分：$split(rt,k,x,y)$表示将以$rt$为根的树分为以$x$为根的
-左子树和以$y$为根的右子树，其中左子树内的节点值均小于等于$k$。
+	\item
+	      按权值划分：$split(rt,k,x,y)$表示将以$rt$为根的树分为以$x$为根的
+	      左子树和以$y$为根的右子树，其中左子树内的节点值均小于等于$k$。
 
-代码如下：
-\begin{lstlisting}[title=splitKey]
+	      代码如下：
+	      \begin{lstlisting}[title=splitKey]
     void split(int u,int k,int& x,int& y) {
         if(u) {
             push(u);
@@ -107,13 +107,13 @@ merge将两棵树按照左右顺序（中序遍历）合并。
 C++11中<random>的$std::linear\_congruential\_engine$给出
 了两组预置的参数：
 \begin{itemize}
-    \item $minstd\_rand0:(a=16807, c=0, m=2147483647)$
+	\item $minstd\_rand0:(a=16807, c=0, m=2147483647)$
 
-    Discovered in 1969 by Lewis, Goodman and Miller, adopted as
-    "Minimal standard" in 1988 by Park and Miller.
-    \item $minstd\_rand:(a=48271, c=0, m=2147483647)$
+	      Discovered in 1969 by Lewis, Goodman and Miller, adopted as
+	      "Minimal standard" in 1988 by Park and Miller.
+	\item $minstd\_rand:(a=48271, c=0, m=2147483647)$
 
-    Newer "Minimum standard", recommended by Park, Miller, and Stockmeyer in 1993.
+	      Newer "Minimum standard", recommended by Park, Miller, and Stockmeyer in 1993.
 
 \end{itemize}
 
@@ -129,31 +129,31 @@ int getRand() {
 现在来试试说明它的优越性：
 
 \begin{itemize}
-    \item 根据节~\ref{PrimitiveRoot}所述，如果$g$是模数$P$的一个原根，
-    则$g$的幂模$P$可以取到$[1,P-1]$内的每一个数，且循环周期长度为$P-1$。
-    由于2147483647是梅森素数，所以它一定存在原根。
-    下列程序可证明48271是2147483647的一个原根：
-    \lstinputlisting[title=RandomTestA.cpp]{DataStructure/RandomTestA.cpp}
-    \item 48271可以较早地使int溢出，从而避免出现$a$过小而导致``锯齿波''。
-    下列程序可证明48271可以满足OI考试的需要：
-    程序输出minc=7884 maxc=8515 except=8192 s2=88.492，可见数据还是蛮均匀的。
+	\item 根据节~\ref{PrimitiveRoot}所述，如果$g$是模数$P$的一个原根，
+	      则$g$的幂模$P$可以取到$[1,P-1]$内的每一个数，且循环周期长度为$P-1$。
+	      由于2147483647是梅森素数，所以它一定存在原根。
+	      下列程序可证明48271是2147483647的一个原根：
+	      \lstinputlisting[title=RandomTestA.cpp]{DataStructure/RandomTestA.cpp}
+	\item 48271可以较早地使int溢出，从而避免出现$a$过小而导致``锯齿波''。
+	      下列程序可证明48271可以满足OI考试的需要：
+	      程序输出minc=7884 maxc=8515 except=8192 s2=88.492，可见数据还是蛮均匀的。
 \end{itemize}
 
 参见cppreference\footnote{
-    \url{https://en.cppreference.com/w/cpp/numeric/random/
-    linear\_congruential\_engine}}与
-    Wikipedia-EN\footnote{
-    \url{https://en.wikipedia.org/wiki/Linear\_congruential\_generator}}。
+	\url{https://en.cppreference.com/w/cpp/numeric/random/
+		linear\_congruential\_engine}}与
+Wikipedia-EN\footnote{
+	\url{https://en.wikipedia.org/wiki/Linear\_congruential\_generator}}。
 
 如果需要更均匀的随机数，可以使用如下方案（质量从低到高）：
 \begin{enumerate}
-    \item 使用比LCG更好的梅森旋转算法
-    \footnote{std::mersenne\_twister\_engine - cppreference.com
-    \url{https://en.cppreference.com/w/cpp/numeric/random/
-    mersenne\_twister\_engine}}；
-    \item Intel指令集内置RDRAND；
-    \item 使用由一些机构提供的真随机数生成器SDK，如\url{https://www.random.org/}；
-    \item 在需要蒙特卡洛采样的场合使用低差异序列如Halton，Sobol等。
+	\item 使用比LCG更好的梅森旋转算法
+	      \footnote{std::mersenne\_twister\_engine - cppreference.com
+		      \url{https://en.cppreference.com/w/cpp/numeric/random/
+			      mersenne\_twister\_engine}}；
+	\item Intel指令集内置RDRAND；
+	\item 使用由一些机构提供的真随机数生成器SDK，如\url{https://www.random.org/}；
+	\item 在需要蒙特卡洛采样的场合使用低差异序列如Halton，Sobol等。
 \end{enumerate}
 
 \subsection{splay}\label{splay}
@@ -167,9 +167,19 @@ splay主要由$rotate$和$splay$函数组成：
 
 $rotate(u)$表示将节点$u$旋转到$u$的父亲上。
 
+主要思想是提取出父亲所在的子树，然后把节点$u$提为子树的根，最后把一个原来的儿子
+挂到原来的父亲下维护二叉树的形状。
 
+具体步骤:
+\begin{enumerate}
+	\item 把自己挂到父亲的位置上;
+	\item 根据相对位置把父亲挂到自己下方；
+	\item 把父亲占用位置所在的节点（原来的儿子）挂到原来自己在父亲儿子的位置上；
+	\item 依次更新原父亲与自己。
+\end{enumerate}
 
-在实践中可使用$connect(u,p,c)$把节点$u$挂到节点$p$的位置$c$下,$getPos(u)$获得
+$rotate$前需要提前将标记下传（在$splay$中$push$）。在实践中可使用\\
+$connect(u,p,c)$把节点$u$挂到节点$p$的位置$c$下,$getPos(u)$获得
 节点$u$相对于父亲的位置。
 
 代码如下：
@@ -188,9 +198,7 @@ void rotate(int u) {
     int kp = getPos(p);
     int pp = T[p].p;
     int t = T[u].c[ku ^ 1];
-    T[u].p = pp;
-    if (!isRoot(p))
-        connect(u, pp, kp);
+    connect(u, pp, kp);
     connect(t, p, ku);
     connect(p, u, ku ^ 1);
     update(p);
@@ -200,16 +208,66 @@ void rotate(int u) {
 
 \subsubsection{splay}
 
+$splay(u,p)$表示将节点$u$旋转到$p$的儿子的位置上。
+$splay$操作有单旋与双旋之分，其中单旋会被卡（原因见下面所述）。
+
+\paragraph{单旋}
+
+单旋的思路很简单,不断地把自己旋转到父亲的位置上即可。
+
+但是当原树是一条链时，单旋$splay$后仍然是一条链，树的高度并没有得到优化，
+因此可以构造数据使得每次$splay$都达到最坏时间复杂度$O(n)$。
+
+\paragraph{双旋}
+
+双旋的区别在于当自己，父亲，爷爷在同一条直线上时，会通过多旋转一次来尽可能
+地减小树高，对链这种情况表现非常好。
+
+代码如下：
+
+\begin{lstlisting}[title=splay]
+void splay(int u,int p) {
+    //push p->u
+    while(T[u].p!=p) {
+        int pu=T[u].p;
+        if(T[pu].p!=p)rotate(getPos(u)==getPos(pu)?pu:u);
+        rotate(u);
+    }
+}
+\end{lstlisting}
+
 \subsubsection{具体应用}
 
-对于二叉搜索树的操作，同子节~\ref{FHQTreap}相同，直接用二叉搜索树的
-操作即可。
+\paragraph{树根}
 
-对于序列操作，可使用splay来提取区间：
+显式维护树根是一件麻烦事，由于$getPos(root)$总是返回0，所以$T[0].c[0]$
+可以用来获得$root$。
+
+\paragraph{二叉搜索树}
+
+对于二叉搜索树的操作，同子节~\ref{FHQTreap}相同，直接用二叉搜索树的
+操作即可，为了优化树高，每次调用完后对最近访问节点$u$调用$splay(u,0)$
+（血泪史：[HNOI2002]营业额统计在$insert$重复时也要$splay$）。
+
+\paragraph{序列操作}
+
+对于序列操作，可使用splay来提取区间。如果需要操作区间$[l,r]$,则：
 
 \begin{enumerate}
-    \item
+	\item 将节点$l-1 splay$到根节点；
+	\item 将节点$r+1 splay$到$l-1$的左儿子上；
+	\item 此时$r+1$的左子树就是目标区间。
 \end{enumerate}
 
+为了操作区间$[1,n]$,可以在头尾分别添加一个哨兵。
+
+\paragraph{splay合并}
+
+$join(T1,T2)$表示将树$T1$与$T2$合并为一棵树，其中$T1$的所有元素权值
+均小于$T2$的任意元素权值。
+
+做法很简单：把$T1$的最大节点$splay$到根，此时该节点没有右子树，然后把$T2$
+的根挂到该节点右儿子的位置上。
+
 上述内容参考了自为风月马前卒的博客\footnote{splay详解（一） - 自为风月马前卒
-\url{http://www.cnblogs.com/zwfymqz/p/7896036.html}}。
+	\url{http://www.cnblogs.com/zwfymqz/p/7896036.html}}。
