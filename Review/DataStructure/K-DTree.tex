@@ -1,0 +1,76 @@
+\section{K-D Tree}
+K-D Tree是一棵二叉树，每一层按照某个轴将本空间内的所有点分为较为均匀的两部分，
+该节点保存划分的中点。查询时依靠不断剪枝来提高查询速度。
+\subsection{构树}
+具体步骤如下：
+\begin{enumerate}
+	\item 对于当前子空间，选取一个轴来划分（使用$std::nth\_element$）出中点;
+	\item 将中点存储在当前节点上；
+	\item 递归建左右子树;
+	\item 更新子树信息。
+\end{enumerate}
+$std::nth\_element$的复杂度为$O(n)$，因此构树的复杂度为$O(nlgn)$。
+\subsection{插入}
+\subsubsection{离线标记}
+构树时将所有点加入，记录每个点的id，然后加入点时打标记一路更新即可，
+不过这样做影响了查询的复杂度。
+\subsubsection{替罪羊树}
+与二叉搜索树的插入相同，注意需要确定每一个节点的划分轴。当二叉树不平衡时会影响
+查询复杂度，采用替罪羊树的策略，维护每棵子树的size，如果
+$max(siz_l,siz_r)>=siz_u \cdot fac$则暴力重构子树（注意每次插入只要找到最高
+的不平衡子树重构即可），一般$fac$取0.75。
+\subsection{删除}
+删除节点后的处理方法与插入相同。
+注意被删除的节点可以gc。
+
+\begin{lstlisting}[title=gc]
+    std::vector<int> pool;
+    int newNode() {
+        static int cnt=0;
+        int id;
+        if(pool.size()) {
+            id=pool.back();
+            pool.pop_hack();
+        }
+        else id=++cnt;
+        return id;
+    }
+    void freeNode(int u) {
+        pool.push_back(u);
+    }
+\end{lstlisting}
+
+\subsection{查询}
+\begin{enumerate}
+	\item 如果整棵子树均不满足要求，就直接返回；
+	\item 如果整棵子树均满足要求且可以不需要继续递归，就记录答案（或者打标记）后返回；
+	\item 计算当前节点；
+	\item 递归左右子树。
+\end{enumerate}
+在随机数据下，查询的时间复杂度是$O(lgn)$，在构造数据下复杂度约
+是$O(n^\frac{d-1}{d})$。
+证明待补充。
+\index{TODO!K-D Tree查询复杂度证明}
+\subsection{估值}
+下列为一些常见估值函数：
+
+由于每个方向上是的独立的，对每个方向贪心后加起来即可。
+\subsubsection{曼哈顿距离最小}
+$w=\sum_{i=1}^d{max(mind_i-p_i,0)+max(p_i-maxd_i,0)}$
+当$p_i$在区域内时估值为0，在一边时估值为到最近一边的值（另一边由于符号问题值为0）。
+\subsubsection{曼哈顿距离最大}
+$w=\sum_{i=1}^d{max(abs(mind_i-p_i),abs(maxd_i-p_i))}$
+选择距离最大的一边。
+\subsubsection{欧几里得距离最小}
+$w=\sum_{i=1}^d{max(mind_i-p_i,p_i-maxd_i,0)^2}$
+\subsubsection{欧几里得距离最大}
+$w=\sum_{i=1}^d{max((mind_i-p_i)^2,(p_i-maxd_i)^2)}$
+\subsection{技巧}
+\subsubsection{全局最优值剪枝}
+如果通过该节点维护的子树信息可以确定子树内不存在更优解，搜索该子树
+已经没有意义了。还可以搭配另一个优化：先求两棵子树的估价函数值，
+选择最优的先进入（更有可能获得最优值然后减少在另一棵子树上的计算）。
+\subsubsection{预处理降维}
+如果插入与查询离线，则可以对某一维排序，边插入边查询，降低kd-Tree查询复杂度。
+
+以上内容参考了n+e的课件\emph{K-D Tree 在信息学竞赛中的应用}\cite{kdTree}。

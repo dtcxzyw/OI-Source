@@ -74,6 +74,7 @@
 				"name": "preview",
 				"tools": [
 					"xelatex",
+					"count"
 				]
 			},
 			{
@@ -82,6 +83,7 @@
 					"xelatex",
 					"makeindex",
 					"xelatex",
+					"count",
 					"xelatex"
 				]
 			}
@@ -94,7 +96,7 @@
 					"-synctex=1",
 					"-interaction=nonstopmode",
 					"-file-line-error",
-					"-output-directory=./../latex",
+					"-output-directory=../latex",
 					"Main.tex"
 				]
 			},
@@ -104,6 +106,11 @@
 				"args": [
 					"../latex/Main.idx"
 				]
+			},
+			{
+				"name": "count",
+				"command": "../bin/charCounter.out",
+				"args": []
 			}
 		],
 		"latex-workshop.view.pdf.viewer": "tab"

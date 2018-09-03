@@ -34,10 +34,11 @@
 \usepackage{lastpage}
 \makeindex
 \pagestyle{headings}
-\newtheorem{theorem}{定理}[chapter]
-\newtheorem{lemma}{引理}[chapter]
-\newtheorem{character}{性质}[chapter]
 \begin{document}
+\newtheorem{theorem}{定理}[chapter]
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{character}{性质}
+\newtheorem{inference}[theorem]{推论}
 \title{OI知识点复习笔记}
 \author{dtcxzyw}
 \maketitle
@@ -50,7 +51,7 @@
 	\item 系统地复习知识点并挖掘一些有用的性质。
 	\item 学会使用\LaTeX{}。
 \end{itemize}
-当前共\pageref{LastPage}页。
+当前共\pageref{LastPage}页，约\input{../latex/charcnt}字。
 \tableofcontents
 \mainmatter{}
 \input{GameTheory/GameTheory}

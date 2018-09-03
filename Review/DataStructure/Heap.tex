@@ -1,4 +1,89 @@
 \section{堆}
-\subsection{二叉堆}
 \subsection{左偏树}
+\index{L!Leftist Tree}
+左偏树（Leftist Tree）也是一个二叉堆，核心操作是$merge$函数，
+它可以以$O(lgn)$合并两个左偏树。
+
+定义外节点为没有左子树或右子树的节点。对于左偏树的每一个节点，维护其到子树外节
+点的最近距离，其中外节点的$dist=0$，$null$的$dist=-1$（其实没必要太严格，
+差不多平衡就够了）。
+
+左偏树具有左偏性质：
+\begin{character}\label{LTC}
+    $dist_l \geq dist_r$
+\end{character}
+
+由此定义可得到一个引理：
+
+\begin{lemma}
+    $dist_u=min(dist_l,dist_r)+1=dist_r+1$
+\end{lemma}
+
+考虑一棵距离为$k$的左偏树的节点数至少有多少，得到以下定理：
+
+\begin{theorem}
+    一棵距离为$k$的左偏树为满二叉树时节点数最少，有$2^{k+1}-1$个节点。
+\end{theorem}
+
+由此得到推论~\ref{LTI}：
+
+\begin{inference}\label{LTI}
+    一棵节点数为$n$的左偏树，距离最多为$[lg(n+1)-1]$。
+\end{inference}
+
+先给出引理~\ref{LTL}：
+
+\begin{lemma}\label{LTL}
+    左偏树的最右链恰好有一个外节点。
+\end{lemma}
+
+证明：由于左偏树是一棵树，因此至少有一个外节点；若存在两个以上外节点，
+对于非深度最深的点，必有右子树（否则链就断了），却没有左子树（由外节点定义可知），
+与性质~\ref{LTC}矛盾。
+
+由推论~\ref{LTI}与引理~\ref{LTL}可得如下定理：
+
+\begin{theorem}\label{LTT}
+    一棵由$n$个节点组成的左偏树最右链最多有$[lg(n+1)]$个节点。
+\end{theorem}
+
+以上证明参考了阿波罗2003的博客\footnote{
+    浅谈左偏树 - 阿波罗2003
+    \url{https://www.cnblogs.com/yyf0309/p/LeftistTree.html}
+}。
+
+我原来的简单理解：对于左偏树的每一个节点，维护其子树高度。每次$merge$时往右边塞，
+若右边的深度比左边的深度更大，就把左边换过来加。以此保证树的高度尽可能小。
+
+$merge(u,v)$的操作如下：
+
+\begin{enumerate}
+    \item 如果$u$或$v$有一个为$null$则返回另一个节点；
+    \item 若$v$应该在$u$的上一层则$swap(u,v)$；
+    \item 递归将节点$v$与$u$的右子树合并；
+    \item 若$dist_l<dist_r$则$swap$左右子树；
+    \item 更新节点$u$的距离$dist_u=dist_r+1$；
+    \item 返回该树的根$u$。
+\end{enumerate}
+
+根据定理~\ref{LTT}可得$merge$的复杂度为$O(lgn)$。
+
+代码如下（以大根堆为例）：
+
+\begin{lstlisting}[title=merge]
+int merge(int u, int v) {
+    if (u && v) {
+        if (T[u].val < T[v].val)
+            std::swap(u, v);
+        T[u].r = merge(T[u].r, v);
+        if (T[T[u].l].dis < T[T[u].r].dis)
+            std::swap(T[u].l, T[u].r);
+        T[u].dis = T[T[u].r].dis + 1;
+    }
+    return u | v;
+}
+\end{lstlisting}
+
 \subsection{斜堆}
+斜堆的操作与左偏树差不多，唯一的区别就是不再维护到外节点的最近距离，
+取而代之的是在每一次$merge$时$swap$左右子树。
