@@ -11,3 +11,19 @@
 留坑待填，参见\emph{Introduction to Algorithms Third Edition}\cite{ITA3}
 中的21.3与21.4节。
 \index{TODO!并查集复杂度证明}
+\subsection{并查集的分裂}
+如果要将集合中的某个点从原集合剥离，且不需要可持久化（即不查询历史信息），
+则可以为每个点分配一个$id$，指向当前所指向的点，分裂时修改$id$指向新的点
+即可，同时消除对原集合的影响。
+
+\subsubsection{例题}
+
+UVA11987 Almost Union-Find \footnote{
+    【UVA11987】Almost Union-Find - 洛谷
+    \url{https://www.luogu.org/problemnew/show/UVA11987}}
+
+步骤同上所述，看了算法导论后才知道路径压缩和按秩合并同时使用才能达到
+$O(m\alpha(n))$的复杂度。
+
+代码如下：
+\lstinputlisting[title=UVA11987]{DataStructure/UVA11987.cpp}
