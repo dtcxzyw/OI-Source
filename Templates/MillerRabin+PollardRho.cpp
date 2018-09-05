@@ -75,17 +75,18 @@ Int64 iabs(Int64 x) {
     return x >= 0 ? x : -x;
 }
 Int64 gcd(Int64 a, Int64 b) {
-    if((a & b) == 0)
-        return a | b;
-    int off = countTZ(a | b);
-    a >>= countTZ(a);
-    do {
-        b >>= countTZ(b);
-        if(a > b)
-            std::swap(a, b);
-        b -= a;
-    } while(b);
-    return a << off;
+    if(a && b) {
+        int off = countTZ(a | b);
+        a >>= countTZ(a);
+        do {
+            b >>= countTZ(b);
+            if(a > b)
+                std::swap(a, b);
+            b -= a;
+        } while(b);
+        return a << off;
+    }
+    return a | b;
 }
 void getFacImpl(Int64 x, Int64& res) {
     if(x <= res)

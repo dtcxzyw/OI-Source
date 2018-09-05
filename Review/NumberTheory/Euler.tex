@@ -1,0 +1,88 @@
+\section{欧拉定理}
+\subsection{费马小定理}
+\index{F!Fermat's Little Theorem}
+\begin{theorem}[Fermat's Little Theorem]\label{FLT}
+	~\\
+	$\forall p~is~a~prime~number,a\in \mathbb{Z},a^p \equiv a \pmod{p}$
+\end{theorem}
+
+该定理是定理~\ref{ET}的特殊化，不证。
+
+利用定理~\ref{FLT}可知：
+
+\begin{inference}
+	$a^{-1} \equiv a^{p-2} \pmod{p}$
+\end{inference}
+
+使用快速幂即可在$O(lgp)$的复杂度下求某个数的逆元。
+
+\subsection{线性推逆元}
+
+如果需要获得$a\in [1,p)$内模$p$的逆元，复杂度为$O(plgp)$的逐个快速幂
+并不是最优方法。
+
+首先有$1^{-1}\equiv 1 \pmod{p}$。
+
+令$p=qa+r$，其中$q=[\frac{p}{a}],r=p \bmod a$。
+
+再把$p \equiv 0 \pmod{q}$中的$p$用$qa+r$代替，两边同时乘上$(ar)^{-1}$，
+移项得$a^{-1}\equiv -qr^{-1} \pmod{q}$，即
+$a^{-1}\equiv -[\frac{p}{a}](p \bmod a) \pmod{p}$。
+
+代码如下：
+\begin{lstlisting}[title=inv]
+inv[1]=1;
+for(int i=2;i<=n;++i)
+    inv[i]=asInt64(mod-mod/i)*inv[mod%i]%mod;
+\end{lstlisting}
+
+以上内容参考了Miskcoo的博客\footnote{[数论]线性求所有逆元的方法 – Miskcoo's Space
+	\url{http://blog.miskcoo.com/2014/09/linear-find-all-invert}}
+
+\subsection{欧拉定理}
+\index{E!Euler's Theorem}
+\begin{theorem}[Euler's Theorem]\label{ET}
+	~\\
+	对于任意互质正整数对$(a,n)$，有$a^\phi(n) \equiv 1 \pmod{n}$
+\end{theorem}
+证明：
+
+\index{L!Lagrange's Theorem}
+\begin{theorem}[Lagrange's Theorem]\label{LT}
+	若$(S,\oplus)$是一个有限群，$(S',\oplus)$是$(S,\oplus)$的子群，则
+	$|S'|$是$|S|$的约数。
+\end{theorem}
+
+令$S=\{x|x\in Z^+ \land x~is~coprime~to~n\}$，则有限群$(S,\cdot_n)$的
+阶为$\phi(n)$。
+
+对于任意一个与$n$互质的正整数$a$，$a$的幂模$n$的值$a,a^2,\ldots,a^k$
+构成了一个子群，其中$a^k\equiv 1 \pmod{n}$。
+
+根据定理~\ref{LT}，有$k|\phi(n)$，令$M=\phi(n)/k$，有
+$a^\phi(n)=a^{kM}=(a^k)^M=1^M\equiv 1 \pmod{n}$。
+
+上述证明源自Wikipedia-EN\footnote{Euler's theorem - Wikipedia
+	\url{https://en.wikipedia.org/wiki/Euler's_theorem}}。
+\subsection{扩展欧拉定理}
+\begin{theorem}
+	$a^x\equiv a^{x \bmod \phi(m)+\phi(m)} \pmod{m}$
+\end{theorem}
+
+\begin{lemma}
+	\begin{displaymath}
+		\left\{
+		\begin{array}{l}
+			x\equiv y \pmod{m_1} \\
+			x\equiv y \pmod{m_2}
+		\end{array}
+		\right.
+		\Rightarrow x\equiv y \pmod{lcm(m_1,m_2)}
+	\end{displaymath}
+\end{lemma}
+
+证明：
+
+
+以上证明源自后缀自动机·张的文章\footnote{微小的欧拉定理EXT证明
+	\url{https://zhuanlan.zhihu.com/p/24902174}}。

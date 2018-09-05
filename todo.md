@@ -22,7 +22,7 @@
 - [x] 可持久化数据结构
 ## 数学
 ### 数论
-- [ ] gcd/exgcd
+- [x] gcd/exgcd
 - [ ] 费马（线性推逆元）/（EX）欧拉定理
 - [ ] Miller Rabin
 - [ ] Pollard Rho
@@ -33,6 +33,7 @@
 - [ ] 杜教筛
 - [ ] BSGS/exBSGS
 - [ ] 原根
+- [ ] 二次剩余
 ### 集合论/群论
 - [ ] 置换
 - [ ] Polya定理

@@ -1,0 +1,140 @@
+\section{辗转相除法GCD}
+\subsection{裴蜀定理}
+\index{B!Bézout's Theorem}
+\begin{theorem}[Bézout's Theorem]\label{BT}
+    对于任意$a,b\in \mathbb{Z}$，关于$x,y$的线性不定方程（裴蜀方程）
+    $ax+by=c$有无穷多整数解$(x,y)$当且仅当$(a,b)|c$。特别地，
+    一定存在$(x,y)$使得$ax+by=(a,b)$成立。
+\end{theorem}
+
+由此可得推论：
+
+\begin{inference}
+    $a,b$互质的充要条件是存在整数$(x,y)$使得$ax+by=1$。
+\end{inference}
+
+接下来证明一定存在$(x,y)$使得$ax+by=(a,b)$成立：
+
+设$s$是$a$和$b$线性组合集中的最小正元素，对于某个整数组$(x,y)$有$ax+by=s$,
+令$q=[a/s],r=a mod s=a-q(ax+by)=a(1-qx)+b(-qy)$，所以$r$也是一个线性组合。
+因为$s$是线性组合集中的最小正元素，且$0\leq r \le s$，所以$r=0$，可得$s|a$。
+同理$s|b$，因此$s$是$a,b$的公约数，可得$(a,b) \geq s$。因为$(a,b)|ax+by$
+且$s>0$，所以$(a,b) \leq s$。结合$(a,b) \geq s$与$(a,b) \leq s$可得
+$s=(a,b)$。
+
+至于无穷多整数解嘛。。。拿最小公倍数调一调初始解$(x,y)$即可。
+
+证明参考了霜刃未曾试的博客\footnote{关于裴蜀定理的一些证明\\
+\url{https://blog.csdn.net/discreeter/article/details/69833579}}与
+算法导论\cite{ITA3}第31.1节定理31.2的证明。
+\subsection{exgcd}
+由定理~\ref{BT}可知一定存在整数解$(x,y)$满足$ax+by=(a,b)$，如何构造
+出一组解呢？
+
+$exgcd$（扩展欧几里得算法）可求出一组特殊的整数解。
+
+先上代码：
+
+\begin{lstlisting}[title=exgcd]
+    void exgcd(int a,int b,int& x,int& y,int& d) {
+        if(b) {
+            exgcd(b,a%b,y,x,d)；
+            y-=a/b*x;
+        }
+        else x=1,y=0,d=a;
+    }
+\end{lstlisting}
+
+该算法由朴素$gcd$修改而来，因此同样讨论两种情况：
+
+\begin{itemize}
+    \item $b=0$时，$gcd$值为$a$，因此有$a=1*a+0*b$。
+    \item $b\neq 0$时，考虑递归计算返回的一组解$(y',x')$满足
+    $by'+(a-[\frac{a}{b}]b)x'=d$，可变形为$ax'+b(y'-[\frac{a}{b}]x')=d$，
+    因此本次递归返回$(x',y'-[\frac{a}{b}]x')$。
+\end{itemize}
+
+\subsection{位运算gcd}
+
+本节内容源自算法导论\cite{ITA3}思考题33-1。
+
+\subsubsection{原理}
+
+首先为了避免除法，将辗转相除法改为更相减损术，可以利用
+$gcd$函数的以下性质：
+
+\begin{itemize}
+    \item \begin{character}\label{GCDC1}
+        若$a,b$均为偶数，则$gcd(a,b)=2*gcd(a/2,b/2)$。
+    \end{character}
+    \item \begin{character}\label{GCDC2}
+        若$a$是奇数，$b$是偶数，则$gcd(a,b)=gcd(a,b/2)$。
+    \end{character}
+    \item \begin{character}\label{GCDC3}
+        若$a,b$均为奇数，则$gcd(a,b)=gcd((a-b)/2,b)$。
+    \end{character}
+\end{itemize}
+
+特别地，当$gcd(x,y)$的参数中存在0,则返回$x|y$。
+
+算法步骤如下：
+\begin{enumerate}
+    \item 特判$x,y$中存在0的情况；
+    \item 根据性质~\ref{GCDC1}，先消去$a,b$的2的幂的公因子，记录幂次$k$；
+    \item 使$a$变为奇数以便于利用性质~\ref{GCDC2}，同时去除2的幂的
+    公因子避免重复计算；
+    \item 利用性质~\ref{GCDC2}使$b$变为奇数；
+    \item 保持$a<b$以便利用性质~\ref{GCDC3}；
+    \item 利用性质~\ref{GCDC3}使$b'=b-a$；
+    \item 若此时$b$为0，则返回$a*2^k$,否则重复第4步。
+\end{enumerate}
+
+实际上就是利用性质~\ref{GCDC1}与~\ref{GCDC2}对更相减损术进行了优化。
+
+\subsubsection{位扫描优化}
+
+如果某个数末尾有多个0，则可以直接使用右移k位代替不断右移1位。
+下面是统计末尾0的个数k的方法：
+
+\begin{itemize}
+    \item GCC自带了对位扫描指令的封装，即$\_\_builtin\_$系列函数，
+    直接使用$\_\_builtin\_ctz$函数即可。
+    \item Sean Eron Anderson 的\emph{Bit Twiddling Hacks}
+    \footnote{\url{http://graphics.stanford.edu/~seander/bithacks.html}}
+    中Counting consecutive trailing zero bits (or finding bit indices)
+    一节介绍了计算末尾0个数的多种方法，这里只给出multiply and lookup法：
+    \begin{lstlisting}[title=countTZ]
+    int countTZ(unsigned int x) {
+        static const int LUT[32] = {
+            0, 1, 28, 2, 29, 14, 24, 3,
+            30, 22, 20, 15, 25, 17, 4, 8,
+            31, 27, 13, 23, 21, 19, 16, 7,
+            26, 12, 18, 6, 11, 5, 10, 9
+        };
+        return LUT[(((v & -v) * 0x077CB531U)) >> 27];
+    }
+    \end{lstlisting}
+    这里的神奇常数{\bfseries 0x077CB531U}与De Bruijn Sequence
+    \index{D!De Bruijn Sequence}有关，在此不详细介绍。
+    LUT可预处理得出（但是不太好记住0x077CB531U）。
+\end{itemize}
+
+\subsubsection{实现}
+
+设$conutTZ(x)$返回$x$末尾0的个数，代码如下：
+
+\begin{lstlisting}[title=gcdX]
+int gcdX(int a,int b) {
+    if(a && b) {
+        int off=countTZ(a|b);
+        a>>=countTZ(a);
+        do {
+            b>>=countTZ(b);
+            if(a>b)std::swap(a,b);
+            b-=a;
+        }while(b);
+        return a<<off;
+    }
+    return a|b;
+}
+\end{lstlisting}
