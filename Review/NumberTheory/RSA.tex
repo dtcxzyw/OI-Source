@@ -1,1 +1,61 @@
 \section{RSA算法}
+\subsection{原理}
+\begin{theorem}[素数定理]\label{PT}
+    $\lim_{n\rightarrow\infty}\frac{\pi(n)}{n/\ln n}=1$
+\end{theorem}
+RSA的安全性基于以下事实：寻找大素数很容易（根据定理~\ref{PT},素数密度还是挺大的），
+但把一个数分解为两个质数之积却很难。
+
+RSA算法的基本步骤如下：
+\begin{enumerate}
+    \item 随机选取两个大素数$p,q$,使得$p\neq q$，令$n=pq$；
+    \item 选取一个与$\phi(n)=(p-1)(q-1)$复制的小奇数$e$,
+    计算出$e$的乘法逆元$d$；
+    \item 将$P(e,n)$公开，作为{\bfseries RSA公钥}；\\
+          将$S(d,n)$保密，作为{\bfseries RSA私钥}。
+\end{enumerate}
+
+对于消息$M$，公钥持有者可进行运算：$P(M)=M^e \bmod n$；
+私钥持有者可进行运算：$S(M)=M^d mod n$。
+对于用公/私钥加密$M$得到的密文$C$，只有使用私/公钥才能得到$M$。
+由于$\bmod n$的缘故，消息$M$的域为$Z_n$。
+
+下面证明RSA算法的正确性，即证明：
+\begin{displaymath}
+    P(S(M))=S(P(M))=M^{ed}\equiv M \pmod{n}
+\end{displaymath}
+
+因为$e,d$是模$\phi(n)$意义下的乘法逆元，所以有$ed=1+k(p-1)(q-1)$。
+
+\begin{itemize}
+    \item 若$M\not\equiv 0 \pmod{p}$,则有
+    \begin{eqnarray*}
+        M^{ed}&\equiv& M^{1+k(p-1)(q-1)} \pmod{p}\\
+        &\equiv& M\cdot (M^{p-1})^{k(q-1)} \pmod{p}\\
+        &\equiv& M\cdot 1^{k(q-1)} \pmod{p}\\
+        &\equiv& M \pmod{p}
+    \end{eqnarray*}
+    \item 若$M\equiv 0 \pmod{p}$，上述等式仍成立。
+\end{itemize}
+
+同样地，对于$q$有$M^{ed}\equiv M \pmod{q}$。根据引理~\ref{EEL1}，有
+$M^{ed}\equiv M \pmod{n}$，证毕。
+
+\subsection{应用}
+\subsubsection{消息加密}
+发送方使用接收方的公钥$P$把消息$M$加密得到密文$C$，将密文$C$发送给
+接收方。接收方使用自己的私钥$P$解密得到消息$M$。
+\paragraph{快速无公钥加密系统}
+若消息过长，则仅用$P$加密对称加密算法的随机密钥$K$，同时用密钥$K$加密
+$M$得到密文$C$，把$(P(K),C)$发送给接收方。接收方使用$P$解密得到$K$，
+再用$K$对$C$解密即可。
+\subsubsection{数字签名}
+发送方使用自己的私钥$S$把消息$M$签署得到签名$C$，将消息$M$与签名$C$
+发送给接收方。接收方使用发送方的公钥$P$解密得到消息$M$，验证消息是否正确。
+\paragraph{快速数字签名}
+同理把对称加密算法的密钥改为快速散列函数的值即可。
+\paragraph{证书链}
+以一个可信根为起点，大家都知道这个根的公钥。下一级可以将自己的公钥和被上一级
+签署后的公钥作为签名证书，由此验证证书链上每一级的正确性，从而证明链尾端消息的
+正确性。
+以上内容参考了算法导论\cite{ITA3}第31.7节。

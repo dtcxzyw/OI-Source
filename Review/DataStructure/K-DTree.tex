@@ -9,7 +9,7 @@ K-D Tree是一棵二叉树，每一层按照某个轴将本空间内的所有点
 	\item 递归建左右子树;
 	\item 更新子树信息。
 \end{enumerate}
-$std::nth\_element$的复杂度为$O(n)$，因此构树的复杂度为$O(nlgn)$。
+$std::nth\_element$的复杂度为$O(n)$，因此构树的复杂度为$O(n\lg n)$。
 \subsection{插入}
 \subsubsection{离线标记}
 构树时将所有点加入，记录每个点的id，然后加入点时打标记一路更新即可，
@@ -47,7 +47,7 @@ $max(siz_l,siz_r)>=siz_u \cdot fac$则暴力重构子树（注意每次插入只
 	\item 计算当前节点；
 	\item 递归左右子树。
 \end{enumerate}
-在随机数据下，查询的时间复杂度是$O(lgn)$，在构造数据下复杂度约
+在随机数据下，查询的时间复杂度是$O(\lg n)$，在构造数据下复杂度约
 是$O(n^\frac{d-1}{d})$。
 证明待补充。
 \index{TODO!K-D Tree查询复杂度证明}

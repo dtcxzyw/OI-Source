@@ -23,10 +23,10 @@
 ## 数学
 ### 数论
 - [x] gcd/exgcd
-- [ ] 费马（线性推逆元）/（EX）欧拉定理
-- [ ] Miller Rabin
+- [x] 费马（线性推逆元）/（EX）欧拉定理
+- [x] Miller Rabin
 - [ ] Pollard Rho
-- [ ] RSA
+- [x] RSA
 - [ ] CRT/exCRT
 - [ ] 莫比乌斯反演
 - [ ] 线性筛求积性函数值

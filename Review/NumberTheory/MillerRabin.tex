@@ -1,1 +1,63 @@
-\section{Miller Rabin素性测试}
+\section{Miller Rabin随机性素性测试}
+\subsection{朴素算法}
+根据~\ref{FLTS}中所述的费马定理，若要测试$p$是否为素数，
+选取基数$a\in [2,p)$，检查$a^(p-1)\equiv 1 \pmod{p}$是否对
+所有的$a$均成立即可。
+\subsection{Miller-Rabin}
+考虑每次随机选取多个$a$，当有$k$个$a$满足时，出错的概率最多为$2^{-k}$，详见
+算法导论\cite{ITA3}第31.8节定理31.39。
+Miller-Rabin使用了上述思想，并且使用$witness$测试来代替朴素的检查算法以避免把
+\emph{Carmichael}数当做素数。
+
+$witness(x,base)$返回$true$当$base$可以证明$x$是合数。
+\begin{lstlisting}[title=witness]
+bool witness(int x, int base) {
+    int end = x - 1;
+    int c = countTZ(end);
+    int t = powm(base, end >> c, x);
+    while(c--) {
+        int ct = mulm(t, t, x);
+        if(t != 1 && t != x - 1 && ct == 1)
+            return true;//case 1
+        t = ct;
+    }
+    return t != 1;//case 2
+}
+\end{lstlisting}
+接下来证明正确性：
+\begin{itemize}
+	\item 如果从case~1处返回$true$，则说明找到了模$x$意义
+            下$1$的一个非平凡平方根。
+
+          \begin{theorem}\label{WITNESST}
+              如果p是一个奇素数且$e\geq 1$，则方程
+
+              \begin{equation}\label{sqrm}
+                   x^2 \equiv 1 \pmod{p^e}
+              \end{equation}
+              只有两个解$x=\pm 1$。
+	      \end{theorem}
+
+          证明：方程~\ref{sqrm}等价于$p^e|(x-1)(x+1)$。因为$p \ge 2$,所以
+          $p|(x-1)$与$p|(x+1)$仅有一个成立（否则$p|((x+1)-(x-1))=2$），
+          两个解为$x=\pm 1$。
+
+	      \begin{inference}
+		      如果模$n$意义下存在$1$的非平凡平方根，则$n$为合数。
+	      \end{inference}
+
+	      证明：根据定理~\ref{WITNESST}的逆否命题，$n$不可能为奇素数的幂，且对于
+	      $n=1,2$均不存在非平方平方根，因此$n$必为合数。
+
+	      根据该推论可得case~1有证据证明$x$为合数。
+	\item 如果从case~2处返回$true$，则说明$x$不满足费马定理。
+\end{itemize}
+以上内容参考了算法导论\cite{ITA3}第31.8节。
+\subsection{常规实现}
+如果数据范围在4759123141内，相当于$uint32_t$范围内，只用2,7,61为基数即可；
+如果数据范围在$10^{16}$内，使用2,3,7,61,24251为基数，唯一的强伪素数为
+46856248255981。
+
+以上内容参考了Matrix67的博客\footnote{
+	数论部分第一节：素数与素性测试 | Matrix67: The Aha Moments
+	\url{http://www.matrix67.com/blog/archives/234}}。
