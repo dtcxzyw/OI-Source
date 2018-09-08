@@ -1,1 +1,50 @@
 \section{中国剩余定理CRT}
+\subsection{CRT}
+\index{C!Chinese Remainder Theorem}
+\begin{theorem}[Chinese Remainder Theorem]
+    对于模线性方程组：
+    \begin{displaymath}
+        \left\{\begin{array}{l}
+            x \equiv a_1 \pmod{n_1}\\
+            x \equiv a_2 \pmod{n_2}\\
+            \ldots\\
+            x \equiv a_k \pmod{n_k}
+        \end{array}\right.
+    \end{displaymath}\\
+    其中$n_1,n_2,\ldots,n_k$两两互质，令$N=\prod_{i=1}^k{n_i}$，
+    该模线性方程组在$[0,N)$内有唯一解。
+\end{theorem}
+如何求解该线性方程组呢？和拉格朗日插值法的思路相同，对于每一个方程都给最终的解
+贡献一个$x_i$，满足
+\begin{displaymath}
+x_i \bmod n_j =
+\left\{\begin{array}{ll}
+0 & \textrm{if $i\neq j$}\\
+a_i & \textrm{if $i=j$}
+\end{array}\right.
+\end{displaymath}
+答案即为$\sum_{i=1}^n{x_i} \bmod N$。
+考虑$i\neq j$时$x_i$应该整除$n_j$，因此$x_i$应该有系数$M=N/n_i$；当$i=j$时，
+$x_i$应该有系数$a_i$，为了抵消$M$带来的影响，再乘上$M$模$n_i$的乘法逆元即可（
+由于$n$两两互质，$M$与$n_i$也互质，根据定理~\ref{ET}，保证其乘法逆元存在）。
+\subsection{ExCRT}
+当$n$不满足两两互质的条件时，可能会找不到其乘法逆元。
+所以我们采用另一种思路求解方程：每次选择两个方程将其合并，直到只剩一个方程为止。
+
+考虑两个方程组成的方程组：
+\begin{displaymath}
+    \left\{\begin{array}{l}
+        x \equiv a_1 \pmod{n_1}\\
+        x \equiv a_2 \pmod{n_2}\\
+    \end{array}\right.
+\end{displaymath}
+等价于
+\begin{eqnarray}
+    x=a_1+k_1n_1\label{CRTE}\\
+    x=a_2+k_2n_2
+\end{eqnarray}
+移项得$k_1n_1-k_2n_2=a_2-a_1$，可以使用
+$exgcd$求出$c_1n_1+c_2n_2=gcd(n_1,n_2)$的各项参数。根据定理~\ref{BT},
+若$gcd(n_1,n_2)\not\mid(a_2-a_1)$则该方程组无解。等比例缩放方程求出$k1$，
+带入方程~\ref{CRTE}反推出$x0$，得到新的模线性方程$x \equiv x0
+\pmod{lcm(n_1,n_2)}$。

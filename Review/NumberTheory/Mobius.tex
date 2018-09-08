@@ -1,1 +1,27 @@
 \section{莫比乌斯反演}
+\subsection{基本定义}
+\index{M!Möbius function}
+莫比乌斯函数定义为：
+\begin{displaymath}
+	\mu(d)=
+	\left\{
+	\begin{array}{ll}
+		1      & \textrm{if $d=1$}                  \\
+		(-1)^k & \textrm{if $d=\prod_{i=1}^k{p_i}$} \\
+		0      & \textrm{otherwise}
+	\end{array}
+	\right.
+\end{displaymath}
+\index{M!Möbius Inversion}
+\begin{theorem}
+    对于数论函数$g$与$f$，满足$g(n)=\sum_{d|n}f(d)$，则有
+    $f(n)=\sum_{d|n}\mu(d)g(\frac{n}{d})$。
+\end{theorem}
+\subsection{狄利克雷卷积}
+\index{D!Dirichlet Convolution}
+
+\subsection{证明}
+
+证明源自Wikipedia-EN\footnote{Möbius inversion formula - Wikipedia\\
+\url{https://en.wikipedia.org/wiki/Mobius_inversion}}。
+\subsection{常见技巧}

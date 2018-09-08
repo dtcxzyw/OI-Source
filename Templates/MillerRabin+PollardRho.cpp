@@ -1,4 +1,3 @@
-// TODO:P4718
 #include <algorithm>
 #include <cstdio>
 #include <cstdlib>
@@ -10,16 +9,12 @@ Int64 getRand32() {
 Int64 getRand64() {
     return getRand32() << 32 | getRand32();
 }
-int countTZ(Int64 x) {
-    return __builtin_ctzll(x);
-}
 Int64 add(Int64 a, Int64 b, Int64 mod) {
     a += b;
     return a < mod ? a : a - mod;
 }
-Int64 sub(Int64 a, Int64 b, Int64 mod) {
-    a -= b;
-    return a >= 0 ? a : a + mod;
+int countTZ(Int64 x) {
+    return __builtin_ctzll(x);
 }
 #ifdef ONLINE_JUDGE
 typedef __int128 Int128;
@@ -52,7 +47,7 @@ bool witness(Int64 x, Int64 base, Int64 d) {
     while(d != end) {
         d <<= 1;
         Int64 ct = mulm(t, t, x);
-        if(t != 1 && t != x - 1 && ct == 1)
+        if(t != 1 && t != end && ct == 1)
             return true;
         t = ct;
     }
@@ -88,35 +83,34 @@ Int64 gcd(Int64 a, Int64 b) {
     }
     return a | b;
 }
+Int64 pollardRho(Int64 n) {
+    Int64 c = getRand64() % (n - 1) + 1, x = 0, y = 0,
+          t = 1, q = 1;
+    for(int k = 2; t == 1; k <<= 1, y = x, q = 1) {
+        for(int i = 0; i < k && t == 1; ++i) {
+            x = add(mulm(x, x, n), c, n);
+            q = mulm(q, iabs(x - y), n);
+            if((i & 127) == 0)
+                t = gcd(q, n);
+        }
+    }
+    return t == 1 ? 0 : t;
+}
 void getFacImpl(Int64 x, Int64& res) {
     if(x <= res)
         return;
     if(primeTest(x))
         res = x;
     else {
-        static int c = 547475638;
-        while(true) {
-            Int64 a = getRand64() % (x - 2) + 2, b = a;
-            int i = 1, k = 2;
-            while(true) {
-                ++i;
-                a = add(mulm(a, a, x), c % x, x);
-                Int64 d = gcd(iabs(a - b), x);
-                if(d > 1 && d != x) {
-                    Int64 e = x / d;
-                    if(e > d)
-                        std::swap(d, e);
-                    getFacImpl(d, res);
-                    getFacImpl(e, res);
-                    return;
-                }
-                if(a == b)
-                    break;
-                if(i == k)
-                    k <<= 1, b = a;
-            }
-            --c;
-        }
+        Int64 d = 0;
+        while(!d)
+            d = pollardRho(x);
+        while(x % d == 0)
+            x /= d;
+        if(x < d)
+            std::swap(x, d);
+        getFacImpl(x, res);
+        getFacImpl(d, res);
     }
 }
 Int64 getFac(Int64 x) {
@@ -136,7 +130,6 @@ Int64 getFac(Int64 x) {
     return res;
 }
 int main() {
-    freopen("testdata.in", "r", stdin);
     int t;
     scanf("%d", &t);
     while(t--) {

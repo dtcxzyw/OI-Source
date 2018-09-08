@@ -1,1 +1,66 @@
 \section{Pollard Rho启发式因子分解}
+\index{P!Pollard Rho}
+Pollard Rho算法可以期望在$\Theta(\sqrt{p})$次算术运算内得到$n$的一个小因子$p$。
+
+\subsection{利用Birthday Trick提高效率}
+\subsubsection{朴素随机算法}
+考虑每次随机选择一个数$x\in [2,n-1]$，若$x|n$，则$x$为$n$的一个因子，最坏情况下
+（$n$为两质数之积）期望测试次数为$\frac{n-2}{2}$。
+\subsubsection{Birthday Trick}
+\index{B!Birthday Trick}
+可以把问题转换为选取$k$个数$x$，每次询问是否存在$(x_i-x_j)|n$。
+根据生日悖论，当$k$达到$\Theta(\sqrt{n})$级别时，可以期望得到一组$(i,j)$满足该条件。
+具体证明参见算法导论\cite{ITA3}第5.4.1节中采用指示器随机变量的分析。
+
+询问是否存在$(x_i-x_j)|n$仍然不够高效，可以转换为询问是否存在$gcd(x_i-x_j,n)>1$。
+那么只要选取约$\sqrt[4]{n}$个数即可。
+
+所以Pollard Rho使用如下策略：
+\begin{enumerate}
+    \item 随机在区间$[2,n-1]$中选取$k$个数；
+    \item 询问是否存在$gcd(x_i-x_j,n)>1$。
+\end{enumerate}
+
+在实践中把$k$个数存下是不可能的，可以每次把相邻的随机数当做$x_i,x_j$来测试。
+有一个简单有效的伪随机数生成函数：$f(x)=x^2+c \bmod n$。
+
+\subsection{Floyd判圈法}
+对于某些数据，可能会导致在找到因子前伪随机数生成函数却掉入死循环的情况，此时将
+永远找不到因子。遇到这种情况，应该及时退出迭代，修改随机数种子$x_0$与偏移$c$。
+
+如何判断是否掉入死循环呢？这里使用Floyd发明的方法：令$A,B$同时迭代生成随机数，
+$A_{i+1}=f(A_i),B_{i+1}=f(f(B_i))$，当$A_i=B_i$时，$B$至少比$A$多走了
+一圈，说明已经掉入了循环。
+
+代码实现：
+\begin{lstlisting}[title=Pollard Rho]
+int f(int x,int c,int n) {
+    return (asInt64(x)*x+c)%n;
+}
+int pollardRhoImpl(int n,int seed) {
+    int c=rand()%n;
+    int a=f(seed,n),b=f(a,c,n);
+    while(a!=b) {
+        int d=gcd(iabs(a-b),n);
+        if(d!=1 && d!=n)
+            return d;
+        a=f(a),b=f(f(b));
+    }
+    return 0;
+}
+int pollardRho(int x) {
+    int d=0;
+    do {
+        d=pollardRhoImpl(x,rand()%n);
+    } while(d);
+    return d;
+}
+\end{lstlisting}
+
+以上内容参考了\emph{A Quick Tutorial on Pollard's Rho Algorithm}
+\footnote{原文地址
+\url{www.cs.colorado.edu/~srirams/classes/doku.php/pollard\_rho\_tutorial}
+\\中文翻译
+\url{http://files.cnblogs.com/files/Doggu/Pollard-rho
+\%E7\%AE\%97\%E6\%B3\%95\%E8\%AF\%A6\%E8\%A7\%A3.pdf}
+}。

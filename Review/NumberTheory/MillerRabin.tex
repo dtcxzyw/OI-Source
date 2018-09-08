@@ -1,4 +1,5 @@
 \section{Miller Rabin随机性素性测试}
+\index{M!Miller Rabin}
 \subsection{朴素算法}
 根据~\ref{FLTS}中所述的费马定理，若要测试$p$是否为素数，
 选取基数$a\in [2,p)$，检查$a^(p-1)\equiv 1 \pmod{p}$是否对
@@ -53,10 +54,14 @@ bool witness(int x, int base) {
 	\item 如果从case~2处返回$true$，则说明$x$不满足费马定理。
 \end{itemize}
 以上内容参考了算法导论\cite{ITA3}第31.8节。
-\subsection{常规实现}
-如果数据范围在4759123141内，相当于$uint32_t$范围内，只用2,7,61为基数即可；
-如果数据范围在$10^{16}$内，使用2,3,7,61,24251为基数，唯一的强伪素数为
-46856248255981。
+\subsection{实现细节}
+\begin{itemize}
+    \item 在MillerRabin之前可先用前几个质数筛掉大部分的合数。
+    \item 如果数据范围在4759123141内，相当于$uint32_t$范围内，
+    只用2,7,61为基数即可。
+    \item 如果数据范围在$10^{16}$内，使用2,3,7,61,24251为基数，
+    唯一的强伪素数为46856248255981。
+\end{itemize}
 
 以上内容参考了Matrix67的博客\footnote{
 	数论部分第一节：素数与素性测试 | Matrix67: The Aha Moments

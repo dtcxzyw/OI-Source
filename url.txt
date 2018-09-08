@@ -146,3 +146,4 @@ CF优秀文章 http://codeforces.com/blog/entry/57282
 划分树 https://www.cnblogs.com/hchlqlz-oj-mrj/p/5744308.html
 位运算技巧 http://graphics.stanford.edu/~seander/bithacks.html
 miskcoo's blog http://blog.miskcoo.com
+通用筛法 https://www.cnblogs.com/zbh2047/p/8552551.html
