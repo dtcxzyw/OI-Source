@@ -1,1 +1,162 @@
 \section{积性函数与线性筛}
+\subsection{定义}
+\index{A!Arithmetic Function}
+\paragraph{数论函数（Arithmetic Function）}
+若函数$f:\mathbb{Z^+}\rightarrow\mathbb{C}$，则称函数$f$为数论函数。
+
+\index{M!Multiplicative Function}
+\paragraph{积性函数（Multiplicative Function）}
+若函数$f$为数论函数，且$f(1)=1$,对于任意互质的正整数$a,b$都有$f(ab)=f(a)f(b)$,
+则称函数$f$为积性函数。
+
+\index{C!Completely Multiplicative\\ Function}
+\paragraph{完全积性函数（Completely Multiplicative Function）}
+若函数$f$为积性函数且对于任意正整数$a,b$都有$f(ab)=f(a)f(b)$，
+则称函数$f$为完全积性函数。
+\begin{character}\label{MFC}
+	若$f$为积性函数，对于正整数$\displaystyle n=\prod_{i=1}^m{{p_i}^{c_i}}$，有
+	$\displaystyle f(n)=\prod_{i=1}^m{f({p_i}^{c_i})}$
+\end{character}
+\begin{character}
+	若$f$为完全积性函数，对于正整数$\displaystyle n=\prod_{i=1}^m{{p_i}^{c_i}}$，
+	有$\displaystyle f(n)=\prod_{i=1}^m{f(p_i)^{c_i}}$
+\end{character}
+\subsection{常见积性函数}
+\subsubsection{积性函数}
+\begin{itemize}
+	\item 除数函数$\displaystyle \sigma_k(n)=\sum_{d|n}{d^k}$，\\
+	      根据性质~\ref{MFC}可得
+	      $\displaystyle \sigma_k(n)=\prod_{i=1}^m{\sum_{j=0}^{c_i}{p_i^{jk}}}$
+	\item 约数个数函数$\tau(n)=\sigma_0(n)$
+	\item 约数和函数$\sigma(n)=\sigma_1(n)$
+	\item \index{E!Euler Totient Function}
+	      欧拉函数（Euler Totient Function）
+	      $\displaystyle \phi(n)=\sum_{i=1}^n{[(n,i)=1]}=n\prod_{p|n}{(1-\frac{1}{p})}$，
+	      且有$\displaystyle \phi(n)=\sum_{i=1}^n{[(n,i)=1]*n}=\frac{n\phi(n)+[n=1]}{2}$
+	\item \index{M!Möbius function}
+	      莫比乌斯函数定义为：
+	      \begin{displaymath}
+		      \mu(d)=
+		      \left\{
+		      \begin{array}{ll}
+			      1      & \textrm{if $d=1$}                                \\
+			      (-1)^k & \textrm{if $\displaystyle d=\prod_{i=1}^k{p_i}$} \\
+			      0      & \textrm{otherwise}
+		      \end{array}
+		      \right.
+	      \end{displaymath}
+	      简单来说就是如果存在平方因子$\mu(n)$为0，不存在则$\mu(n)=(-1)^\textrm{质因子数}$。
+\end{itemize}
+\begin{theorem}\label{MobiusT}
+	\begin{displaymath}
+		[n=1]=\sum_{d|n}{\mu(d)}
+	\end{displaymath}
+\end{theorem}
+证明：当$n=1$时，该等式成立。
+对于$n>1$的情况，将$n$分解为$\displaystyle \prod_{i=1}^m{{p_i}^{c_i}}$,令
+$\displaystyle X=\prod_{i=1}^m{p_i}$，
+仅考虑$\mu(d)\neq 0$的部分，$\mu(d)$有贡献当且仅当$d|X$，$d$可表示为一个长度为$m$
+的01向量。
+由排列组合知识可知选取奇数个1的向量方案数等于选取偶数个1的向量方案数，即正负贡献抵消。
+\begin{theorem}\label{PhiT}
+	\begin{displaymath}
+		n=\sum_{d|n}{\phi(d)}
+	\end{displaymath}
+\end{theorem}
+证明：将$n$个分数$\frac{1}{n},\frac{2}{n},\ldots,\frac{n}{n}$化为最简分数，
+$\phi(x)$即表示分母为$x$的最简分数个数。
+\subsubsection{完全积性函数}
+\begin{itemize}
+	\item \index{U!Unit Function}
+	      元函数(Unit Function)$\epsilon(n)=[n=1]$
+	\item \index{C!Constant Function}
+	      恒等函数(Constant Function)$1(n)=1$
+\end{itemize}
+以上内容参考了skywalkert的博客\footnote{浅谈一类积性函数的前缀和\\
+	\url{https://blog.csdn.net/skywalkert/article/details/50500009}}与
+Wikipedia-EN\footnote{Arithmetic function - Wikipedia
+	\url{https://en.wikipedia.org/wiki/Arithmetic\_function}}。
+\subsection{线性筛}
+主要思路是每次拿当前的数和当前已经筛出的质数构造成新的合数并将其筛去。
+
+代码如下：
+\begin{lstlisting}[title=Euler]
+int prime[size/log(size)],pcnt=0;
+bool flag[size];
+void pre(int n) {
+    for(int i=1;i<=n,++i) {
+        if(!flag[i])
+            prime[++pcnt]=i;
+        for(int j=1;j<=pcnt && prime[j]*i<=n;++j) {
+            flag[prime[j]*i]=true;
+            if(i%prime[j]==0)
+                break;//case 1
+        }
+    }
+}
+\end{lstlisting}
+注意到case 1中的优化，它保证了每个合数最多被筛1次，从而使时间复杂度变为$O(n)$，
+并且增加了一个性质：一个合数只被最小质因子筛去。
+接下来证明该优化的正确性：当$i\bmod p_j=0$时，有$i=kp_j$，
+若要筛去后面的合数$ip_{j+x}=kp_jp_{j+x}$，可知该合数未来将被合数$kp_{j+x}$与质数
+$p_j$筛去，因此直接跳出即可。
+\subsection{积性函数筛}
+\subsubsection{欧拉函数}
+\begin{itemize}
+	\item $\phi(1)=1$；
+	\item 若$i$为质数，则$\phi(i)=i-1$；
+	\item 若$i \bmod p_j=0$，则说明$i$存在至少两个$p_j$因子，因此
+	      $\phi(ip_j)=\phi(i)p_j$；
+	\item 若$i \bmod p_j\neq 0$，则根据积性函数性质可得
+	      $\phi(ip_j)=\phi(i)(p_j-1)$。
+\end{itemize}
+\subsubsection{莫比乌斯函数}
+\begin{itemize}
+	\item $\mu(1)=1$；
+	\item 若$i$为质数，则$\mu(i)=-1$；
+	\item 若$i \bmod p_j=0$，则说明$i$存在至少两个$p_j$因子，因此
+	      $\mu(ip_j)=0$，若数组已清零则不赋值；
+	\item 若$i \bmod p_j\neq 0$，则根据积性函数性质可得
+	      $\mu(ip_j)=-\mu(i)$。
+\end{itemize}
+\subsubsection{约数个数}
+记数组$A_i$为$i$中最小质因子的次数。
+\begin{itemize}
+	\item $\tau(1)=1,A_1=0$；
+	\item 若$i$为质数，则$\tau(i)=2,A_i=1$；
+	\item 若$i \bmod p_j=0$，则说明$i$存在至少两个$p_j$因子，因此
+	      $\tau(ip_j)=\tau(i)\cdot\frac{A_i+2}{A_i+1}$且$A_{ip_j}=A_i+1$；
+	\item 若$i \bmod p_j\neq 0$，则根据积性函数性质可得
+	      $\tau(ip_j)=2\tau(i)$且$A_{ip_j}=1$。
+\end{itemize}
+\subsubsection{约数和}
+由性质~\ref{MFC}可得
+\begin{displaymath}
+	\sigma(n)=\prod_{i=1}^m{\sum_{j=0}^{c_i}{p_i^j}}
+\end{displaymath}
+记数组$low_i$为$i$中最小质因子的幂，$sum_i$为$i$中最小质因子的贡献。
+\begin{itemize}
+	\item $\sigma(1)=1,low_1=1,sum_1=1$；
+	\item 若$i$为质数，则$\sigma(i)=i+1,low_i=i,sum_i=i+1$；
+	\item 若$i \bmod p_j=0$，则说明$i$存在至少两个$p_j$因子，因此
+	      $\sigma(ip_j)=\sigma(i)\cdot\frac{sum_{ip_j}}{sum_i}$且
+	      $low_{ip_j}=low_i*p_j,sum_{ip_j}=sum_i+low_{ip_j}$；
+	\item 若$i \bmod p_j\neq 0$，则根据积性函数性质可得
+	      $\sigma(ip_j)=(p_j+1)\sigma(i)$且
+	      $low_{ip_j}=p_j,sum_{ip_j}=p_j+1$。
+\end{itemize}
+\subsubsection{普通积性函数}
+同约数和的思想，记数组$sum_i$为$i$中最小质因子的贡献。
+要求能够快速推出$f({p_i}^{c_i})$的值。
+\begin{itemize}
+	\item $f(1)=1,sum_1=？？？$；
+	\item 若$i$为质数，则$f(i)=sum_i=？？？$；
+	\item 若$i \bmod p_j=0$，则说明$i$存在至少两个$p_j$因子，因此
+	      $f(ip_j)=f(i)\cdot\frac{sum_{ip_j}}{sum_i}$；
+	\item 若$i \bmod p_j\neq 0$，则根据积性函数性质可得
+	      $f(ip_j)=f(p_j)f(i)$。
+\end{itemize}
+以上内容参考了租酥雨的博客\footnote{积性函数与线性筛 - 租酥雨
+	\url{https://www.cnblogs.com/zhoushuyu/p/8275530.html}}。
+\subsection{因子分解}
+通过在每次筛除时记录其最小质因子，可以于$O(\lg n)$复杂度内分解因子。

@@ -56,15 +56,15 @@ $max(siz_l,siz_r)>=siz_u \cdot fac$则暴力重构子树（注意每次插入只
 
 由于每个方向上是的独立的，对每个方向贪心后加起来即可。
 \subsubsection{曼哈顿距离最小}
-$w=\sum_{i=1}^d{max(mind_i-p_i,0)+max(p_i-maxd_i,0)}$
+$\displaystyle w=\sum_{i=1}^d{max(mind_i-p_i,0)+max(p_i-maxd_i,0)}$
 当$p_i$在区域内时估值为0，在一边时估值为到最近一边的值（另一边由于符号问题值为0）。
 \subsubsection{曼哈顿距离最大}
-$w=\sum_{i=1}^d{max(abs(mind_i-p_i),abs(maxd_i-p_i))}$
+$\displaystyle w=\sum_{i=1}^d{max(abs(mind_i-p_i),abs(maxd_i-p_i))}$
 选择距离最大的一边。
 \subsubsection{欧几里得距离最小}
-$w=\sum_{i=1}^d{max(mind_i-p_i,p_i-maxd_i,0)^2}$
+$\displaystyle w=\sum_{i=1}^d{max(mind_i-p_i,p_i-maxd_i,0)^2}$
 \subsubsection{欧几里得距离最大}
-$w=\sum_{i=1}^d{max((mind_i-p_i)^2,(p_i-maxd_i)^2)}$
+$\displaystyle w=\sum_{i=1}^d{max((mind_i-p_i)^2,(p_i-maxd_i)^2)}$
 \subsection{技巧}
 \subsubsection{全局最优值剪枝}
 如果通过该节点维护的子树信息可以确定子树内不存在更优解，搜索该子树

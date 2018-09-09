@@ -1,0 +1,18 @@
+\section{狄利克雷卷积与求逆}
+\subsection{狄利克雷卷积}
+\index{D!Dirichlet Convolution}
+对于数论函数$f,g$，定义狄利克雷卷积
+\begin{displaymath}
+	(f*g)(n)=\sum_{d|n}{f(d)g(\frac{n}{d})}=\sum_{ab=n}{f(a)g(b)}
+\end{displaymath}
+狄利克雷卷积的乘法单位元为元函数$\epsilon$。
+
+狄利克雷卷积有如下性质：
+\begin{eqnarray}
+	\textrm{结合律} & (f*g)*h=f*(g*h)\\
+	\textrm{分配律} & f*(g+h)=f*g+f*h\\
+	\textrm{交换律} & f*g=g*f；\\
+	\textrm{单位元} & f*\epsilon=\epsilon*f=f。
+\end{eqnarray}
+\subsection{狄利克雷求逆}
+\subsection{常见技巧}
