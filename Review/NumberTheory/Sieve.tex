@@ -1,0 +1,72 @@
+\section{低于线性时间复杂度筛法}
+这类筛法主要用于计算大数据规模积性函数求和。
+\subsection{约数函数前缀和}
+求$\displaystyle \sum_{i=1}^n{\sigma(i)},n\leq 10^{12}$。
+\begin{eqnarray*}
+    \sum_{i=1}^n{\sigma(i)}&=&\sum_{i=1}^n{\sum_{d|i}d}\\
+    &=&\sum_{d=1}^n{d[\frac{n}{d}]}
+\end{eqnarray*}
+由于$[\frac{n}{d}]$连续相同的值有许多，使用分块算法即可做到$O(\sqrt{n})$。
+\subsection{欧拉函数前缀和}
+求$\displaystyle \sum_{i=1}^n{\varphi(i)},n\leq 10^{11}$。
+由定理~\ref{PhiT}可得
+$\displaystyle \varphi(n)=n-\sum_{d|n,d<n}{\varphi(d)}$。
+\begin{eqnarray*}
+    ans(n)&=&\sum_{i=1}^n{\varphi(i)}\\
+    &=&\sum_{i=1}^n{\left(i-\sum_{d|i,d<i}{\varphi(d)}\right)}\\
+    &=&\frac{n(n+1)}{2}-\sum_{i=2}^{n}{\sum_{d|i,d<i}{\varphi(d)}}\\
+    &=&\frac{n(n+1)}{2}-\sum_{\frac{i}{d}=2}^n
+    {\sum_{d=1}^{[\frac{n}{\frac{i}{d}}]}{\varphi(d)}}\\
+    &=&\frac{n(n+1)}{2}-\sum_{t=2}^n
+    {\sum_{d=1}^{[\frac{n}{t}]}{\varphi(d)}}\\
+    &=&\frac{n(n+1)}{2}-\sum_{t=2}^n{ans([\frac{n}{t}])}
+\end{eqnarray*}
+同理使用分块+递归询问区间和来计算答案。为了降低复杂度，应该先线性筛预处理前一部分值。
+当预处理$k=n^\frac{2}{3}$时可以取到复杂度$T(n)=O(n^\frac{2}{3})$。
+\subsection{莫比乌斯函数前缀和}
+求$\displaystyle \sum_{i=1}^n{\mu(i)},n\leq 10^{11}$。
+由定理~\ref{MobiusT}可得
+$\displaystyle \mu(n)=[n=1]-\sum_{d|n,d<n}{\mu(d)}$。
+\begin{eqnarray*}
+    ans(n)&=&\sum_{i=1}^n{\mu(i)}\\
+    &=&\sum_{i=1}^n{\left([i=1]-\sum_{d|i,d<i}{\mu(d)}\right)}\\
+    &=&1-\sum_{i=1}^n{\sum_{d|i,d<i}{\mu(d)}}\\
+    &=&1-\sum_{t=2}^n{ans([\frac{n}{t}])}
+\end{eqnarray*}
+\subsection{其它函数前缀和}
+主要思路是使用狄利克雷卷积构造出一个简单的前缀和函数，且用于卷积的另一个函数也容易计算。
+
+令$\displaystyle A(n)=\sum_{i=1}^n\frac{i}{(n,i)}$，求
+$\displaystyle \sum_{i=1}^n{A(n)},n\leq 10^{9}$。
+
+先化简$A(n)$:
+\begin{eqnarray*}
+    A(n)&=&\sum_{i=1}^n\frac{i}{(n,i)}\\
+    &=&\sum_{d|n}{\sum_{i=1}^n{[(n,i)=d]\cdot\frac{i}{d}}}\\
+    &=&\sum_{d|n}{\sum_{\frac{i}{d}=1}^{\frac{n}{d}}
+    {[(\frac{n}{d},\frac{i}{d})=1]\cdot\frac{i}{d}}}\\
+    &=&\frac{1}{2}\left(1+\sum_{d|n}{d\cdot\varphi(d)}\right)
+\end{eqnarray*}
+
+那么答案即为$\displaystyle \frac{1}{2}\left(n+\sum_{t=1}^n
+{\sum_{d=1}^{[\frac{n}{t}]}{d\cdot\varphi(d)}}\right)$。
+
+考虑计算$\displaystyle \sum_{d=1}^n{d\cdot\varphi(d)}$的值：
+
+易知$(id\cdot\varphi)*id=id^2$，因为\begin{displaymath}
+    \sum_{d|n}d\cdot*\varphi(d)\cdot\frac{n}{d}=
+    n\cdot\sum_{d|n}\varphi(d)=n^2
+\end{displaymath}
+
+所以有\begin{eqnarray*}
+    \frac{n(n+1)(2n+1)}{6}&=&\sum_{i=1}^n{(id\cdot\varphi)*id}\\
+    &=&\sum_{t=1}^n{t\cdot\sum_{d=1}^{[\frac{n}{t}]}{d\cdot\varphi(d)}}
+\end{eqnarray*}
+
+从等式中提出要求的那一项即可。
+\subsection{复杂度分析}
+为了得到较优的复杂度，需要设置合适的预处理大小。
+\index{TODO!筛法复杂度分析}
+
+以上例题来自skywalkert的博客\footnote{浅谈一类积性函数的前缀和\\
+\url{https://blog.csdn.net/skywalkert/article/details/50500009}}。

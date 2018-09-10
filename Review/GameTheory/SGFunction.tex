@@ -31,17 +31,17 @@
 必胜点与必败点有如下性质：
 
 \begin{itemize}
-	\item \begin{character}
+	\item \begin{property}
 		      终结点为必败点
-	      \end{character}
-	\item \begin{character}
+	      \end{property}
+	\item \begin{property}
 		      必败点的下一状态必然为必胜点（某玩家必败，等价于无论他如何操作都使另一
 		      玩家必胜）
-	      \end{character}
-	\item \begin{character}
+	      \end{property}
+	\item \begin{property}
 		      从必胜点出发至少有一种方式进入必败点（该玩家的最优策略就是使状态转移到
 		      必败点）
-	      \end{character}
+	      \end{property}
 \end{itemize}
 
 要判断哪个玩家必胜，只要使用SG函数和SG定理计算出先手所在状态（即初始状态）是必胜点

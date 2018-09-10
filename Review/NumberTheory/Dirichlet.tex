@@ -1,4 +1,4 @@
-\section{狄利克雷卷积与求逆}
+\section{狄利克雷卷积，狄利克雷逆与莫比乌斯反演}
 \subsection{狄利克雷卷积}
 \index{D!Dirichlet Convolution}
 对于数论函数$f,g$，定义狄利克雷卷积
@@ -8,11 +8,88 @@
 狄利克雷卷积的乘法单位元为元函数$\epsilon$。
 
 狄利克雷卷积有如下性质：
-\begin{eqnarray}
+\begin{eqnarray*}
 	\textrm{结合律} & (f*g)*h=f*(g*h)\\
 	\textrm{分配律} & f*(g+h)=f*g+f*h\\
 	\textrm{交换律} & f*g=g*f；\\
 	\textrm{单位元} & f*\epsilon=\epsilon*f=f。
-\end{eqnarray}
-\subsection{狄利克雷求逆}
+\end{eqnarray*}
+\subsection{狄利克雷逆}
+\index{D!Dirichlet Inverse}
+已知数论函数$f$，求$g=f^{-1}$。
+\begin{itemize}
+	\item 当$n=1$时，有$(f*g)(1)=f(1)g(1)=\epsilon(1)=1$，
+	      解得$g(1)=\frac{1}{f(1)}$。
+	\item 当$n>1$时，
+	      有$\displaystyle (f*g)(n)=\sum_{ab=n}{f(a)g(b)}=\epsilon(n)=0$，
+	      解得$\displaystyle g(n)=\frac{-1}{f(1)}
+		      \sum_{d|n}{f(\frac{n}{d})g(d)}$。
+\end{itemize}
+\subsubsection{狄利克雷逆性质}
+\begin{property}
+	积性函数的狄利克雷逆仍然是积性函数。
+\end{property}
+\begin{property}
+	若数论函数$f,g$为积性函数，则$(f*g)^{-1}=f^{-1}*g^{-1}$。
+\end{property}
+\begin{property}
+	积性函数$f$为完全积性函数当且仅当$f^{-1}(n)=\mu(n)f(n)$。
+\end{property}
+证明：\begin{eqnarray*}
+	(f*f^{-1})(n)&=&\sum_{ab=n}{f(a)f^{-1}(b)}\\
+	&=&\sum_{ab=n}(f(a)\mu(b)f(b))\\
+	&=&f(n)sum_{d|n}{\mu(d)}\\
+	&=&f(n)\epsilon(n)\\
+	&=&\epsilon(n)
+\end{eqnarray*}
+\subsubsection{常见数论函数及其狄利克雷逆}
+\begin{itemize}
+	\item $1*\mu=\epsilon$\\
+	      参见定理~\ref{MobiusT}的证明。
+	\item $id^\alpha*(\mu\cdot id^\alpha)=\epsilon$
+	\item $\displaystyle \varphi*(\sum_{d|n}{\mu(d)d})=\epsilon$\\
+	      由定理~\ref{PhiT}可得$id=\varphi*1$，两边同时乘上$\mu$
+	      可得$id*\mu=\varphi$，所以$\varphi^{-1}=id^{-1}*\mu^{-1}=id^{-1}*1$。
+	\item $\sigma_\alpha*(\sum_{d|n}{\mu(d)\mu(\frac{n}{d})d^\alpha})=\epsilon$
+
+	      $\sigma_\alpha=id^\alpha*1$可推出
+	      $(\sigma_\alpha)^{-1}={id^\alpha}^{-1}*\mu$
+\end{itemize}
+以上内容参考了Wikipedia-EN\footnote{Dirichlet convolution - Wikipedia\\
+	\url{https://en.wikipedia.org/wiki/Dirichlet\_convolution}}。
+\subsection{莫比乌斯反演}
+\index{M!Möbius Inversion}
+\begin{theorem}
+	对于数论函数$f,g$，满足$\displaystyle g(n)=\sum_{d|n}f(d)$，则有
+	\begin{displaymath}
+		f(n)=\sum_{d|n}\mu(d)g(\frac{n}{d})
+	\end{displaymath}
+\end{theorem}
+莫比乌斯反演可表示为若$g=f*1$则$f=\mu*g$。
+证明：将$g=f*1$两边同时乘上$\mu$即可。
+证明源自Wikipedia-EN\footnote{Möbius inversion formula - Wikipedia\\
+\url{https://en.wikipedia.org/wiki/Mobius_inversion}}。
 \subsection{常见技巧}
+\begin{itemize}
+	\item
+	对于数论函数$g,f$，
+	\begin{displaymath}
+		g(n)=\sum_{n|d}{f(d)}\Rightarrow
+		f(n)=\sum_{n|d}{\mu(d)g(\frac{d}{n})}
+	\end{displaymath}
+	\item
+	若$\displaystyle n=\prod_{i=1}^m{{p_i}^{c_i}},g(n)=\sum_{d|n}{f(d)}$
+	且$f$为积性函数，将$g$看做$f*1$可知$g$也是积性函数，则$g(n)=\prod_{i=1}^m
+	{\sum_{j=0}^{c_i}{f(p_i^j)}}$。
+	\item 交换内外求和顺序。
+	\item 枚举倍数，最大公约数等有共性的值并换元。
+	\item \begin{eqnarray*}
+		\sum_{i=1}^n{\sum_{d|i}{f(d)}}&=&
+		\sum_{\frac{i}{d}=1}^n{\sum_{d=1}^{[\frac{n}{\frac{i}{d}}]}{f(d)}}\\
+		&=&\sum_{t=1}^n{\sum_{d=1}^{[\frac{n}{t}]}{f(d)}}
+	\end{eqnarray*}
+	遇到前缀和后递归计算即可，线性筛预处理前$n^\frac{2}{3}$个值，时间复杂度$O(n^\frac{2}{3})$。
+	\item 同时除以最大公约数使其互质，然后套用$\varphi$。
+\end{itemize}
+更多技巧待补充。
+\index{TODO!数论解题技巧}

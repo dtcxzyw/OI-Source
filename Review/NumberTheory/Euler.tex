@@ -43,7 +43,7 @@ for(int i=2;i<=n;++i)
 \index{E!Euler's Theorem}
 \begin{theorem}[Euler's Theorem]\label{ET}
 	~\\
-	对于任意互质正整数对$(a,n)$，有$a^\phi(n) \equiv 1 \pmod{n}$
+	对于任意互质正整数对$(a,n)$，有$a^\varphi(n) \equiv 1 \pmod{n}$
 \end{theorem}
 证明：
 
@@ -54,20 +54,20 @@ for(int i=2;i<=n;++i)
 \end{theorem}
 
 令$S=\{x|x\in Z^+ \land x \textrm{is coprime to n}\}$，则有限群$(S,\cdot_n)$的
-阶为$\phi(n)$。
+阶为$\varphi(n)$。
 
 对于任意一个与$n$互质的正整数$a$，$a$的幂模$n$的值$a,a^2,\ldots,a^k$
 构成了一个子群，其中$a^k\equiv 1 \pmod{n}$。
 
-根据定理~\ref{LT}，有$k|\phi(n)$，令$M=\phi(n)/k$，有
-$a^\phi(n)=a^{kM}=(a^k)^M=1^M\equiv 1 \pmod{n}$。
+根据定理~\ref{LT}，有$k|\varphi(n)$，令$M=\varphi(n)/k$，有
+$a^\varphi(n)=a^{kM}=(a^k)^M=1^M\equiv 1 \pmod{n}$。
 
 上述证明源自Wikipedia-EN\footnote{Euler's theorem - Wikipedia
 	\url{https://en.wikipedia.org/wiki/Euler's_theorem}}。
 \subsection{扩展欧拉定理}
 \begin{theorem}\label{exEuler}
-	$\forall a\in \mathbb{Z},x,m\in \mathbb{Z^+},x\geq \phi(m)
-	,a^x\equiv a^{x \bmod \phi(m)+\phi(m)} \pmod{m}$
+	$\forall a\in \mathbb{Z},x,m\in \mathbb{Z^+},x\geq \varphi(m)
+	,a^x\equiv a^{x \bmod \varphi(m)+\varphi(m)} \pmod{m}$
 \end{theorem}
 
 \begin{lemma}\label{EEL1}
@@ -127,12 +127,12 @@ $a^\phi(n)=a^{kM}=(a^k)^M=1^M\equiv 1 \pmod{n}$。
 \begin{lemma}\label{EEL2}
 	\begin{displaymath}
 		\forall p\textrm{ is a prime number},q\in \mathbb{Z^+}\ge 1,
-		\phi(p^q)\geq q.
+		\varphi(p^q)\geq q.
 	\end{displaymath}
 \end{lemma}
 
-证明：首先有$\phi(p^q)=(p-1)p^{q-1}$，当$p$固定时，$q$取2使得$\phi(p^q)-q$
-最小，但该值仍非负。当$p=2,q=2$时，有$\phi(p^q)=q$。
+证明：首先有$\varphi(p^q)=(p-1)p^{q-1}$，当$p$固定时，$q$取2使得$\varphi(p^q)-q$
+最小，但该值仍非负。当$p=2,q=2$时，有$\varphi(p^q)=q$。
 
 接下来证明定理~\ref{exEuler}：
 
@@ -140,13 +140,13 @@ $a^\phi(n)=a^{kM}=(a^k)^M=1^M\equiv 1 \pmod{n}$。
 \begin{itemize}
 	\item 若$gcd(a,p)=1$，则$gcd(a,p^q)=1$，根据欧拉定理可证；
 	\item 若$gcd(a,p)=p$，由适用范围可知$x\geq p$,由引理~\ref{EEL2}可知
-	$x \bmod \phi(p^q) + \phi(p^q) \geq p$,因此
-	$a^x\equiv 0 \equiv a^{x \bmod \phi(p^q)+\phi(p^q)} \pmod{p^q}$
+	$x \bmod \varphi(p^q) + \varphi(p^q) \geq p$,因此
+	$a^x\equiv 0 \equiv a^{x \bmod \varphi(p^q)+\varphi(p^q)} \pmod{p^q}$
 \end{itemize}
 
-对于任意$m$可根据算术基本定理分解为素数幂之积。因为$\phi(p^q)|\phi(m)$,所以有
-$a^x\equiv a^{x \bmod \phi(p^q)+\phi(p^q)}
-\equiv a^{x \bmod \phi(m)+\phi(m)} \pmod{p^q}$。
+对于任意$m$可根据算术基本定理分解为素数幂之积。因为$\varphi(p^q)|\varphi(m)$,所以有
+$a^x\equiv a^{x \bmod \varphi(p^q)+\varphi(p^q)}
+\equiv a^{x \bmod \varphi(m)+\varphi(m)} \pmod{p^q}$。
 根据引理~\ref{EEL1}及其推论合并即可。
 
 以上证明源自后缀自动机·张的文章\footnote{微小的欧拉定理EXT证明

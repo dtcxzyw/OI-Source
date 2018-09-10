@@ -9,7 +9,7 @@ RSA的安全性基于以下事实：寻找大素数很容易（根据定理~\ref
 RSA算法的基本步骤如下：
 \begin{enumerate}
     \item 随机选取两个大素数$p,q$,使得$p\neq q$，令$n=pq$；
-    \item 选取一个与$\phi(n)=(p-1)(q-1)$复制的小奇数$e$,
+    \item 选取一个与$\varphi(n)=(p-1)(q-1)$复制的小奇数$e$,
     计算出$e$的乘法逆元$d$；
     \item 将$P(e,n)$公开，作为{\bfseries RSA公钥}；\\
           将$S(d,n)$保密，作为{\bfseries RSA私钥}。
@@ -25,7 +25,7 @@ RSA算法的基本步骤如下：
     P(S(M))=S(P(M))=M^{ed}\equiv M \pmod{n}
 \end{displaymath}
 
-因为$e,d$是模$\phi(n)$意义下的乘法逆元，所以有$ed=1+k(p-1)(q-1)$。
+因为$e,d$是模$\varphi(n)$意义下的乘法逆元，所以有$ed=1+k(p-1)(q-1)$。
 
 \begin{itemize}
     \item 若$M\not\equiv 0 \pmod{p}$,则有

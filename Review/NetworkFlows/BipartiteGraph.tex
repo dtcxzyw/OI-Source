@@ -3,9 +3,9 @@
 \index{B!Bipartite Graph}
 二分图的顶点可分为两个集合，每条边的端点分别属于这两个集合。
 \subsection{二分图判定}
-\begin{character}
+\begin{property}
 	二分图中不存在奇环。
-\end{character}
+\end{property}
 如果存在奇环，则必有一条边的端点属于同一集合。
 所以可以使用DFS染色来判定二分图，遇到矛盾则退出。
 

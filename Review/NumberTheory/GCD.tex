@@ -64,15 +64,15 @@ $exgcd$（扩展欧几里得算法）可求出一组特殊的整数解。
 $gcd$函数的以下性质：
 
 \begin{itemize}
-    \item \begin{character}\label{GCDC1}
+    \item \begin{property}\label{GCDC1}
         若$a,b$均为偶数，则$gcd(a,b)=2*gcd(a/2,b/2)$。
-    \end{character}
-    \item \begin{character}\label{GCDC2}
+    \end{property}
+    \item \begin{property}\label{GCDC2}
         若$a$是奇数，$b$是偶数，则$gcd(a,b)=gcd(a,b/2)$。
-    \end{character}
-    \item \begin{character}\label{GCDC3}
+    \end{property}
+    \item \begin{property}\label{GCDC3}
         若$a,b$均为奇数，则$gcd(a,b)=gcd((a-b)/2,b)$。
-    \end{character}
+    \end{property}
 \end{itemize}
 
 特别地，当$gcd(x,y)$的参数中存在0,则返回$x|y$。
