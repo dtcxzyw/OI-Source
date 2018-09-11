@@ -1,2 +1,43 @@
 \section{原根}\label{PrimitiveRoot}
 \index{P!Primitive Root}
+\subsection{基本定义与定理}
+\subsubsection{数论阶}
+设$n>1,(a,n)=1$,记$\delta_n(a)$为使得$a^r\equiv 1 \pmod{n}$
+成立的最小正整数$r$，称为$a$对模$n$的阶。
+
+\begin{theorem}
+	设$n>1,(a,n)=1$，若$a^x\equiv 1 \pmod{n}$，则有$\delta_n(a)\mid x$。
+\end{theorem}
+
+\subsubsection{原根}
+若$\delta_n(a)=\varphi(n)$，则称$a$为模$n$的一个原根。
+
+若$a$为模$n$的原根，则对于$0\leq i< \varphi(n)$，有$a^i\bmod{n}$两两不同。
+
+\begin{theorem}
+	如果模$n$有原根，则它一共有$\varphi(\varphi(n))$个原根。
+\end{theorem}
+
+\begin{theorem}
+	设$p$为奇素数，$n=2,4,2p^i,4p^i\Leftrightarrow$模$n$有原根。
+\end{theorem}
+
+\subsection{求模$n$的原根}
+
+对$\varphi(n)$进行质因数分解，
+对于$\displaystyle \varphi(n)=\prod_{i=1}^m{p_i^{c_i}}$，若
+恒有$g^\frac{\varphi(n)}{p_i}\not\equiv 1 \pmod{n}$，则$g$为模$n$的一个原根。
+
+以上内容参考了mosquito\_zm的博客\footnote{原根
+	\url{https://blog.csdn.net/mosquito\_zm/article/details/77227570}}。
+\subsection{原根的应用}
+\begin{itemize}
+	\item 在NTT中用于推算主单位根。
+	\item 将乘积恒定转换为幂次和恒定后NTT（见例题[SDOI2015]序列统计）。
+\end{itemize}
+\paragraph{例题} [SDOI2015]序列统计\footnote{【P3321】[SDOI2015]序列统计 - 洛谷
+\url{https://www.luogu.org/problemnew/show/P3321}}
+
+将$x$映射为$g^i$，由生成函数法推导出要求多项式幂，最后将答案逆映射即可。
+
+\lstinputlisting[title=luogu P3321]{Source/Source/'FFT NTT'/3321.cpp}

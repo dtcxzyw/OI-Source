@@ -40,11 +40,11 @@ $x_i$应该有系数$a_i$，为了抵消$M$带来的影响，再乘上$M$模$n_i
 \end{displaymath}
 等价于
 \begin{eqnarray}
-	x=a_1+k_1n_1\label{CRTE}\\
-	x=a_2+k_2n_2
+	x0=a_1+k_1n_1\label{CRTE}\\
+	x0=a_2+k_2n_2
 \end{eqnarray}
 移项得$k_1n_1-k_2n_2=a_2-a_1$，可以使用
 $exgcd$求出$c_1n_1+c_2n_2=gcd(n_1,n_2)$的各项参数。根据定理~\ref{BT},
-若$gcd(n_1,n_2)\not\mid(a_2-a_1)$则该方程组无解。等比例缩放方程求出$k1$，
+若$gcd(n_1,n_2)\nmid(a_2-a_1)$则该方程组无解。等比例缩放方程求出$k1$，
 带入方程~\ref{CRTE}反推出$x0$，得到新的模线性方程$x \equiv x0
 	\pmod{lcm(n_1,n_2)}$。

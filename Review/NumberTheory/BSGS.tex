@@ -1,1 +1,36 @@
 \section{BSGS}
+\index{B!Baby Step Giant Step}
+BSGS法（Baby Step Giant Step）用来求解类似于$a^x\equiv b\pmod{P}$的方程。
+\subsection{BSGS}
+普通BSGS仅考虑$P$为质数的情况。
+
+以下为求解最小非负整数解的方法：
+
+首先根据定理~\ref{ET}可知$x$的最小非负整数解小于$\varphi(P)=P-1$。将x的值域
+分为高低两部分，分别用$O(\sqrt{P})$的复杂度枚举值即可。
+
+\begin{enumerate}
+    \item 若$a$为$P$的倍数，则特判$b$是否为$0$，算法结束；
+    \item 令$m=\lceil\sqrt{P}\rceil,x=im-j$，移项得$x^im\equiv bx^j\pmod{P}$；
+    \item 枚举$bx^j$的值，按$j$从小到大覆盖存入HashTable；
+    \item 枚举$(x^m)^i$的值，按$i$从小到大在HashTable中查询，存在则返回$im-j$；
+    \item 返回无解。
+\end{enumerate}
+
+\subsection{ExBSGS}
+ExBSGS可解决$a,P$不互质的问题。主要思路是将原方程化为普通BSGS可解决的方程。
+
+记化简后方程为$Aa^{x-B}\equiv b\pmod{P}$，化简步骤如下：
+\begin{enumerate}
+    \item 将$A,B$初始化为$1,0$；
+    \item 令$d=(a,P)$,
+    \begin{itemize}
+        \item 若$d\mid b$，则提出一个$d$，即$A*=a/d,b/=d,P/=d,++B$；
+        \item 若$d\nmid b$，则特判$b$是否为$A$，$b=A$则$x=B$，$b\neq A$则无解；
+    \end{itemize}
+    \item 重复第2步直至$d=1$。
+\end{enumerate}
+令$x=im+j+B$然后按照普通BSGS做即可，注意在BSGS前要暴力检查$x\in[0,B)$的解。
+
+以上内容参考了ZigZagK的博客\footnote{BSGS及扩展BSGS
+\url{https://blog.csdn.net/zzkksunboy/article/details/73162229}}。

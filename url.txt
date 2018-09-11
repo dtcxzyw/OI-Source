@@ -147,3 +147,4 @@ CF优秀文章 http://codeforces.com/blog/entry/57282
 位运算技巧 http://graphics.stanford.edu/~seander/bithacks.html
 miskcoo's blog http://blog.miskcoo.com
 通用筛法 https://www.cnblogs.com/zbh2047/p/8552551.html
+二次剩余与三次剩余 https://blog.csdn.net/skywalkert/article/details/52591343
