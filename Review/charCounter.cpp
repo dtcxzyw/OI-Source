@@ -6,13 +6,16 @@ int main() {
     std::locale::global(std::locale(""));
     system("pdftotext ../latex/Main.pdf");
     std::wifstream in("../latex/Main.txt");
-    int cnt = 0;
+    int cntA = 0, cntB = 0;
     while(in) {
         wchar_t c = in.get();
-        if(iswgraph(c))
-            ++cnt;
+        if(iswgraph(c)) {
+            ++cntA;
+            if(!isalnum(c) && !ispunct(c))
+                ++cntB;
+        }
     }
     std::wofstream out("../latex/charcnt");
-    out << cnt << std::flush;
+    out << cntA << "(" << cntB << ")" << std::flush;
     return 0;
 }

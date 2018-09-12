@@ -1,4 +1,7 @@
 \documentclass[10pt,a16paper,UTF8,AutoFakeBold,AutoFakeSlant]{book}
+\usepackage{titletoc}
+\usepackage{titlesec}
+\usepackage{ctexcap}
 \usepackage{xeCJK}
 \setCJKmainfont{SimSun}
 \usepackage[english]{babel}
@@ -42,30 +45,27 @@
 \newtheorem{inference}[theorem]{推论}
 \title{OI知识点复习笔记}
 \author{dtcxzyw}
-\maketitle
 \frontmatter
-\begin{center}
-	\Huge 前言
-\end{center}
+\maketitle
+\chapter{前言}
 本人写复习笔记的目的有两个：
 \begin{itemize}
 	\item 系统地复习知识点并挖掘一些有用的性质。
 	\item 学会使用\LaTeX{}。
 \end{itemize}
 当前共\pageref{LastPage}页，约\input{../latex/charcnt}字。
+\renewcommand\contentsname{目录}
 \tableofcontents
-\mainmatter{}
+\mainmatter
 \input{GameTheory/GameTheory}
 \input{NetworkFlows/NetworkFlows}
 \input{DataStructure/DataStructure}
 \input{NumberTheory/NumberTheory}
+\input{SetAndGroupTheory/SetAndGroupTheory}
 \appendix
 \include{Recommendation}
 \printindex
 \input{Bib.tex}
-\backmatter{
-	\begin{center}
-		\Huge 后记
-	\end{center}
-}
+\backmatter
+\chapter{后记}
 \end{document}

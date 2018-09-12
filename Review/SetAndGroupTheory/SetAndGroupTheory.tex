@@ -1,0 +1,119 @@
+\chapter{集合论~群论}
+\section{集合论定理}
+\begin{theorem}
+	\begin{displaymath}
+		A\oplus B=A\cup B - A\cap B
+	\end{displaymath}
+\end{theorem}
+\index{D!De Morgan's Laws}
+\begin{theorem}[De Morgan's Laws]\label{DML}
+	\begin{eqnarray*}
+		\overline{A\cup B}=\overline{A}\cap \overline{B} \\
+		\overline{A\cap B}=\overline{A}\cup \overline{B}
+	\end{eqnarray*}
+\end{theorem}
+\index{I!Inclusion–exclusion Principle}
+\begin{theorem}[Inclusion–exclusion Principle]\label{IEP}
+	\begin{displaymath}
+		\left|\bigcup_{i=1}^n{A_i}\right|=
+		\sum_{\emptyset \neq J\subseteq \{1,2,\ldots,n\}}{(-1)^{|J|-1}
+			\left|\bigcap_{j\in J}{A_j}\right|}
+	\end{displaymath}
+\end{theorem}
+
+由定理~\ref{DML}与~\ref{IEP}可得
+
+\begin{theorem}
+	\begin{displaymath}
+		\left|\bigcap_{i=1}^n\overline{A_i}\right|=
+		\left|\overline{\bigcup_{i=1}^n{A_i}}\right|=
+		|U|+\sum_{\emptyset \neq J\subseteq \{1,2,\ldots,n\}}{(-1)^{|J|}
+			\left|\bigcap_{j\in J}{A_j}\right|}
+	\end{displaymath}
+\end{theorem}
+
+以上内容参考了Wikipedia-EN\footnote{Inclusion–exclusion principle - Wikipedia
+	\url{https://en.wikipedia.org/wiki/Inclusion\%E2\%80\%93exclusion\_principle}
+
+	De Morgan's laws - Wikipedia
+    \url{https://en.wikipedia.org/wiki/De\_Morgan\%27s\_laws}}。
+
+\section{拉格朗日定理}
+\index{L!Lagrange's Theorem}
+\begin{theorem}[Lagrange's Theorem]\label{LT}
+	若$(S,\oplus)$是一个有限群，$(S',\oplus)$是$(S,\oplus)$的子群，则
+	$|S'|$是$|S|$的约数。
+\end{theorem}
+证明留坑待补。
+\index{*TODO!拉格朗日定理证明}
+
+\section{置换群}
+\index{P!Permutation Groups}
+{\bfseries 置换}是从$[1,n]$到$[1,n]$的一一映射。
+
+置换可以分解为多个循环，计算循环相关数据的方法为：枚举每一个节点
+\begin{enumerate}
+    \item 若该节点已被访问，则跳过；
+    \item 顺着该节点对应的目标节点不断跳跃，标记已访问，直至跳跃到已访问点（即出发点）为止。
+    \item 这个环就是一个循环。
+\end{enumerate}
+\begin{theorem}
+    若对于一个置换有$n$个循环，长度分别为$l_1,l_2,\ldots,l_n$，
+    则该置换的循环节长度为$lcm(l_1,l_2,\ldots,l_n)$。
+\end{theorem}
+\paragraph{不动点}
+若一个状态$S$经由置换$f$置换后的状态与原状态相同，则状态$S$为$f$的不动点。
+\paragraph{等价关系}
+对于一个置换集合$F$，若状态$S$能经由$F$中的置换变为状态$S'$，则称$S$与$S'$等价。
+\paragraph{等价类}
+满足等价关系的状态属于同一等价类。
+
+\subsubsection{Burnside引理}
+\index{B!Burnside's Lemma}
+\begin{lemma}[Burnside's Lemma]
+    等价类数目为置换群$G$中所有置换的不动点数目的平均值。
+    \begin{displaymath}
+        |X/G|=\frac{1}{|G|}\sum_{g\in G}|X^g|
+    \end{displaymath}
+\end{lemma}
+上述定理证明留坑待补。
+\index{*TODO!证明Burnside引理}
+\subsubsection{Polya定理}
+\index{P!Pólya Enumeration Theorem}
+
+\begin{theorem}[Pólya Enumeration Theorem]
+    若对每一个节点进行$m$染色，置换$g$有$c(g)$个循环，则染色方案
+    等价类数目为$\displaystyle \frac{1}{|G|}\sum_{g\in G}m^{c(g)}$。
+\end{theorem}
+
+证明：一个循环内所有的节点颜色相同，不同循环颜色的选择是独立的，每一个循环颜色选择
+方案对应一个不动点，根据乘法原理可知$|X^g|=m^{c(g)}$。
+
+以上内容参考了QAQqwe的博客\footnote{Burnside引理与Polya定理
+\url{https://blog.csdn.net/liangzhaoyang1/article/details/72639208}}与
+Wikipedia-EN\footnote{
+    Burnside's lemma - Wikipedia
+    \url{https://en.wikipedia.org/wiki/Burnside\%27s\_lemma}
+
+    Pólya enumeration theorem - Wikipedia
+    \url{https://en.wikipedia.org/wiki/P\%C3\%B3lya\_enumeration\_theorem}
+}。
+
+\subsubsection{常见题型}
+题型来自My\_ACM\_Dream的博客\footnote{polya|burnside定理的一些总结\\
+\url{https://blog.csdn.net/My\_ACM\_Dream/article/details/45312365}}。
+
+\paragraph{正方形旋转}
+n*n正方形染色：
+\begin{itemize}
+    \item 旋转0度，循环节数$n^2$。
+    \item 旋转90/270度，若$n$为偶数，循环节数$\frac{n^2}{4}$；若$n$为奇数，
+    循环节数$\frac{n^2-1}{4}+1$。
+    \item 旋转180度，若$n$为偶数，循环节数$\frac{n^2}{2}$；若$n$为奇数，循环
+    节数$\frac{n^2-1}{2}+1$。
+\end{itemize}
+奇偶循环节数不同的原因是因为$n$为奇数时中间的点自成一个循环节。
+\paragraph{环形旋转}
+\paragraph{环形翻转}
+\paragraph{正方体旋转}
+

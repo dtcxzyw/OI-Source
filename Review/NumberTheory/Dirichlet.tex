@@ -23,7 +23,7 @@
 	\item 当$n>1$时，
 	      有$\displaystyle (f*g)(n)=\sum_{ab=n}{f(a)g(b)}=\epsilon(n)=0$，
 	      解得$\displaystyle g(n)=\frac{-1}{f(1)}
-		      \sum_{d|n}{f(\frac{n}{d})g(d)}$。
+		      \sum_{d|n,d<n}{f(\frac{n}{d})g(d)}$。
 \end{itemize}
 \subsubsection{狄利克雷逆性质}
 \begin{property}
@@ -38,7 +38,7 @@
 证明：\begin{eqnarray*}
 	(f*f^{-1})(n)&=&\sum_{ab=n}{f(a)f^{-1}(b)}\\
 	&=&\sum_{ab=n}(f(a)\mu(b)f(b))\\
-	&=&f(n)sum_{d|n}{\mu(d)}\\
+	&=&f(n)\sum_{d|n}{\mu(d)}\\
 	&=&f(n)\epsilon(n)\\
 	&=&\epsilon(n)
 \end{eqnarray*}
@@ -53,7 +53,7 @@
 	\item $\sigma_\alpha*(\sum_{d|n}{\mu(d)\mu(\frac{n}{d})d^\alpha})=\epsilon$
 
 	      $\sigma_\alpha=id^\alpha*1$可推出
-	      $(\sigma_\alpha)^{-1}={id^\alpha}^{-1}*\mu$
+	      $(\sigma_\alpha)^{-1}=(id^\alpha)^{-1}*\mu$
 \end{itemize}
 以上内容参考了Wikipedia-EN\footnote{Dirichlet convolution - Wikipedia\\
 	\url{https://en.wikipedia.org/wiki/Dirichlet\_convolution}}。
@@ -90,6 +90,12 @@
 	\end{eqnarray*}
 	遇到前缀和后递归计算即可，线性筛预处理前$n^\frac{2}{3}$个值，时间复杂度$O(n^\frac{2}{3})$。
 	\item 同时除以最大公约数使其互质，然后套用$\varphi$。
+	\item $\displaystyle [gcd(i,j)=1]=\sum_{k|gcd(i,j)}\mu(k)=
+	\sum_{k|i,k|j}\mu(k)$
+	\item $\displaystyle \sum_{i=1}^n{i}=
+	\sum_{i=1}^n{\sum_{d|i}\varphi(d)}=
+	\sum_{d=1}^n{\varphi(d)\cdot[\frac{n}{d}]}$
+	\item $(id\cdot\varphi)*id=id^2$
 \end{itemize}
 更多技巧待补充。
 \index{*TODO!数论解题技巧}
