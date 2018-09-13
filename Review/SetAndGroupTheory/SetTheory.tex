@@ -1,0 +1,38 @@
+\section{集合论定理}
+\begin{theorem}
+	\begin{displaymath}
+		A\oplus B=A\cup B - A\cap B
+	\end{displaymath}
+\end{theorem}
+\index{D!De Morgan's Laws}
+\begin{theorem}[De Morgan's Laws]\label{DML}
+	\begin{eqnarray*}
+		\overline{A\cup B}=\overline{A}\cap \overline{B} \\
+		\overline{A\cap B}=\overline{A}\cup \overline{B}
+	\end{eqnarray*}
+\end{theorem}
+\index{I!Inclusion–exclusion Principle}
+\begin{theorem}[Inclusion–exclusion Principle]\label{IEP}
+	\begin{displaymath}
+		\left|\bigcup_{i=1}^n{A_i}\right|=
+		\sum_{\emptyset \neq J\subseteq \{1,2,\ldots,n\}}{(-1)^{|J|-1}
+			\left|\bigcap_{j\in J}{A_j}\right|}
+	\end{displaymath}
+\end{theorem}
+
+由定理~\ref{DML}与~\ref{IEP}可得
+
+\begin{theorem}
+	\begin{displaymath}
+		\left|\bigcap_{i=1}^n\overline{A_i}\right|=
+		\left|\overline{\bigcup_{i=1}^n{A_i}}\right|=
+		|U|+\sum_{\emptyset \neq J\subseteq \{1,2,\ldots,n\}}{(-1)^{|J|}
+			\left|\bigcap_{j\in J}{A_j}\right|}
+	\end{displaymath}
+\end{theorem}
+
+以上内容参考了Wikipedia-EN\footnote{Inclusion–exclusion principle - Wikipedia
+	\url{https://en.wikipedia.org/wiki/Inclusion\%E2\%80\%93exclusion\_principle}
+
+	De Morgan's laws - Wikipedia
+    \url{https://en.wikipedia.org/wiki/De\_Morgan\%27s\_laws}}。
