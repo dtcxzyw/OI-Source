@@ -4,26 +4,62 @@
 Catalan数是组合数学中的常见数列
 \footnote{A000108 - OEIS \url{http://oeis.org/A000108}}，其前几项为
 \begin{displaymath}
-    1, 1, 2, 5, 14, 42, 132, 429, 1430, \ldots
+	1, 1, 2, 5, 14, 42, 132, 429, 1430, \ldots
 \end{displaymath}
 
 Catalan数（记为$C_n$）满足如下关系：
-\begin{eqnarray*}
-C_0&=&C_1=1\\
-C_{n+1}&=&\sum_{i=0}^n{C_iC_{n-i}}=\sum_{i=1}^n{C_iC_{n+1-i}}\\
-C_n&=&\frac{4n-2}{n+1}C_{n-1}\\
-C_n&=&{2n \choose n}-{2n \choose n+1}=\frac{1}{n+1}{2n \choose n}\\
-C_n&=&\prod_{k=2}^n\frac{n+k}{k}
-\end{eqnarray*}
+\begin{eqnarray}
+	C_0&=&C_1=1\\
+	C_{n+1}&=&\sum_{i=0}^n{C_iC_{n-i}}\label{CT2}\\
+	&=&\sum_{i=1}^n{C_iC_{n+1-i}}\label{CT3}\\
+	C_n&=&\frac{4n-2}{n+1}C_{n-1}\\
+	C_n&=&{2n \choose n}-{2n \choose n+1}=\frac{1}{n+1}{2n \choose n}\\
+	C_n&=&\prod_{k=2}^n\frac{n+k}{k}
+\end{eqnarray}
 根据Striling近似公式
 \begin{displaymath}
-    n!\sim\sqrt{2\pi n}\left(\frac{n}{e}\right)^n
+	n!\sim\sqrt{2\pi n}\left(\frac{n}{e}\right)^n
 \end{displaymath}
 可得
 \begin{displaymath}
-C_n\sim\frac{4^n}{\sqrt{\pi} n^\frac{3}{2}}
+	C_n\sim\frac{4^n}{\sqrt{\pi} n^\frac{3}{2}}
 \end{displaymath}
 \subsection{常见应用}
+\subsubsection{括号序列，出栈序列，网格行走}
+\paragraph{括号序列} 给定$2n$个位置填上左右括号使括号匹配（对于每一个位置之前的
+左括号必须不少于右括号）。
+\paragraph{出栈序列} 求将$n$个元素入栈一次（限制顺序）并出栈一次（不限制顺序）
+的方案数（对于每一次操作都要保证栈不出现下溢，即入栈元素不少于出栈元素）。
+\paragraph{网格行走} 在一个$n*n$的网格内从左下角移动到右上角，纵坐标必须不少于
+横坐标，求方案数。
+\paragraph{分析}
+这三个问题是同构的，都满足操作数为$2n$且限制任意时刻操作A的数目不少于操作B的数目。
+它们的答案都是$C_n$，以括号序列问题为例，通过等式~\ref{CT2}理解：
+将括号序列看做由一个可分割的序列加上一个不可分割的序列（即最外层有一对配对括号）得来，
+左边为$n_1+1$对，右边为$n_2$对，满足$n_1+n_2=n-1$，这种方案的贡献为
+$C_{n_1}C_{n_2}$。
+\subsubsection{二叉树构型计数}
+\paragraph{有$n$个节点的二叉树}
+通过等式~\ref{CT2}理解：枚举左右子树大小，满足左右子树节点数为$n-1$。
+\paragraph{有$n+1$个叶子节点的满二叉树}
+通过等式~\ref{CT3}理解：枚举左右子树叶子节点数，满足其和为$n+1$。
+\subsubsection{阶梯填充}
+用$n$个长方形填充$n*n$的阶梯的方案数为$C_n$。
 
+不严格证明：填充一个以直角顶点与阶梯顶点为对顶点的长方形，使其分为大小为
+$n_1*n_1,n_2*n_2$的两个小阶梯，满足$n_1+n_2=n-1$，分别分配$n_1,n_2$
+个长方形的份额，就成为子问题了。该分析满足等式\ref{CT2}。
+\subsubsection{凸包分割}
+将$n+2$个顶点的凸包分为三角形的方案数为$C_n$。
+
+猜想：最终将分为$n$个三角形。
+
+证明留坑待补。
+\subsubsection{圆上点连线}
+将圆上的$2n$个点两两配对连线，所连$n$条线段不相交的方案数为$C_n$。
+
+证明留坑待补。
+
+\index{*TODO:Catalan应用证明}
 上述内容参考了Wikipedia-EN\footnote{Catalan number - Wikipedia
-\url{https://en.wikipedia.org/wiki/Catalan\_number}}。
+	\url{https://en.wikipedia.org/wiki/Catalan\_number}}。

@@ -1,1 +1,43 @@
 \section{Stirling数}
+\index{S!Stirling Number}
+\subsection{第一类Stirling数}
+\newcommand{\stirlingA}[2]{\left[#1 \atop #2\right]}
+令$\stirlingA{n}{k}$为把$n$个点放到$k$个环内的方案数，有
+\begin{eqnarray*}
+    \stirlingA{n}{0}&=&0 \textrm{~for all $n\geq 1$}\\
+    \stirlingA{n}{n}&=&1 \textrm{~for all $n\geq 0$}\\
+    \stirlingA{n}{k}&=&(n-1)\stirlingA{n-1}{k}+\stirlingA{n-1}{k-1}\\
+    \sum_{i=0}^n{\stirlingA{n}{i}}&=&n!
+\end{eqnarray*}
+证明递推式：
+\begin{itemize}
+    \item 若将当前点丟给之前的环，则可以选择$p-1$个点在其右边，因此贡献
+    $(n-1)\stirlingA{n-1}{k}$。
+    \item 当前点自成一环，贡献$\stirlingA{n-1}{k-1}$。
+\end{itemize}
+\subsection{第二类Stirling数}
+\newcommand{\stirlingB}[2]{\left\{#1 \atop #2\right\}}
+令$\stirlingB{n}{k}$为把$n$个点放到$k$个集合内的方案数，有
+\begin{eqnarray}
+    \stirlingB{n}{0}&=&0 \textrm{~for all $n\geq 1$}\\
+    \stirlingB{n}{n}&=&1 \textrm{~for all $n\geq 0$}\\
+    \stirlingB{n}{k}&=&k\stirlingB{n-1}{k}+\stirlingB{n-1}{k-1}\label{SB3}\\
+    \stirlingB{n}{k}&=&\frac{1}{k!}\sum_{i=0}^k{(-1)^{k-i}{k \choose i}i^n}
+    \label{SB4}
+\end{eqnarray}
+证明等式~\ref{SB3}：
+\begin{itemize}
+    \item 若将当前点丟给之前的集合，则可以选择$k$个集合，因此贡献
+    $k\stirlingA{n-1}{k}$。
+    \item 当前点自成一集合，贡献$\stirlingB{n-1}{k-1}$。
+\end{itemize}
+
+证明~\ref{SB4}：
+考虑计算将$n$个点放入$k$个带编号集合且无空集的方案数：
+\begin{eqnarray*}
+    N&=&k^n+\sum_{i=1}^k{(-1)^i{k \choose i}(k-i)^n}
+    \textrm{~（根据定理~\ref{ExDML}）}\\
+    &=&k^n+\sum_{i=0}^{k-1}{(-1)^{k-i}{k \choose i}i^n}\\
+    &=&\sum_{i=0}^k{(-1)^{k-i}{k \choose i}i^n}
+\end{eqnarray*}
+最后变为无标号时除以$k!$即可。
