@@ -78,7 +78,7 @@ SG函数的定义如下：$SG(x)=mex(S(x))$\index{S!SpragueGrundy Function}
 	游戏的SG函数值等于各子游戏函数值的Nim和（即xor和）。
 \end{theorem}
 
-设$S_X$为$X$后继状态的集合，$b=SG(X_1)\oplus \ldots \oplus SG(X_N)$。
+设$S_X$为$X$后继状态的集合，$b=SG(X_1)\oplus \cdots \oplus SG(X_N)$。
 
 该定理可分为两个引理证明：
 
@@ -96,10 +96,10 @@ SG函数的定义如下：$SG(x)=mex(S(x))$\index{S!SpragueGrundy Function}
 	      所以$SG(X_i)\oplus d<SG(X_i)$，由假设得$\exists_{X_i'\in
 			      S_{X_i}},SG(X_i')=SG(X_i)\oplus d$。
 
-	      结合$a=b\oplus d$得$a=SG(X_1)\oplus \ldots \oplus SG(X_i')
-		      \oplus \ldots \oplus SG(X_N)$
+	      结合$a=b\oplus d$得$a=SG(X_1)\oplus \cdots \oplus SG(X_i')
+		      \oplus \cdots \oplus SG(X_N)$
 
-	      因为$X_1,\ldots,X_i',\ldots,X_N\in S_X$，所以引理~\ref{SGBL1}得证。
+	      因为$X_1,\cdots,X_i',\cdots,X_N\in S_X$，所以引理~\ref{SGBL1}得证。
 
 	\item
 	      \begin{lemma}\label{SGBL2}

@@ -1,0 +1,114 @@
+\section{快速傅里叶变换FFT}
+\subsection{FFT原理}
+FFT求多项式卷积的过程为：$\Theta(n\lg n)$求值->$\Theta(n)$点值乘法->
+$\Theta(n\lg n)$插值。
+
+$\Theta(n\lg n)$求值/插值的复杂度是在单位复数根上计算得到的。
+
+\subsubsection{单位复数根}
+
+定义{\bfseries $n$次单位复数根}是满足$\omega^n=1$的复数$\omega$，恰好有$n$个，即
+$\omega_n^k=e^{2\pi ik/n},k=0,1,\cdots,n-1$。
+
+定义{\bfseries 主$n$次单位根}$\omega_n=e^{2\pi i/n}$。
+
+下面是关于$n$次单位复数根的性质：
+
+\begin{lemma}[消去引理]\label{FFTL1}
+	对于任意整数$n\geq 0,k \geq 0,d>0$，
+	\begin{displaymath}
+		\omega_{dn}^{dk}=\omega_n^k
+	\end{displaymath}
+\end{lemma}
+证明：
+\begin{displaymath}
+	\omega_{dn}^{dk}=e^{2\pi i dk/dn}=e^{2\pi i k/n}=\omega_n^k
+\end{displaymath}
+
+\begin{inference}\label{FFTI2}
+	对于任意偶数$n>0$，有
+	\begin{displaymath}
+		\omega_n^{n/2}=\omega_2=-1
+	\end{displaymath}
+\end{inference}
+
+\begin{lemma}[折半引理]
+	对于偶数$n>0$，$n$个$n$次单位复数根的平方组成的集合为$n/2$个$n/2$
+	次单位复数根的集合。
+\end{lemma}
+证明：根据引理~\ref{FFTL1}可得$(\omega_n^k)^2=(\omega_n^{k+n/2})^2=
+	\omega_{n/2}^k$，每个$n/2$次单位复数根恰好被得到2次。
+
+\begin{lemma}[求和引理]
+	对于任意整数$n\geq 1$与不能被$n$整除的非负整数$k$，有
+	\begin{displaymath}
+		\sum_{i=0}^{n-1}{(w_n^k)^i}=0
+	\end{displaymath}
+\end{lemma}
+证明：
+\begin{displaymath}
+	\sum_{i=0}^{n-1}{(w_n^k)^i}=\frac{(w_n^k)^n-1}{w_n^k-1}=0
+\end{displaymath}
+$n$不整除$k$保证了分母不为0。
+
+\subsubsection{DFT}
+对于次数界为$n$的多项式
+\begin{displaymath}
+	A(x)=\sum_{i=0}^{n-1}{a_ix^i}
+\end{displaymath}
+其DFT为
+\begin{displaymath}
+	DFT_n(a)=(y_0,y_1,\cdots,y_{n-1})=
+	(A(\omega_n^0),A(\omega_n^1),\cdots,A(\omega_n^{n-1}))
+\end{displaymath}
+
+\subsubsection{FFT}
+FFT采用分治策略，假设$n$是2的幂（不足补0），其步骤如下：
+\begin{enumerate}
+	\item 若次数界为1，则返回$a_0$。
+	\item 定义新的次数界为$n/2$多项式
+	      \begin{eqnarray*}
+		      A^{[0]}(x)&=&a_0+a_2x+\cdots+a_{n-2}x^{n/2-1}\\
+		      A^{[1]}(x)&=&a_1+a_3x+\cdots+a_{n-1}x^{n/2-1}
+	      \end{eqnarray*}
+	      递归计算其在点$(\omega_n^0)^2,(\omega_n^1)^2,\cdots,(\omega_n^{n-1})^2$
+	      的值（实际上递归只求了前一半）。
+	\item 该多项式满足等式\begin{equation}\label{RFFTE}
+		      A(x)=A^{[0]}(x^2)+xA^{[1]}(x^2)
+	      \end{equation}
+	      可利用递归计算的值合并。
+	      对于$k=0,1,\cdots,n/2-1$，
+	      \begin{eqnarray*}
+		      y_k&=&y_k^{[0]}+\omega_n^ky_k^{[1]}\\
+		      y_{k+n/2}&=&y_k^{[0]}-\omega_n^ky_k^{[1]}
+	      \end{eqnarray*}
+	      正确性证明：
+	      \begin{eqnarray*}
+		      y_k&=&y_k^{[0]}+\omega_n^ky_k^{[1]}\\
+		      &=&A^{[0]}(\omega_{n/2}^k)+\omega_n^kA^{[1]}(\omega_{n/2}^k)\\
+		      &=&A^{[0]}(\omega_n^{2k})+\omega_n^kA^{[1]}(\omega_n^{2k})
+		      \textrm{~（根据引理~\ref{FFTL1}）}\\
+		      &=&A(\omega_n^k) \textrm{~（根据式~\ref{RFFTE}）}\\
+		      y_{k+n/2}&=&y_k^{[0]}-\omega_n^ky_k^{[1]}\\
+		      &=&A^{[0]}(\omega_{n/2}^k)+\omega_n^{k+n/2}A^{[1]}(\omega_{n/2}^k)
+		      \textrm{~（根据推论~\ref{FFTI2}）}\\
+		      &=&A^{[0]}(\omega_n^{2k+n})+\omega_n^{k+n/2}A^{[1]}(\omega_n^{2k+n})
+		      \textrm{~（根据引理~\ref{FFTL1}与$\omega_n^n=1$）}\\
+		      &=&A(\omega_n^{k+n/2}) \textrm{~（根据式~\ref{RFFTE}）}\\
+	      \end{eqnarray*}
+\end{enumerate}
+\subsubsection{逆DFT}
+\begin{theorem}
+	\begin{displaymath}
+		DFT_n^{-1}(a)=\frac{1}{n}DFT_n(DFT_n(a))
+	\end{displaymath}
+\end{theorem}
+证明：
+
+以上内容来自算法导论\cite{ITA3}第30章 多项式与快速傅里叶变换。
+\subsection{迭代FFT实现}
+\subsubsection{单位复数根预处理}
+\subsubsection{离线位逆序}
+\subsubsection{在线位逆序}
+\subsection{实序列DFT}
+\subsection{MTT之拆系数FFT}

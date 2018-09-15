@@ -12,7 +12,61 @@
 		{n \choose m}\equiv\prod_{i=0}^k{n_i \choose m_i} \pmod{p}
 	\end{displaymath}
 \end{theorem}
-
+Nathan Fine的证明：
+对于质数$p$与整数$n$满足$1\leq n <p$，有
+\begin{lemma}
+	\begin{displaymath}
+		p|{p \choose n}=\frac{p\cdot(p-1)\cdots(p-n+1)}{n\cdot(n-1)\cdots 1}
+	\end{displaymath}
+\end{lemma}
+证明：注意到$p$是质数且与分母的每一个数互质，不可被分母的因子约去，所以最终值必有因子$p$。
+那么可用普通生成函数表达为：
+\begin{displaymath}
+	(1+x)^p\equiv 1+x^p \pmod{p}
+\end{displaymath}
+可归纳推广为
+\begin{inference}\label{LucasI}
+	\begin{displaymath}
+		(1+x)^{p^i}\equiv 1+x^{p^i} \pmod{p},i\in \mathbb{N}
+	\end{displaymath}
+\end{inference}
+利用生成函数证明：
+\begin{eqnarray*}
+	\sum_{m=0}^n{{n \choose m}x^m}&=&(1+x)^n\\
+	&=&\prod_{i=0}^k{((1+x)^{p^i})^{n_i}}\\
+	&\equiv&\prod_{i=0}^k{(1+x^{p^i})^{n_i}} \textrm{~（根据推论~\ref{LucasI}）}\\
+	&=&\prod_{i=0}^k{\left(\sum_{m_i=0}^{n_i}
+	{n_i \choose m_i}x^{p_im_i}\right)}\\
+	&=&\prod_{i=0}^k{\left(\sum_{m_i=0}^{p-1}
+	{n_i \choose m_i}x^{p_im_i}\right)}\\
+	&=&\sum_{m=0}^n{\left(\prod_{i=0}^k{n_i \choose m_i}\right)x^m} \pmod{p}
+\end{eqnarray*}
 以上内容参考了Wikipedia-EN\footnote{Lucas's theorem - Wikipedia
 	\url{https://en.wikipedia.org/wiki/Lucas\%27s\_theorem}}
 \subsection{ExLucas}
+对于模数为合数的情况，将$p$质因数分解，即
+$\displaystyle p=\sum_{i=1}^k{p_i^{c_i}}$。
+然后用求出${n \choose m} \bmod{p_i^{c_i}}$的值，最后CRT合并即可。
+
+首先将求组合数转换为求阶乘，对于$n!$提出p的倍数，
+即\begin{displaymath}
+	n!=\prod_{i=1}^n{i^{[(n,i)=1]}}\cdot p^{[\frac{n}{p}]}\cdot
+	\prod_{i=1}^{[\frac{n}{p}]}i
+\end{displaymath}
+\begin{itemize}
+	\item 第一部分：前$[\frac{n}{p_i^{c_i}}]$块的答案相等，计算一块后快速幂即可，
+	      最后不完整的一块暴力计算。
+	\item 第二部分：由于分子分母都有因子$p$，单独拆出来算。
+
+	统计次数代码：
+	\begin{lstlisting}
+		int cnt = 0;
+		for(int i=n/p;i;i/=p)
+			cnt+=i;
+	\end{lstlisting}
+	\item 第三部分：成为了一个新阶乘，递归解决。
+\end{itemize}
+对于单个质数幂计算复杂度$O(p_i^{c_i})$。
+
+以上内容参考了Candy?的博客\footnote{[Lucas定理]【学习笔记】 - Candy?
+	\url{https://www.cnblogs.com/candy99/p/6637629.html}}。
