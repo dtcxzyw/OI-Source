@@ -1,4 +1,53 @@
 \section{快速数论变换NTT}
 \subsection{NTT原理}
+NTT的原理与FFT类似，即找到单位根$x$满足$x^n\equiv 1 \pmod{p}$。
+NTT模数$p$需满足$p$为质数且$p=r\cdot 2^k+1$。
+
+根据定理~\ref{FLT}可知若模数$p$为质数则有$x^{p-1}\equiv 1 \pmod{p}$,
+所以当$n|(p-1)$时才能进行NTT。
+
+根据~\ref{PrimitiveRoot}节所述，$p$必有原根，设$p$的原根为$g$，则
+$g^\frac{p-1}{n}$就是{\bfseries 主$n$次单位根}，$n$个单位根即为
+$w_n^k=g^{k\cdot \frac{p-1}{n}}$。
+
+其余部分与FFT相同。
+
 \subsection{NTT实现}
+NTT仅预处理单位复数根部分不同，以模998244353为例：
+\begin{lstlisting}
+int tot, root[size], invR[size];
+void init(int n) {
+    const int g = 3;
+    tot = n;
+    Int64 base = powm(g, (mod - 1) / n);
+    Int64 invBase = powm(base, mod - 2);
+    root[0] = invR[0] = 1;
+    for (int i = 1; i < n; ++i)
+        root[i] = root[i - 1] * base % mod;
+    for (int i = 1; i < n; ++i)
+        invR[i] = invR[i - 1] * invBase % mod;
+}
+\end{lstlisting}
+\subsection{NTT常见模数}
+\begin{itemize}
+    \item $469762049=7*2^26+1$。
+    \item $998244353=119*2^23+1$。
+    \item $1004535809=479*2^21+1$，加起来不爆int。
+    \item $2281701377=17*2^27+1$，平方恰好不爆long long。
+\end{itemize}
+\index{*Constant!NTT模数P=\{469762049,998244353,1004535809,2281701377\},g=3}
+它们的原根均为3。
 \subsection{MTT之三模数NTT}
+选取3个模数，比如\{469762049，998244353,1004535809\}，它们的乘积大于卷积
+过程中最大的数，分别以这三个数为模数求NTT，最后解同余方程组即可。
+
+但是使用CRT求解会爆long long，因此先合并前两项，得到
+\begin{eqnarray*}
+    x&\equiv&n_1 \pmod{p_1}\\
+    x&\equiv&n_2 \pmod{p_2}
+\end{eqnarray*}
+设$x=k_1p_1+n_1=k_2p_2+n_2$，由于$k_1<p_2$，我们可以求解
+$k_1p_1\equiv n_2-n_1 \pmod{p_2}$得到$k_1$，带入原式求出$x \bmod{p}$的值。
+
+该方法来自AntiLeaf\footnote{COGS2294 释迦 - AntiLeaf
+\url{http://www.cnblogs.com/hzoier/p/6441967.html}}

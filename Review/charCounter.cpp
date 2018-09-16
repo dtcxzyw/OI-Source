@@ -11,7 +11,7 @@ int main() {
         wchar_t c = in.get();
         if(iswgraph(c)) {
             ++cntA;
-            if(!isalnum(c) && !ispunct(c))
+            if(0x4E00 <= c && c <= 0x9FA5)
                 ++cntB;
         }
     }

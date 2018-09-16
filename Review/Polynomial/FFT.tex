@@ -1,4 +1,5 @@
 \section{快速傅里叶变换FFT}
+\index{F!Fast Fourier Transformation}
 \subsection{FFT原理}
 FFT求多项式卷积的过程为：$\Theta(n\lg n)$求值->$\Theta(n)$点值乘法->
 $\Theta(n\lg n)$插值。
@@ -39,7 +40,7 @@ $\omega_n^k=e^{2\pi ik/n},k=0,1,\cdots,n-1$。
 证明：根据引理~\ref{FFTL1}可得$(\omega_n^k)^2=(\omega_n^{k+n/2})^2=
 	\omega_{n/2}^k$，每个$n/2$次单位复数根恰好被得到2次。
 
-\begin{lemma}[求和引理]
+\begin{lemma}[求和引理]\label{FFTL4}
 	对于任意整数$n\geq 1$与不能被$n$整除的非负整数$k$，有
 	\begin{displaymath}
 		\sum_{i=0}^{n-1}{(w_n^k)^i}=0
@@ -52,6 +53,7 @@ $\omega_n^k=e^{2\pi ik/n},k=0,1,\cdots,n-1$。
 $n$不整除$k$保证了分母不为0。
 
 \subsubsection{DFT}
+\index{D!Discrete Fourier Transform}
 对于次数界为$n$的多项式
 \begin{displaymath}
 	A(x)=\sum_{i=0}^{n-1}{a_ix^i}
@@ -99,16 +101,164 @@ FFT采用分治策略，假设$n$是2的幂（不足补0），其步骤如下：
 \end{enumerate}
 \subsubsection{逆DFT}
 \begin{theorem}
-	\begin{displaymath}
-		DFT_n^{-1}(a)=\frac{1}{n}DFT_n(DFT_n(a))
-	\end{displaymath}
+	对于范德蒙德矩阵$V_n$满足$v_{ij}=\omega_n^{ij}$，
+	其逆矩阵$V_n^{-1}$满足$v^{-1}_{ij}=\omega_n^{-ij}/n$（矩阵下标从0开始）。
 \end{theorem}
 证明：
+\begin{eqnarray*}
+	[V_nV_n^{-1}]_{ij}&=&\sum_{k=0}^{n-1}{\omega_n^{ik}\omega_n^{-kj}/n}\\
+	&=&\sum_{k=0}^{n-1}{\omega_n^{k(i-j)}/n}\\
+	&=&[i=j]\textrm{~（根据引理~\ref{FFTL4}）}\\
+	&\Rightarrow& V_nV_n^{-1}=I_n
+\end{eqnarray*}
+所以逆DFT的矩阵就是DFT矩阵的$\frac{1}{n}$，用$\omega_n^{-1}$代替$\omega_n$，
+对多项式的DFT做一次DFT后除以$n$即可得到原多项式。
 
 以上内容来自算法导论\cite{ITA3}第30章 多项式与快速傅里叶变换。
 \subsection{迭代FFT实现}
 \subsubsection{单位复数根预处理}
-\subsubsection{离线位逆序}
-\subsubsection{在线位逆序}
-\subsection{实序列DFT}
+一般可以确定FFT所需最大规模，在所有FFT前预处理即可。
+\begin{lstlisting}
+typedef double FT;
+typedef std::complex<FT> Complex;
+int tot;
+Complex root[size],invR[size];
+void init(int n) {
+	tot=n;
+	FT base=2.0*acos(-1.0)/n;
+	for(int i=0;i<n;++i) {
+		root[i]=Complex(cos(base*i),sin(base*i));
+		invR[i]=conj(root[i]);
+	}
+}
+\end{lstlisting}
+根据引理~\ref{FFTL1}，$root[tot/n*k]=w_n^k$。
+\subsubsection{离线位逆序置换}
+为了做迭代FFT，我们需要置换原多项式的系数，第$i$个系数被换到基于$2^k$的$i$的位逆序上。
+若FFT的规模不变，比如求多项式乘法之类的简单问题，可预处理位逆序置换数组后，按照数组下标
+置换即可（规定$i<rev[i]$保证只置换1次）。
+\begin{lstlisting}
+int rev[size];
+void initRev(int k) {
+	rev[0]=0;
+	int end=1<<k;
+	for(int i=1;i<end;++i)
+		rev[i]=rev[i>>1]>>1|(i&1)<<(k-1);
+}
+\end{lstlisting}
+\subsubsection{在线位逆序置换}
+在分治FFT时，需要不同规模的位逆序置换，预处理到数组上显然不适用，这里使用时间复杂度
+$O(n)$，空间复杂度$O(1)$的在线算法。
+\begin{lstlisting}
+void rev(int* A,int n) {
+	for(int i=0,j=0;i<n;++i) {
+		if(i>j)std::swap(A[i],A[j]);
+		int l=n>>1;
+		while((j^=l)<l)l>>=1;//key
+	}
+}
+\end{lstlisting}
+在每轮循环开始时，$i$与$j$互为位逆序。
+代码中key部分是整个算法的关键，$i$的递增就是正向二进制加法，$j$就要
+进行反向二进制加法，即从高到低找到第1个0，从高到低将这一段取反。
+
+时间复杂度证明：设$n=2^k$，按$while$迭代次数分类，有
+\begin{eqnarray*}
+	T(n)&=&\sum_{i=1}^k{i\cdot 2^{k-i}}\\
+	&=&n\sum_{i=1}^k{i\cdot 2^{-i}}\\
+	&=&n\sum_{i=1}^k{\sum_{j=i}^k{2^{-j}}}\\
+	&<&n\sum_{i=1}^k{2^{1-i}}\\
+	&<&2n\Rightarrow T(n)=O(n)
+\end{eqnarray*}
+\subsubsection{迭代FFT}
+考虑每一层递归树，发现最底层的递归树是按位逆序顺序排的（每一次递归相当于一次01划分）。
+若系数数组按照这种顺序存储，则可以很快地找到每一层对应的位置。
+
+迭代FFT的计算顺序是自底向上的，代码如下：
+
+\begin{lstlisting}
+void FFT(int n, Complex *A, Complex *w) {
+    for (int i = 0, j = 0; i < n; ++i) {
+        if (i > j) std::swap(A[i], A[j]);
+        int l = n >> 1;
+        while ((j ^= l) < l) l >>= 1;
+    }
+    for (int i = 2; i <= n; i <<= 1) {
+        int m = i >> 1, fac = tot / i;
+        for (int j = 0; j < n; j += i)
+            for (int k = 0; k < m; ++k) {
+                Complex t = A[j + k + m] * w[k * fac];
+                A[j + k + m] = A[j + k] - t;
+                A[j + k] += t;
+            }
+    }
+}
+\end{lstlisting}
+首先做位逆序置换，然后从倒数第二层开始向上递推，$i$表示当前层每一块的长度，$m$是下一层
+每一块的长度，$fac$是单位复数根缩放系数，$j$是块编号，内层循环与递归FFT合并答案的方法
+相同，注意蝴蝶操作的求值顺序。
+
+以上内容参考了Miskcoo的博客\footnote{从多项式乘法到快速傅里叶变换 – Miskcoo's Space
+\url{http://blog.miskcoo.com/2015/04/polynomial-multiplication-and-fast-fourier-transform}}。
+\subsection{实序列DFT}\label{RDFT}
+对于多项式乘法这类问题，常规方法需要对每个序列做1次DFT。但由于我们
+只在实数域上做FFT，可以考虑将两个实序列合并为一个复序列，
+直接使用1次DFT以及一点后处理得到两个实序列的DFT。
+
+记大小为$N$的序列$a$的DFT为$A$,考虑序列$A$的共轭为$\overline{A}$:
+\begin{displaymath}
+	\overline{A(n)}=\sum_{k=0}^{N-1}{\overline{a(k)}\cdot\omega_N^{-nk}}=
+	\sum_{k=0}^{N-1}{\overline{a(k)}\cdot\omega_N^{K(N-n)}}
+	n=0,1,\cdots,N-1
+\end{displaymath}
+
+对于实序列$a$，有$a(n)=\overline{a(n)}$，由此可得$\overline{A(n)}=A(N-n)$，
+即实序列的DFT共轭对称。
+
+令$z(i)=x(i)+i\cdot y(i)$，则$Z(n)=X(n)+i\cdot Y(n)$，
+记$Z(n)$的实部与虚部分别为$X(n)$与$Y(n)$，有
+\begin{eqnarray*}
+	\overline{Z(N-n)}&=&\overline{X(N-n)+i\cdot Y(N-n)}\\
+	&=&\overline{A(N-n)+i\cdot B(N-n)}\\
+	\Rightarrow X(n)-i\cdot Y(n)&=&A(N-n)-i\cdot B(N-n)
+\end{eqnarray*}
+
+联立解得
+\begin{eqnarray*}
+	2X(n)&=&(A(n)+A(N-n))+i\cdot (B(n)-B(N-n))\\
+	2Y(n)&=&(B(n)+B(N-n))-i\cdot (A(n)-A(N-n))
+\end{eqnarray*}
+
+对复序列$z(n)$的DFT后处理一下就可以得到$X(n)$与$Y(n)$(注意要对$n=0$
+进行特别处理)。
+
+代码如下：
+\begin{lstlisting}
+FFT(p,A,root);
+X[0] = A[0].real();
+Y[0] = A[0].imag();
+for (int i = 1; i < p; ++i) {
+	FT x1 = A[i].real(), y1 = A[i].imag();
+	FT x2 = A[p - i].real(), y2 = A[p - i].imag();
+	X[i] = Complex((x1 + x2) * 0.5, (y1 - y2) * 0.5);
+	Y[i] = Complex((y1 + y2) * 0.5, (x2 - x1) * 0.5);
+}
+\end{lstlisting}
+
+以上内容参考了Miskcoo的博客\footnote{实序列离散傅里叶变换的快速算法 – Miskcoo's Space
+\url{http://blog.miskcoo.com/2018/01/real-dft}}。
 \subsection{MTT之拆系数FFT}
+MTT主要用来解决模数不满足NTT条件的卷积问题，可以使用拆系数FFT的实数运算来
+绕开限制。
+
+设模数为$M$,解决方法是找一个$k\geq\sqrt{M}$，将序列$a(n)$拆为2个新序列
+$a_0(n)=a(n)/p,a_1(n)=a(n)\% p$，两两相乘后按照系数合并即可，共4次DFT，
+4次IDFT。
+
+优化：
+\begin{itemize}
+	\item 注意到这4个多项式均为实序列，所以可按照~\ref{RDFT}节中所述方法
+	仅使用2次DFT与2次IDFT。
+	\item 合并时有两个多项式的系数均为$k$，可以加在一起IDFT，
+	使用4次DFT与3次IDFT。
+\end{itemize}
