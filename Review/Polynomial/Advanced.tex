@@ -1,10 +1,70 @@
 \section{多项式高级操作}
-\subsection{Poly模块}
 \subsection{牛顿迭代法}
+已知函数$G(z)$，求函数$F(z) \bmod{z^n}$满足$G(F(z))\equiv 0 \pmod{z^n}$。
+
+令$n=2^t$，若$n$不为2的幂，补齐后截断即可。
+
+当$t=0$时，简单地令$F(z)$的常数项为0。
+
+若已知$G(F_0(z)) \equiv 0\pmod{z^{2^t}}$，
+可以计算$G(F(z))$在$F_0(z)$上的泰勒展开：
+\begin{displaymath}
+    G(F(z))=\sum_{i=0}^\infty{\frac{G^{(i)}(F_0(z))}{i!}\cdot (F(z)-F_0(z))^i}
+\end{displaymath}
+由于$F(z)$与$F_0(z)$后$2^t$项均相等，所以它们之差的平方的最小非0项次数$\geq 2^{t+1}$，
+因此仅前两项有效，即
+\begin{displaymath}
+    G(F(z))\equiv G(F_0(z))+G'(F_0(z))(F(z)-F_0(z)) \pmod{z^{2^{t+1}}}
+\end{displaymath}
+结合$G(F(z))\equiv 0 \pmod{z^{2^{t+1}}}$可得到新的$F_0(z)$:
+\begin{displaymath}
+    F(z)\equiv F_0(z)-\frac{G(F_0(z))}{G'(F_0(z))} \pmod{z^{2^{t+1}}}
+\end{displaymath}
+这就是牛顿迭代法。
+\subsection{多项式开方}
+对于给定的$A(z)$，求$F(z) \pmod z^n$，使得$F^2(z)\equiv A(z)\pmod{z^n}$。
+
+构造方程$F^2(z)-A(z)\equiv 0\pmod{z^n}$，
+同理可得
+\begin{eqnarray*}
+    F(z)&\equiv& F_0(z)-\frac{F_0(z)^2-A(z)}{2F_0(z)} \pmod{z^{2^{t+1}}}\\
+    &\equiv& \frac{F_0(z)^2+A(z)}{2F_0(z)} \pmod{z^{2^{t+1}}}
+\end{eqnarray*}
+
+注意当$t=0$时可能需要用二次剩余在模意义下开根。
+
 \subsection{多项式求逆}
+对于给定的$A(z)$，求$F(z) \pmod z^n$，使得$F(z)\cdot A(z)\equiv 1\pmod{z^n}$。
+
+构造方程$F(z)\cdot A(z)-1\equiv 0\pmod{z^n}$，
+同理可得
+\begin{eqnarray*}
+    F(z)&\equiv& F_0(z)-\frac{F_0(z)\cdot A(z)-1}{A(z)} \pmod{z^{2^{t+1}}}\\
+    &\equiv& F_0(z)-(F_0(z)\cdot A(z)-1)\cdot{F_0(z)} \pmod{z^{2^{t+1}}}
+    \textrm{～（考虑最小非0项可知可乘$F_0(z)$代替$F(z)$）}\\
+    &\equiv& 2F_0(z)-F_0^2(z)\cdot A(z) \pmod{z^{2^{t+1}}}
+\end{eqnarray*}
 \subsection{多项式取模}
-\subsection{多项式快速幂}
 \subsection{多项式ln}
 \subsection{多项式exp}
-\subsection{分治FFT}
+\subsection{多项式快速幂}
+使用常规快速幂可以得到$O(n\lg n\lg k)$的复杂度。
+但是通过如下变形：
+\begin{displaymath}
+    F^k(z)=e^{k \ln F(z)}
+\end{displaymath}
+使用多项式ln/exp可以得到$O(n\lg n)$的复杂度。
+\subsection{多项式三角函数}
+由欧拉公式可得
+\begin{displaymath}
+    e^{F(z)i}=\cos F(z)+\sin F(z) i
+\end{displaymath}
+在复数域上做多项式exp即可。
+\subsection{进制转换}
 \subsection{多项式多点求值/插值}
+\subsection{组合数取模}
+以上内容参考了picks
+\footnote{Newton's Method of Polynomial « Picks's Blog
+\url{http://picks.logdown.com/posts/209226-newtons-method-of-polynomial}}
+和Miskcoo\footnote{牛顿迭代法在多项式运算的应用 – Miskcoo's Space
+\url{http://blog.miskcoo.com/2015/06/polynomial-with-newton-method}}的博客。

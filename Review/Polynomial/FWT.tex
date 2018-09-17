@@ -1,9 +1,42 @@
 \section{快速沃尔什变换FWT}
+\index{F!Fast Walsh–Hadamard Transform}
 \subsection{FWT原理}
-FWT主要用来求下列三种卷积：
+FWT主要用来求下列卷积：
+\begin{displaymath}
+    z_n=\sum_{i\oplus j=n}{a_ib_j}
+\end{displaymath}
+其中$\oplus$为二元位运算符。
+
+其原理与FFT相同，关键在于蝴蝶操作。
+
+序列可表示为$A=(A_0,A_1)$，01表示当前处理的位，只需找到对于$C=A\otimes B$，
+有$FWT(C)=FWT(A)*FWT(B)$即可，由$UFWT(FWT(A))=A$可推出其逆变换。
+
+现场推导时可以仅考虑由倒数第二层合并至倒数第三层的情况，其余自底向上可以归纳证明。
+
+\subsubsection{and}
+由$C=(A_0*B_0+A_0*B_1+A_1*B_0,A_1*B_1)$
+可构造出
 \begin{eqnarray*}
-    z_n&=&\sum_{i\&j=n}{a_ib_j}\\
-    z_n&=&\sum_{i|j=n}{a_ib_j}\\
-    z_n&=&\sum_{i\land j=n}{a_ib_j}
+    FWT_{and}(A)&=&(FWT_{and}(A_0)+FWT_{and}(A_1),FWT_{and}(A_1))\\
+    UFWT_{and}(A)&=&(UFWT_{and}(A_0)-UFWT_{and}(A_1),UFWT_{and}(A_1))
 \end{eqnarray*}
+\subsubsection{or}
+\begin{eqnarray*}
+    FWT_{or}(A)&=&(FWT_{or}(A_0),FWT_{or}(A_1)+FWT_{or}(A_0))\\
+    FWT_{or}(A)&=&(UFWT_{or}(A_0),UFWT_{or}(A_1)-UFWT_{or}(A_0))
+\end{eqnarray*}
+\subsubsection{xor!!!}
+\begin{eqnarray*}
+    FWT_{xor}(A)&=&(FWT_{xor}(A_0)+FWT_{xor}(A_1),FWT_{xor}(A_0)-FWT_{xor}(A_1))\\
+    FWT_{xor}(A)&=&\left(\frac{UFWT_{xor}(A_0)+UFWT_{xor}(A_1)}{2},
+    \frac{UFWT_{xor}(A_0)-UFWT_{xor}(A_1)}{2}\right)
+\end{eqnarray*}
+\subsection{nand,nor,nxor}
+求出$\oplus$为and,or,xor时的FWT后按取反交换即可。
+
+以上内容参考了picks的博客
+\footnote{Fast Walsh-Hadamard Transform « Picks's Blog
+    \url{http://picks.logdown.com/posts/179290-fast-walsh-hadamard-transform}}。
 \subsection{FWT实现}
+\lstinputlisting[title=FWT]{Source/Templates/FWT.cpp}

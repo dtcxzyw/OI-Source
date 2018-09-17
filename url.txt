@@ -89,7 +89,7 @@ fhqtreap http://www.yhzq-blog.cc/fhq-treap%E6%80%BB%E7%BB%93/ https://blog.csdn.
 猫锟的blog http://immortalco.blog.uoj.ac
 多项式高级操作 https://www.cnblogs.com/joyouth/p/5604618.html https://blog.csdn.net/semiwaker/article/details/73251486
 https://cnyali-lk.com/%E5%A4%9A%E9%A1%B9%E5%BC%8F%E5%B0%8F%E7%BB%93/
-FWT https://blog.csdn.net/xuanandting/article/details/70991372
+FWT https://www.cnblogs.com/cjyyb/p/9065615.html
 SBT https://blog.csdn.net/murmured/article/details/17029131
 treap https://blog.csdn.net/acdreamers/article/details/11309971
 rand seed=seed*48271%2147483647
