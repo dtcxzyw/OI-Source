@@ -1,4 +1,7 @@
 \section{多项式高级操作}
+{\bfseries 警告：慎卡常导致编码/调试困难。}
+
+{\bfseries 优化：分治到小规模时直接暴力。}
 \subsection{牛顿迭代法}
 已知函数$G(z)$，求函数$F(z) \bmod{z^n}$满足$G(F(z))\equiv 0 \pmod{z^n}$。
 
@@ -45,8 +48,50 @@
     &\equiv& 2F_0(z)-F_0^2(z)\cdot A(z) \pmod{z^{2^{t+1}}}
 \end{eqnarray*}
 \subsection{多项式取模}
+给定一个$n$次多项式$A(z)$与$m$次多项式$B(z)$（$m\leq n$），
+求多项式$D(z),R(z)$满足
+\begin{displaymath}
+    A(z)=D(z)B(z)+R(z),deg(D)\leq n-m,deg(R)<m
+\end{displaymath}
+记$n$次多项式$A(z)$的系数翻转$A^R(z)=z^nA(\frac{1}{z})$。
+
+令$deg(D)=n-m,deg(R)=m-1$，不足高位补0。
+将原方程的$z$全部换成$\frac{1}{z}$，然后乘上$z^n$，有
+\begin{eqnarray*}
+    z^nA(\frac{1}{z})&=&z^nD(\frac{1}{z})B(\frac{1}{z})+R(\frac{1}{z})\\
+    A^R(z)&=&D^R(z)B^R(z)+z^{n-m+1}R^R(z)
+\end{eqnarray*}
+由于$deg(D^R)\leq n-m$，所以可以在模$z^(n-m+1)$的情况下求解$D^R(z)$，
+翻转后带入原方程求出$R(z)$。
+
+\subsection{多项式求导与积分}
+根据$(x^n)'=nx^{n-1}$可得
+\begin{eqnarray*}
+    F'(z)&=&\sum_{i=1}^{n-1}{ic_iz^{i-1}}\\
+    \int F(z)&=&\sum_{i=1}^{n-1}{\frac{c_{i-1}}{i}\cdot z^i}
+\end{eqnarray*}
+时间复杂度$O(n)$。
 \subsection{多项式ln}
+考虑对$\ln A(z)$求导：
+\begin{displaymath}
+    (\ln A(z))'=\frac{A'(z)}{A(z)}
+\end{displaymath}
+所以有
+\begin{displaymath}
+    \ln A(z)=\int \frac{A'(z)}{A(z)}
+\end{displaymath}
+由于要求逆元，时间复杂度$O(n \lg n)$。
 \subsection{多项式exp}
+先进行如下变换：
+\begin{displaymath}
+    F(z)-e^{A(z)}\equiv 0 \pmod{z^n}
+    \Rightarrow \ln F(z)-A(z)\equiv 0 \pmod{z^n}
+\end{displaymath}
+直接牛顿迭代法得
+\begin{eqnarray*}
+    F(z)&=&F_0(z)-(\ln F_0(z)-A(z))F_0(z)\\
+    &=&F_0(z)(1-\ln F_0(z)+A(z))
+\end{eqnarray*}
 \subsection{多项式快速幂}
 使用常规快速幂可以得到$O(n\lg n\lg k)$的复杂度。
 但是通过如下变形：
@@ -61,10 +106,73 @@
 \end{displaymath}
 在复数域上做多项式exp即可。
 \subsection{进制转换}
-\subsection{多项式多点求值/插值}
+将$A$进制数转换为$B$进制数。
+
+$A$进制数可表示为$\displaystyle \sum_{i=0}^n{a_iA^i}$，求出其在
+$B$进制下的值。
+
+对其分治，即
+\begin{displaymath}
+    \sum_{i=0}^n{a_iA^i}=\sum_{i=0}^{\frac{n}{2}-1}{a_iA^i}
+    +A^{\frac{n}{2}}\sum_{i=0}^{\frac{n}{2}}{a_{i+\frac{n}{2}}A^i}
+\end{displaymath}
+
+预处理出$A^i$对应的$B$进制数，然后分治即可，FFT优化右边的卷积。
+
+时间复杂度$O(n \lg n)$。
+
+\subsection{多项式多点求值}
+已知$A(z)$与$n$个点$z_0,z_1,\cdots,z_{n-1}$，
+求$A(z_0),A(z_1),\cdots,A(z_{n-1})$。
+
+将要求的$x$分为两半，那么左右两半对应的插值多项式的次数为$[\frac{n}{2}]$，
+只要求出这两个插值多项式后递归计算即可。
+
+对于左半部分，考虑多项式$\displaystyle B(z)=\prod_{i=0}^
+{[\frac{n}{2}]}(z-z_i)$，满足$deg(B)=[\frac{n}{2}]$。
+令$A(z)=D(z)B(z)+R(z)$，当$z$为左半部分中的点时，$D(z)B(z)$为0，即
+$A(z)=R(z)$。那么可以两边同时模$B(z)$，达到次数减半的效果。
+右边部分类似。
+
+{\bfseries 注意$B(z)$要$O(n\lg^2 n)$分治预处理，空间$O(n\lg n)$}。
+
+时间复杂度$O(n\lg^2n)$。
+\subsection{多项式多点插值}
+
+对待插值点分治，假设求出了左半部分插值多项式$A_{left}(z)$，构造出左半部分的$B(z)$
+使其满足$A(z)=A_{left}(z)+A_{right}(z)B(z)$，那么左半部分的点都将在$A(z)$上。
+仅考虑右半部分即可：
+\begin{displaymath}
+    \forall(x_i,y_i)\in P_{right},y_i=A_{left}(x_i)+A_{right}(x_i)B(x_i)
+\end{displaymath}
+化简得
+\begin{displaymath}
+    A_{right}(x_i)=\frac{y_i-A_{left}(x_i)}{B(x_i)}
+\end{displaymath}
+那么可利用多点求值得到一组新的插值点，递归求解。
+
+求出$A_{right}(z)$后合并即可，时间复杂度$O(n \lg^3 n)$。
 \subsection{组合数取模}
+
 以上内容参考了picks
-\footnote{Newton's Method of Polynomial « Picks's Blog
-\url{http://picks.logdown.com/posts/209226-newtons-method-of-polynomial}}
-和Miskcoo\footnote{牛顿迭代法在多项式运算的应用 – Miskcoo's Space
-\url{http://blog.miskcoo.com/2015/06/polynomial-with-newton-method}}的博客。
+\footnote{
+Newton's Method of Polynomial « Picks's Blog
+\\\url{http://picks.logdown.com/posts/209226-newtons-method-of-polynomial}
+
+Positional Notation Conversion « Picks's Blog
+\\\url{http://picks.logdown.com/posts/208342-positional-notation-conversion}
+
+Binomial Coefficient Modulo Prime « Picks's Blog
+\\\url{http://picks.logdown.com/posts/245545-binomial-coefficient-modulo-prime}
+
+}
+和Miskcoo\footnote{
+牛顿迭代法在多项式运算的应用 – Miskcoo's Space
+\\\url{http://blog.miskcoo.com/2015/06/polynomial-with-newton-method}
+
+多项式除法及求模 – Miskcoo's Space
+\\\url{http://blog.miskcoo.com/2015/05/polynomial-division}
+
+多项式的多点求值与快速插值 – Miskcoo's Space
+\\\url{http://blog.miskcoo.com/2015/05/polynomial-multipoint-eval-and-interpolation}
+}的博客。
