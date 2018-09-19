@@ -1,0 +1,60 @@
+\section{高斯消元}
+\subsection{变换为上三角矩阵}
+高斯消元的思路很简单：每次通过初等变换消去第$i$行第$i$列下面的项，
+最终变换为一个上三角矩阵。
+\begin{lstlisting}[title=gauss]
+typedef double FT;
+const FT eps=1e-8;
+FT A[size][size];
+bool gauss(int n) {
+    for(int i=1;i<=n;++i) {
+        int x=i;
+        for(int j=i+1;j<=n;++j)
+            if(fabs(A[j][i])>fabs(A[x][i]))
+                x=j;
+        if(fabs(A[x][i])<eps)return false;
+        if(x!=i) {
+            for(int j=i;j<=n;++j)
+                std::swap(A[i][j],A[x][j]);
+        }
+        for(int j=i+1;j<=n;++j) {
+            FT fac=A[j][i]/A[i][i];
+            for(int k=i;k<=n;++k)
+                A[j][k]-=fac*A[i][k];
+        }
+    }
+    return true;
+}
+\end{lstlisting}
+时间复杂度$O(n^3)$。
+\subsubsection{精度}
+对于实数运算，选择绝对值最大数作为主元，以减小误差。
+\subsubsection{优化}
+可以观察矩阵的特殊性来优化消元复杂度，对于方程间联系不大的情况使用
+迭代解小规模线性方程组。
+\subsection{求解线性方程组}\label{LSE}
+即求解$Ax=b$的向量$x$。
+注意到上三角矩阵的最后一行是一元方程，解出后倒数第二行还是是一元方程，所以不断逆推即可。
+注意对矩阵$A$的操作也要应用到向量$b$上（两边同时乘上变换矩阵）。
+时间复杂度$O(n^2)$。
+\begin{lstlisting}
+for(int i=n;i>=1;--i) {
+    FT sum=B[i];
+    for(int j=i+1;j<=n;++j)
+        sum-=A[i][j]*X[j];
+    X[i]=sum/A[i][i];
+}
+\end{lstlisting}
+\subsection{求解逆矩阵}\label{InvMatGauss}
+设将$A$变换为上三角矩阵的变换矩阵为$P$，求逆矩阵即求解方程$PAA^{-1}=PI$，
+由矩阵乘法的定义可知，将$A^{-1}$与$PI$按列拆分，即得到$(PA)A_i^{-1}=(PI)_i$
+的形式，按照求解线性方程组的方法做即可。
+
+由于要额外维护$PI$，所以常数较LUP分解大。
+
+\subsubsection{板子}
+
+【P4783】【模板】矩阵求逆 - 洛谷
+\footnote{\url{https://www.luogu.org/problemnew/show/P4783}}
+\lstinputlisting[title=InvMatGauss]{LinearAlgebra/InvMatGauss.cpp}
+时间复杂度$O(n^3)$。

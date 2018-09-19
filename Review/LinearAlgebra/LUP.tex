@@ -1,0 +1,184 @@
+\section{LUP分解}
+\subsection{基本原理}
+要求解线性方程组$Ax=b$，对系数矩阵$A$进行LUP分解：
+\begin{displaymath}
+	PA=LU
+\end{displaymath}
+其中$P$为置换矩阵，$L$为下三角矩阵，$U$为上三角矩阵。
+
+将$Ax=b$乘上$P$，得$PAx=Pb$，然后用$PA=LU$代换得$LUx=Pb$。
+设$y=Ux$，有$Ly=Pb$，可以使用类似于~\ref{LSE}节$O(n^2)$求解$y$,
+然后再次使用该方法求出$x$。
+
+\subsection{LUP分解}
+\subsubsection{LU分解}
+考虑不会出现不需要换主元的情况(比如对称正定矩阵)，即$P=I$。
+
+运用矩阵代数将A分解：
+\begin{eqnarray*}
+	A&=&\left[\begin{array}{c|ccc}
+			a_{11} & a_{12} & \cdots & a_{1n} \\
+			\hline
+			a_{21} & a_{22} & \cdots & a_{2n} \\
+			\vdots & \vdots & \ddots & \vdots \\
+			a_{n1} & a_{n2} & \cdots & a_{nn}
+        \end{array} \right]\\
+    &=&\left[\begin{array}{cc}
+        a_{11}&w^T\\
+        v&A'
+    \end{array}\right]\\
+    &=&\left[\begin{array}{cc}
+        1&0\\
+        v/a_{11}&I_{n-1}
+    \end{array}\right]
+    \left[\begin{array}{cc}
+        a_{11}&w^T\\
+        0&A'-vw^T/a_{11}
+    \end{array}\right]\\
+    &=&\left[\begin{array}{cc}
+        1&0\\
+        v/a_{11}&I_{n-1}
+    \end{array}\right]
+    \left[\begin{array}{cc}
+        a_{11}&w^T\\
+        0&L'U'
+    \end{array}\right] \textrm{~（递归分解子矩阵）}\\
+    &=&\left[\begin{array}{cc}
+        1&0\\
+        v/a_{11}&L'
+    \end{array}\right]
+    \left[\begin{array}{cc}
+        a_{11}&w^T\\
+        0&U'
+    \end{array}\right]\textrm{~(左右矩阵分别为L，U)}\\
+    &=&LU
+\end{eqnarray*}
+
+求出矩阵的外围部分与子矩阵后将子矩阵递归分解即可。
+
+\subsubsection{LUP分解实现}
+设换主元时把第1行（因为要递归分解）与第$k$行交换的置换矩阵为$Q$，则$QA$
+可以进行LU分解，即\begin{displaymath}
+    QA=\left[\begin{array}{cc}
+        1&0\\
+        v/a_{k1}&I_{n-1}
+    \end{array}\right]
+    \left[\begin{array}{cc}
+        a_{k1}&w^T\\
+        0&A'-vw^T/a_{k1}
+    \end{array}\right]
+\end{displaymath}
+设子矩阵满足$P'(A'-vw^T/a_{k1})=L'U'$，与$Q$相乘得到置换矩阵$P$，即
+\begin{displaymath}
+    P=\left[\begin{array}{cc}
+        1&0\\
+        0&P'
+    \end{array}\right]Q
+\end{displaymath}
+继续变换：
+\begin{eqnarray*}
+    PA&=&\left[\begin{array}{cc}
+        1&0\\
+        0&P'
+    \end{array}\right]
+    \left[\begin{array}{cc}
+        1&0\\
+        v/a_{k1}&I_{n-1}
+    \end{array}\right]
+    \left[\begin{array}{cc}
+        a_{k1}&w^T\\
+        0&A'-vw^T/a_{k1}
+    \end{array}\right]\\
+    &=&\left[\begin{array}{cc}
+        1&0\\
+        P'v/a_{k1}&P'
+    \end{array}\right]
+    \left[\begin{array}{cc}
+        a_{k1}&w^T\\
+        0&A'-vw^T/a_{k1}
+    \end{array}\right]\\
+    &=&\left[\begin{array}{cc}
+        1&0\\
+        P'v/a_{k1}&I_{n-1}
+    \end{array}\right]
+    \left[\begin{array}{cc}
+        a_{k1}&w^T\\
+        0&P'(A'-vw^T/a_{k1})
+    \end{array}\right]\\
+    &=&\left[\begin{array}{cc}
+        1&0\\
+        P'v/a_{k1}&I_{n-1}
+    \end{array}\right]
+    \left[\begin{array}{cc}
+        a_{k1}&w^T\\
+        0&L'U'
+    \end{array}\right]\\
+    &=&\left[\begin{array}{cc}
+        1&0\\
+        P'v/a_{k1}&L'
+    \end{array}\right]
+    \left[\begin{array}{cc}
+        a_{k1}&w^T\\
+        0&U'
+    \end{array}\right]\\
+    &=&LU
+\end{eqnarray*}
+
+\begin{lstlisting}
+typedef double FT;
+const FT eps=1e-8;
+FT A[size][size],B[size];
+bool LUP(int n){
+    for(int i=1;i<=n;++i) {
+        int x=i;
+        for(int j=i+1;j<=n;++j)
+            if(fabs(A[j][i])>fabs(A[x][i]))
+                x=j;
+        if(fabs(A[x][i])<eps)return false;
+        if(i!=x){
+            for(int j=1;j<=n;++j)
+                std::swap(A[i][j],A[x][j]);
+            std::swap(B[i],B[x]);
+        }
+        for(int j=i+1;j<=n;++j) {
+            A[j][i]/=A[i][i];
+            FT fac=A[j][i];
+            for(int k=i+1;k<=n;++k)
+                A[j][k]-=fac*A[i][k];
+        }
+    }
+    return true;
+}
+\end{lstlisting}
+{\bfseries 注意L与U同时覆盖于A数组上,即}
+\begin{displaymath}
+	a_{ij}=\left\{\begin{array}{ll}
+		l_{ij} & \textrm{if $i>j$}     \\
+		u_{ij} & \textrm{if $i\leq j$}
+	\end{array}\right.
+\end{displaymath}
+\subsection{正向/反向替换}
+原理同~\ref{LSE}节，代码如下：
+\begin{lstlisting}
+FT Y[size],X[size];
+void solve(int n) {
+    for(int i=1;i<=n;++i) {
+        FT sum=B[i];
+        for(int j=1;j<i;++j)
+            sum-=A[i][j]*Y[j];
+        Y[j]=sum;
+    }
+    for(int i=n;i>=1;--i) {
+        FT sum=Y[i];
+        for(int j=i+1;j<=n;++j)
+            sum-=A[i][j]*X[j];
+        X[i]=sum/A[i][i];
+    }
+}
+\end{lstlisting}
+\subsection{LUP分解求逆矩阵}
+同~\ref{InvMatGauss}节所述，求解$n$次线性方程组即可。LUP分解的好处
+是只需维护置换矩阵$P$而不是维护变换矩阵$PI$（这两个矩阵意义不同）。
+\lstinputlisting[title=InvMatLUP]{Source/Templates/LUP.cpp}
+
+以上内容参考了算法导论\cite{ITA3} 第28章 矩阵运算。

@@ -12,9 +12,9 @@ int read() {
     }
     return res;
 }
-const int size = 405, mod = 1000000007;
 typedef long long Int64;
 #define asInt64(x) static_cast<Int64>(x)
+const int size = 405, mod = 1000000007;
 Int64 inv(Int64 a) {
     Int64 res = 1;
     int k = mod - 2;
@@ -25,31 +25,32 @@ Int64 inv(Int64 a) {
     }
     return res;
 }
-int A[size][size], P[size];
-bool LUP(int n) {
-    for(int i = 1; i <= n; ++i)
-        P[i] = i;
+int A[size][size], P[size][size], B[size][size];
+bool gauss(int n) {
     for(int i = 1; i <= n; ++i) {
         int x = 0;
         for(int j = i; j <= n; ++j)
-            if(A[i][j]) {
-                x = j;
+            if(A[j][i]) {
+                x = i;
                 break;
             }
         if(x == 0)
             return false;
-        if(i != x) {
-            std::swap(P[i], P[x]);
-            for(int j = 1; j <= n; ++j)
+        if(x != i) {
+            for(int j = i; j <= n; ++j)
                 std::swap(A[i][j], A[x][j]);
+            for(int j = 1; j <= n; ++j)
+                std::swap(P[i][j], P[x][j]);
         }
-        Int64 fac = inv(A[i][i]);
+        Int64 invi = inv(A[i][i]);
         for(int j = i + 1; j <= n; ++j) {
-            A[j][i] = A[j][i] * fac % mod;
-            Int64 mul = A[j][i];
-            for(int k = i + 1; k <= n; ++k)
+            Int64 fac = A[j][i] * invi % mod;
+            for(int k = i; k <= n; ++k)
                 A[j][k] =
-                    (A[j][k] - mul * A[i][k]) % mod;
+                    (A[j][k] - A[i][k] * fac) % mod;
+            for(int k = 1; k <= n; ++k)
+                P[j][k] =
+                    (P[j][k] - P[i][k] * fac) % mod;
         }
     }
     return true;
@@ -60,43 +61,31 @@ bool needMod(Int64 x) {
     x = (x >= 0 ? x : -x);
     return x >= limit;
 }
-int B[size][size], C[size], D[size];
-void solve(int n, int m) {
-    for(int i = 1; i <= n; ++i) {
-        Int64 sum = (P[i] == m ? 1 : 0);
-        for(int j = 1; j < i; ++j) {
-            sum -= asInt64(A[i][j]) * C[j];
-            if(needMod(sum))
-                sum %= mod;
-        }
-        C[i] = sum % mod;
-    }
-    for(int i = n; i >= 1; --i) {
-        Int64 sum = C[i];
-        for(int j = i + 1; j <= n; ++j) {
-            sum -= asInt64(A[i][j]) * D[j];
-            if(needMod(sum))
-                sum %= mod;
-        }
-        sum %= mod;
-        D[i] = sum * inv(A[i][i]) % mod;
-    }
-    for(int i = 1; i <= n; ++i)
-        B[i][m] = D[i];
-}
 int main() {
     int n = read();
     for(int i = 1; i <= n; ++i)
         for(int j = 1; j <= n; ++j)
             A[i][j] = read();
-    if(LUP(n)) {
-        for(int i = 1; i <= n; ++i)
-            solve(n, i);
+    for(int i = 1; i <= n; ++i)
+        P[i][i] = 1;
+    if(gauss(n)) {
+        for(int i = 1; i <= n; ++i) {
+            for(int j = n; j >= 1; --j) {
+                Int64 sum = P[j][i];
+                for(int k = j + 1; k <= n; ++k) {
+                    sum -= asInt64(A[j][k]) * B[k][i];
+                    if(needMod(sum))
+                        sum %= mod;
+                }
+                B[j][i] =
+                    sum % mod * inv(A[j][j]) % mod;
+            }
+        }
         for(int i = 1; i <= n; ++i) {
             for(int j = 1; j <= n; ++j) {
-                int val = B[i][j];
+                int res = B[i][j];
                 printf("%d ",
-                       val >= 0 ? val : val + mod);
+                       res >= 0 ? res : res + mod);
             }
             putchar('\n');
         }

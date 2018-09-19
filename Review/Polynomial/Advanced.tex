@@ -154,6 +154,21 @@ $A(z)=R(z)$。那么可以两边同时模$B(z)$，达到次数减半的效果。
 求出$A_{right}(z)$后合并即可，时间复杂度$O(n \lg^3 n)$。
 \subsection{组合数取模}
 
+求$(n \choose m) \bmod{p}$的值，其中$p$为质数，$n,m\leq 1e9$。
+
+\begin{itemize}
+    \item $p\leq 1e6$：线性预处理逆元+lucas；
+    \item $n<p$：可知$n!$与$p$互质，求$n!$即可。
+    可构造多项式：
+    \begin{eqnarray*}
+        Q(x)&=&\sum_{i=1}^{\sqrt{n}}{(x+i)}\\
+        n!&=&\sum_{i=0}^{\sqrt{n}-1}{Q(i\sqrt{n})}
+    \end{eqnarray*}
+    卷积出$Q(x)$后在$i\sqrt{n}=0,\sqrt{n},\cdots,(\sqrt{n}-1)\sqrt{n}$上
+    多点求值即可，时间复杂度$O(\sqrt{n}\lg^2 n)$。
+    \item $n\geq p$：结合上述两种做法即可，易知第二种做法最多只执行一次。
+\end{itemize}
+
 以上内容参考了picks
 \footnote{
 Newton's Method of Polynomial « Picks's Blog
