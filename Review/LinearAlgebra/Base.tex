@@ -1,1 +1,73 @@
 \section{线性基}
+在此仅描述异或线性基。
+
+记数组$b$存储了基中的向量，这是个01上三角矩阵。
+
+\begin{property}
+    {\bfseries 线性基内的向量是线性无关的。}
+\end{property}
+通常利用这个性质+贪心来解题。
+\subsection{插入}
+\begin{lstlisting}
+int b[bitSize+1];
+bool insert(int x) {
+    for(int i=bitSize;i>=0;--i)
+        if(x&(1<<i)){
+            if(b[i])x^=b[i];
+            else {
+                b[i]=x;
+                return true;
+            }
+        }
+    return false;
+}
+\end{lstlisting}
+按位遍历进行高斯消元，如果被消为0则可被原基构造。
+\subsection{合并}
+将一个线性基内的所有数插到另一个线性基进去即可。
+\subsection{存在性查询}
+按位扫描进行高斯消元，如果被消为0则在基的张成中。
+\subsection{最大值}
+\begin{lstlisting}
+int maxv() {
+    int res=0;
+    for(int i=bitSize;i>=0;++i)
+        res=std::max(res,res^b[i]);
+    return res;
+}
+\end{lstlisting}
+由于线性基可以构造出所有可能的值，因此从高位到低位贪心即可。
+\subsection{最小值}
+\begin{lstlisting}
+int minv() {
+    for(int i=0;i<=bitSize;++i)
+        if(b[i])
+            return b[i];
+    return -1;
+}
+\end{lstlisting}
+最小值就是最小的基向量。
+\subsection{第k小值}
+首先变换线性基，使位与位之间独立（即仅$b[i]$含有$1<<i$），然后挑出非0向量。
+\begin{lstlisting}
+int vb[bitSize+1],vcnt=0;
+void cook() {
+    for(int i=bitSize;i>=0;--i)
+        for(int j=i-1;j>=0;--j)
+            if(b[i]&(1<<j))b[i]^=b[j];
+    for(int i=bitSize;i>=0;--i)
+        if(b[i])
+            vb[vcnt++]=b[i];
+}
+\end{lstlisting}
+计算第k小时扫描一遍k即可。
+\begin{lstlisting}
+int kth(int k) {
+    if(k>(1<<vcnt))return -1;
+    int res=0;
+    for(int i=0;i<cnt;++i)
+        if(k&(1<<i))
+            res^=vb[i];
+    return res;
+}
+\end{lstlisting}

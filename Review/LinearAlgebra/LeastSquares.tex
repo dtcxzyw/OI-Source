@@ -1,1 +1,35 @@
 \section{最小二乘逼近}
+\index{L!Least Squares}
+该方法用来确定基函数的系数以拟合曲线。
+
+设有$m$个数据点$(x_1,y_1),(x_2,y_2),\cdots,(x_m,y_m)$，
+$n$个基函数$f_1,f_2,\cdots,f_n$
+记向量$y=(y_1,y_2.\cdots,y_m)$，基函数值矩阵$A$
+为\begin{displaymath}
+    A=\left[
+    \begin{array}{cccc}
+    f_1(x_1)&f_2(x_1)&\cdots&f_n(x_1)\\
+    f_1(x_2)&f_2(x_2)&\cdots&f_n(x_2)\\
+    \vdots&\vdots&\ddots&\vdots\\
+    f_1(x_m)&f_2(x_m)&\cdots&f_n(x_m)
+    \end{array}
+    \right]
+\end{displaymath}
+设系数向量为$c$，则有误差向量$\eta=Ac-y$。
+
+使用最小二乘的思想，令$\|\eta\|^2$最小，
+即最小化
+\begin{displaymath}
+    \|Ac-y\|=\sum_{i=1}^m{\left(\sum_{j=1}^n{a_{ij}c_j}-y_i\right)}^2
+\end{displaymath}
+
+对向量$c$中的每个元素微分并让结果为0，
+即对于单个元素$c_k$，有
+\begin{displaymath}
+    \frac{\ud \|\eta\|^2}{\ud c_k}=\sum_{i=1}^m{2\left(
+        \sum_{j=1}^n{a_{ij}c_j-y_i}\right)a_{ik}}=0
+\end{displaymath}
+将$n$个等式结合在一起，发现这是个向量*矩阵的形式，可得新的矩阵方程$(Ac-y)^TA=0$,
+记$A^+=(A^TA)^{-1}A^T$为矩阵$A$的伪逆，有$c=A^+y$。
+
+以上内容参考了算法导论\cite{ITA3} 28.3节。

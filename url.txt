@@ -42,6 +42,7 @@ AHOI2009 mincut 结论 http://blog.csdn.net/nlj1999/article/details/50310755
 APIO2016 烟火表演 http://blog.csdn.net/u014609452/article/details/52347062
 hzwer's blog http://hzwer.com/
 线性基 https://blog.sengxian.com/algorithms/linear-basis
+https://blog.csdn.net/qaq__qaq/article/details/53812883
 nimk游戏 http://blog.csdn.net/kele52he/article/details/77248940
 LCT http://blog.csdn.net/saramanda/article/details/55253627
  http://www.cnblogs.com/zwfymqz/p/8972914.html
