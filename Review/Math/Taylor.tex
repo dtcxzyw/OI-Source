@@ -1,0 +1,20 @@
+\section{泰勒级数展开}
+\index{T!Taylor Series}
+\subsection{形式}
+函数$f$在点$a$上的泰勒级数展开为
+\begin{displaymath}
+    \sum_{n=0}^\infty{\frac{f^{(n)}(a)}{n!}(x-a)^n}
+\end{displaymath}
+\index{M!Maclaurin Series}
+$a=0$时称为麦克劳林级数。
+\subsection{常见泰勒级数展开}
+通常使用麦克劳林级数推导。
+\begin{eqnarray*}
+    e^x&=&\sum_{n=0}^\infty{\frac{x^n}{n!}}\\
+    \ln(1-x)&=&-\sum_{n=1}^\infty{\frac{x^n}{n}} \textrm{~for all $|x|<1$}\\
+    \frac{1}{1-x}&=&\sum_{n=0}^\infty{x^n}\\
+    \frac{1}{(1-x)^k}&=&\sum_{n=0}^\infty{(x^n)^{(k)}}\\
+    (1+x)^\alpha&=&\sum_{n=0}^\infty{{\alpha \choose n}x^n}\\
+    \sin(x)&=&\sum_{n=0}^\infty{\frac{(-1)^n}{(2n+1)!}x^{2n+1}}\\
+    \cos(x)&=&\sum_{n=0}^\infty{\frac{(-1)^n}{(2n)!}x^{2n}}\\
+\end{eqnarray*}

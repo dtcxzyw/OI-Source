@@ -1,0 +1,78 @@
+\section{概率与期望}
+\subsection{全概率公式}
+\begin{theorem}\label{FP}
+    若事件$A$可分为独立事件$A_1,A_2,\cdots,A_n$，则
+    \begin{displaymath}
+        P(B)=\sum_{i=1}^n{P(B|A_i)P(A_i)}
+    \end{displaymath}
+\end{theorem}
+\subsection{贝叶斯定理}
+由\begin{displaymath}
+    P(A\cap B)=P(B)P(A|B)=P(A)P(B|A)
+\end{displaymath}
+可得贝叶斯定理
+\begin{theorem}
+    \begin{displaymath}
+        P(A|B)=\frac{P(A)P(B|A)}{P(B)}
+    \end{displaymath}
+\end{theorem}
+结合定理~\ref{FP}得
+\begin{inference}
+    \begin{displaymath}
+        P(A_i|B)=\frac{P(A_i)P(B|A_i)}{\displaystyle \sum_{j=1}^n{P(B|A_j)P(A_j)}}
+    \end{displaymath}
+\end{inference}
+\subsection{期望}
+\begin{theorem}[期望的线性性质]
+    $E[X+Y]=E[X]+E[Y]$
+\end{theorem}
+\begin{theorem}
+    $E[aX]=aE[X]$
+\end{theorem}
+\begin{theorem}
+    若随机变量X,Y独立且期望有定义时，$E[XY]=E[X]E[Y]$。
+\end{theorem}
+有一个十分常用的优化：
+\begin{displaymath}
+    E[X]=\sum_{i=0}^n{i\cdot P(X=i)}
+    =\sum_{i=0}^n{i(P(X\geq i)-P(X\geq i+1))}
+    =\sum_{i=1}^n{P(X\geq i)}
+\end{displaymath}
+\index{J!Jensen's Inequality}
+\begin{theorem}[Jensen's Inequality]
+    若函数$f(x)$为凸函数（即对于任意$x,y$和$\lambda\in [0,1]$，有
+    $f(\lambda x+(1-\lambda)y)\leq\lambda f(x)+(1-\lambda)f(y)$）
+    ，则$E[f(X)]\geq f(E[X])$。
+\end{theorem}
+\begin{theorem}
+    对于在$[0,1]$上均匀分布的随机变量$X$，$n$个随机变量的第$k$小值
+    的期望为$\frac{k}{n+1}$。
+\end{theorem}
+证明：
+随机变量$X$的概率分布函数cdf（Cumulative Distribution Function
+\index{C!Cumulative Distribution\\ Function}）
+为$\displaystyle cdf(x)=P(X\leq x)=\int_0^1{pdf(x)\ud x}$。
+对其求导得到概率密度函数pdf（Probability Density Function）
+\index{P!Probability Density Function}：
+\begin{displaymath}
+    pdf(x)=P(X=x)=k{n \choose k}x^{k-1}(1-x)^{n-k}
+\end{displaymath}
+乘上随机变量后积分即为期望：
+\begin{displaymath}
+    \int_0^1{xpdf(x)\ud x}=\frac{k}{n+1}
+\end{displaymath}
+对于求解其它连续区间的期望问题也是这个思路。
+\subsubsection{随机变量的方差}
+$Var[X]$表示随机变量$X$的方差。
+\begin{theorem}
+    若随机变量$X$的均值为$E[X]$，则有$E[X^2]=Var[X]+E^2[X]$。
+\end{theorem}
+\begin{theorem}
+    $Var[aX]=a^2Var[X]$
+\end{theorem}
+\begin{theorem}
+    若随机变量$X_1,X_2,\cdots,X_n$两两独立，则有
+    \begin{displaymath}
+        Var[\sum_{i=1}^n{X_i}]=\sum_{i=1}^n{Var[X_i]}
+    \end{displaymath}
+\end{theorem}

@@ -1,0 +1,40 @@
+\section{拉格朗日插值}
+\subsection{原理}
+拉格朗日插值法的思路是将每个点对应一个基函数，
+使得点$(x_i,y_i)$对应的基函数$F_i(x)$满足
+\begin{displaymath}
+F_i(x)=\left\{\begin{array}{ll}
+    y_i& \textrm{~if~$x=x_i$}\\
+    0&\textrm{otherwise}
+\end{array}\right.
+\end{displaymath}
+如何构造$F_i(x)$呢？首先可以提出$y_i$令$F_i(x)=y_iG_i(x)$，
+然后显然$G_i(x)$有$\displaystyle \prod_{j\neq i}{x-x_j}$项，
+为了让$G_i(x_i)=1$，再除以$\displaystyle \prod_{j\neq i}{x_i-x_j}$。
+
+综上所述，插值函数为
+\begin{displaymath}
+    F(x)=\sum_{i=1}^n{y_i\prod_{j\neq i}{\frac{x-x_j}{x_i-x_j}}}
+\end{displaymath}
+\subsection{插值多项式计算}
+时间复杂度$\Theta(n^2)$，步骤如下：
+\begin{enumerate}
+    \item $O(n^2)$计算出多项式$\displaystyle F(x)=\prod_{i=1}^i{x-x_i}$；
+    \item $\Theta(n^2)$计算每个$i$的多项式$\frac{F(x)}{x-x_i}$；
+    \item $\Theta(n^2)$将每个多项式乘以系数$\frac{y_i}{\prod_{i\neq j}{x_i-x_j}}$
+    （分母部分直接将$x_i$带入$i$对应的分子的多项式求出）；
+    \item $\Theta(n^2)$将多项式相加合并。
+\end{enumerate}
+单点插值也可以使用这种优化。
+\subsection{多点插值}
+\begin{itemize}
+    \item 预处理出多项式，然后每次使用霍纳法则$O(n)$求值；
+    \item 预处理出每个$i$的$\displaystyle y_i
+    \prod_{i\neq j}\frac{1}{x_i-x_j}$，每次$O(n^2)$求分子后相加。
+\end{itemize}
+\subsection{缺点}
+\begin{itemize}
+    \item 拉格朗日插值法的给出的曲线的确经过了样本点，但是这个曲线有可能十分曲折，而且
+    受单个点的影响大。可以考虑使用最小二乘逼近来消除噪声，或者使用样条。
+    \item $\Theta(n^2)$拉格朗日插值法的时间复杂度并没有比FFT插值方法优。
+\end{itemize}

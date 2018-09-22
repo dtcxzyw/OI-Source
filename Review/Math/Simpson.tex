@@ -1,0 +1,44 @@
+\section{Simpson积分}
+\subsection{形式与推导}
+Simpson积分是用二次函数来拟合等距三点$(l,f(l)),(m,f(m)),(r,f(r))\\
+(m=\frac{l+r}{2})$来积分的。推导如下：
+\begin{eqnarray*}
+    \int_l^r{f(x)\ud x}&\approx&\int_l^r{(ax^2+bx+c)\ud x}\\
+    &=&\frac{a}{3}(r^3-l^3)+\frac{b}{2}(r^2-l^2)+c(r-l)\\
+    &=&\frac{r-l}{6}(2a(r^2+rl+l^2)+3b(r+l)+6c)\\
+    &=&\frac{r-l}{6}(f(l)+4f(m)+f(r))
+\end{eqnarray*}
+
+\subsection{自适应Simpson}
+当Simpson未能精确拟合函数值时，将其区间二分拟合。判断拟合程度
+可以与子区间积分之和相比较。
+
+\begin{lstlisting}
+typedef double FT;
+const FT eps=1e-8;
+FT f(FT x);
+FT simpson(FT l,FT r,FT fl,FT fm,FT fr) {
+    return (r-l)*(fl+4.0*fm+fr)/6.0;
+}
+FT SAAImpl(FT l,FT m,FT r,FT fl,FT fm,FT fr,FT sm) {
+    FT lm=(l+m)*0.5,flm=f(lm),sl=simpson(l,m,fl,flm,fm);
+    FT rm=(m+r)*0.5,frm=f(rm),sr=simpson(m,r,fm,frm,fr);
+    FT esm=sl+sr;
+    if(fabs(sm-esm)<eps)return esm;
+    return SAAImpl(l,lm,m,fl,flm,fm,sl)+
+    SAAImpl(m,rm,r,fm,frm,fr,sr);
+}
+FT SAA(FT l,FT r) {
+    FT m=(l+r)*0.5;
+    FT fl=f(l),fm=f(m),fr=f(r);
+    return SAAImpl(l,m,r,fl,fm,fr,simpson(l,r,fl,fm,fr));
+}
+\end{lstlisting}
+
+\paragraph{警告}
+\begin{itemize}
+    \item {\bfseries 最好不要在圆上做Simpson积分。}
+    \item {\bfseries 注意初始定义域端点的位置（比如函数只在$[0,50]$有较大贡献，
+其余区域贡献几乎为0，若对$[0,10000]$Simpson积分则误差较大，考虑分析函数图像后
+倍增区间大小）。}
+\end{itemize}

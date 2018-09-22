@@ -1,0 +1,41 @@
+\section{常见数学公式与应用}
+\subsection{常见公式}
+\begin{eqnarray*}
+    \textrm{平方和}&~\sum_{k=1}^n{k^2}&=\frac{n(n+1)(2n+1)}{6}\\
+    \textrm{立方和}&~\sum_{k=1}^n{k^3}&=\frac{n^2(n+1)^2}{4}\\
+    \textrm{无穷递减几何级数}&~\forall |x|<1,\sum_{k=0}^\infty{x^k}
+    &=\frac{1}{1-x}\\
+    \textrm{调和级数}&~\sum_{k=1}^n{\frac{1}{k}}&=\ln n+\gamma+\varepsilon_n\\
+    \textrm{Leibniz formula for π}&~\sum_{k=0}^\infty{\frac{(-1)^k}{2k+1}}
+    &=\arctan 1=\frac{\pi}{4}\\
+    \textrm{Wallis' product}&~\prod_{k=1}^\infty{\frac{2k}{2k-1}
+    \cdot\frac{2k}{2k+1}}&=\frac{\pi}{2}\\
+    \textrm{Basel problem}&~\zeta(2)=\sum_{k=1}^\infty{\frac{1}{k^2}}
+    &=\frac{\pi^2}{6}
+\end{eqnarray*}
+\subsection{调和级数应用}
+$\varepsilon_n\approx\frac{1}{2n}$，
+欧拉-马歇罗尼常数$\gamma\approx 0.5772156649\ldots$。
+\index{*Constant!$\gamma\approx 0.5772156649\ldots$}
+\subsubsection{$O(n\ln n)$dp}
+\begin{itemize}
+    \item 两层循环分别枚举区间长度和左端点。
+    \item Eratosthenes筛法：枚举因子和因子的倍数。
+\end{itemize}
+\subsubsection{书籍堆叠问题}
+有$n$本长度为$l$，质量分布均匀的书，将书叠在一起，放在桌边，求书最多能伸出多长。
+
+
+注意在计算调和级数时，小规模用暴力，大规模用$O(1)$近似。
+
+该问题源自Wikipedia-EN\footnote{Block-stacking problem - Wikipedia
+\url{https://en.wikipedia.org/wiki/Block-stacking\_problem}}。
+\subsubsection{穿越沙漠问题}
+该问题源自Wikipedia-EN\footnote{Jeep problem - Wikipedia
+\url{https://en.wikipedia.org/wiki/Jeep\_problem}}。
+\subsubsection{蚂蚁在橡胶绳上}
+该问题源自Wikipedia-EN\footnote{Ant on a rubber rope - Wikipedia
+\url{https://en.wikipedia.org/wiki/Ant\_on\_a\_rubber\_rope}}。
+
+以上内容参考了Wikipedia-EN\footnote{Harmonic series (mathematics) - Wikipedia
+\url{https://en.wikipedia.org/wiki/Harmonic\_series\_(mathematics)}}。

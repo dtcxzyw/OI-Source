@@ -122,6 +122,7 @@ NOI2008 志愿者招募 https://blog.csdn.net/FZHvampire/article/details/5088918
 动态最小生成树 https://www.cnblogs.com/BLADEVIL/p/3512644.html
 线段树分治 https://www.cnblogs.com/flashhu/p/9404225.html
 仙人掌 https://blog.csdn.net/zhangche0526/article/details/71879985#%E4%BB%99%E4%BA%BA%E6%8E%8C%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95
+http://vfleaking.blog.uoj.ac/blog/89
 k短路 https://blog.csdn.net/litble/article/details/79171311
 有上下界网络流 https://www.cnblogs.com/liu-runda/p/6262832.html
 https://www.cnblogs.com/nietzsche-oier/p/8185805.html
@@ -153,3 +154,4 @@ http://blog.miskcoo.com/2014/08/quadratic-residue
 套路/技巧 https://www.cnblogs.com/ywwyww/p/8511485.html
 https://www.cnblogs.com/ywwyww/p/8511472.html
 https://www.cnblogs.com/ywwyww/p/8511463.html
+反演 http://vfleaking.blog.uoj.ac/blog/87
