@@ -1,7 +1,6 @@
 \section{Stirling数}
 \index{S!Stirling Number}
 \subsection{第一类Stirling数}
-\newcommand{\stirlingA}[2]{\left[#1 \atop #2\right]}
 令$\stirlingA{n}{k}$为把$n$个点放到$k$个环内的方案数，有
 \begin{eqnarray*}
     \stirlingA{n}{0}&=&0 \textrm{~for all $n\geq 1$}\\
@@ -16,13 +15,12 @@
     \item 当前点自成一环，贡献$\stirlingA{n-1}{k-1}$。
 \end{itemize}
 \subsection{第二类Stirling数}
-\newcommand{\stirlingB}[2]{\left\{#1 \atop #2\right\}}
 令$\stirlingB{n}{k}$为把$n$个点放到$k$个集合内的方案数，有
 \begin{eqnarray}
     \stirlingB{n}{0}&=&0 \textrm{~for all $n\geq 1$}\\
     \stirlingB{n}{n}&=&1 \textrm{~for all $n\geq 0$}\\
     \stirlingB{n}{k}&=&k\stirlingB{n-1}{k}+\stirlingB{n-1}{k-1}\label{SB3}\\
-    \stirlingB{n}{k}&=&\frac{1}{k!}\sum_{i=0}^k{(-1)^{k-i}{k \choose i}i^n}
+    \stirlingB{n}{k}&=&\frac{1}{k!}\sum_{i=0}^k{(-1)^{k-i}\binomial{k}{i}i^n}
     \label{SB4}
 \end{eqnarray}
 证明等式~\ref{SB3}：
@@ -35,9 +33,19 @@
 证明~\ref{SB4}：
 考虑计算将$n$个点放入$k$个带编号集合且无空集的方案数：
 \begin{eqnarray*}
-    N&=&k^n+\sum_{i=1}^k{(-1)^i{k \choose i}(k-i)^n}
+    N&=&k^n+\sum_{i=1}^k{(-1)^i\binomial{k}{i}(k-i)^n}
     \textrm{~（根据定理~\ref{ExDML}）}\\
-    &=&k^n+\sum_{i=0}^{k-1}{(-1)^{k-i}{k \choose i}i^n}\\
-    &=&\sum_{i=0}^k{(-1)^{k-i}{k \choose i}i^n}
+    &=&k^n+\sum_{i=0}^{k-1}{(-1)^{k-i}\binomial{k}{i}i^n}\\
+    &=&\sum_{i=0}^k{(-1)^{k-i}\binomial{k}{i}i^n}
 \end{eqnarray*}
 最后变为无标号时除以$k!$即可。
+
+一个常用的转化：
+\begin{theorem}
+    \begin{displaymath}
+        n^k=\sum_{i=0}^n{\stirlingB{k}{i}\binomial{n}{i}i!}
+    \end{displaymath}
+\end{theorem}
+意义：
+左边是将$k$个球放入$n$个盒子里的方案数，右边枚举非空盒子数，那么$i$个非空盒子的方案数
+即为划分非空子集的方案数*盒子排列数（盒子选取方案数*盒子标号方案数）。

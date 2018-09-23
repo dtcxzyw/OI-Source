@@ -154,4 +154,4 @@ http://blog.miskcoo.com/2014/08/quadratic-residue
 套路/技巧 https://www.cnblogs.com/ywwyww/p/8511485.html
 https://www.cnblogs.com/ywwyww/p/8511472.html
 https://www.cnblogs.com/ywwyww/p/8511463.html
-反演 http://vfleaking.blog.uoj.ac/blog/87
+反演 http://vfleaking.blog.uoj.ac/slide/87#/

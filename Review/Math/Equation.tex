@@ -1,17 +1,17 @@
 \section{常见数学公式与应用}
 \subsection{常见公式}
 \begin{eqnarray*}
-    \textrm{平方和}&~\sum_{k=1}^n{k^2}&=\frac{n(n+1)(2n+1)}{6}\\
-    \textrm{立方和}&~\sum_{k=1}^n{k^3}&=\frac{n^2(n+1)^2}{4}\\
-    \textrm{无穷递减几何级数}&~\forall |x|<1,\sum_{k=0}^\infty{x^k}
-    &=\frac{1}{1-x}\\
-    \textrm{调和级数}&~\sum_{k=1}^n{\frac{1}{k}}&=\ln n+\gamma+\varepsilon_n\\
-    \textrm{Leibniz formula for π}&~\sum_{k=0}^\infty{\frac{(-1)^k}{2k+1}}
-    &=\arctan 1=\frac{\pi}{4}\\
-    \textrm{Wallis' product}&~\prod_{k=1}^\infty{\frac{2k}{2k-1}
-    \cdot\frac{2k}{2k+1}}&=\frac{\pi}{2}\\
-    \textrm{Basel problem}&~\zeta(2)=\sum_{k=1}^\infty{\frac{1}{k^2}}
-    &=\frac{\pi^2}{6}
+	\textrm{平方和}&~\sum_{k=1}^n{k^2}&=\frac{n(n+1)(2n+1)}{6}\\
+	\textrm{立方和}&~\sum_{k=1}^n{k^3}&=\frac{n^2(n+1)^2}{4}\\
+	\textrm{无穷递减几何级数}&~\forall |x|<1,\sum_{k=0}^\infty{x^k}
+	&=\frac{1}{1-x}\\
+	\textrm{调和级数}&~H_n=\sum_{k=1}^n{\frac{1}{k}}&=\ln n+\gamma+\varepsilon_n\\
+	\textrm{Leibniz formula for π}&~\sum_{k=0}^\infty{\frac{(-1)^k}{2k+1}}
+	&=\arctan 1=\frac{\pi}{4}\\
+	\textrm{Wallis' product}&~\prod_{k=1}^\infty{\frac{2k}{2k-1}
+		\cdot\frac{2k}{2k+1}}&=\frac{\pi}{2}\\
+	\textrm{Basel problem}&~\zeta(2)=\sum_{k=1}^\infty{\frac{1}{k^2}}
+	&=\frac{\pi^2}{6}
 \end{eqnarray*}
 \subsection{调和级数应用}
 $\varepsilon_n\approx\frac{1}{2n}$，
@@ -19,23 +19,54 @@ $\varepsilon_n\approx\frac{1}{2n}$，
 \index{*Constant!$\gamma\approx 0.5772156649\ldots$}
 \subsubsection{$O(n\ln n)$dp}
 \begin{itemize}
-    \item 两层循环分别枚举区间长度和左端点。
-    \item Eratosthenes筛法：枚举因子和因子的倍数。
+	\item 两层循环分别枚举区间长度和左端点。
+	\item Eratosthenes筛法：枚举因子和因子的倍数。
 \end{itemize}
 \subsubsection{书籍堆叠问题}
-有$n$本长度为$l$，质量分布均匀的书，将书叠在一起，放在桌边，求书最多能伸出多长。
+有$n$本长度为$l$，质量分布均匀的书，将书叠成一摞，放在桌边，求书最多能伸出多长。
 
+首先书籍从下到上肯定是不断伸出的，从上往下编号，设第$i-1$本书比第$i$本书多伸长$x_i$，
+记最上面的书为第$0$本书，桌子为第$n$本书。
+
+若要使书不倒下，需满足上面的书的重心在当前书上，
+即
+\begin{displaymath}
+	\frac{\sum_{i=1}^k{\sum_{j=i}^k{x_i}}}{k}=\frac{\sum_{i=1}^k{ix_i}}{k}\leq \frac{l}{2}，k=1,2,\cdots,n
+\end{displaymath}
+
+当$x_i=\frac{\frac{l}{2}}{i}$时等号恒成立，此时
+伸长量$\displaystyle L=\sum_{i=1}^n{x_i}=\frac{l}{2}H_n$。
 
 注意在计算调和级数时，小规模用暴力，大规模用$O(1)$近似。
 
+如果允许在一层上放多本书，则最大伸出量与$\sqrt[3]{n}$成正比。
+
 该问题源自Wikipedia-EN\footnote{Block-stacking problem - Wikipedia
-\url{https://en.wikipedia.org/wiki/Block-stacking\_problem}}。
-\subsubsection{穿越沙漠问题}
+	\url{https://en.wikipedia.org/wiki/Block-stacking\_problem}}。
+\subsubsection{吉普车问题}
+
+给定$n$个单位的燃料，吉普车只能携带$1$单位的燃料，$1$单位燃料可行驶$1$单位距离，
+吉普车可以在沙漠的任意地方留下燃料，最大化最后一次的行驶距离。
+
+该问题有两种类型：
+\begin{itemize}
+    \item 探索沙漠：最后一次要返回基地，答案为$H_n$。
+    \item 穿越沙漠：最后一次不返回基地，答案为$\displaystyle
+    \sum_{k=1}^n{\frac{1}{2k-1}}=H_{2n-1}-\frac{1}{2}H_{n-1}$。
+\end{itemize}
+
 该问题源自Wikipedia-EN\footnote{Jeep problem - Wikipedia
-\url{https://en.wikipedia.org/wiki/Jeep\_problem}}。
+	\url{https://en.wikipedia.org/wiki/Jeep\_problem}}。
 \subsubsection{蚂蚁在橡胶绳上}
+
+一只蚂蚁在$1km$长的橡胶绳上以$1cm/s$的速度爬行，同时绳子以$1km/s$的速度拉伸，
+蚂蚁是否可以到达绳子的另一端？
+
+答案为是，可用离散方法或积分方法解决，时间$T=\frac{c}{v}(e^{\frac{v}{\alpha}}-1)$。
+$c$为初始绳长，$v$为伸长速度，$\alpha$为蚂蚁运动速度。
+
 该问题源自Wikipedia-EN\footnote{Ant on a rubber rope - Wikipedia
-\url{https://en.wikipedia.org/wiki/Ant\_on\_a\_rubber\_rope}}。
+	\url{https://en.wikipedia.org/wiki/Ant\_on\_a\_rubber\_rope}}。
 
 以上内容参考了Wikipedia-EN\footnote{Harmonic series (mathematics) - Wikipedia
-\url{https://en.wikipedia.org/wiki/Harmonic\_series\_(mathematics)}}。
+	\url{https://en.wikipedia.org/wiki/Harmonic\_series\_(mathematics)}}。

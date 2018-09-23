@@ -5,22 +5,52 @@
 \section{其它公式}
 \begin{theorem}
     \begin{displaymath}
-        \sum_{i=1}^n{i \choose k}={n+1 \choose k+1} ~k>0
+        \sum_{i=0}^n\binomial{i}{k}=\binomial{n+1}{k+1}
     \end{displaymath}
 \end{theorem}
 \begin{itemize}
-    \item 证明：将等式加上$(1\choose k+1)=0$，左边不断合并即可。
+    \item 证明：将等式加上$\binomial{0}{k+1}=0$，左边不断合并即可。
     \item 证明：将右式不断展开即为左式。
     \item 理解：在$n+1$个中选$k+1$个点，第$k+1$个点为哨兵，剩下$k$个在它之前
     的元素中选择。
 \end{itemize}
 \begin{theorem}
     \begin{displaymath}
-        \sum_{i=0}^n{{n\choose i}i}=n2^{n-1}
+        \sum_{i=0}^n{\binomial{n}{i}i}=n2^{n-1}
     \end{displaymath}
 \end{theorem}
 \begin{theorem}
     \begin{displaymath}
-        \int_0^1{(n \choose k)x^k(1-x)^{n-k}\ud x}=\frac{1}{n+1}
+        \int_0^1{\binomial{n}{k}x^k(1-x)^{n-k}\ud x}=\frac{1}{n+1}
     \end{displaymath}
 \end{theorem}
+\begin{theorem}
+    \begin{displaymath}
+        (-1+1)^n=\sum_{k=0}^n{(-1)^k\binomial{n}{k}}=[n=0]
+    \end{displaymath}
+\end{theorem}
+更一般地，可以得到
+\begin{theorem}
+    \begin{displaymath}\label{BSum}
+        \sum_{k=0}^m{(-1)^k\binomial{n}{k}}=\binomial{m-n}{m}
+    \end{displaymath}
+\end{theorem}
+证明：
+\begin{lemma}[上指标反转]\label{BSL}
+    \begin{displaymath}
+        \binomial{n}{m}=(-1)^m\binomial{m-n-1}{m}
+    \end{displaymath}
+\end{lemma}
+将组合数的分子取反即可证明。
+由于$(-1)^i=(-1)^{-i}$，该式也可表述为
+\begin{inference}
+    \begin{displaymath}
+        (-1)^m\binomial{n}{m}=\binomial{m-n-1}{m}
+    \end{displaymath}
+\end{inference}
+接下来证明定理：
+\begin{eqnarray*}
+    \sum_{k=0}^m{(-1)^k\binomial{n}{k}}&=&
+    \sum_{k=0}^m{\binomial{k-n-1}{k}}\\
+    &=&\binomial{m-n}{m} \textrm{(展开后不断合并最左边两项))}
+\end{eqnarray*}

@@ -1,1 +1,46 @@
-\section{线性时间复杂度插值}
+\section{线性时间复杂度整点插值}
+给定$k$次多项式$P(x)$在$P(0),P(1),\cdots,P(k)$上的值，
+求$P(n),n \in \mathbb{N}$。
+
+考虑$\binomial{x}{i}$是一个关于$x$的$i$次多项式，
+所以可以使用$\binomial{x}{0},\binomial{x}{1},\cdots,\binomial{x}{k}$
+进行线性组合（因为它们的次数两两不同，线性无关），即
+\begin{equation}\label{LIP1}
+    P(x)=\sum_{i=0}^k{\binomial{x}{i}p(i)}
+\end{equation}
+当$x\leq k$时，$P(i)$可以表示为
+\begin{equation*}
+    P(x)=\sum_{i=0}^x{\binomial{x}{i}p(i)},x\leq k
+\end{equation*}
+然后套推论~\ref{BII}得：
+\begin{equation}\label{LIP3}
+    p(x)=\sum_{i=0}^x{(-1)^{x-i}\binomial{x}{i}P(i)},x\leq k
+\end{equation}
+将~\ref{LIP3}代回~\ref{LIP1}得：
+\begin{eqnarray*}
+    P(x)&=&\sum_{i=0}^k{\binomial{x}{i}\sum_{j=0}^i{
+        (-1)^{i-j}\binomial{i}{j}P(j)}}\\
+    &=&\sum_{j=0}^k{P(j)\sum_{i=j}^k{(-1)^{i-j}\binomial{x}{i}
+    \binomial{i}{j}}} \textrm{~（提出$P(j)$）}\\
+    &=&\sum_{j=0}^k{P(j)\sum_{i=0}^{k-j}{(-1)^i\binomial{x}{i+j}
+    \binomial{i+j}{j}}}\\
+    &=&\sum_{j=0}^k{\binomial{x}{j}P(j)\sum_{i=0}^{k-j}{
+        (-1)^i\binomial{x-j}{i}}}\\
+    &=&\sum_{j=0}^k{\binomial{x}{j}P(j)
+        \binomial{k-x}{k-j}}\textrm{~（根据定理~\ref{BSum}）}\\
+    &=&\sum_{j=0}^k{(-1)^{k-j}\binomial{x}{j}
+        \binomial{x-j-1}{k-j}P(j)}\textrm{~（根据引理~\ref{BSL}）}
+\end{eqnarray*}
+\begin{displaymath}
+    \textrm{其中~} \binomial{x}{j}\binomial{x-j-1}{k-j}=
+    \frac{x!}{(x-j)(x-k-1)!}\cdot\frac{1}{j!(k-j)!}
+\end{displaymath}
+
+对组合数部分划分后，左边部分的$\frac{x!}{(x-k-1)!}$是$k+1$个值之积，$x-j$是其中的值，
+$O(k)$预处理前缀积与后缀积，$O(1)$合并。
+右边部分使用线性推逆元$O(k)$完成。
+
+以上内容参考了Miskcoo的博客\footnote{
+特殊多项式在整点上的线性插值方法 – Miskcoo's Space\\
+\url{http://blog.miskcoo.com/2015/08/special-polynomial-linear-interpolation}
+}。

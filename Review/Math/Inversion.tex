@@ -1,1 +1,94 @@
 \section{反演}
+\subsection{反演定义}
+若数列${f_n}$与${g_n}$满足
+\begin{displaymath}
+	f_n=\sum_{i=0}^n{a_{ni}g_i}
+\end{displaymath}
+反演就是已知数列${f_n}$（函数较简单），
+求数列${g_n}$的过程（关键是要推出$b_{ni}$）：
+\begin{displaymath}
+	g_n=\sum_{i=0}^n{b_{ni}f_i}
+\end{displaymath}
+这其实是一个求解线性方程组的过程。
+\subsection{二项式反演}\label{BI}
+\begin{theorem}
+	\begin{displaymath}
+		f(n)=\sum_{i=0}^n{(-1)^i\binomial{n}{i}g(i)}
+		\Leftrightarrow g(n)=\sum_{i=0}^n{(-1)^i\binomial{n}{i}f(i)}
+	\end{displaymath}
+\end{theorem}
+使用容斥证明：
+
+设集合$S$中拥有性质$P_1,P_2,\cdots,P_n$的集合分别为$A_1,A_2,\cdots,A_n$，
+根据定理~\ref{ExDML}可得不具有这$n$个性质的对象的集合大小为
+\begin{displaymath}
+	f(n)=|S|+\sum_{\emptyset \neq J\subseteq{1,2,\cdots,n}}
+	{(-1)^{|J|}\left|\bigcap_{j\in J}{A_j}\right|}
+\end{displaymath}
+若集合$A_1,A_2,\cdots,A_n$满足任意$i$个集合的并集大小相等，记为$g(i)$,
+定义$g(0)=|S|$，有
+\begin{displaymath}
+	f(n)=\sum_{i=0}^n{(-1)^i \binomial{n}{i}g(i)}
+\end{displaymath}
+同样对$g(i)$使用容斥可以得到右式。
+\begin{inference}\label{BII}
+	\begin{displaymath}
+		f(n)=\sum_{i=0}^n{\binomial{n}{i}g(i)}
+		\Leftrightarrow g(n)=\sum_{i=0}^n{(-1)^{n-i}\binomial{n}{i}f(i)}
+	\end{displaymath}
+\end{inference}
+把$g(i)$代入后把外面的$(-1)^i$丢进去即可。
+\subsubsection{错位排序问题}
+求$n$个人均站错位置的方案数。
+
+记$f(n)$为$n$个人任意站的方案数，$g(n)$为$n$个人都站错的方案数。
+
+显然$f(n)=n!$且$\displaystyle f(n)=\sum_{i=0}^n{\binomial{n}{i} g(i)}$，
+由推论~\ref{BII}得
+\begin{eqnarray*}
+	g(n)&=&\sum{i=0}^n{(-1)^{n-i}\binomial{n}{i}i!}\\
+	&=&\sum_{i=0}^n{(-1)^(n-i)\frac{n!}{(n-i)!}}\\
+	&=&n!\cdot\sum_{i=0}^n{\frac{(-1)^i}{i!}}
+\end{eqnarray*}
+\subsubsection{球染色问题}
+求用$k$种颜色给$n$个排成一排的球染色，满足相邻球不同色且必须用上所有颜色的方案数。
+
+记$f(k)$为使用$k$种颜色，相邻球不同色，不要求用上所有颜色的染色方案数，
+$g(k)$为使用$k$种颜色的方案数。
+
+那么有$f(k)=k(k-1)^{n-1}$且$f(k)=\sum_{i=0}^k{\binomial{k}{i}g(i)}$。
+
+同理可得$g(k)=\sum_{i=2}^k{(-1)^{k-i}\binomial{k}{i}k(k-1)^{n-1}}$。
+
+\subsection{斯特林反演}
+\begin{theorem}
+    \begin{displaymath}
+        f(n)=\sum_{i=1}^n{\stirlingB{n}{i}g(i)}
+        \Leftrightarrow
+        g(n)=\sum_{i=1}^n{(-1)^{n-i}\stirlingA{n}{i}f(i)}
+    \end{displaymath}
+\end{theorem}
+\subsection{子集反演}
+\begin{theorem}
+	\begin{displaymath}
+		f(S)=\sum_{T\subseteq S}{(-1)^{|T|}g(T)}
+		\Leftrightarrow
+		g(S)=\sum_{T\subseteq S}{(-1)^{|T|}f(T)}
+	\end{displaymath}
+\end{theorem}
+\begin{inference}
+	\begin{displaymath}
+		f(S)=\sum_{T\subseteq S}{g(T)}
+		\Leftrightarrow
+		g(S)=\sum_{T\subseteq S}{(-1)^{|S|-|T|}f(T)}
+	\end{displaymath}
+\end{inference}
+证明同~\ref{BI}节所述。
+\subsection{多重子集反演}
+一个数的质因数分解可以对应一个多重子集，莫比乌斯反演即可。
+
+以上内容参考了vfleaking的幻灯片
+\footnote{炫酷反演魔术 \url{http://vfleaking.blog.uoj.ac/slide/87\#}}
+和Miskcoo的博客\footnote{反演魔术：反演原理及二项式反演 – Miskcoo's Space.
+	\url{http://blog.miskcoo.com/2015/12/inversion-magic-binomial-inversion}
+}。
