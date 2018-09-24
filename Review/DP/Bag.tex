@@ -1,0 +1,37 @@
+\section{背包优化}
+\subsection{完全背包优化}
+\subsubsection{排序筛选}
+若一种物品比另一种物品代价更大，收益更低，直接排除。
+\subsection{多重背包优化}
+\subsubsection{完全背包转换}
+若该物品的数量已经超过最大需求，直接转换为完全背包，单种物品$O(V)$转移。
+\subsubsection{二进制优化}
+将数量按$2^0,2^1,2^2,\cdots,2^k,rem$拆分为多个物品，然后做01背包，
+单种物品$O(V\lg c)$转移。
+\subsubsection{单调队列优化}
+朴素的多重背包状态转移方程为：
+\begin{eqnarray*}
+    end&=&min(c[i],j/v[i])\\
+    dp[i][j]=max(dp[i-1][j-k*v[i]]+k*w[i]),0\leq k \leq end
+\end{eqnarray*}
+令$a=j/v[i],b=j\%v[i]$，将方程转换为：
+\begin{displaymath}
+    dp[i][j]=max(dp[i-1][b+k*v[i]]-k*w[i])+a*w[i],a-end\leq k \leq a
+\end{displaymath}
+此时$k$表示比$a$少取$k$件。
+
+此时$max$部分只与$k$的取值有关，使用单调队列优化。
+每次转移时，枚举$b$，对$k$做单调队列，根据转移区间的移动弹出队列。
+单种物品$O(V)$转移。
+
+该方法参考了soloier的博客\footnote{单调队列优化多重背包\\
+\url{https://blog.csdn.net/sinat\_34943123/article/details/52857327}}。
+
+\subsubsection{例题}
+Luogu P1776 宝物筛选\_NOI导刊2010提高（02）
+\footnote{【P1776】宝物筛选\_NOI导刊2010提高（02） - 洛谷
+\url{https://www.luogu.org/problemnew/show/P1776}}
+
+使用了上述的完全背包转换和单调队列优化。
+
+\lstinputlisting[title=Luogu 1776]{DP/MultiBag.cpp}

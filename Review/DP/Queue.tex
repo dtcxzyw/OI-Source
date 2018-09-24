@@ -1,0 +1,22 @@
+\section{单调队列优化}
+当状态转移方程为如下形式时
+\begin{displaymath}
+    dp[i][j]=max(dp[i-1][j-k]+w(i,j,k))+c(i,j) l \leq k \leq r
+\end{displaymath}
+可以使用单调队列优化。
+
+该状态转移方程满足如下性质：
+\begin{itemize}
+    \item 转移区间是连续的。
+    \item 当前转移位置到转移区间有距离限制。
+\end{itemize}
+
+对每个$i$进行dp的步骤如下：
+\begin{enumerate}
+    \item 初始化空队列；
+    \item 计算自己到队首的距离，弹出超出转移距离的队首；
+    \item 计算新进入转移区间的转移点的权（即$max$的内容）；
+    \item 为了维护队列的单调性，不断地从队尾弹出不比当前转移点更优的旧转移点
+    （即使权相等也要弹出，因为当前转移点肯定比旧转移点更晚弹出）；
+    \item 此时队首为最优值，加上常数后就是dp最优值了。
+\end{enumerate}

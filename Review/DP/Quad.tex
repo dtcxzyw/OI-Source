@@ -1,0 +1,18 @@
+\section{四边形不等式优化}
+在区间动规时通常会推出以下状态转移方程：
+\begin{displaymath}
+    dp[i][j]=min(dp[i][k]+dp[k+1][j])+w[i][j],i\leq k <j
+\end{displaymath}
+此时可考虑使用四边形不等式将$O(n^3)$优化到$O(n^2)$。
+
+接下来定义两个性质：
+\paragraph{区间包含的单调性}
+对于$a\leq b\leq c\leq d$，有$f(b,c)\leq f(a,d)$。
+\paragraph{四边形不等式}
+对于$a\leq b\leq c\leq d$，有$f(a,d)+f(b,c)\geq f(a,c)+f(b,d)$。
+
+\paragraph{优化} 计算$w[i][j]$时要考虑区间统计方面的优化（如前缀和）。
+
+以上内容参考了XDU\_Skyline的博客\footnote{动态规划专题小结：四边形不等式优化
+    \url{https://blog.csdn.net/u014800748/article/details/45750737}
+}。
