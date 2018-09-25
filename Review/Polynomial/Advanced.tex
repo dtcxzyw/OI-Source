@@ -42,10 +42,10 @@
 构造方程$F(z)\cdot A(z)-1\equiv 0\pmod{z^n}$，
 同理可得
 \begin{eqnarray*}
-    F(z)&\equiv& F_0(z)-\frac{F_0(z)\cdot A(z)-1}{A(z)} \pmod{z^{2^{t+1}}}\\
-    &\equiv& F_0(z)-(F_0(z)\cdot A(z)-1)\cdot{F_0(z)} \pmod{z^{2^{t+1}}}
-    \textrm{～（考虑最小非0项可知可乘$F_0(z)$代替$F(z)$）}\\
-    &\equiv& 2F_0(z)-F_0^2(z)\cdot A(z) \pmod{z^{2^{t+1}}}
+    F(z)&\equiv& F_0(z)-\frac{F_0(z)A(z)-1}{A(z)} \pmod{z^{2^{t+1}}}\\
+    &\equiv& F_0(z)-(F_0(z) A(z)-1){F_0(z)} \pmod{z^{2^{t+1}}}
+    \textrm{~（考虑最小非0项可知可乘$F_0(z)$代替$F(z)$）}\\
+    &\equiv& 2F_0(z)-F_0^2(z)A(z) \pmod{z^{2^{t+1}}}
 \end{eqnarray*}
 \subsection{多项式取模}
 给定一个$n$次多项式$A(z)$与$m$次多项式$B(z)$（$m\leq n$），
@@ -58,10 +58,10 @@
 令$deg(D)=n-m,deg(R)=m-1$，不足高位补0。
 将原方程的$z$全部换成$\frac{1}{z}$，然后乘上$z^n$，有
 \begin{eqnarray*}
-    z^nA(\frac{1}{z})&=&z^nD(\frac{1}{z})B(\frac{1}{z})+R(\frac{1}{z})\\
+    z^nA(\frac{1}{z})&=&z^nD(\frac{1}{z})B(\frac{1}{z})+z^nR(\frac{1}{z})\\
     A^R(z)&=&D^R(z)B^R(z)+z^{n-m+1}R^R(z)
 \end{eqnarray*}
-由于$deg(D^R)\leq n-m$，所以可以在模$z^(n-m+1)$的情况下求解$D^R(z)$，
+由于$deg(D^R)\leq n-m$，所以可以在模$z^{n-m+1}$的情况下求解$D^R(z)$，
 翻转后带入原方程求出$R(z)$。
 
 \subsection{多项式求导与积分}
@@ -119,7 +119,7 @@ $B$进制下的值。
 
 预处理出$A^i$对应的$B$进制数，然后分治即可，FFT优化右边的卷积。
 
-时间复杂度$O(n \lg n)$。
+时间复杂度$O(n \lg^2 n)$。
 
 \subsection{多项式多点求值}
 已知$A(z)$与$n$个点$z_0,z_1,\cdots,z_{n-1}$，

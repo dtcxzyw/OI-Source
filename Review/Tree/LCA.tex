@@ -1,0 +1,99 @@
+\section{最小公共祖先}
+\subsection{倍增法}
+预处理：DFS时计算每个节点的深度和$2^k$级祖先。
+
+查询：首先将较深节点跳到同一高度，若原节点在一条链上，则
+较浅的点为LCA，算法结束。否则按$k$从大到小尽量跳，保持不
+跳到同一祖先。最后这两个节点的父亲就是原节点的LCA。
+
+\begin{lstlisting}
+int d[size],p[size][20];
+void DFS(int u) {
+    for(int i=1;i<20;++i)
+        p[u][i]=p[u][i-1][i-1];
+    for(int i=last[u];i;i=E[i].next) {
+        int v=E[i].to;
+        if(p[u][0]!=v) {
+            p[v][0]=u;
+            d[v]=d[u]+1;
+            DFS(v);
+        }
+    }
+}
+int lca(int u,int v){
+    if(d[u]<d[v])std::swap(u,v);
+    int delta=d[u]-d[v];
+    for(int i=0;i<20;++i)
+        if(delta&(1<<i))
+            u=p[u][i];
+    if(u==v)
+        return u;
+    for(int i=19;i>=0;--i)
+        if(p[u][i]!=p[v][i])
+            u=p[u][i],v=p[v][i];
+    return p[u][0];
+}
+\end{lstlisting}
+预处理$O(n\lg n)$，查询$O(\lg n)$。
+\subsection{树链剖分}
+树链剖分后，如果在同一条链上则返回较浅者，否则令链头较深的节点向上跳。
+
+\begin{lstlisting}
+int lca(int u,int v) {
+    while(top[u]!=top[v]) {
+        if(d[top[u]]>d[top[v]])u=p[top[u]];
+        else v=p[top[v]];
+    }
+    return d[u]<d[v]?u:v;
+}
+\end{lstlisting}
+
+两趟DFS预处理$O(n)$。
+由于树链剖分后重链不超过$\lg n$条，所以查询也是$O(\lg n)$的，常数比倍增法小。
+\subsection{欧拉序+ST表}
+考虑DFS序，显然两个来自节点$i$的不同子树的点的LCA为节点$i$，那么可以在
+DFS完一棵子树后加入节点$i$的深度作为隔板，按访问时间戳查询ST表即可。为了
+应对在一条链上的情况，同时也为了给节点$i$一个时间戳，在遍历节点$i$之初就插入一个隔板。
+\begin{lstlisting}
+int L[size],d[size],A[20][size*2],siz=0;
+void DFS(int u,int p) {
+    A[0][++siz]=d[u];
+    L[siz]=u;
+    for(int i=last[u];i;i=E[i].next) {
+        int v=E[i].to;
+        if(v!=p) {
+            d[v]=d[u]+1;
+            DFS(v,u);
+            A[0][++siz]=d[u];
+        }
+    }
+}
+void buildST() {
+    for(int i=1;i<20;++i) {
+        int end=siz-(1<<i)+1,off=1<<(i-1);
+        for(int j=1;j<=end;++j)
+            st[i][j]=std::min(st[i-1][j],st[i-1][j+off]);
+    }
+}
+int query(int l,int r) {
+    int siz=r-l+1;
+    int p=ilg2(siz);
+    return std::min(A[p][l],A[p][r-(1<<p)+1]);
+}
+int lca(int u,int v) {
+    u=L[u],v=L[v];
+    if(u<v)std::swap(u,v);
+    return query(u,v);
+}
+\end{lstlisting}
+
+预处理$O(n\lg n)$，查询$O(1)$。
+\subsection{Tarjan}
+当查询离线时，可使用Tarjan算法。
+
+\lstinputlisting[title=Tarjan]{Tree/Tarjan.cpp}
+
+原理与欧拉序+ST表法类似，当节点分别在两棵不同的子树时，若另一节点已处理完毕，
+他的祖先肯定是LCA（因为LCA处还没有遍历完，未合并到更高的祖先上去）。
+
+\paragraph{优化} 可以把find改为用队列实现，迭代更新父亲。

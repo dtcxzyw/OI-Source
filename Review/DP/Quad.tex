@@ -11,6 +11,23 @@
 \paragraph{四边形不等式}
 对于$a\leq b\leq c\leq d$，有$f(a,d)+f(b,c)\geq f(a,c)+f(b,d)$。
 
+\begin{theorem}
+    若$w$函数满足上述两个性质，$dp$函数也满足四边形不等式性质。
+\end{theorem}
+
+\begin{theorem}
+    若$dp$函数满足四边形不等式，设$s(i,j)$为$dp[i][j]$的转移点$k$，有
+    $s(i,j)\leq s(i,j+1)\leq s(i+1,j+1)$。
+\end{theorem}
+
+那么可以缩小转移点的搜索范围：
+\begin{displaymath}
+    dp[i][j]=min(dp[i][k]+dp[k+1][j])+w[i][j],s[i][j-1]\leq k \leq s[i+1][j]
+\end{displaymath}
+
+\paragraph{复杂度分析} 即对于每一个左端点，最多扫一遍右边所有点，
+时间复杂度降为$O(n^2)$。
+
 \paragraph{优化} 计算$w[i][j]$时要考虑区间统计方面的优化（如前缀和）。
 
 以上内容参考了XDU\_Skyline的博客\footnote{动态规划专题小结：四边形不等式优化
