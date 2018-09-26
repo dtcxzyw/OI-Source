@@ -95,9 +95,50 @@ void apply(int u,int v) {
 顾名思义就是把子树深度最深的儿子当做重儿子进行剖分。
 
 \subsubsection{快速合并以深度为下标的消息}
+令同一条链上的点共享一块dp存储区，统计当前节点信息时，直接继承重儿子的信息，
+然后暴力合并轻儿子的链的信息。
+
+复杂度证明：注意每条轻儿子所在的链合并到长链上的复杂度是$O(链长)$，
+而父亲继承重儿子消息的复杂度为$O(1)$，所以最终复杂度为$O(n)$。
+
+为了能够让父亲$O(1)$继承重儿子的消息，按照重儿子优先的DFS序分配dp数组起始位置即可。
+原因为：
+\begin{itemize}
+    \item 合并后子树dp数组已经不再需要，直接覆盖。
+    \item 父亲恰好在重儿子前一位，满足深度上的相对关系，可以$O(1)$继承数组。
+\end{itemize}
+因此空间复杂度也是$O(n)$的。
 
 \subsubsection{快速求k级祖先}
+\paragraph{预处理}
+\begin{enumerate}
+    \item 使用树上倍增$O(n\lg n)$计算第$2^k$级祖先。
+    \item 对每条长链预处理长链顶的前``链长''个祖先，以及链上的所有点的编号。
+\end{enumerate}
+
+\paragraph{查询}
+
+\begin{theorem}\label{DBCBD}
+    任意一点的$k$级祖先所在的链长一定大于等于$k$。
+\end{theorem}
+证明：
+\begin{itemize}
+    \item 若该点与$k$级祖先在同一长链，显然定理成立。
+    \item 否则，$k$级祖先所在长链的叶节点肯定不比自己浅，定理同样成立。
+\end{itemize}
+
+步骤如下：
+\begin{enumerate}
+    \item 用倍增数组跳$k$的最高位,设剩余层数为$k'$，有$k'<\frac{k}{2}$；
+    \item 由定理~\ref{DBCBD}得当前节点所在链的链长严格大于$k'$，利用链头
+    向上/向下的数组即可$O(1)$查询。
+\end{enumerate}
+
+预处理$O(n\lg n)$，查询$O(1)$。
 
 长链剖分参考了MoebiusMeow的博客\footnote{长链剖分随想 - MoebiusMeow
     \url{https://www.cnblogs.com/meowww/p/6403515.html}
+}
+与后缀自动机·张的文章\footnote{长链剖分之O(nlgn)-O(1)求k级祖先
+    \url{https://zhuanlan.zhihu.com/p/25984772}
 }。

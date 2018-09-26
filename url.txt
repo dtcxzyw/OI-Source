@@ -156,3 +156,4 @@ https://www.cnblogs.com/ywwyww/p/8511472.html
 https://www.cnblogs.com/ywwyww/p/8511463.html
 反演 http://vfleaking.blog.uoj.ac/slide/87#/
 动态规划的优化技巧 https://blog.csdn.net/sentimental_dog/article/details/51954383
+最小割建模思路 https://www.cnblogs.com/jszkc/p/7310257.html

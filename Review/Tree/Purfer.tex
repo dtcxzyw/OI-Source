@@ -1,1 +1,32 @@
-\section{Purfer序列}
+\section{Purfer Sequence}
+\index{P!Purfer Sequence}
+Purfer Sequence用来表示树的结构（注意这里的树{\bfseries 带标号}）。
+\subsection{构造Purfer Sequence}
+\begin{enumerate}
+	\item 在当前树中找到标号最小的叶子节点；
+	\item 向序列加入与该叶子节点相连的节点标号，并将该叶子节点删除。
+	\item 重复步骤1直至只剩2个节点。
+\end{enumerate}
+由此可得两个性质：
+\begin{property}[唯一性]
+	一个大小为$n$的树对应一个长度为$n-2$的Purfer Sequence。
+\end{property}
+\begin{property}
+	一个度数为$d$的节点在Purfer Sequence中出现$d-1$次。
+\end{property}
+\subsection{恢复原树}
+\begin{enumerate}
+	\item 统计节点在Purfer Sequence在节点中出现的次数得到每个点的度数，记为$d[u]$；
+	\item 对于序列中的每一个数$v$，选取$d[u]=1$且标号最小的节点$u$，连接$(u,v)$，
+	      然后$--d[u],--d[v]$（实际上只需在平衡树上删除点$u$，$--d[v]$后检查是否要
+	      插入点$v$）；
+	\item 将剩下两个$d[u]=1$的点连边。
+\end{enumerate}
+\subsection{计数应用}
+可根据度数与出现次数的关系计算满足度数要求的树的数目。
+{\bfseries 注意无解和$n\leq 2$时的情况。}
+
+以上内容参考了JMJST的博客\footnote{
+	BZOJ 1005 [HNOI2008] 明明的烦恼（组合数学 Purfer Sequence） - jianzhang.zj
+	\url{http://www.cnblogs.com/zhj5chengfeng/archive/2013/08/23/3278557.html}
+}。

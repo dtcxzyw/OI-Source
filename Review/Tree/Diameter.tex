@@ -1,1 +1,52 @@
 \section{树的直径}
+\subsection{定义与计算}
+树的直径就是树的最长链。
+
+\begin{itemize}
+    \item 求直径长：一遍DFS对于每个点计算其到子树的最大与次大距离，
+    然后相加更新答案。
+    \item
+    求某条直径：
+    \begin{enumerate}
+        \item 任选一点$a$，DFS计算与其相距最远的点$b$；
+        \item 从$b$点开始DFS计算与其相距最远的点$c$；
+        \item $b-c$就是树的直径。
+    \end{enumerate}
+\end{itemize}
+
+\subsection{性质}
+
+\begin{property}
+    距树上任意一点最远的点必定在树的直径上。
+\end{property}
+
+\begin{property}
+    所有直径的中心（点或边）相同，树上任意一点到最远点的路径必经过这个中心。
+\end{property}
+
+\begin{property}
+    所有直径的偏心距相等。
+\end{property}
+
+这个性质可用于计算合并子树后的直径：
+\begin{property}
+    树的直径端点是子树的直径端点。
+\end{property}
+
+与树上点到路径距离有关的dp题一般先考虑求直径，然后双指针法dp。
+
+上述性质参考了里阿奴摩西的博客\footnote{[树的直径] BZOJ 1999 [Noip2007]Core树网的核
+\url{https://blog.csdn.net/u014609452/article/details/69351006}}。
+
+\subsection{多子树直径查询}
+对原树按DFS序展开到线段树上，对于每个区间维护其直径与两端点，
+合并时取四个点中最远点对即可。由于询问保证区间内的点连通，不必
+考虑合并时区间不连通的问题。
+
+{\bfseries 注意用LCA求距离时要使用欧拉序+ST表法。}
+
+预处理$O(n\lg n)$，查询$O(\lg n)$。
+
+上述内容参考了rzO\_KQP\_Orz的博客\footnote{用线段树维护树的直径
+\url{https://blog.csdn.net/rzo\_kqp\_orz/article/details/52280811}
+}。
