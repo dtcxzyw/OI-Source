@@ -1,3 +1,86 @@
 \section{点分治}
+点分治就是每次选择树的重心（儿子的子树大小的最大值最小的节点）作为分治点，
+以分治点为根将整棵树分为多棵子树，统计当前节点的答案，
+然后递归每棵子树分治。这种方法一般用来解决{\bfseries 路径统计问题}。
 \subsection{常规点分治}
+\subsubsection{重心性质}
+\begin{property}\label{WPP}
+    重心的儿子子树大小不超过整棵树大小的一半。
+\end{property}
+\begin{property}
+    所有点到重心的距离和最小，到两个重心的距离和相等。
+\end{property}
+\begin{property}
+    两棵树合并后的重心在这两棵树的重心的路径上。
+\end{property}
+\begin{property}
+    添加或减少一个叶子节点，重心最多偏移一条边。
+\end{property}
+\subsubsection{重心选择}
+以当前联通块内任意一点为根（当然是分治点的儿子）DFS，然后计算
+其儿子的子树大小的最大值，然后与除自己子树外的节点数求最大值
+（儿子为有根树意义下的父亲时的子树），
+就得到当前节点的权重了。
+
+使用$vis$数组来标记是否已成为分治点，顺便原来分割联通块。
+
+\begin{lstlisting}[title=getRoot]
+bool vis[size];
+int root,tsiz,msiz,siz[size];
+void getRootImpl(int u,int p) {
+    int maxs=0;
+    siz[u]=1;
+    for(int i=last[u];i;i=E[i].nxt) {
+        int v=E[i].to;
+        if(!vis[v] && v!=p) {
+            getRootImpl(v,u);
+            siz[u]+=siz[v];
+            maxs=std::max(maxs,siz[v]);
+        }
+    }
+    maxs=std::max(maxs,tsiz-siz[u]);
+    if(maxs<msiz) {
+        msiz=maxs;
+        root=u;
+    }
+}
+int getRoot(int u,int csiz) {
+    msiz=1<<30;
+    tsiz=csiz;
+    getRootImpl(u,0);
+    return root;
+}
+\end{lstlisting}
+
+\subsubsection{分治与统计}
+每次把重心作为分治点，统计从分治点出发的信息，两两合并后对于每棵子树去除
+来自同一棵子树的信息（因为这已经不是简单路径了）。
+
+\begin{lstlisting}[title=divide]
+void divide(int u) {
+    //count u->child
+    vis[u]=true;
+    for(int i=last[u];i;i=E[i].nxt) {
+        int v=E[i].to;
+        if(!vis[v]) {
+            //minus v->u->v
+            divide(getRoot(v,siz[v]));
+        }
+    }
+}
+\end{lstlisting}
+
+\subsubsection{时间复杂度}
+点分治会带来$O(\lg n)$的复杂度，证明：
+
+根据性质~\ref{WPP}，点分治的层数为$O(\lg n)$，而且每层的总规模都是$n$。
+
 \subsection{动态点分治}
+动态点分治就是在分治时连接当前分治点与子联通块的分治点，
+这些点构成了一棵点分树，多次查询时使用点分树来计算。
+
+\subsubsection{例题}
+
+Luogu P4115 Qtree4\footnote{【P4115】Qtree4 - 洛谷
+\url{https://www.luogu.org/problemnew/show/P4115}}
+

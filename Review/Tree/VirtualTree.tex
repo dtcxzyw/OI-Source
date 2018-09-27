@@ -1,1 +1,74 @@
 \section{虚树}
+在多次询问的树型dp中，若遇到询问总点数与树的大小同数量级的情况，
+可以在每次询问中将询问节点建成一棵``虚树''，然后对虚树做树型dp
+即可。这样可以有效地降低dp规模（$\displaystyle qT(n)->
+\sum_{i=1}^q{\left(O(m_i\lg m_i)+T(2m_i)\right)}$）。
+
+\subsubsection{构造过程}
+
+首先预处理树，从根节点DFS遍历整棵树，记录DFS序与深度，准备计算LCA的信息，
+同时维护其他信息。
+
+对于每一次询问：
+\begin{enumerate}
+    \item 将询问节点按DFS序排序；
+    \item 将第一个节点加入栈中，栈上维护的是当前节点到根的链；
+    \item 对于剩下每一个节点$u$：
+    \begin{enumerate}
+        \item 计算自己与栈顶节点$v$的$lca$；
+        \item 若栈中第二个节点$p$的深度比$lca$大，则连接$p->v$，弹出$v$。
+        重复该步骤直至不满足条件；
+        \item 若$lca$比$v$浅，连接$lca->v$，弹出$v$。
+        \item 若栈为空或$v$比$lca$浅，加入节点$lca$。
+        \item 加入节点$u$。
+    \end{enumerate}
+    \item 此时栈上还有一条链，将链加入树中，栈底就是根节点。
+\end{enumerate}
+\subsubsection{算法解释}
+
+$lca$有两种可能：
+\begin{itemize}
+    \item $lca$为$v$：此时的操作只有加入节点$u$，
+    就是简单地将自己挂在虚树中的父亲下。
+    \item $u$和$v$在$lca$的两棵子树下：
+    首先不断地折叠链直至$u$和$v$在虚树上的直接祖先为$lca$，
+    然后继续分类：
+    \begin{itemize}
+        \item $p$为$lca$，连接$lca->v$后把$v$换成$u$。
+        \item $p$为$lca$的祖先，连接$lca->v$后把$v$换成$lca$与$v$。
+        \item $lca$为原链头的祖先，把链全部折叠后加入节点$lca$与$u$。
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{算法实现}
+
+\begin{lstlisting}
+int buildTree(int k) {
+    g2.cnt = 0;
+    int top = 1;
+    std::sort(id + 1, id + k + 1, cmp);
+    st[1] = id[1];
+    for (int i = 2; i <= k; ++i) {
+        int u = id[i];
+        int lca = getLca(u, st[top]);
+        while (top > 1 && d[lca] < d[st[top - 1]]) {
+            g2.addEdge(st[top - 1], st[top]);
+            --top;
+        }
+        if (d[lca] < d[st[top]]) {
+            g2.addEdge(lca, st[top]);
+            --top;
+        }
+        if (top == 0 || d[st[top]] < d[lca])
+            st[++top] = lca;
+        st[++top] = u;
+    }
+    while (top > 1) {
+        g2.addEdge(st[top - 1], st[top]);
+        --top;
+    }
+    return st[1];
+}
+\end{lstlisting}
+
+{\bfseries 注意有时需要把根节点强制加入到虚树中去。}
