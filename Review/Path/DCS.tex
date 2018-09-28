@@ -1,0 +1,20 @@
+\section{差分约束系统}
+差分约束系统是一堆形如$x_i-x_j\leq c_k$的不等式组成的不等式组。
+
+若要构造$x_i-x_j=c_k$，加双向不等式约束即可。
+
+\subsection{与最短/长路的关系}
+对不等式$x_i-x_j\leq c_k$进行变形得$x_i\leq x_j+c_k$，把$x_i$看做点$i$
+到源点的距离，该不等式就等价于从点$j$向点$i$连了一条距离为$c_k$边。
+如此便可以将差分约束问题转换为最短路问题。最长路的分析类似。
+
+\subsection{判断是否有可行解}
+
+当最短路算法找到负权环路时，该差分约束系统无解。
+
+\subsubsection{例题}
+Luogu P4578 [FJOI2018]所罗门王的宝藏
+\footnote{【P4578】[FJOI2018]所罗门王的宝藏 - 洛谷
+\url{https://www.luogu.org/problemnew/show/P4578}}
+
+\subsection{求解}

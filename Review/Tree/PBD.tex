@@ -84,3 +84,15 @@ void divide(int u) {
 Luogu P4115 Qtree4\footnote{【P4115】Qtree4 - 洛谷
 \url{https://www.luogu.org/problemnew/show/P4115}}
 
+首先点分治建出点分树。
+对于每个节点维护两个可修改堆，堆A维护子树白节点到该节点父亲的距离，堆B维护
+该节点儿子们的堆A最大值，那么经过该节点的最长路径为堆B的最大值+堆B的次大值。
+注意自身就是白点的情况。
+
+对于经过每个节点的最长路径，再用一个可修改堆维护即可。
+
+事实上双$std::priority\_queue$维护可修改堆比$std::multiset$跑得更快。
+
+代码如下：
+\lstinputlisting[title=Luogu P4115]
+{Source/Source/'Point-Based Partition'/4115queue.cpp}

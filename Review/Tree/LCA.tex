@@ -55,35 +55,39 @@ int lca(int u,int v) {
 DFS完一棵子树后加入节点$i$的深度作为隔板，按访问时间戳查询ST表即可。为了
 应对在一条链上的情况，同时也为了给节点$i$一个时间戳，在遍历节点$i$之初就插入一个隔板。
 \begin{lstlisting}
-int L[size],d[size],A[20][size*2],siz=0;
-void DFS(int u,int p) {
-    A[0][++siz]=d[u];
-    L[siz]=u;
-    for(int i=last[u];i;i=E[i].next) {
-        int v=E[i].to;
-        if(v!=p) {
-            d[v]=d[u]+1;
-            DFS(v,u);
-            A[0][++siz]=d[u];
+int icnt = 0, A[size * 2][18], L[size], d[size];
+void DFS(int u) {
+    A[++icnt][0] = u;
+    L[u] = icnt;
+    for (int i = last[u]; i; i = E[i].nxt) {
+        int v = E[i].to;
+        if (!L[v]) {
+            d[v] = d[u] + 1;
+            DFS(v);
+            A[++icnt][0] = u;
         }
     }
 }
+int choose(int u, int v) {
+    return d[u] < d[v] ? u : v;
+}
 void buildST() {
-    for(int i=1;i<20;++i) {
-        int end=siz-(1<<i)+1,off=1<<(i-1);
-        for(int j=1;j<=end;++j)
-            st[i][j]=std::min(st[i-1][j],st[i-1][j+off]);
+    for (int i = 1; i < 18; ++i) {
+        int off = 1 << (i - 1),
+            end = icnt - (1 << i) + 1;
+        for (int j = 1; j <= end; ++j)
+            A[j][i] = choose(A[j][i - 1],
+                A[j + off][i - 1]);
     }
 }
-int query(int l,int r) {
-    int siz=r-l+1;
-    int p=ilg2(siz);
-    return std::min(A[p][l],A[p][r-(1<<p)+1]);
+int ilg2(int x) {
+    return 31 - __builtin_clz(x);
 }
-int lca(int u,int v) {
-    u=L[u],v=L[v];
-    if(u<v)std::swap(u,v);
-    return query(u,v);
+int getLca(int u, int v) {
+    int l = L[u], r = L[v];
+    if (l > r) std::swap(l, r);
+    int p = ilg2(r - l + 1);
+    return choose(A[l][p], A[r - (1 << p) + 1][p]);
 }
 \end{lstlisting}
 

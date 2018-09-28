@@ -1,6 +1,6 @@
 #include <algorithm>
 #include <cstdio>
-#include <set>
+#include <queue>
 int read() {
     int res = 0, c;
     bool flag = false;
@@ -96,20 +96,47 @@ int getRoot(int u, int csiz) {
     return root;
 }
 const int nan = 0xc0c0c0c0;
-typedef std::multiset<int> Heap;
-typedef Heap::reverse_iterator IterT;
-void modifyHeap(Heap& heap, int val, bool op) {
-    if(val != nan) {
-        if(op)
-            heap.insert(val);
-        else
-            heap.erase(heap.find(val));
+class Heap {
+private:
+    std::priority_queue<int> A, B;
+    void update() {
+        while(B.size() && B.top() == A.top())
+            A.pop(), B.pop();
     }
-}
-int getMaxv(Heap& heap) {
-    return heap.size() ? *heap.rbegin() : nan;
-}
-Heap df[size], md[size], glo;
+
+public:
+    void insert(int val) {
+        if(val != nan)
+            A.push(val);
+    }
+    void erase(int val) {
+        if(val != nan)
+            B.push(val);
+    }
+    void modify(int val, bool op) {
+        if(val != nan)
+            (op ? A : B).push(val);
+    }
+    int getMax() {
+        update();
+        return A.size() ? A.top() : nan;
+    }
+    int getMix() {
+        int vala = getMax();
+        if(vala != nan) {
+            A.pop();
+            int valb = getMax();
+            A.push(vala);
+            if(valb != nan)
+                return vala + valb;
+        }
+        return nan;
+    }
+    void replace(int a, int b) {
+        erase(a);
+        insert(b);
+    }
+} df[size], md[size], glo;
 int fa[size];
 void DFS(int u, int p, int a, int b) {
     df[a].insert(getDis(u, b));
@@ -131,36 +158,22 @@ void divide(int u) {
             int nrt = getRoot(v, siz[v]);
             fa[nrt] = u;
             divide(nrt);
-            md[u].insert(getMaxv(df[nrt]));
+            md[u].insert(df[nrt].getMax());
         }
     }
-}
-int getMix(int u) {
-    IterT end = md[u].rend();
-    IterT a = md[u].rbegin();
-    if(a != end) {
-        int vala = *a;
-        ++a;
-        if(a != end)
-            return vala + *a;
-    }
-    return nan;
 }
 void modify(int p, int u, bool op) {
     int pp = fa[p];
     int dis = getDis(pp, u);
-    int old = getMaxv(df[p]);
-    modifyHeap(df[p], dis, op);
-    int now = getMaxv(df[p]);
+    int old = df[p].getMax();
+    df[p].modify(dis, op);
+    int now = df[p].getMax();
     if(old != now) {
-        int omix = getMix(pp);
-        modifyHeap(md[pp], old, false);
-        modifyHeap(md[pp], now, true);
-        int nmix = getMix(pp);
-        if(omix != nmix) {
-            modifyHeap(glo, omix, false);
-            modifyHeap(glo, nmix, true);
-        }
+        int omix = md[pp].getMix();
+        md[pp].replace(old, now);
+        int nmix = md[pp].getMix();
+        if(omix != nmix)
+            glo.replace(omix, nmix);
     }
 }
 bool col[size];
@@ -178,7 +191,7 @@ int main() {
     int rt = getRoot(1, n);
     divide(rt);
     for(int i = 1; i <= n; ++i)
-        glo.insert(getMix(i));
+        glo.insert(md[i].getMix());
     int q = read();
     while(q--) {
         if(getOp() == 'C') {
@@ -186,14 +199,12 @@ int main() {
             bool op = col[u];
             col[u] ^= 1;
             {
-                int omix = getMix(u);
-                modifyHeap(md[u], 0, op);
-                modifyHeap(md[u], 0, op);
-                int nmix = getMix(u);
-                if(omix != nmix) {
-                    modifyHeap(glo, omix, false);
-                    modifyHeap(glo, nmix, true);
-                }
+                int omix = md[u].getMix();
+                md[u].modify(0, op);
+                md[u].modify(0, op);
+                int nmix = md[u].getMix();
+                if(omix != nmix)
+                    glo.replace(omix, nmix);
             }
             int p = u;
             while(fa[p]) {
@@ -201,7 +212,7 @@ int main() {
                 p = fa[p];
             }
         } else {
-            int res = getMaxv(glo);
+            int res = glo.getMax();
             if(res != nan)
                 printf("%d\n", res);
             else
