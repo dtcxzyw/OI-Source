@@ -83,10 +83,10 @@
 - [x] purfer序列
 - [x] dsu on tree
 ### 最短路
-- [ ] SPFA
-- [ ] Dijskra
-- [ ] Floyd
-- [ ] 差分约束
+- [x] SPFA
+- [x] Dijskra
+- [x] Floyd
+- [x] 差分约束
 - [ ] k短路
 ### 生成树
 - [ ] Kruskal/Prim
@@ -104,7 +104,7 @@
 - [ ] 欧拉回路
 - [ ] 点覆盖、路径覆盖、最大独立集、最大团
 - [ ] 竞赛图
-- [ ] 负环-最小平均值环
+- [ ] 最小平均值环
 ## 字符串
 - [ ] Hash
 - [ ] Trie/AC自动机

@@ -1,15 +1,20 @@
 \section{单/多源最短路}
 \subsection{SPFA}
+最坏时间复杂度$O(VE)$。
 \paragraph{严重警告}
 是SPFA让我在NOI2018Day1中滚粗的。
 \subsubsection{SLF优化}
 插入队列时，若当前节点比队首距离更短则插入队首，否则插入队尾。
 \subsubsection{LLL优化}
 每次选取一个距离小于队列距离平均值的节点松弛。
+\subsubsection{堆优化}
+沿着LLL优化的思路：使用距离尽可能小的节点来松弛。使用堆就可以维护了。
 \subsubsection{卡SPFA}
 留坑待补。
 \index{*TODO!卡SPFA}
 \subsection{Dijkstra}
+使用二叉堆的最坏时间复杂度$O((V+E)\lg V)$，在稀疏图中表现良好。
+稠密图可以使用$O(V^2)$暴力。
 \paragraph{强烈安利}
 大型考试还是使用Dijkstra算法好了。
 

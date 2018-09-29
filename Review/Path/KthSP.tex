@@ -1,3 +1,26 @@
 \section{k短路}
 \subsection{A*算法}
+主要思想是使用启发式函数来修正关键字，以达到加速效果。
+
+步骤如下：
+
+\begin{enumerate}
+    \item 将启发式函数设为当前节点到目标节点的最短距离，SSSP预处理。
+    \item 维护一个优先队列（关键字为估价函数=当前距离+到目标点的最短路），加入起点。
+    \item 选取估价函数最小的点松弛（不比较直接加入堆中）。根据以下定理：
+    \begin{theorem}
+        一个点第$k$次出队后，当前距离就是它到起点的第$k$短路。
+    \end{theorem}
+    在目标节点出队时计算是否为第$k$次出队，满足就返回。
+    \item 若中途不返回则说明不存在第$k$短路，返回无解。
+\end{enumerate}
+{\bfseries 注意判断$s=t$和$s-t$不连通的情况。}
+
+以上内容参考了Z\_Mendez的博客\footnote{A*算法—第K短路 - This is Mendez.
+    \url{https://blog.csdn.net/z\_mendez/article/details/47057461}
+}。
 \subsection{可持久化左偏树法}
+
+以上内容参考了litble\footnote{HDU5960 可持久化左偏树 k短路问题 - litble的成(tui)长(fei)史
+    \url{https://blog.csdn.net/litble/article/details/79171311}
+}

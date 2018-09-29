@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "command": "g++",
     "args": [
-        "-g",
+        "-O2",
         "${file}",
         "-o",
         "bin/${fileBasenameNoExtension}.out",

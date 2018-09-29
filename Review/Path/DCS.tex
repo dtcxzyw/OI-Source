@@ -10,11 +10,49 @@
 
 \subsection{判断是否有可行解}
 
-当最短路算法找到负权环路时，该差分约束系统无解。
+\begin{theorem}
+    当图中存在负权环路时，该差分约束系统无可行解。
+\end{theorem}
+
+证明：从负权环路中拆出一条边，记边为$(u->v，w_1)$，其它边合并得$(v->u,w_2)$，
+有$w_1+w_2<0$，将边还原成不等式组：
+\begin{eqnarray*}
+    x_v-x_u&\leq& w_1\\
+    x_u-x_v&\leq& w_2\\
+\end{eqnarray*}
+两式相加得$0\leq w_1+w_2$，与$w_1+w_2>0$矛盾。
+
+使用SPFA判负环有DFS与BFS两种方法。
+
+首先用一个超级源连接所有点，保证图的连通。
+
+\begin{itemize}
+    \item DFS-SPFA:松弛时递归下去，当存在环时说明存在负权环。
+
+    注：使用setjmp/longjmp较为方便，记得把调用过程中修改的变量设为
+    {\bfseries volatile}。
+    \item BFS-SPFA:当某节点{\bfseries 入队次数}（注意不是被松弛次数）大于等于节点
+    总数时，存在负权环。
+\end{itemize}
+一般使用DFS法（跑得飞快），但是如果不存在环，DFS法的效率会比BFS法慢，
+所以可以使用卡时技巧将DFS/BFS结合。
+
+代码如下：
+\lstinputlisting{Source/Templates/NegRing.cpp}
 
 \subsubsection{例题}
 Luogu P4578 [FJOI2018]所罗门王的宝藏
 \footnote{【P4578】[FJOI2018]所罗门王的宝藏 - 洛谷
 \url{https://www.luogu.org/problemnew/show/P4578}}
 
+看上去可以使用高斯消元法求解系数矩阵为稀疏矩阵的线性方程组。进一步分析发现，若
+将$y$方向操作的左右取反，可以得到$x_i-y_j=c_k$的形式。将该形式拆成最短路的
+差分约束形式：
+\begin{eqnarray*}
+    x_i-y_j&\leq& c_k\\
+    y_j-x_i&\leq& -c_k\\
+\end{eqnarray*}
+双向连边后判负环即可。
+
 \subsection{求解}
+最短路的距离就是一组可行解，对这组可行解任意加减一个常数可以得到另一个可行解。
