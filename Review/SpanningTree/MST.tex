@@ -1,0 +1,94 @@
+\section{最小生成树}
+\subsection{Kruskal与LCT}
+Luogu P4234 最小差值生成树\footnote{【P4234】最小差值生成树 - 洛谷
+	\url{https://www.luogu.org/problemnew/show/P4234}
+}
+
+按照Kruskal的处理顺序处理生成树，当遇到环时删掉环上权值最小的边，换上自己即可。
+
+\subsection{Prim算法}
+
+从一个点开始贪心地连接最短的可扩展边，直至每个点都被连接。
+
+代码：
+\begin{lstlisting}
+struct Info{
+    int u,d;
+    Info(int u,int d):u(u),d(d){}
+    bool operator<(const Info& rhs) const {
+        return d>rhs.d;
+    }
+};
+bool flag[size];
+int prim(int n) {
+    flag[1]=true;
+    std::priority_queue<Info> heap;
+    for(int i=last[1];i;i=E[i].nxt)
+        heap.push(Info(E[i].to,E[i].w));
+    int cnt=1,sum=0;
+    while(cnt<n && heap.size()) {
+        int u=heap.top().u;
+        int d=heap.top().d;
+        heap.pop();
+        if(!flag[u]) {
+            flag[u]=true;
+            sum+=E[i].w;
+            for(int i=last[u];i;i=E[i].nxt) {
+                int v=E[i].to;
+                if(!flag[v])
+                    heap.push(Info(v,E[i].w));
+            }
+        }
+    }
+    return cnt==n?sum:-1;
+}
+\end{lstlisting}
+
+当边数较大时，可以考虑使用Prim或优先队列+Kruskal法。
+
+\subsection{次小生成树}
+步骤如下：
+\begin{enumerate}
+	\item 构造最小生成树，标记并连接树边；
+	\item 对生成树进行树链剖分，构造线段树，使其可以$O(\lg n)$查询到链上最大权；
+	\item 枚举非树边，计算其替代链上的最大边后的代价，更新答案。
+\end{enumerate}
+
+对于严格次小生成树，需要维护链上最大权与严格次大权。
+
+\subsection{生成树性质}
+以下性质用于解决最小生成树计数问题：
+\begin{property}
+	最小生成树中,不同权值边的数量固定。
+\end{property}
+\begin{property}
+	Kruskal算法中,处理完某一权值的边后，联通块相同。
+\end{property}
+\subsubsection{例题}
+
+Luogu P4208 [JSOI2008]最小生成树计数\footnote{
+【P4208】[JSOI2008]最小生成树计数 - 洛谷
+\url{https://www.luogu.org/problemnew/show/P4208}
+}
+
+根据以上两个性质可以把每种权值的边分别计算，然后使用乘法原理组合即可。
+
+步骤如下：
+\begin{enumerate}
+	\item 首先使用常规Kruskal计算每种权值边的数量$c_i$以及相同权值的分布区间；
+	\item 对于每一种权值，计算用完$c_i$条边的方案数。
+	      由于题中每种权值的边数不超过10，可以枚举每条边选还是不选，
+	      在回溯时直接令连接的两点的根的父亲重设为自己，时间复杂度近似为$O(2^{c_i})$。
+	\item 把每种权值的方案数乘起来就是方案数。
+\end{enumerate}
+
+代码如下：
+\lstinputlisting{Source/Unclassified/Done/4208.cpp}
+
+另一种方法：每次计算小联通块->大联通块的过程，对于每个大联通块单独使用
+Matrix-Tree定理求方案数，最后乘起来即可。
+
+最小生成树计数问题参考了clover\_hxy的博客\footnote{
+bzoj 1016: [JSOI2008]最小生成树计数 （矩阵树定理+最小生成树）
+\url{https://blog.csdn.net/clover\_hxy/article/details/69397184}
+}。

@@ -44,7 +44,8 @@ struct G {
     G() : cnt(0) {}
     void addEdge(int u, int v, FT w) {
         ++cnt;
-        E[cnt].to = v, E[cnt].nxt = last[u], E[cnt].w = w;
+        E[cnt].to = v, E[cnt].nxt = last[u],
+        E[cnt].w = w;
         last[u] = cnt;
     }
 } g1, g2;
@@ -117,14 +118,15 @@ void DFS(int u) {
         for(int i = g2.last[u]; i; i = g2.E[i].nxt) {
             int v = g2.E[i].to;
             FT delta = dis[v] + g2.E[i].w - dis[u];
-            if(v == fa[u] && equalZero(delta) && !haveEdge)
+            if(v == fa[u] && equalZero(delta) &&
+               !haveEdge)
                 haveEdge = true;
             else
                 root[u] = insert(root[u], delta, v);
         }
         enableClone = true;
+        root[u] = merge(root[u], root[fa[u]]);
     }
-    root[u] = merge(root[u], root[fa[u]]);
     for(int i = g1.last[u]; i; i = g1.E[i].nxt) {
         int v = g1.E[i].to;
         FT delta = dis[u] + g1.E[i].w - dis[v];
@@ -160,7 +162,8 @@ int main() {
     if(e >= dis[1]) {
         e -= dis[1], ++res;
         std::priority_queue<Info> heap;
-        heap.push(Info(root[1], dis[1] + T[root[1]].val));
+        heap.push(
+            Info(root[1], dis[1] + T[root[1]].val));
         while(heap.size() && e >= heap.top().dis) {
             int u = heap.top().id;
             int v = root[T[u].p];
@@ -172,9 +175,11 @@ int main() {
                 heap.push(Info(v, d + T[v].val));
             FT base = d - T[u].val;
             if(T[u].ls)
-                heap.push(Info(T[u].ls, base + T[T[u].ls].val));
+                heap.push(Info(T[u].ls,
+                               base + T[T[u].ls].val));
             if(T[u].rs)
-                heap.push(Info(T[u].rs, base + T[T[u].rs].val));
+                heap.push(Info(T[u].rs,
+                               base + T[T[u].rs].val));
         }
     }
     printf("%d\n", res);

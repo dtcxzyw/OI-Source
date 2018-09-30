@@ -70,7 +70,8 @@ int main() {
             DFS(end[i - 1], end[i], refCount[i]);
             ans = ans * cnt % mod;
             while(cur < end[i]) {
-                int u = find(E[cur].u), v = find(E[cur].v);
+                int u = find(E[cur].u),
+                    v = find(E[cur].v);
                 if(u != v)
                     fa[u] = v;
                 ++cur;
