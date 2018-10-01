@@ -1,1 +1,46 @@
 \section{Kruskal重构树}
+\subsection{构造}
+在做Kruskal时，将合并两点所在集合的操作改为将两点所在集合
+连到一个新的点上（代表边），新点的权为边权，代表点的权为0，
+这样就可以构造出一棵Kruskal重构树，用来处理边权最值问题。
+
+由构造过程可推出Kruskal重构树的性质：
+
+\begin{property}
+    最小生成树与Kruskal重构树两点路径上的边权（点权）最大值相等。
+\end{property}
+\begin{property}\label{KRTP2}
+    Kruskal重构树中子节点的权小于等于父节点的权。
+\end{property}
+由上述性质可得到在Kruskal重构树中询问边权最大值的方法：计算
+两点的LCA，LCA的点权就是原生成树边权最大值。
+
+以上内容参考了Coco\_T\_的博客\footnote{
+    bzoj3732 Network（Kruskal重构树）
+    \url{https://blog.csdn.net/wu_tongtong/article/details/77601523}
+}。
+\subsection{例题}
+Luogu P4768 [NOI2018]归程\footnote{
+    【P4768】[NOI2018]归程 - 洛谷
+    \url{https://www.luogu.org/problemnew/show/P4768}
+}
+
+很容易看出这题求的是汽车可到达节点到原节点的最短路的最小值。
+
+首先使用Dijkstra预处理最短路（{\bfseries 不要用SPFA！！！不要用SPFA！！！
+不要用SPFA！！！}）。
+
+\subsubsection{可持久化并查集法}
+一个很简单的思路是按照海拔高度从大到小连边，使用可持久化并查集记录连通性，同时
+维护联通块内最短路最小值，预处理后查询集合最值即可，注意可持久化线段树的规模。
+
+\subsubsection{Kruskal重构树法}
+下面是Kruskal重构树的做法：
+
+由性质~\ref{KRTP2}不难想到对该图按海拔高度做最大生成树，这样就保证了
+Kruskal重构树的父节点点权小于等于子节点点权，使用倍增法可以跳到满足要求的
+的最浅的祖先。这个祖先就代表了满足海拔要求的最大连通集合。对每个点存储子树叶
+子节点（即生成树中的点）的最短路最小值即可支持$O(\lg n)$查询。
+
+代码如下：
+\lstinputlisting{Source/Unclassified/Done/4768.cpp}

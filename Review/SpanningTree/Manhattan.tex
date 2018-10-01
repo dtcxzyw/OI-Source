@@ -1,1 +1,106 @@
 \section{曼哈顿距离MST}
+\subsection{分析}
+由于$E=O(V^2)$，显然不能使用常规Kruskal法。
+
+考虑曼哈顿距离的特性，以每个点为原点建坐标系，将坐标系每$45\circ$分成一块区域，
+发现这个点到每个区域最多只会连离它最近的点，预处理每个点到八个区域的最近点即可，
+边数缩减为$O(V)$。根据对称性可只考虑一半的区域，最多加入$4V$条边。
+
+接下来思考如何查询最近点（仅处理右半区域，以下左右分别指逆时针和顺时针）：
+
+\begin{itemize}
+	\item 首先考虑y正半轴向右$45\circ$的点，发现若以点$P$为原点，
+	      落在该区域的点$Q$满足：
+	      \begin{eqnarray*}
+		      x_P&\leq& x_Q\\
+		      x_Q-y_Q&\leq& x_P-y_P\\
+	      \end{eqnarray*}
+	      等号至少取一边即可，因为其它区域可以覆盖到边界。
+
+	      因为$|PQ|=(x_Q+y_Q)-(x_P+y_P)$，所以要查询满足要求且$x+y$的取最小时
+	      对应的点。
+
+	      按照$x$从大到小排序，对$x-y$离散，使用树状数组维护$x+y$前缀最小值与对应的点。
+	\item 对于其它三个区域的点，可以使用坐标变换得到：
+	      \begin{enumerate}
+		      \item y正半轴向右：直接做；
+		      \item x正半轴向左：交换$x,y$；
+		      \item x正半轴向右：$x$取反；
+		      \item y负半轴向左：交换$x,y$。
+	      \end{enumerate}
+\end{itemize}
+
+以上内容参考了GGBeng的博客\footnote{曼哈顿距离最小生成树
+	\url{https://www.cnblogs.com/xzxl/p/7237246.html}
+}。
+\subsection{实现}
+\begin{lstlisting}
+struct Node{
+    int id,val;
+    Node(int id,int val):id(id),val(val) {}
+    void update(const Node& rhs) {
+        if(val>rhs.val)
+            *this=rhs;
+    }
+} T[size];
+void reset(int siz) {
+    for(int i=1;i<=siz;++i)
+        T[i].id=-1,T[i].val=1<<30;
+}
+void modify(int x,int siz,const Node& val) {
+    while(x<=siz) {
+        T[x].update(val);
+        x+=x&-x;
+    }
+}
+Node query(int x) {
+    Node val(-1,1<<30);
+    while(x) {
+        val.update(T[x]);
+        x-=x&-x;
+    }
+    return val;
+}
+int A[size];
+int find(int x,int siz) {
+    return std::lower_bound(A+1,A+siz+1,x)-A;
+}
+struct Pos{
+    int x,y,id;
+    bool operator<(const Pos& rhs) const {
+        return x>rhs.x;
+    }
+} P[size];
+struct Edge{
+    int u,v,w;
+    Edge(int u,int v,int w):u(u),v(v),w(w) {}
+} E[4*size];
+int buildGraph(int n) {
+    int ecnt=0;
+    for(int d=0;d<4;++d) {
+        if(d==2) {
+            for(int i=1;i<=n;++i)
+                P[i].x=-P[i].x;
+        }
+        else if(d!=0) {
+            for(int i=1;i<=n;++i)
+                std::swap(P[i].x,P[i].y);
+        }
+        for(int i=1;i<=n;++i)
+            A[i]=P[i].x-P[i].y;
+        std::sort(A+1,A+n+1);
+        int siz=std::unique(A+1,A+n+1)-(A+1);
+        reset(siz);
+        std::sort(P+1,P+n+1);
+        for(int i=1;i<=n;++i) {
+            int pos=find(P[i].x-P[i].y,siz);
+            Node p=query(pos);
+            int sum=P[i].x+P[i].y;
+            if(p.id!=-1)
+                E[++ecnt]=Edge(P[i].id,p.id,p.val+sum);
+            modify(pos,Node(P[i].id,sum));
+        }
+    }
+    return ecnt;
+}
+\end{lstlisting}
