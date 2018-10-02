@@ -1,28 +1,28 @@
 \section{Kruskal重构树}
 \subsection{构造}
 在做Kruskal时，将合并两点所在集合的操作改为将两点所在集合
-连到一个新的点上（代表边），新点的权为边权，代表点的权为0，
+连到一个新的点上（代表边），新点的权为边权，代表点的叶子节点的权为0，
 这样就可以构造出一棵Kruskal重构树，用来处理边权最值问题。
 
 由构造过程可推出Kruskal重构树的性质：
 
 \begin{property}
-    最小生成树与Kruskal重构树两点路径上的边权（点权）最大值相等。
+	最小生成树与Kruskal重构树两点路径上的边权（点权）最大值相等。
 \end{property}
 \begin{property}\label{KRTP2}
-    Kruskal重构树中子节点的权小于等于父节点的权。
+	Kruskal重构树中子节点的权小于等于父节点的权。
 \end{property}
 由上述性质可得到在Kruskal重构树中询问边权最大值的方法：计算
 两点的LCA，LCA的点权就是原生成树边权最大值。
 
 以上内容参考了Coco\_T\_的博客\footnote{
-    bzoj3732 Network（Kruskal重构树）
-    \url{https://blog.csdn.net/wu_tongtong/article/details/77601523}
+	bzoj3732 Network（Kruskal重构树）
+	\url{https://blog.csdn.net/wu_tongtong/article/details/77601523}
 }。
 \subsection{例题}
 Luogu P4768 [NOI2018]归程\footnote{
-    【P4768】[NOI2018]归程 - 洛谷
-    \url{https://www.luogu.org/problemnew/show/P4768}
+【P4768】[NOI2018]归程 - 洛谷
+\url{https://www.luogu.org/problemnew/show/P4768}
 }
 
 很容易看出这题求的是汽车可到达节点到原节点的最短路的最小值。
@@ -44,3 +44,14 @@ Kruskal重构树的父节点点权小于等于子节点点权，使用倍增法�
 
 代码如下：
 \lstinputlisting{Source/Unclassified/Done/4768.cpp}
+
+\subsection{最小瓶颈路}\label{MBP}
+最小瓶颈路求的是无向图中指定两点的路径的边权最大值的最小值。
+
+无向图中任意两点的最小瓶颈路肯定在最小生成树上，建出
+Kruskal重构树，根据性质~\ref{KRTP2}，两点的LCA即为边权最大值。
+
+\subsection{次小生成树}
+求解次小生成树的思路是使用非树边替换链上最大边，按照~\ref{MBP}节所述
+可以简洁地求出链上边权最大值。对于严格次小生成树，对每个点维护子树严格
+次小值也是很简单的事情（比线段树不知道高到哪里去了）。

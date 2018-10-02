@@ -1,3 +1,60 @@
 \section{双连通分量}
+\index{B!Biconnected Component}
 \subsection{点双连通分量}
+如果连通图中任意两点之间至少存在两条点不重复路径，则称该图为点双连通的。
+无向图中点双连通的极大子图称为点双连通分量。
+
+可以发现当找到一个割点时，就已经访问了一个点双连通分量，所以在Tarjan算法求割点
+的基础上记录栈中元素即可。注意一个割点可能属于多个点双，因此割点的编号是无意义的，
+并且需要记录的元素是边而不是点。
+
+\begin{lstlisting}
+int dfn[size], low[size], st[size], top = 0, col[size],
+    ccnt = 0;
+bool cut[size];
+void DFS(int u, int p) {
+    static int icnt = 0;
+    dfn[u] = low[u] = ++icnt;
+    int child = 0;
+    for(int i = last[u]; i; i = E[i].nxt) {
+        int v = E[i].to;
+        if(dfn[v]) {
+            if(dfn[v] < dfn[u] && v != p) {
+                st[++top] = i;
+                low[u] = std::min(low[u], dfn[v]);
+            }
+        }
+        else {
+            st[++top] = i;
+            DFS(v, u);
+            ++child;
+            low[u] = std::min(low[u], low[v]);
+            if(dfn[u] <= low[v]) {
+                cut[u] = true;
+                int c = ++ccnt;
+                while(true) {
+                    int eid = st[top--];
+                    int eu = E[eid ^ 1].to;
+                    int ev = E[eid].to;
+                    col[eu] = col[ev] = c;
+                    if(u == eu && v == ev)
+                        break;
+                }
+            }
+        }
+    }
+    if(!p && child == 1)
+        cut[u] = false;
+}
+\end{lstlisting}
+
 \subsection{边双连通分量}
+如果连通图中任意两点之间至少存在两条边不重复路径，则称该图为边双连通的。
+无向图中边双连通的极大子图称为边双连通分量。
+
+把桥删去后分出的联通块就是边双连通分量，可以一遍DFS求出桥，再一遍DFS染色。
+
+上述内容参考了vufw\_795的博客\footnote{
+    Tarjan三大算法之双连通分量（双连通分量）
+\url{https://blog.csdn.net/fuyukai/article/details/51303292}
+}。

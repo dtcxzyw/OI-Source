@@ -1,3 +1,53 @@
 \section{割点与桥}
 \subsection{割点}
+若删除{\bfseries 无向连通图}中的一个点及与它相连的边，使得整个图不连通，
+那么称这个点为割点。
+
+查找割点的步骤如下：
+\begin{enumerate}
+    \item 从一个点开始DFS遍历未被遍历的点；
+    \item 对于每个点维护其访问时间$dfn$和不经过与父亲相连的边所能访问到的点的访问时间
+    最小值$low$；
+    \item 如果自己不是DFS树的根，若DFS树中儿子的$low$不超过自己的$dfn$，则说明删掉
+        自己后DFS树上自己的父亲与自己的儿子不连通，自己为割点；
+    \item 如果自己为DFS树的根，并且自己在DFS树上有两个及以上的儿子，说明自己也是割点。
+\end{enumerate}
+
+代码如下（求的是每个连通图的割点）：
+\lstinputlisting{Source/Review/Graph/CutVertex.cpp}
+
 \subsection{桥}
+若删除{\bfseries 无向连通图}中的一条边，使得整个图不连通，那么称这条边为桥。
+
+同样维护$dfn$与$low$，在DFS树上处理$u->v$的过程中，
+$(u,v)$为桥当且仅当$(u,v)$无重边且$dfn[u]<low[v]$。
+
+为了判断无重边的情况，在DFS过程中让其儿子返回是否存在重边。
+
+\begin{lstlisting}
+struct EdgeT {
+    int u,v;
+    EdgeT(int u,int v):u(u),v(v) {}
+} E[maxm];
+int dfn[size], low[size], ccnt = 0, ecnt = 0;
+bool DFS(int u, int p, int e) {
+    static int icnt = 0;
+    dfn[u] = low[u] = ++icnt;
+    int pcnt = 0;
+    for(int i = last[u]; i; i = E[i].nxt) {
+        int v = E[i].to;
+        if(v != p) {
+            if(dfn[v])
+                low[u] = std::min(low[u], dfn[v]);
+            else {
+                bool flag = DFS(v, u, i);
+                low[u] = std::min(low[u], low[v]);
+                if(flag && dfn[u] < low[v])
+                    E[++ecnt] = EdgeT(u, v);
+            }
+        }
+        else ++pcnt;
+    }
+    return pcnt==1;
+}
+\end{lstlisting}

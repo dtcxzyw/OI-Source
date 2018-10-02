@@ -1,1 +1,55 @@
 \section{强连通分量}
+\index{S!Strongly Connected\\ Component}
+\subsection{定义}
+\paragraph{强连通} 如果一对点存在路径互相可达，就称这对点强连通。
+\paragraph{强连通子图} 强连通子图的点两两互相可达。
+\paragraph{强连通分量} 有向图的极大强连通子图。
+
+一般可以将强连通分量缩成一个点，然后对缩点后的图进行dp。
+\subsection{Tarjan算法}
+Tarjan算法求SCC的步骤如下：
+
+\begin{enumerate}
+	\item DFS遍历每个未遍历的点。
+	\item 对于每个点，维护其访问时间$dfn$，可访问到的栈上的
+	      最早的点的访问时间$low$。DFS处理该点时，将该点加入栈中。
+	\item 若$dfn[u]==low[u]$，则说明栈上从栈顶到自己的点构成了强连通分量，
+	      新建一个强连通分量，记录每个点所属的强连通分量。
+\end{enumerate}
+
+正确性证明留坑待补。
+\index{*TODO!Tarjan算法正确性证明}
+
+代码如下：
+\begin{lstlisting}
+int dfn[size],low[size],st[size],top=0,col[size],ccnt=0;
+bool flag[size];
+void tarjan(int u) {
+    static int icnt=0;
+    dfn[u]=low[u]=++icnt;
+    flag[u]=true;
+    st[++top]=u;
+    for(int i=last[u];i;i=E[i].nxt) {
+        int v=E[i].to;
+        if(dfn[v]) {
+            if(flag[v])
+                low[u]=std::min(low[u],dfn[v]);
+        }
+        else {
+            DFS(v);
+            low[u]=std::min(low[u],low[v]);
+        }
+    }
+    if(dfn[u]==low[u]) {
+        int c=++ccnt,v;
+        do {
+            v=st[top--];
+            flag[v]=false;
+            col[v]=c;
+        } while(u!=v);
+    }
+}
+for(int i=1;i<=n;++i)
+    if(!dfn[i])
+        DFS(i);
+\end{lstlisting}

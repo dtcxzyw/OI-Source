@@ -1,3 +1,122 @@
-\section{圆方树}
+\section{仙人掌与圆方树}
 \subsection{仙人掌}
+\paragraph{仙人掌} 任意一条边最多只存在于一个环中的无向连通图叫做仙人掌。
+\subsubsection{仙人掌的判定}
+假设整个图已经连通，可以先对仙人掌进行DFS，记录DFS序与点的深度。然后
+树上差分求出经过这条边的环数。判定的同时还可以把仙人掌取环变成一棵森林。
+\begin{lstlisting}
+bool flag[size];
+int p[size], d[size], id[size], icnt;
+void DFS(int u) {
+    id[++icnt] = u;
+    flag[u] = true;
+    for(int i = last[u]; i; i = E[i].nxt) {
+        int v = E[i].to;
+        if(!flag[v]) {
+            d[v] = d[u] + 1;
+            p[v] = u;
+            DFS(v);
+        }
+    }
+}
+int tag[size];
+bool graph2Forest(int n) {
+    icnt = 0;
+    memset(flag, n);
+    DFS(1);
+    memset(tag, n);
+    for(int i = 1; i <= cnt; i += 2) {
+        int u = E[i].to, v = E[i ^ 1].to;
+        if(d[u] < d[v])
+            std::swap(u, v);
+        if(p[u] != v)
+            ++tag[u], --tag[v];
+    }
+    initGraph(n);
+    for(int i = n; i >= 1; --i) {
+        int u = id[i];
+        tag[p[u]] += tag[u];
+        if(tag[u] == 0) {
+            if(p[u]) {
+                addEdge(u, p[u]);
+                addEdge(p[u], u);
+            }
+        } else if(tag[u] > 1)
+            return false;
+    }
+    return true;
+}
+\end{lstlisting}
+如果graph2Forest返回false则说明这个图不是仙人掌。若返回true
+则建出一个去掉环的森林。
+\subsubsection{DFS树dp法}
+对于简单的仙人掌问题可以使用DFS树做法：
+
+首先可以使用类似Tarjan的算法判断是否出现了环，然后对于环和桥分别dp，
+将环的信息记录在环上节点在DFS树上最浅的节点上（即在回到环上最浅点时
+另外dp）。
 \subsection{圆方树}
+圆方树是解决仙人掌问题的利器，主要思想是把仙人掌构造为一棵树，然后使用
+熟悉的树上操作来处理。
+\subsubsection{构造}
+在Tarjan时连树边（圆圆边），在环上深度最浅的点上处理环，把环上的节点（圆点）
+都连到新建的点（方点）上（圆方边）。
+
+\begin{lstlisting}
+
+\end{lstlisting}
+
+圆方树具有以下性质：
+\begin{property}
+    圆方树的子树对应仙人掌的子仙人掌。
+\end{property}
+\begin{property}
+    圆方树不存在方点与方点的连边。
+\end{property}
+但是上述版本甚至不存在圆点与圆点的连边，所以只要考虑圆方边即可（其实上面建的是
+广义圆方树）。
+\subsubsection{应用}
+\paragraph{最短路}
+
+\paragraph{点分治}
+注意处理方点时的复杂度，一般将方点设为环的大小，点分治时找带权重心。
+
+\subsection{广义圆方树}
+对于每个点双，将点双内的点（称为圆点）连到新点（称为方点）即可。
+\begin{lstlisting}
+int dfn[size], low[size], st[size], timeStamp = 0,
+    top = 0, nsiz;
+void tarjan(int u) {
+    dfn[u] = low[u] = ++timeStamp;
+    st[++top] = u;
+    for(int i = g1.last[u]; i; i = g1.E[i].nxt) {
+        int v = g1.E[i].to;
+        if(dfn[v])
+            low[u] = std::min(low[u], dfn[v]);
+        else {
+            tarjan(v);
+            low[u] = std::min(low[u], low[v]);
+            if(dfn[u] <= low[v]) {
+                int s = ++nsiz, p;
+                g2.addEdge(u, s);
+                do {
+                    p = st[top--];
+                    g2.addEdge(s, p);
+                } while(p != v);
+            }
+        }
+    }
+}
+nsiz = n;
+\end{lstlisting}
+广义圆方树的点与边数的最大规模都是$2V$级别的（原点与方点相间，
+并且连成一棵树）。
+
+关键在于考虑圆点和方点的权值和边权，注意更新方点时不要更新父亲，
+在另外的计算过程中考虑父亲，以保证更新的复杂度。
+
+上述内容参考了小蒟蒻yyb\footnote{仙人掌\&圆方树学习笔记
+    \url{https://www.cnblogs.com/cjyyb/p/9098400.html}
+}和immortalCO\footnote{圆方树——处理仙人掌的利器
+    \url{http://immortalco.blog.uoj.ac/blog/1955}
+}的博客。
