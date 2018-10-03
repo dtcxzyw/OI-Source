@@ -54,7 +54,7 @@ bool graph2Forest(int n) {
 
 首先可以使用类似Tarjan的算法判断是否出现了环，然后对于环和桥分别dp，
 将环的信息记录在环上节点在DFS树上最浅的节点上（即在回到环上最浅点时
-另外dp）。
+另外dp），这样向上转移时就和桥一样了。
 \subsection{圆方树}
 圆方树是解决仙人掌问题的利器，主要思想是把仙人掌构造为一棵树，然后使用
 熟悉的树上操作来处理。
@@ -63,12 +63,46 @@ bool graph2Forest(int n) {
 都连到新建的点（方点）上（圆方边）。
 
 \begin{lstlisting}
-
+int dfn[size],low[size],d[size],p[size],ncnt;
+void solveRing(int u,int v) {
+    int siz=d[v]-d[u]+1;
+    int id=++ncnt;
+    for(int i=v;i!=u;i=p[i])
+        //add id->i
+    //add id->u
+}
+void tarjan(int u) {
+    static int icnt=0;
+    dfn[u]=low[u]=++icnt;
+    for(int i=last[u];i;i=E[i].nxt) {
+        int v=E[i].to;
+        if(dfn[v]) {
+            if(v!=p[u])
+                low[u]=std::min(low[u],dfn[v]);
+        }
+        else {
+            p[v]=u;
+            d[v]=d[u]+1;
+            DFS(v);
+            low[u]=std::min(low[u],low[v]);
+        }
+        if(dfn[u]<low[v])
+            //add u->v
+    }
+    for(int i=last[u];i;i=E[i].nxt) {
+        int v=E[i].to;
+        if(v!=p[u] && p[v]!=u && dfn[u]<dfn[v])
+            solveRing(u,v);
+    }
+}
+ncnt=n;
 \end{lstlisting}
 
 圆方树具有以下性质：
+\paragraph{子仙人掌} 以$r$为根的仙人掌上点$p$的子仙人掌为去掉$p$到$r$的连通块后
+点$p$所在的连通块。
 \begin{property}
-    圆方树的子树对应仙人掌的子仙人掌。
+    以$r$为根仙人掌上点$p$的子仙人掌对应圆方树上点$p$的子树。
 \end{property}
 \begin{property}
     圆方树不存在方点与方点的连边。
@@ -77,10 +111,32 @@ bool graph2Forest(int n) {
 广义圆方树）。
 \subsubsection{应用}
 \paragraph{最短路}
+把圆圆边的权值设为原边权值，圆方边的权值设为当前点到方点父亲的最短距离
+（可以维护到DFS树根的距离来计算），方圆边的权值设为0。
+重新DFS准备树链剖分时计算即可。如此可以保证经过环的时候走的是最短路。
 
+类比树上距离的做法，树链剖分后求LCA。
+\begin{itemize}
+    \item 若LCA为圆点，则按照树上距离的方法解决。
+    \item 若LCA为方点，则说明该路径经过了环上的两个点，但走哪一侧还未知。
+    首先计算询问的这两个点分别在哪棵子树中，计算两条路径的答案，接下来只要考虑
+    环上路径即可。
+    询问子树时需要对是否为重儿子进行分类：
+    \begin{lstlisting}
+    int jump(int u,int lca) {
+        int res;
+        while(top[u]!=top[lca]) {
+            res=u;
+            u=p[top[u]];
+        }
+        return u==lca?res:son[lca];
+    }
+    \end{lstlisting}
+    预先在计算方圆边距离时标记走的方向，然后分类讨论计算环上两点的最短路。
+\end{itemize}
 \paragraph{点分治}
 注意处理方点时的复杂度，一般将方点设为环的大小，点分治时找带权重心。
-
+\index{*TODO!仙人掌典型应用}
 \subsection{广义圆方树}
 对于每个点双，将点双内的点（称为圆点）连到新点（称为方点）即可。
 \begin{lstlisting}

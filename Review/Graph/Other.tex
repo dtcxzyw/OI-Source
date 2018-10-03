@@ -1,8 +1,36 @@
 \section{杂讲}
-\subsection{点覆盖}
-\subsection{路径覆盖}
-\subsection{最大独立集}
-\subsection{最大团}
 \subsection{竞赛图}
+\index{T!Tournament}
+竞赛图是一个无向完全图被定向后得到的图。
+\begin{theorem}
+    竞赛图缩点后是一条链。
+\end{theorem}
+\subsubsection{竞赛图判定}
+竞赛图可以用来指示两两选手比赛的胜负，判定比分是否
+合法即判定是否存在合法的竞赛图。
+\index{L!Landau's Theorem}
+\begin{theorem}[Landau's Theorem]
+对于一个有序的竞赛图度数序列/得分序列$0\leq s_1 \leq s_2 \leq \cdots \leq s_n$，
+有$\displaystyle \forall 1\leq k\leq n,\sum_{i=1}^k{s_i}\geq \binomial{k}{2}$
+，当$k=n$时等号必须成立。
+\end{theorem}
+对度数/胜利场数排序后逐个判断即可。
 \subsection{最小平均值环}
+对于一个有向图，找出平均值最小的环。
+
+类似于分数规划的思想，对平均值进行二分，将所有边权减去二分值，
+若存在负环则说明存在环的平均值小于该二分值，不断二分即可。
 \subsection{平面图性质}
+\index{P!Planar Graph}
+以下仅讨论$V\geq 3$的情况：
+\begin{property}
+    $E\leq 3V-6$
+\end{property}
+\begin{property}
+    $F\leq 2V-4$
+\end{property}
+使用这些性质可以限制边数以加速平面图判定。
+
+上述内容参考了Wikipedia-EN\footnote{Planar graph - Wikipedia
+    \url{https://en.wikipedia.org/wiki/Planar\_graph}
+}

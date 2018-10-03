@@ -62,7 +62,7 @@ int prim(int n) {
 	最小生成树中,不同权值边的数量固定。
 \end{property}
 \begin{property}
-	Kruskal算法中,处理完某一权值的边后，联通块相同。
+	Kruskal算法中,处理完某一权值的边后，连通块相同。
 \end{property}
 \subsubsection{例题}
 
@@ -85,7 +85,7 @@ Luogu P4208 [JSOI2008]最小生成树计数\footnote{
 代码如下：
 \lstinputlisting{Source/Unclassified/Done/4208.cpp}
 
-另一种方法：每次计算小联通块->大联通块的过程，对于每个大联通块单独使用
+另一种方法：每次计算小连通块->大连通块的过程，对于每个大连通块单独使用
 Matrix-Tree定理求方案数，最后乘起来即可。
 
 最小生成树计数问题参考了clover\_hxy的博客\footnote{

@@ -135,7 +135,7 @@ http://immortalco.blog.uoj.ac/blog/1955
 杂项 https://blog.csdn.net/YxuanwKeith/article/details/67640768
 [JSOI2008]最小生成树计数 最小生成树的两个性质：
 (1)不同的最小生成树中,每种权值的边出现的个数是确定的
-(2)不同的生成树中,某一种权值的边连接完成后,形成的联通块状态是一样的
+(2)不同的生成树中,某一种权值的边连接完成后,形成的连通块状态是一样的
 最小圆覆盖 https://www.cnblogs.com/mypsq/p/4348151.html
 计算几何总结 https://blog.csdn.net/clover_hxy/article/details/53966405
 回文自动机 https://blog.csdn.net/u013368721/article/details/42100363

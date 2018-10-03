@@ -1,3 +1,89 @@
 \section{图上路径}
-\subsection{欧拉回路}
+\subsection{欧拉路径与欧拉回路}
+\index{E!Eulerian Path}
+这两种路径都要求经过每条边有且只有一次，后者要求起点和终点相同。
+\subsubsection{无向图欧拉路径}
+\paragraph{判定} 无向图欧拉路径的奇点个数为0（欧拉回路）或2。
+\index{H!Hierholzer's Algorithm}
+这里使用Hierholzer算法，时间复杂度$O(E)$。
+
+首先统计奇点个数，若奇点个数为0则任意选取点作为起点，
+奇点个数为2则任意选取奇点之一作为起点。
+
+接下来从起点开始DFS：
+\begin{enumerate}
+    \item 选取与点$u$相连的边$(u,v)$，删除$(U,v),(v,u)$，然后$DFS(u)$。
+    \item 向队列中加入点$u$。
+\end{enumerate}
+遍历边时可以使用类似于Dinic的当前弧优化，若要求字典序最小，使用$std::multiset$
+存边。
+\subsubsection{有向图欧拉回路}
+有向图欧拉路径有0（欧拉回路）或2个点不满足入度=出度的要求。
+然后继续使用Hierholzer算法，注意输出时要反向（因为DFS是反向放入队列的）。
+
+板子（UOJ117）：
+\lstinputlisting{Graph/EulerPath.cpp}
+\subsubsection{混合图欧拉回路}
+对于既有无向边又有有向边的图，主要思路是对无向边进行定向，使其满足入度=出度，
+然后转换为有向边欧拉回路问题来做。
+
+首先对无向边进行随机定向，把图转换为有向图，然后统计每个点入度与出度，
+若入度与出度奇偶性不同则无解（每次调整方向都会导致它们的差变动2，奇偶性仍不变）。
+
+接下来利用网络流的自动调整功能，从超级源向每个入度<出度的点连流量为
+$\frac{\textrm{出度}-\textrm{入度}}{2}$的边，从超级汇向每个入度>出度的点连流量为
+$\frac{\textrm{入度}-\textrm{出度}}{2}$的边，对于原图中定向为$u->v$的边从$u$到$v$
+连一条流量为1的边。最后跑最大流，若满流则说明有解。把所有无向边对应的边中残余流量非0
+的边就是该无向边的方向。此时满足每个点的入度=出度，跑有向边欧拉回路求得方案。
+
+\paragraph{正确性证明} 每次对一条增广路进行增广时，相当于把路径上所有的边反向，
+路径中间的点的入度和出度保持不变，而起点的入度+1，出度-1，终点的入度-1，出度+1。
+如果最大流满流，则所有的点都已经满足入度=出度了。此时如果这条边有流量，说明它所
+对应的无向边应该定向为自己的反向。
+
+以上内容参考了ajcxsu\footnote{[模板][持续更新]欧拉回路与欧拉路径浅析
+    \url{https://www.cnblogs.com/acxblog/p/7390301.html}
+}和commonc\footnote{混合图的欧拉回路
+    \url{https://blog.csdn.net/commonc/article/details/52442882}
+}的博客。
 \subsection{哈密尔顿回路}
+\index{H!Hamiltonian Path}
+哈密尔顿路径要求经过每个点有且只有一次，哈密尔顿回路还要求起点和终点相同。
+
+\subsubsection{判定}
+\begin{itemize}
+    \item \begin{theorem}[Dirac's Theorem]
+        若大小为$n$的无向图的每个节点的度数都大于等于$\frac{n}{2}$，则
+        存在哈密尔顿回路。
+    \end{theorem}
+    \item \begin{theorem}
+        任意竞赛图存在哈密尔顿路径，若此图强连通则存在哈密尔顿回路。
+    \end{theorem}
+\end{itemize}
+构造只能靠暴力DFS了。。。
+\subsubsection{旅行商问题TSP}
+\index{T!Travelling Salesman Problem}
+旅行商问题求的是无向完全图的最短哈密尔顿回路，是NP问题。
+
+若距离函数满足三角不等式（比如欧几里得距离），存在其解不超过
+最优解两倍的近似算法（双生成树算法）：对该图求MST，DFS时遍历的路径
+去掉重复点就是其解。时间复杂度$O(V^2)$。
+
+还存在其解不超过最优解$\frac{3}{2}$的近似算法（Christofides算法）：
+\index{C!Christofides Algorithm}
+\begin{itemize}
+    \item 求该图的MST；
+    \item 对MST中度数为奇数的点做最小权完美匹配，将匹配边加入MST；
+    \item 求出欧拉回路；
+    \item 按照欧拉回路走，跳过重复节点。
+\end{itemize}
+时间复杂度$O(V^3)$。
+
+\index{*TODO!理解Christofides算法中的最小权完美匹配}
+
+该方法参考了Wikipedia-EN\footnote{Christofides algorithm - Wikipedia\\
+    \url{https://en.wikipedia.org/wiki/Christofides\_algorithm}
+}。
+
+若不满足三角不等式，可以使用$O(V^2)$的最近邻算法，即每次DFS都贪心地选取
+最短的边递归。

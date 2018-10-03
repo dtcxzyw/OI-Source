@@ -36,6 +36,7 @@
 \usepackage[numbib,numindex,chapter]{tocbibind}
 \usepackage{lastpage}
 \usepackage{array}
+\usepackage{shorttoc}
 \makeindex
 \pagestyle{headings}
 \begin{document}
@@ -58,7 +59,8 @@
 	\item 学会使用\LaTeX{}。
 \end{itemize}
 当前共\pageref{LastPage}页，约\input{../latex/charcnt}字。
-%\renewcommand\contentsname{目录}
+\shorttoc{简略目录}{1}
+\renewcommand\contentsname{目录}
 \tableofcontents
 \mainmatter
 \input{GameTheory/GameTheory}
@@ -75,6 +77,7 @@
 \input{Path/Path}
 \input{SpanningTree/SpanningTree}
 \input{Graph/Graph}
+\input{String/String}
 \appendix
 \include{Recommendation}
 \printindex
