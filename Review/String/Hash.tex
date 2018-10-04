@@ -1,1 +1,28 @@
 \section{Hash}
+\subsection{BKDRHash}
+BKDRHash在一般情况下表现良好，速度快，Hash质量高。
+代码如下：
+\begin{lstlisting}
+typedef unsigned long long HashT;
+HashT BKDRHash(const char*  str) {
+    HashT res=0;
+    while(*str) {
+        res=res*131+*str;
+        ++str;
+    }
+    return res;
+}
+\end{lstlisting}
+\subsection{混合Hash}
+若要快速求得子串Hash，预处理前缀Hash值，查询时化到同一幂次再差分即可。
+
+若要判断两个串是否为同一子串或对称子串，可以预处理后缀Hash值，
+然后将正向Hash值与逆向Hash值相乘得到新的Hash值。
+
+若要忽略整个字符串的某一连续区间，可以将其前缀的前缀Hash与后缀的后缀Hash
+加权混合。
+\subsection{子串Hash}
+注意一个字符串的子串有$O(n\lg n)$个，预处理整个字符串的所有子串的
+复杂度为$O(n\lg n)$。
+
+一般来说二分长度后Hash是个不错的选择。

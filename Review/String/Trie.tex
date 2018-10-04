@@ -1,1 +1,30 @@
 \section{Trie字典树}
+Trie字典树利用了字符串的公共前缀信息，一般用作
+搭配AC自动机或者实现可持久化01Trie回答xor最值问题。
+
+Trie树上每个节点对应一个字符串的某个前缀，节点的LCA为
+这两个节点所代表字符串的最大公共前缀。
+
+代码如下：
+\begin{lstlisting}
+struct Node{
+    int nxt[26],cnt;
+} T[tsiz];
+void insert(const char* str) {
+    static int icnt=0;
+    int p=0;
+    while(*str) {
+        int& id=T[p].nxt[*str-'a']
+        if(id==0)
+            id=++icnt;
+        p=id;
+        ++str;
+    }
+    ++T[p].cnt;
+}
+\end{lstlisting}
+
+注意对于字符集大小$e$固定的Trie，对于$n$个长度为$m$的字符串，
+其空间并不需要开$nm$，尤其是01串。最坏情况下需要的节点$<(m-\lg_2 n+2)n$，
+当$n\gg m$时要考虑压缩空间。当然也可以对Trie中连续的链进行压缩，
+最坏情况下需要的节点数$<ne$。

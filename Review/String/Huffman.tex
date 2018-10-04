@@ -1,3 +1,57 @@
 \section{Huffman编码}
 \subsection{常规Huffman}
+计算步骤如下：
+\begin{enumerate}
+	\item 将每个字符按照（节点编号，频率）插入构造最小堆。
+	\item 弹出频率最低的两个节点，将这两个节点挂在新节点下，新节点的频率
+	      为这两个节点频率之和。将新节点插入堆中。
+	\item 重复步骤2直至堆中只剩1个节点为止。
+\end{enumerate}
 \subsection{k叉Huffman}
+对于2叉Huffman，可以保证最后堆中只剩1个节点，但是对于k叉Huffman来说则不一定
+，所以需要`补零‘。考虑k叉Huffman每次操作都会减少$k-1$个节点，而且最后剩下1个
+节点，因此补齐$(k-1 - ((n-1) \bmod (k-1))) \bmod (k-1)$个频率为0的节点即可。
+\subsection{效率优化}
+与NOIP2016蚯蚓同理，新插入的节点的频率是单调非减的。因此可以对原字符进行排序，然后
+维护两个单调队列，取最小的一个弹出即可。
+\subsection{限长Huffman}
+论文\cite{LLH}给出了Package-Merge Algorithm，时间复杂度$O(nL)$。
+\index{P!Package-Merge Algorithm}
+\subsubsection{Coin collector's problem}
+一个硬币收藏家收藏有许多硬币，每个硬币都有它的面值和收藏价值，
+现在硬币收藏家需要选择一个硬币子集，使得这个子集的面值总和$\geq n$，
+同时收藏价值总和最小。其中面值取值为$2^{-k},0\leq k \leq m$。
+\subsubsection{Package-Merge Algorithm}
+\begin{enumerate}
+	\item 将硬币按照面额分成多个集合，集合内按照收藏价值排序；
+	\item 选取最小面额的集合内的硬币按照顺序两两合并（$1+2,3+4,\cdots$）
+	      后插入2倍面额的硬币集合，若剩余一个硬币则搁置；
+	\item 不断合并直至合并到面值为1的集合，此时在该集合内贪心选取硬币。
+\end{enumerate}
+注意插入到下一面值集合的收藏价值是单调非减的，维护一个指针即可支持线性插入。
+除去排序的复杂度，该算法复杂度为$O(n)$。
+
+\subsubsection{规约到限长Huffman问题}
+设限长为$L$，将面值设为编码后的代价，即$2^{-1},2^{-2},\cdots,2^{-L}$，
+设收藏价值为每种字符的频率，对每个面值都加入所有字符的收藏价值（预先排序），
+运行该算法，最后选取前$n-1$个硬币。仅考虑相邻集合的转移可将
+空间复杂度降为$O(n)$。
+
+接下来构造标准Huffman编码：统计每个字符被选择的硬币数，作为其编码的长度（保证
+长度不超过$L$），
+
+代码如下：
+\lstinputlisting{String/LLH.cpp}
+
+该算法参考了Wikipedia-EN\footnote{
+	Package-merge algorithm - Wikipedia
+	\url{https://en.wikipedia.org/wiki/Package-merge\_algorithm}
+}和pymqq的博客\footnote{
+	基于二叉树和双向链表实现限制长度的最优Huffman编码
+	\url{https://blog.csdn.net/pymqq/article/details/32084763}
+}。
+\subsection{编码字符代价不等的Huffman}
+现实应用是摩尔斯电码的点和短横线的发送时间不同。
+\index{*TODO!编码字符代价不等的\\Huffman}
+
+留坑待补，参见\cite{huffman}。

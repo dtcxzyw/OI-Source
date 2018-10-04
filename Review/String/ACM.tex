@@ -1,1 +1,96 @@
 \section{AC自动机}
+\index{A!Aho–Corasick Algorithm}
+AC自动机基于Trie树实现，原理是在Trie树上匹配字符串，
+失配时根据fail指针跳到下一匹配位置。
+\subsection{构造}
+首先建出Trie，然后对Trie按BFS序确定fail指针，fail指针
+指向它的在Trie中的最长后缀（这个字符串是某个模式串的前缀），BFS序
+可以保证最长的性质。
+
+为了简化找fail指针的过程，可以设一个虚拟节点0，root为1，令root的
+fail为0，0的所有儿子全设为root，这样就可以避免判断是否到达root，
+同时令找不到后缀的节点的fail为root。
+
+\begin{lstlisting}
+const int root=1;
+int q[size];
+void cook() {
+    T[root].fail=0;
+    int b=0,e=1;
+    q[b]=root;
+    while(b!=e) {
+        int u=q[b++];
+        for(int i=0;i<26;++i) {
+            int v=T[u].nxt[i];
+            if(v) {
+                int p=T[u].fail;
+                while(!T[p].nxt[i])
+                    p=T[p].fail;
+                T[v].fail=T[p].nxt[i];
+                q[e++]=v;
+            }
+        }
+    }
+}
+for(int i=0;i<26;++i)
+    T[0].nxt[i]=root;
+\end{lstlisting}
+在实际应用中可以让无儿子$v$的节点$u$继承其fail的对应儿子，
+省去了在Trie上不断跳fail指针的时间，如果不希望影响Trie的形态
+（比如需要DFS）可以另外开个quick数组。
+\begin{lstlisting}
+int q[size];
+void cook() {
+    int b = 0, e = 0;
+    for(int i = 0; i < 26; ++i)
+        if(T[0].nxt[i])
+            q[e++] = T[0].nxt[i];
+    while(b != e) {
+        int u = q[b++];
+        for(int i = 0; i < 26; ++i) {
+            int& v = T[u].nxt[i];
+            if(v) {
+                T[v].fail = T[T[u].fail].nxt[i];
+                q[e++] = v;
+            } else
+                v = T[T[u].fail].nxt[i];
+        }
+    }
+}
+\end{lstlisting}
+\subsection{查询}
+AC自动机的经典功能是多模匹配。
+将主串的字符按顺序在自动机上跳，失配就走fail指针，
+对于每一次匹配后的状态，不断跳fail到根查找是否存在
+节点为某个模式串。
+\begin{lstlisting}
+void match(const char* str) {
+    int p=0;
+    while(*str) {
+        int c=*str-'a';
+        //`注意如果使用继承优化就不需要跳fail了`
+        while(p && !T[p].nxt[c])
+            p=T[p].fail;
+        p=T[p].nxt[c];
+        //`查找匹配的模式串`
+        int cp=p;
+        while(cp) {
+            if(T[cp].cnt)
+                //match
+            cp=T[cp].fail;
+        }
+        ++str;
+    }
+}
+\end{lstlisting}
+继承方式不影响查询的正确性（继承fail节点的儿子相当于跳到fail上），
+而且同样避免了跳fail。
+\subsection{fail树}
+容易发现fail指针所指的节点所代表的字符串是自己的最长公共后缀。
+从fail向自己连边，可以得到一棵fail树。将代表某个模式串的节点称为终结点，
+那么fail树上某个终结点是它子树内的终结点的后缀。
+
+对于多次询问求第$x$个字符串在第$y$个字符串中出现次数的问题，模拟字符串$y$在AC
+自动机上跑的过程，查询匹配时跳fail扫一遍相当于在fail树上将自己的权值传给父亲。
+因此先建出fail树，计算DFS序，（尽量按照字典序）让$y$在AC自动机上跑，把经过的
+每个节点都标记，最后求询问中所有$x$的子树权值和，使用树状数组很容易实现。
