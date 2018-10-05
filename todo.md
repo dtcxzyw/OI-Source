@@ -109,9 +109,9 @@
 - [x] Trie/AC自动机
 - [ ] 后缀树/Trie/数组/自动机/仙人掌
 - [ ] PAM
-- [ ] KMP/ExKMP
-- [ ] Manacher
-- [ ] Huffman
+- [x] KMP/ExKMP
+- [x] Manacher
+- [x] Huffman
 - [ ] LL(1) Parser
 ## 计算几何
 - [ ] 基础设施-pick定理

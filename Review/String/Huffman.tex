@@ -16,10 +16,13 @@
 维护两个单调队列，取最小的一个弹出即可。
 \subsection{限长Huffman}
 论文\cite{LLH}给出了Package-Merge Algorithm，时间复杂度$O(nL)$。
+\footnote{A fast algorithm for optimal length-limited Huffman codes\\
+	\url{http://www.cse.ust.hk/mjg\_lib/bibs/DPSu/DPSu.Files/p464-larmore.pdf}
+}
 \index{P!Package-Merge Algorithm}
 \subsubsection{Coin collector's problem}
 一个硬币收藏家收藏有许多硬币，每个硬币都有它的面值和收藏价值，
-现在硬币收藏家需要选择一个硬币子集，使得这个子集的面值总和$\geq n$，
+现在硬币收藏家需要选择一个硬币子集，使得这个子集的面值总和$=X,X\in \mathbb{N}$，
 同时收藏价值总和最小。其中面值取值为$2^{-k},0\leq k \leq m$。
 \subsubsection{Package-Merge Algorithm}
 \begin{enumerate}
@@ -31,14 +34,16 @@
 注意插入到下一面值集合的收藏价值是单调非减的，维护一个指针即可支持线性插入。
 除去排序的复杂度，该算法复杂度为$O(n)$。
 
+如果$X$不为最大面值的倍数，将$X$二进制拆分，算到某个为1的位对应的面值集合时，
+选取集合内最小值加入方案并从集合内删除，继续合并。
 \subsubsection{规约到限长Huffman问题}
 设限长为$L$，将面值设为编码后的代价，即$2^{-1},2^{-2},\cdots,2^{-L}$，
 设收藏价值为每种字符的频率，对每个面值都加入所有字符的收藏价值（预先排序），
-运行该算法，最后选取前$n-1$个硬币。仅考虑相邻集合的转移可将
-空间复杂度降为$O(n)$。
+运行该算法，最后选取前$n-1$个硬币。使用递归分治可将空间复杂度降为$O(n)$。
 
 接下来构造标准Huffman编码：统计每个字符被选择的硬币数，作为其编码的长度（保证
-长度不超过$L$），
+长度不超过$L$），计算每个长度的字符数，然后给当前长度的字符分配位置（即计算偏移），
+剩余位置给下一长度的字符使用。
 
 代码如下：
 \lstinputlisting{String/LLH.cpp}

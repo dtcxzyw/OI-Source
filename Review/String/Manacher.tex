@@ -1,1 +1,55 @@
 \section{Manacher算法}
+\index{M!Manacher's Algorithm}
+Manacher算法用来求解最长回文串问题。主要思想是利用之前的计算结果
+来加速回文串的计算，从而达到线性时间复杂度。
+
+算法步骤如下：
+\begin{enumerate}
+    \item 为了统一奇回文串和偶回文串，向每对相邻字符间插入一个未出现过的字符，
+    接下来算法仅讨论奇回文串；
+    \item 维护当前访问到的最右位置$maxr$和最右位置所对应的字符串中心$pos$，
+    以及以每个位置为中心向右扩展长度$RL[i]$（从中心开始数）；
+    \item 对于每一个位置：
+    \begin{enumerate}
+        \item
+        \begin{itemize}
+            \item 若当前位置$i\geq maxr$，设$RL[i]=1$；
+            \item 否则令$RL[i]=min(RL[pos-(pos-i)],maxr-i+1)$（因为
+            此时$i$到$maxr$的部分和$i$以$pos$为轴的对称部分对称，而那个
+            部分已经被处理过了）。
+        \end{itemize}
+        \item 不断向两端扩展增大$i$；
+        \item 更新$maxr$与$pos$。
+    \end{enumerate}
+    \item 答案即为$RL[i]-1$的最大值。
+\end{enumerate}
+
+代码如下：
+\begin{lstlisting}
+char buf[size],str[2*size];
+int RL[2*size];
+int manacher() {
+    int cnt=0;
+    for(int i=0;buf[i];++i) {
+        str[cnt++]='@';
+        str[cnt++]=buf[i];
+    }
+    str[cnt++]='@';
+    int maxr=0,pos=0,ans=0;
+    for(int i=0;i<cnt;++i) {
+        if(i<maxr)
+            RL[i]=std::min(RL[2*pos-i],maxr-i+1);
+        else
+            RL[i]=1;
+        while(i-RL[i]>=0 && i+RL[i]<cnt &&
+            str[i-RL[i]]==str[i+RL[i]])
+            ++RL[i];
+        if(i+RL[i]-1>maxr) {
+            maxr=i+RL[i]-1;
+            pos=i;
+        }
+        ans=std::max(ans,RL[i]);
+    }
+    return ans-1;
+}
+\end{lstlisting}
