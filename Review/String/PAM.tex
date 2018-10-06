@@ -1,1 +1,43 @@
 \section{回文自动机}
+\index{P!Palindromic Tree}
+\subsection{构造}
+回文自动机需要维护每个节点所对应的回文串的长度$len$，两端加入字符$c$
+后的后继节点$nxt[c]$，自身的最长后缀回文串所对应的节点$fail$，以及
+自身代表的回文串数（需要最后在fail树上上传才是完整的）。
+还要维护当前已加入自动机的字符$buf$，以及最后一次加入字符后的状态$last$。
+
+构造PAM的复杂度为$O(n\lg |\Sigma|)$。
+\subsubsection{初始化}
+首先在空PAM中加入两个根：偶数长度的根0和奇数长度的根1。其中节点0的fail
+指向1，len为0，节点1的len为-1（避免特判）。同时令$buf[0]=-1$（避免特判）。
+\subsubsection{状态转移}
+构造PAM时，按顺序向PAM加入字符。
+首先向$buf$加入该字符，然后在fail树上跳最长后缀回文串，直至找到对称点
+与自身相同为止。注意如果找不到这样的对称点，就会到达奇数长度的根，它的len
+为-1，其对称点就是自己，所以迭代必定会结束。
+
+接下来查看是否有该节点的后继节点，如果没有就新建一个节点，len比父亲多2，
+fail指针重新在父亲的fail链上找。然后把该节点挂在父亲下。
+
+最后重置last,++T[last].cnt结束加入。
+\subsubsection{后处理}
+注意自身的fail肯定是自己的子回文串，最后做一次后处理，按照节点编号的逆序
+往上累加cnt即可。
+\subsubsection{代码}
+\lstinputlisting{Source/Templates/PAM.cpp}
+\subsection{应用}
+\subsubsection{统计串S的前缀本质不同的回文串个数}
+extend该前缀的所有字符后，PAM的$siz-1$就是本质不同的回文串个数。
+\subsubsection{统计串S的每个本质不同的回文串的出现次数}
+由于PAM中每个节点代表一个回文串，后处理后每一个节点的
+cnt就是它的出现次数。
+\subsubsection{统计串S的回文串的个数}
+答案即为后处理后的cnt之和。
+\subsubsection{统计以节点$i$结尾的回文串个数}
+对每个节点记录其在fail树上的深度，fail链上的节点所代表的回文串都是
+自己的后缀回文串，所以答案即为深度。
+
+以上内容参考了poursoul的博客\footnote{
+    Palindromic Tree——回文树【处理一类回文串问题的强力工具】
+    \url{https://blog.csdn.net/u013368721/article/details/42100363}
+}。

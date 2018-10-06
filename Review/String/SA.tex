@@ -1,1 +1,101 @@
 \section{后缀数组}
+\index{S!Suffix Array}
+\subsection{倍增构造}
+后缀数组$SA[i]$表示排名为$i$的后缀位置，相应地可以
+得到起始位置为$i$的后缀排名$rk[i]$。
+
+数组$rk$一般使用倍增法$O(n\lg n)$构造，然后对应地初始化$SA$。
+
+构造步骤如下：
+\begin{enumerate}
+    \item 对于每一个字符初始化其排序关键字（即字符）；
+    \item 对关键字进行基数排序，算出此时字符串$[i\ldots i+2^k-1]$的排名；
+    \item 若所有排名都不相同，直接跳出；否则将$rk[i]$与$rk[i+2^k]$作为以$i$
+    为起始位置的字符串的关键字，重复步骤2；
+    \item 根据$rk$数组初始化$SA$数组。
+\end{enumerate}
+代码如下：
+\lstinputlisting{Source/Templates/SA.cpp}
+\subsection{最长公共前缀}
+\index{L!Longest Common Prefix}
+定义$LCP(i,j)$为第$i$个后缀与第$j$个后缀的最长公共前缀。
+
+显然LCP函数有两个性质：
+\begin{itemize}
+    \item $LCP(i,j)=LCP(j,i)$
+    \item $LCP(i,i)=n-SA[i]+1$
+\end{itemize}
+所以只要考虑$LCP(i,j),i<j$的情况。
+\begin{theorem}[LCP Theorem]
+    $LCP(i,j)=min{LCP(k-1,k)},i<k\leq j$
+\end{theorem}
+要证明该定理可先证明下列引理：
+\begin{lemma}[LCP Lemma]
+    $LCP(i,j)=min(LCP(i,k),LCP(k,j)),i<k<j$
+\end{lemma}
+\paragraph{证明}
+首先根据传递性显然有$LCP(i,j)\geq min(LCP(i,k),LCP(k,j))$。
+
+其次考虑到$i,j,k$是后缀的排名且$i<j<k$，所以$LCP(i,j)>min(LCP(i\\,k),LCP(k,j))$
+不可能成立，即$LCP(i,j)\leq min(LCP(i,k),LCP(k,j))$。该引理得证。
+
+因此设$height[i]=LCP(i-1,i),height[1]=0$，求出height数组后
+使用ST表即可$O(1)$询问LCP。
+
+考虑在原串上相邻后缀的关系，显然两个后缀右移1位的$LCP'\geq LCP-1$，
+快速转移后继续向后比较即可。
+
+\begin{lstlisting}
+void cook(int n) {
+    int h=0;
+    for(int i=1;i<=n;++i) {
+        if(rk[i]==1)h=0;
+        else {
+            int k=SA[rk[i]-1];
+            if(h)--h;
+            while(buf[i+h]==buf[k+h])
+                ++h;
+        }
+        height[rk[i]]=h;
+    }
+}
+\end{lstlisting}
+以上内容参考了Angel\_Kitty的博客\footnote{后缀数组(一堆干货) - Angel\_Kitty
+    \url{https://www.cnblogs.com/ECJTUACM-873284962/p/6618870.html}
+}。
+\subsection{应用}
+一般思想是二分LCP长度，对height数组进行分组。若遇到多串
+将其用未出现字符连在一块求后缀数组。对于回文串/翻转系列问题将
+反串一起加入即可。
+\subsubsection{可重叠最长重复子串}
+该子串一定是某两个后缀的LCP，而LCP在height数组中取最小值，因此
+答案为height最大值。
+\subsubsection{不可重叠最长重复子串}
+二分LCP长度k，使用k对height数组进行划分，满足每块内的height值
+不小于k，判断是否存在块内$SA[i]$的极差$\geq k$（此时子串不重叠）。
+\subsubsection{可重叠k次最长重复子串}
+二分LCP长度，对其分组，询问是否存在大小$\geq k$的块。
+\subsubsection{本质不同的子串个数}
+考虑按照后缀字典序加入每个后缀的前缀，每个后缀贡献了$n-SA[i]+1$个前缀，
+去掉重复的$height[i]$个重复前缀，对每个后缀统计贡献即可。
+\subsubsection{最长回文子串}
+将串与反串用未出现字符连接，按照长度奇偶分类讨论，枚举对称中心求LCP。
+\subsubsection{连续重复子串}
+枚举串长$n$的因子$k$，询问字符串$[1\ldots n-k]$与$[k+1\ldots n]$是否
+相等，即$LCP(rk[1],rk[k+1])=n-k$，$O(n)$预处理即可。
+\subsubsection{重复次数最多的连续重复子串}
+首先枚举连续重复子串长度$L$，仅考虑重复2次以上的情况，那么整个连续的串
+每隔$L$个必相同，因此对起始位置$L*i,L*(i+1)$错位匹配求LCP后，若起点
+不为$L$的倍数,尝试调用LCP判断左边剩余部分是否相等。求得长度后取max即为答案。
+\subsubsection{最长公共子串}
+将两个串拼接在一块，求两个字典序相邻但来自不同字符串的height最大值。
+\subsubsection{长度$\geq k$的公共子串数}
+
+\subsubsection{出现于不小于$k$个字符串的最长子串}
+\subsubsection{在每个字符串不重叠重复的最长子串}
+\subsubsection{出现或翻转后出现在每个字符串中的最长子串}
+
+以上内容参考了罗穗骞的论文《后缀数组——处理字符串的有力工具》。
+\subsection{后缀仙人掌}
+\index{S!Suffix Cactus}
+该方法主要用来快速构造后缀树。

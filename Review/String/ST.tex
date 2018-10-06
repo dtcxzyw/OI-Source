@@ -1,1 +1,30 @@
 \section{后缀树}
+\index{S!Suffix Tree}
+后缀树是由串S的所有后缀组成的压缩Trie。
+
+为了避免压缩过程隐藏了某个后缀，插入每个后缀后再
+插入一个不出现的字符。
+\subsection{构造}
+常规的构造方法是$O(n^2)$的，一般采用Ukkonen算法在线性时间内完成构造。
+\index{U!Ukkonen's Algorithm}
+\index{*TODO!线性构造后缀树}
+留坑待补（还是去学后缀仙人掌吧）。
+\subsection{广义后缀树}
+广义后缀树在插入不同的串时用的结尾字符不同，以区分不同的字符串。
+
+查询最长公共子串时找到最深的拥有2种结束标记的节点即可。
+\subsection{应用}
+后缀树满足如下性质：
+\begin{itemize}
+    \item 每个节点代表一个子串。
+
+    查询串P在串S的出现次数可以按照Trie的方法匹配，然后
+    统计其所在节点的子树中的叶子节点个数。
+    \item 每个非叶节点至少有两个儿子。
+
+    统计串S的最长重复子串只要找到其最深非叶子节点即可。
+\end{itemize}
+以上内容参考了的博客\footnote{
+	从Trie树（字典树）谈到后缀树（10.28修订）
+	\url{https://blog.csdn.net/v\_july\_v/article/details/6897097}
+}。

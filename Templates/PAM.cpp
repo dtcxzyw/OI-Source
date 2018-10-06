@@ -29,7 +29,8 @@ struct PAM {
         if(!T[p].nxt[c]) {
             int u = ++siz;
             T[u].len = T[p].len + 2;
-            T[u].fail = T[getFail(T[p].fail, c)].nxt[c];
+            T[u].fail =
+                T[getFail(T[p].fail, c)].nxt[c];
             T[p].nxt[c] = u;
         }
         last = T[p].nxt[c];
@@ -39,7 +40,8 @@ struct PAM {
         Int64 ans = 0;
         for(int i = siz; i >= 1; --i) {
             T[T[i].fail].cnt += T[i].cnt;
-            ans = std::max(ans, asInt64(T[i].cnt) * T[i].len);
+            ans = std::max(ans, asInt64(T[i].cnt) *
+                               T[i].len);
         }
         return ans;
     }
