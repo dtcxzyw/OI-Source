@@ -1,0 +1,66 @@
+\section{后缀仙人掌}
+\index{S!Suffix Cactus}
+\subsection{概述}
+后缀仙人掌将后缀Trie的每个非叶子结点与它的一个儿子合并，
+形成``树枝''。每个树枝表示的是从根节点到自身叶子节点的后缀。
+树枝的深度为其顶端节点的父节点的深度，根树枝的深度为0。记后缀排名为$s$
+的后缀为$s$，深度为$depth(s)$。一个树枝的父亲树枝为包含其顶端节点左兄弟
+的树枝。
+
+后缀仙人掌有如下性质：
+\begin{property}
+	$depth(s)=LCP(SA[s],SA[s-1])$
+\end{property}
+显然$depth(s)$是它和它前一个后缀的最小公共祖先的深度。
+$depth(s)$其实就是$height[s]$。
+\begin{property}
+	树枝$r(r>1)$的父亲树枝是满足$depth(s)\leq depth(r),s<r$的
+	编号最大的树枝$s$。
+\end{property}
+\subsection{构造}
+根据$depth(s)$与$height[s]$的联系，首先预处理后缀数组与$height$数组。
+
+然后按照字典序从小到大考虑，维护一个单调栈，栈内存储可能的父亲树枝编号，
+找到需要的父亲树枝$k$后将边$(k,depth(s))=s$插入HashTable。
+
+代码如下：
+\begin{lstlisting}
+int st[size];
+void buildSC(int n) {
+    int top=1;
+    st[top]=1;
+    for(int i=2;i<=n;++i) {
+        while(height[st[top]]>height[i])
+            --top;
+        addEdge(st[top],height[i],i);
+        st[++top]=i;
+    }
+}
+\end{lstlisting}
+\subsection{应用}
+多次询问串T的前缀为串S的子串的最大长度。
+
+维护当前所在树枝$id$，与匹配长度$d$。每字符匹配时尽可能沿树枝走，
+走不到就跳到子树枝，若没有子树枝则返回。
+\begin{lstlisting}
+int match(const char* str,int n) {
+    int id=1,d=0,i;
+    for(i=0;str[i];++i) {
+        char c=str[i];
+        bool flag=false;
+        while(sa[id]+d>n || buf[sa[id]+d]!=c) {
+            int nxt=find(id,d);
+            if(!nxt) {
+                flag=true;
+                break;
+            }
+            id=nxt;
+        }
+        if(flag)
+            break;
+        ++d;
+    }
+    return i;
+}
+\end{lstlisting}
+上述内容参考了WC2014营员交流课件《Suffix Cactus》。

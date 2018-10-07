@@ -1,0 +1,25 @@
+\section{时间复杂度分析}
+\subsection{主定理}
+\begin{theorem}[Master Theorem]
+    对于递归式
+    \begin{displaymath}
+        T(n)=aT(n/b)+f(n)
+    \end{displaymath}
+    有如下渐近界：
+    \begin{itemize}
+        \item 对常数$\varepsilon>0$，若$f(n)=O(n^{\lg_b{a-\varepsilon}})$，
+        则$T(n)=\Theta(n^{\lg_ba})$。
+        \item 若$f(n)=\Theta(n^{\lg_ba})$，则$T(n)=\Theta(n^{\lg_ba}\lg n)$
+        \item 若$f(n)=\Omega(n^{\lg_ba})$，且对于常数$c<1$和足够大的$n$满足
+        $af(n/b)\leq cf(n)$，则$T(n)=\Theta(f(n))$。
+    \end{itemize}
+\end{theorem}
+简单来说，先比较函数$f(n)$和$n^{\lg_ba}$的渐近大小，若不同则选择较大的一个，
+相同则再乘个$\lg n$。注意第三种情况的特殊要求。
+
+证明留坑待补。
+\index{*TODO!主定理证明}
+以上内容参考了算法导论\cite{ITA3}第4.5节。
+\subsection{Akra-Bazzi法}
+留坑待补。
+\index{*TODO!Akra-Bazzi法}
