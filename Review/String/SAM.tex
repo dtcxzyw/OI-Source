@@ -1,1 +1,95 @@
 \section{后缀自动机}
+\index{S!Suffix Automaton}
+\subsection{描述}
+后缀自动机可用来识别母串的后缀，在转移的过程中可以识别母串的子串。
+SAM使用最简状态表示。SAM是一个DAG，任何从初始状态出发的路径对应一个子串。
+
+定义$ST(str)$为接受$str$后转移到的状态，$Right(s)$为能够转移到
+该状态的字符串的end位置集合（即字符串末端的下一位，且编号从0开始）。
+给定状态$Right$集合的元素$r$，再确定子串长度$len$，就可以识别子串$[r-len,r)$。
+发现若$l\in Right(s),r\in Right(s),l<r$，有$m\in Right(s),l\leq m \leq r$。
+所以一个状态$s$映射了一段长度区间内的，末尾出现位置集合相同所有子串。
+设其长度区间为$[l_s,r_s]$。
+
+\subsubsection{状态Right集合之间的关系}
+\begin{property}
+若状态$a,b$的$Right$集合有交集，则必满足一个集合是另一个集合的真子集。
+\end{property}
+\paragraph{证明} 因为状态$a,b$表示的子串无交集，所以$[l_a,r_a]$与$[l_b,r_b]$
+无交集。设$r_a<l_b$，对于任意终结点$r\in Right(a) \cap Right(b)$，有
+$a$表示的所有子串是$b$表示的所有子串的后缀。那么$\forall r\in Right(b),r\in Right(a)$。
+又因为$Right(a)\neq Right(b)$，所以$Right(b) \subset Right(a)$。
+
+若$Right(s)\subset Right(fa)$，将$fa->s$连边，构成了一棵Parent树。
+可以发现$r_{fa}=l_s-1$，因此存储状态时只要存储$r_s$即可。
+\subsection{构造}
+与回文自动机类似，按顺序调用$extend$函数插入字符，时间复杂度$O(n)$。
+
+对于每一个状态，维护其转移函数$nxt$，区间右端$len$，Parent树上父亲$link$。
+SAM内维护一个末状态$last$，初始状态为1，表示空串。
+
+插入步骤记为$SAM(T)->SAM(Tx)$，即增加了Tx的后缀。
+其中已加入的串为$T$，记$len(T)=L$。
+步骤如下：
+\begin{enumerate}
+    \item 新建节点$s$，设$s.len=last.len+1$。
+    \item 所有表示$T$后缀的节点，即满足位置$L\in Right(c)$的状态$c$。
+    显然$ST(T)$满足该条件，因为$Right(ST(T))=\{L\}$。易知$ST(T)$在Parent
+    树上到根的链上节点都有$L$，考虑这些节点。对于其中一个节点$c$，
+    若要使$c$能够转移$x$，需要$\forall{r\in Right(c)},str[r]=x$。
+    对于没有转移$x$的节点$c$，将其转移$x$设为$s$。显然这一段从$last$开始是连续的
+    一段区间，找到有转移的节点后直接退出，开始讨论另一种情况。
+    \item \begin{itemize}
+        \item 若不存在已有转移的节点，使$s.link=1$后退出。
+        \item 设转移节点为$q$，
+    \end{itemize}
+    \item 更新$last=s$。
+\end{enumerate}
+注意SAM的点数不超过2n-2，边数不超过3n-3（转移边+Parent树边）。
+
+代码如下：
+\begin{lstlisting}
+struct SAM {
+    struct State {
+        int nxt[26],link,len;
+    } S[size*2];
+    int last,siz;
+    SAM():last(1),siz(1) {}
+    void extend(int c) {
+        int id=++siz;
+        S[id].len=S[last].len+1;
+        int p=last;
+        while(p && !S[p].nxt[c]) {
+            S[p].nxt[c]=id;
+            p=S[p].link;
+        }
+        if(p) {
+            int q=S[p].nxt[c];
+            if(S[p].len+1==S[q].len)
+                S[id].link=q;
+            else {
+                int cq=++siz;
+                S[cq]=S[q];
+                S[cq].len=S[p].len+1;
+                while(p && S[p].nxt[c]==q) {
+                    S[p].nxt[c]=cq;
+                    p=S[p].link;
+                }
+                S[q].link=S[id].link=cq;
+            }
+        }
+        else S[id].link=1;
+        last=id;
+    }
+}
+\end{lstlisting}
+\subsection{Parent树}
+\subsection{后缀树}
+\subsection{计数问题}
+\subsection{线性构造后缀数组}
+\subsection{广义SAM}
+
+以上内容参考了WC2012陈立杰的讲课课件《后缀自动机 Suffix Automaton》
+与Candy?的博客\footnote{[后缀自动机]【学习笔记】
+    \url{https://www.cnblogs.com/candy99/p/6374177.html}
+}。
