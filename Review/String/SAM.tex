@@ -38,11 +38,14 @@ SAM内维护一个末状态$last$，初始状态为1，表示空串。
     树上到根的链上节点都有$L$，考虑这些节点。对于其中一个节点$c$，
     若要使$c$能够转移$x$，需要$\forall{r\in Right(c)},str[r]=x$。
     对于没有转移$x$的节点$c$，将其转移$x$设为$s$。显然这一段从$last$开始是连续的
-    一段区间，找到有转移的节点后直接退出，开始讨论另一种情况。
+    一段，找到有转移的节点后直接退出，开始讨论另一种情况。
     \item \begin{itemize}
         \item 若不存在已有转移的节点，使$s.link=1$后退出。
-        \item 设转移节点为$q$，
+        \item 设有转移的节点$p$的转移节点为$q$，若$p.len+1=q.len$，令
+        $s.link=q$，否则克隆节点$q$为$cq$，其中$cq.len=p.len+1$，在Parent
+        树上把$q$换为$cq$，同时令$s.link=q.link=cq$。
     \end{itemize}
+    \index{*TODO!理解SAM中克隆节点的原因}
     \item 更新$last=s$。
 \end{enumerate}
 注意SAM的点数不超过2n-2，边数不超过3n-3（转移边+Parent树边）。
@@ -84,12 +87,39 @@ struct SAM {
 }
 \end{lstlisting}
 \subsection{Parent树}
+注意Parent树上的父亲是儿子的后缀，因此匹配子串时可以
+在转移边上跑，不行就跳Parent树的link（等同于fail树）。
 \subsection{后缀树}
+Parent树是反串的后缀树。
 \subsection{计数问题}
+对于每一个节点维护一个$right$值表示当前状态的Right集合大小。
+新增节点时该节点贡献了1，但注意克隆节点并没有贡献，所以克隆后令$cq.right=0$。
+最后拓扑排序dp就可以得到真实right值。
+
+节点$s$表示了$s.len-s.link.len$个本质不同的子串，每种子串有$s.right$个。
+
+优化：拓扑排序时可以按照len进行分层基数排序。
 \subsection{线性构造后缀数组}
+首先构造出SAM，发现last到根的链上的节点分别代表每一个后缀。对这些节点进行
+标记，按照字典序DFS，维护DFS子串的长度$d$，通过遍历顺序得到$sa$数组。
+
+注意对于跑单条链的情况可以使用类似并查集的方法压缩。
+
+代码如下：
+\lstinputlisting{Source/Templates/SAM2SA.cpp}
 \subsection{广义SAM}
+有两种构造方法：
+\begin{itemize}
+    \item 在线：插入一个字符串之前将$last$重置，时间复杂度为O(Trie大小*字符集大小
+    +叶子节点深度和)。
+    \item 离线：先建出Trie，BFS插入，插入时把父亲在SAM上的编号当做$last$，
+    时间复杂度为O(Trie大小*字符集大小)。
+\end{itemize}
 
 以上内容参考了WC2012陈立杰的讲课课件《后缀自动机 Suffix Automaton》
-与Candy?的博客\footnote{[后缀自动机]【学习笔记】
+与Candy?\footnote{[后缀自动机]【学习笔记】
     \url{https://www.cnblogs.com/candy99/p/6374177.html}
-}。
+}和dwjshift\footnote{
+    用SAM建广义后缀树 « dwjshift's Blog
+    \url{http://dwjshift.logdown.com/posts/304570}
+}的博客。

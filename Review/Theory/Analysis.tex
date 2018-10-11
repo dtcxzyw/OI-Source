@@ -1,0 +1,59 @@
+\section{时间复杂度分析}
+\subsection{主定理}
+\begin{theorem}[Master Theorem]
+	对于递归式
+	\begin{displaymath}
+		T(n)=aT(n/b)+f(n)
+	\end{displaymath}
+	有如下渐近界：
+	\begin{itemize}
+		\item 若对常数$\varepsilon>0$，有$f(n)=O(n^{\log_b{a-\varepsilon}})$，
+		      则$T(n)=\Theta(n^{\log_ba})$。
+		\item 若$f(n)=\Theta(n^{\log_ba})$，则$T(n)=\Theta(n^{\log_ba}\lg n)$
+		\item 若对常数$\varepsilon>0$，有$f(n)=\Omega(n^{\log_b{a+\varepsilon}})$，
+		      则$T(n)=\Theta(f(n))$。
+	\end{itemize}
+\end{theorem}
+简单来说，先比较函数$f(n)$和$n^{\log_ba}$的渐近大小，若不同则选择较大的一个，
+相同则再乘个$\lg n$。
+
+证明留坑待补。
+\index{*TODO!主定理证明}
+\subsubsection{典例}
+\begin{theorem}
+	若$f(n)=\Theta(n^{\log_ba}\lg^kn)$，其中$k\geq 0$，则主递归式的解为
+	$T(n)=\Theta(n^{\log_ba}\lg^{k+1}n)$。
+\end{theorem}
+证明：
+注意此例不能使用主定理，考虑对递归式进行展开，假设$n$为$b$的幂，有
+\begin{eqnarray*}
+	T(n)&=&\sum_{i=0}^{\log_bn}{a^i\Theta(n^{\log_ba}\lg^kn)}\\
+	&=&\Theta\left(\sum_{i=0}^{\log_bn}{\left(a^i\left(\frac{n}{b^i}\right)^
+				{\log_b a}(\lg n-i)^k\right)}\right)\\
+	&=&\Theta\left(\sum_{i=0}^{\log_bn}{\left(n^{\log_ba}
+	(\lg n-i)^k\right)}\right)\\
+	&=&\Theta\left(n^{\log_ba}\sum_{i=0}^{\log_ba}{(\lg n-i)^k}\right)
+	~\textrm{因为}\lg n\leq \log_ba\\
+	&=&\Theta\left(n^{\log_ba}\lg^{k+1}n\right)
+\end{eqnarray*}
+
+以上内容参考了算法导论\cite{ITA3}第4.5节。
+\subsection{Akra-Bazzi法}
+对于子问题规模划分不均衡的算法，不能使用主方法，
+Akra-Bazzi法解决了如下递归式的渐进界计算：
+\begin{displaymath}
+	T(x)=\left\{\begin{array}{ll}
+		\Theta(1)                     & 1\leq x \leq x_0 \\
+		\sum_{i=1}^k{a_iT(b_ix)}+f(x) & x>x_0            \\
+	\end{array}\right.
+\end{displaymath}
+其中常数$x_0\geq 1/b_i$且$x_0 \geq 1/(1-b_i)$，$0<b_i<1$，$a_i>0$，$f(x)$
+满足存在正常数$c_1,c_2$使得对于$b_ix\leq u \leq x$，有$c_1f(x)\leq f(u)
+	\leq c_2f(x)$（或者$|f'(x)|$的上界为多项式时也满足条件）。
+
+首先计算满足$\sum_{i=1}^k{a_ib_i^p}=1$的$p$，然后可得
+\begin{displaymath}
+	T(n)=\Theta\left(x^p\left(1+\int_1^x{\frac{f(u)}{u^{p+1}} \ud u}\right)\right)
+\end{displaymath}
+
+上述方法参考了算法导论\cite{ITA3}第4章的本章注记。
