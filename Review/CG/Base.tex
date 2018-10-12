@@ -1,0 +1,91 @@
+\section{基础设施}
+以下内容主要讨论二维空间中的计算几何。
+\subsection{点，向量，直线，半平面的表示}
+点与向量由2个坐标表示；半平面和直线由直线上一点$ori$与
+直线的方向向量$dir$表示；直线上的一点可表示为$ori+dir*t$，通过控制$t$的取值还可以
+表示射线或线段；
+可以人为规定半平面的顺时针/逆时针180$\circ$为半平面所在点集，
+通过叉积来判断点在半平面的哪一边。
+\begin{lstlisting}
+typedef double FT;
+struct Vec {
+    FT x,y;
+    //constructor
+    //operator+-*
+};
+struct Line {
+    Vec ori,dir;
+    Vec operator()(FT t) const {
+        return ori+dir*t;
+    }
+};
+\end{lstlisting}
+\subsection{点乘与叉乘}
+向量点乘$dot(a,b)=a.x*b.x+a.y*b.y=|a||b|cos<a,b>$，一般用来
+判断与法向量的夹角，以及辅助叉乘计算两向量夹角。点乘满足加法分配律和交换律。
+
+向量叉乘$cross(a,b)=a.x*b.y-b.x*a.y=|a||b|sin<a,b>$，这是两向量
+构成的平行四边形的有向面积。一般用来判断向量的相对方向以及计算多边形的面积。
+叉乘满足$cross(a,b)=-cross(b,a)$和加法分配律。
+
+\begin{theorem}[拉格朗日公式]
+cross(a,cross(b,c))=b*dot(a,c)-c*dot(a,b)
+\end{theorem}
+
+三维向量的叉乘计算了垂直于这两个向量的向量（两向量组成平面的法向量），即
+\begin{displaymath}
+    cross(a,b)=\left(\begin{array}{c}
+        a.y*b.z-b.y*a.z\\
+        a.z*b.x-b.z*a.x\\
+        a.x*b.y-b.x*a.y
+    \end{array}\right)
+\end{displaymath}
+其方向满足右手定则（右手四指与大拇指垂直，食指指向向量$a$，其余三指指向向量$b$，
+大拇指方向即为叉乘方向），长度满足
+$|cross(a,b)|=|a||b|sin<a,b>$。
+
+结合点乘和叉乘可得点$A$与点$B,C,D$所组成的三棱锥$A-BCD$的有向体积为
+\begin{displaymath}
+    V=|\frac{1}{6}dot(\overrightarrow{BA},cross(\overrightarrow{BC},
+    \overrightarrow{BD}))|
+\end{displaymath}
+\subsection{点到直线的距离}
+设偏移向量$delta=p-ori$：
+\begin{itemize}
+    \item 计算$dot(delta,dir)/|dir|$可得到投影长度$d'$，根据
+    勾股定理得到$d^2=|delta|^2-d'^2$。
+    \item 计算$|cross(delta,dir)|$可得偏移向量与方向向量构成的平行四边形的面积，
+    根据面积公式得到$d=|\frac{cross(delta,dir)}{|dir|}|$。
+\end{itemize}
+叉乘法的运算量少且精度较高，总是被选用。
+\subsection{直线、线段的交点}
+先上代码：
+\begin{lstlisting}
+Vec intersect(const Line& a,const Line& b) {
+    Vec delta=a.ori-b.ori;
+    FT t=cross(b.dir,delta)/cross(a.dir,b.dir);
+    return a.ori+a.dir*t;
+}
+\end{lstlisting}
+\paragraph{证明} 首先可以发现两直线的方向向量都已经被单位化了。
+然后通过两个直角三角形中边与$sin$的关系可证。
+
+线段相交也是如此，但首先要判断两线段是否相交。将该问题转换为
+两线段是否互相平分。设线段为$a-b,c-d$，首先判断$a-b$平分$c-d$，
+即$c,d$分别位于$a-b$两边，有$cross(c-a,b-a)*cross(d-a,b-a)\leq 0$，
+同理对$c-d$做一遍即可。
+\subsection{判定点是否在多边形内}
+\subsubsection{随机射线法}
+从点P开始随机引出一条射线，计算其与多边形的边的交点个数，若为奇数次则
+在多边形内。注意射线恰好经过点时要重新选择方向。
+\subsubsection{旋转角法}
+从点P与多边形的一个点开始不断旋转到下一个点，直至转完一圈为止。
+此时若点P旋转了0$\circ$，则在多边形外；若点$P$旋转了360$\circ$，
+则在多边形内。旋转角可以使用$atan(cross(a,b),dot(a,b))$计算，以
+$\pi(180\circ)$为界进行比较。
+\subsection{向量的旋转}
+\subsection{坐标系的切换}
+\subsection{反射与折射}
+\subsection{pick定理}
+\subsection{切比雪夫距离}
+\subsection{精度处理}

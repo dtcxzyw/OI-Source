@@ -65,7 +65,8 @@
 			"utility": "cpp",
 			"cstdbool": "cpp",
 			"set": "cpp",
-			"climits": "cpp"
+			"climits": "cpp",
+			"stack": "cpp"
 		},
 		"latex-workshop.intellisense.citation.maxfilesizeMB": 128,
 		"latex-workshop.latex.outputDir": "./../latex/",
