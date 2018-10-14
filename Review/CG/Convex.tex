@@ -1,10 +1,53 @@
 \section{凸包}
+\index{C!Convex Hull}
 \subsection{极角序凸包}
+经典算法是Graham扫描法\index{G!Graham Scan}。
+算法步骤如下：
+\begin{itemize}
+    \item 选择一个纵坐标最低的点加入凸包，以此为原点按极角对其他点排序；
+    \item 按照极角序加入每一个节点，保持凸包相邻3个节点的凸性质。
+\end{itemize}
 \subsection{水平序凸包}
+极角序计算凸包容易由于$atan2$的精度问题而造成错误。
+考虑对横坐标进行排序，分别计算其凸包的上凸壳和下凸壳，最后合并即可。
+
+代码如下（逆时针顺序）：
+\begin{lstlisting}
+Vec P[size],C[size];
+void convexHull(int n) {
+    std::sort(P+1,P+n+1,[](const Vec& a,const Vec& b) {
+        return a.x<b.x;
+    });
+    int top=1;
+    C[1]=P[1];
+    for(int i=2;i<=n;++i) {
+        while(top>=2 && cross(C[top]-C[top-1],
+            P[i]-C[top-1])<eps)
+            --top;
+        C[++top]=P[i];
+    }
+    for(int i=n-1;i>=1;--i) {
+        while(top>=2 && cross(C[top]-C[top-1],
+            P[i]-C[top-1])<eps)
+            --top;
+        C[++top]=P[i];
+    }
+}
+\end{lstlisting}
 \subsection{在线凸包}
+在线凸包即每次向点集中加入新点，求当前凸包的某些信息。
+经典思路是按照极角序（选择一个范围外的定点，否则将产生循环，不易维护）将
+凸包上的点存储在set上。
 \subsubsection{水平序在线凸包}
 \subsection{凸包加法}
 \subsection{凸包合并}
 \subsection{稀疏包分布}
+\begin{itemize}
+    \item 若点在圆面上均匀分布，则凸包期望规模为$\Theta(n^{1/3})$。
+    \item 若点在凸多边形内部取得（平面，半平面也是凸多边形），凸包期望
+    规模为$\Theta(\lg n)$。
+    \item 若点根据二维正态分布取得，凸包期望规模为$\Theta(\sqrt{\lg n})$。
+\end{itemize}
+该内容来自算法导论\cite{ITA3}思考题33-5。
 \subsection{二维最小乘积生成树}
 \subsection{三维凸包}

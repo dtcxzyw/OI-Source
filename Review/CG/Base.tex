@@ -81,7 +81,7 @@ Vec intersect(const Line& a,const Line& b) {
 \subsubsection{旋转角法}
 从点P与多边形的一个点开始不断旋转到下一个点，直至转完一圈为止。
 此时若点P旋转了0$\circ$，则在多边形外；若点$P$旋转了360$\circ$，
-则在多边形内。旋转角可以使用$atan(cross(a,b),dot(a,b))$计算，以
+则在多边形内。旋转角可以使用$atan2(cross(a,b),dot(a,b))$计算，以
 $\pi(180\circ)$为界进行比较。
 \subsubsection{半平面法}
 若该多边形为凸多边形，以每条边构造半平面，使用叉积判断是否在半平面内，
@@ -144,6 +144,7 @@ $TBN$组成一个矩阵（从上到下）$A$，则$P'=AP$。因为$TBN$为单位
 $V$，满足$N^T\cdot V=0$。那么对于变换后的两向量仍然
 要保持垂直，即$N^TT'^{-1} \cdot T'V=0$，对左边进行转置得到$N'=(T'^{-1})^TN$。
 \subsection{反射与折射}
+以下的入射向量与出射向量均为单位向量。
 \subsubsection{反射}
 根据反射定律，反射向量由水平方向的向量$I_x$减去垂直方向的向量$I_y$。
 若法向量$N$为单位向量，有
@@ -154,16 +155,70 @@ $V$，满足$N^T\cdot V=0$。那么对于变换后的两向量仍然
 \end{eqnarray*}
 解得$O=I-2N\cdot dot(I,N)$。
 \subsubsection{折射}
-根据菲涅尔定律，折射向量由
+斯涅尔定律描述了折射率与角度的关系：
+\begin{theorem}
+    $\eta_1\sin \theta_1=\eta_2\sin \theta_2$
+\end{theorem}
+同样以法向量和切向量为基向量进行正交分解，
+记$\eta=\frac{\eta_1}{\eta_2}$，有
+\begin{eqnarray*}
+    I&=&I_x+I_y\\
+    I_y&=&N\cdot dot(I,N)\\
+    I_x&=&\sin \theta_1T\\
+    O&=&O_x+O_y=\sin \theta_2T-\cos \theta_2N
+\end{eqnarray*}
+化简：
+\begin{eqnarray*}
+    O&=&\sin \theta_2T-\cos \theta_2N\\
+    &=&\frac{\sin \theta_2}{\sin \theta_1}I_x - \cos \theta_2 N\\
+    &=&\frac{\eta_1}{\eta_2}(I-dot(I,N)\cdot N)-\cos \theta_2 N\\
+    &=&\eta\cdot I-(\eta dot(I,N)+\cos \theta_2)N
+\end{eqnarray*}
+
+代码如下，注意全反射的情况（即$\sin \theta_2$超出值域）：
+\begin{lstlisting}
+Vec refract(Vec I,Vec N,FT eta) {
+    FT idn=dot(I,N);
+    FT cosO2=1.0-eta*eta*(1-idn*idn);
+    if(cosO2<0.0)return Vec();
+    FT k=eta*idn+sqrt(cosO2);
+    return I*eta-k*N;
+}
+\end{lstlisting}
+上述内容参考了Milo Yip的文章\footnote{
+    用 C 语言画光（五）：折射
+    \url{https://zhuanlan.zhihu.com/p/31127076}
+}和glm库的代码\footnote{
+    glm/func\_geometric.inl at master · g-truc/glm · GitHub
+    \url{https://github.com/g-truc/glm/blob/master/glm/detail/func\_geometric.inl}
+}。
 \subsection{pick定理}
+\index{P!Pick's Theorem}
+\begin{theorem}[Pick's Theorem]
+    若格点多边形内的点数为$a$，落在边上的点数为$b$，则
+    该多边形的面积为$a-\frac{b}{2}+1$。
+\end{theorem}
 \subsection{切比雪夫距离}
+切比雪夫距离是两点坐标之差的最小值。
+分别考虑到原点曼哈顿距离和切比雪夫距离为1的点集$P,Q$，
+发现将$P$绕原点45$\circ$后缩放$\sqrt{2}$倍后等于$Q$。
+
+因此$P(x,y)\rightarrow Q(x+y,x-y)$，$Q(x,y)
+\rightarrow P(\frac{x+y}{2},\frac{x-y}{2})$。
 \subsection{精度处理}
 一般引入$eps=1e-8$来避免精度问题。
+
+常见问题：
 \begin{itemize}
     \item 判断两个值相等：$fabs(a-b)<eps$。
-    \item 要输出$1.00$却输出$0.99$或要输出$0.0$却输出$-0.0$：
-        对输出值$+eps$。
+    \item 要输出$1.00$却输出$0.99$或者要输出$0.0$却输出$-0.0$：
+        对正值$+eps$，负值$-eps$。
     \item 已知$\sin \theta$求$\cos \theta$：$sqrt(1.0-cosTheta*cosTheta)$
     可能会因为传入$sqrt$的参数小于0而返回$nan$，在调用数学函数前要clamp到定义域内
     或特判。
+    \item 若表示的范围越界，则可以使用对数之和表示数。
+    \item 技巧：若要维护$set<FT>$，在比较器中引入$eps$自动完成去重工作。
 \end{itemize}
+该内容参考了Ac\_smile的博客\footnote{计算几何中的精度问题\\
+    \url{https://www.cnblogs.com/acsmile/archive/2011/05/09/2040918.html}
+}。
