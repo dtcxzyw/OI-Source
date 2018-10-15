@@ -119,7 +119,7 @@
 - [ ] LL(1) Parser
 ## 计算几何
 - [x] 基础设施-pick定理-切比雪夫距离
-- [ ] 凸包（[在线凸包](http://dwjshift.logdown.com/posts/285072) /凸包加法/合并/稀疏包分布P614）
+- [x] 凸包（[在线凸包](http://dwjshift.logdown.com/posts/285072) /凸包加法/合并/稀疏包分布P614）
 - [ ] 旋转卡壳
 - [ ] HPI（WC2012钟诚讲稿-线性判空集）
 - [ ] 圆的交并/最小圆覆盖/圆的反演
@@ -207,6 +207,7 @@
 - [ ] 笛卡尔树 O(n)-O(1) RMQ
 - [ ] Raney 引理
 - [ ] SA-IS算法
+- [ ] 快速凸包
 - [ ] Chan's algorithm
 - [x] 康托展开
 - [ ] ETT
