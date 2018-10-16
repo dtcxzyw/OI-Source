@@ -30,7 +30,10 @@ ExBSGS可解决$a,P$不互质的问题。主要思路是将原方程化为普通
     \end{itemize}
     \item 重复第2步直至$d=1$。
 \end{enumerate}
-令$x=im+j+B$然后按照普通BSGS做即可，注意在BSGS前要暴力检查$x\in[0,B)$的解。
+令$x=im-j+B$然后按照普通BSGS做即可，注意在BSGS前要暴力检查$x\in[0,B)$的解。
+
+代码如下：
+\lstinputlisting{Source/Templates/exBSGS.cpp}
 
 以上内容参考了ZigZagK的博客\footnote{BSGS及扩展BSGS
 \url{https://blog.csdn.net/zzkksunboy/article/details/73162229}}。

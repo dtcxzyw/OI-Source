@@ -1,3 +1,5 @@
+// P2742
+#include <algorithm>
 #include <cmath>
 #include <cstdio>
 const int size = 10005;
@@ -18,29 +20,40 @@ FT dis(Vec a, Vec b) {
 FT cross(Vec a, Vec b) {
     return a.x * b.y - a.y * b.x;
 }
-int sign(FT val) {
-    return fabs(val) >= eps ? (val > eps ? 1 : 2) : 0;
-}
 struct Line {
-    Vec ori, dir;
+    Vec ori, dst, dir;
     Line(Vec beg, Vec end)
-        : ori(beg), dir(end - beg) {}
+        : ori(beg), dst(end), dir(end - beg) {}
     FT test(Vec p) const {
         return cross(p - ori, dir);
     }
 };
 FT ans = 0.0;
-void quickHullImpl(int beg, int end,
-                   const Line& line) {
+void quickHullImpl(int beg, int end, const Line& ab) {
     if(beg == end)
         return;
     FT marea = 0.0;
     Vec cv;
     for(int i = beg; i < end; ++i) {
-        FT cc = line.test(P[i]);
+        FT cc = ab.test(P[i]);
         if(cc > marea)
             marea = cc, cv = P[i];
     }
+    int le = beg, rb = end;
+    Line ac(ab.ori, cv), cb(cv, ab.dst);
+    for(int i = beg; i < rb;) {
+        if(cb.test(P[i]) > eps) {
+            std::swap(P[--rb], P[i]);
+        } else {
+            if(ac.test(P[i]) > eps)
+                P[le++] = P[i];
+            ++i;
+        }
+    }
+    quickHullImpl(beg, le, ac);
+    ans += dis(latest, cv);
+    latest = cv;
+    quickHullImpl(rb, end, cb);
 }
 void quickHull(int n) {
     Vec lv = P[0], rv = P[0];
@@ -50,8 +63,24 @@ void quickHull(int n) {
         else if(P[i].x > rv.x)
             rv = P[i];
     }
+    int le = 0, rb = n;
+    Line ab(lv, rv), ba(rv, lv);
+    for(int i = 0; i < rb;) {
+        FT cv = ab.test(P[i]);
+        if(cv < -eps)
+            std::swap(P[--rb], P[i]);
+        else {
+            if(cv > eps)
+                P[le++] = P[i];
+            ++i;
+        }
+    }
     latest = lv;
-    int cp = 0;
+    quickHullImpl(0, le, ab);
+    ans += dis(latest, rv);
+    latest = rv;
+    quickHullImpl(rb, n, ba);
+    ans += dis(latest, lv);
 }
 int main() {
     int n;

@@ -132,10 +132,20 @@ $P_i,Q_j$连边当且仅当：
 主要思想是每次选择到超平面的最远点，该点肯定在凸包上，并且该点与超平面将整个集合分割为$d+1$个子集，
 其中该点与超平面组成的体内的点直接被排除，以达到快速求解的目的。
 
+构造初始超平面时先选择一个点，再选择离这个点最远的点构成线，再选择离这条线最远的
+点构成三角平面，以此类推。构造线也可以使用两个坐标为极值的点。还有一种随机化方法：
+不断随机构造一个超平面，计算到这个超平面的有向距离的最大值与最小值，取出对应的点，
+直到选出$d$个不重复的点。
+
 二维凸包代码：
 \lstinputlisting{Source/Templates/QuickHull2D.cpp}
-三维凸包代码：
+三维凸包代码（不正确）：
 \lstinputlisting{Source/Templates/QuickHull3D.cpp}
+计算表面积时四点共面的情况不太好处理。为了处理四点共面的情况，
+可以给每个点的坐标值加一些``扰动''。
+
+\index{*TODO!修复三维QuickHull板子}
+
 上述内容参考了Wikipedia-EN\footnote{
     Quickhull - Wikipedia
     \url{https://en.wikipedia.org/wiki/Quickhull}
