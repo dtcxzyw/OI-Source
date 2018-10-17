@@ -214,3 +214,4 @@
 - [ ] Top-Tree
 - [ ] 最大势算法
 - [ ] 扩展Dijkstra
+- [ ] Stoer-Wagner算法

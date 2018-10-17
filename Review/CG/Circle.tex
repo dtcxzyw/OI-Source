@@ -1,5 +1,37 @@
 \section{圆}
-\subsection{圆的交}
+处理圆的交并问题一般考虑圆之间的覆盖区间。
 \subsection{圆的并}
+求圆的并的面积。
+
+首先去除被其他圆覆盖的圆。然后对于每个圆与其它圆求交点，得到每个圆被覆盖的弧度区间
+（逆时针为正方向）。注意跨越弧度$\pi$的区间要分为两个区间。对每个圆的覆盖区间排序
+得到不覆盖的区间。
+
+画图可以发现圆并的面积等于圆弧面积+多边形的有向面积。由于多边形需要计算有向面积（直接
+以原点作为基准点），不能直接计算扇形面积和。
+
+对于半径为$R$的圆，弧度为$x$的圆弧的面积为$\frac{1}{2}(x-\sin x)R^2$。
+当$x> \pi$时该等式也满足。求交时先计算交点弦的中点，再根据勾股定理计算两交点。
+
+时间复杂度$O(n^2 \lg n)$。
+
+代码如下：
+\lstinputlisting{Source/Templates/CIRU.cpp}
+
+\subsubsection{扩展}
+求被$i$个圆覆盖的区域面积。
+
+同样对于每个圆考虑其覆盖区间，发现覆盖$i$次的区间贡献给覆盖$i+1$次及以上的答案，
+排序+差分统计区间覆盖次数后计算贡献，输出时差分即可。注意覆盖次数要加上整个圆被覆盖的次数。
+
+\lstinputlisting{Source/Source/CG/CIRUT.cpp}
+
+上述内容参考了Oyking的博客\footnote{
+	SPOJ 8073 The area of the union of circles（计算几何の圆并）（CIRU）
+	\url{https://www.cnblogs.com/oyking/p/3424999.html}
+}。
+\subsection{圆的交}
+与求圆并同理，对于每个圆求出覆盖区间的并，答案贡献为圆弧面积+$\frac{1}{2}$区间并
+两端点的叉积。
 \subsection{最小圆覆盖}
 \subsection{圆的反演}

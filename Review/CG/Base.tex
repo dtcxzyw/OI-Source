@@ -219,6 +219,19 @@ Vec refract(Vec I,Vec N,FT eta) {
     \item 若表示的范围越界，则可以使用对数之和表示数。
     \item 技巧：若要维护$set<FT>$，在比较器中引入$eps$自动完成去重工作。
 \end{itemize}
+
+为了辅助判断两个值的大小关系，引入一个符号函数$sign$：
+\begin{lstlisting}
+int sign(FT x) {
+    return (x>eps)-(x<-eps);
+}
+\end{lstlisting}
+
+\index{*TODO!计算几何中的精度问题}
+
 该内容参考了Ac\_smile的博客\footnote{计算几何中的精度问题\\
     \url{https://www.cnblogs.com/acsmile/archive/2011/05/09/2040918.html}
+}与Oyking的博客\footnote{
+    IO/ACM中来自浮点数的陷阱（收集向）
+    \url{https://www.cnblogs.com/oyking/p/3959905.html}
 }。
