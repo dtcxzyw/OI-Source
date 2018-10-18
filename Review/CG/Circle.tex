@@ -34,4 +34,52 @@
 与求圆并同理，对于每个圆求出覆盖区间的并，答案贡献为圆弧面积+$\frac{1}{2}$区间并
 两端点的叉积。
 \subsection{最小圆覆盖}
+\index{M!Minimum Covering Circle}
+一般使用随机增量法：
+\begin{enumerate}
+	\item 将输入的圆随机化重排列；
+	\item 以前两个点为直径端点构造初始圆；
+	\item 不断加入点更新最小覆盖圆，设当前点为$P_i$：
+	\begin{enumerate}
+		\item 若该点已经在该圆内，跳出；
+		\item 否则该点必在新圆上，与$P_1$构造初始圆，按顺序加入点$P_j,j<i$
+		，若$P_j$不在当前圆内，则$P_j$也在新圆上。同理固定$P_i,P_j$，找出不在
+		当前圆上的点$P_k,k<j$，则$P_i,P_j,P_k$三点可确定一个圆，
+		保证该圆是$P_i,P_j,P_x,x\leq k$的最小覆盖圆。
+	\end{enumerate}
+\end{enumerate}
+
+\paragraph{实现细节}
+在求三角形内接圆时注意对三点共线的点取最远点对作为直径，三点不共线则使用中垂线求交
+求外接圆。
+
+代码如下：
+\lstinputlisting{Source/Templates/Cover.cpp}
+
+上述内容参考了Wikipedia-EN\footnote{
+	Smallest-circle problem - Wikipedia\\
+	\url{https://en.wikipedia.org/wiki/Smallest-circle\_problem}
+}。
 \subsection{圆的反演}
+\paragraph{定义} 已知$\odot O$的半径为$r$，若点$O,P_1,P_2$在同一直线上，
+且$OP_1\cdot OP_2=r^2$，则称$P_1,P_2$关于$\odot O$互为反演，称点$O$为反演中心。
+
+\begin{property}
+	一条不经过反演中心的直线的反演图形是一个经过反演中心的圆。
+\end{property}
+可以根据直线到反演中心的距离与圆的直径的关系来互推。
+
+\begin{property}
+	一个不经过反演中心的圆的反演图形还是一个不经过反演中心的圆。
+\end{property}
+可以根据圆心与反演中心的直线上与两圆的四个交点（两两对应）解出反演圆的
+半径和到反演中心的距离。
+
+\subsubsection{求过定点且与两个圆相切的圆}
+以定点为反演中心，计算两个圆的反演圆，求反演圆的公切线，再做一次反演就可以得到
+经过反演中心的圆了。
+
+以上内容参考了ACdreamer的博客\footnote{
+	圆的反演变换 - ACdreamer
+	\url{https://blog.csdn.net/acdreamers/article/details/16966369}
+}。
