@@ -1,0 +1,60 @@
+\section{最优化方法}
+下列方法主要用于提答题中的最优化问题。
+\subsection{爬山法}
+\index{H!Hill Climbing}
+每次迭代时选取与$x$点临近的点$x'$计算，若其值更优，则接受$x'$（也可以选择临近最优点）
+，进入下一步迭代；若所有临近点都比$x$要差，那么此时$x$局部最优。重新随机选取
+初始点进行迭代。
+\subsubsection{随机爬山法}
+\index{S!Stochastic Hill Climbing}
+在选取下一迭代点时，还可以对更优点集按照变化值建立分布然后离散采样。
+\subsection{模拟退火}
+\index{S!Simulated Annealing}
+模拟退火为比赛中的常用方法。
+步骤如下：
+\begin{enumerate}
+	\item 选取一个初始温度$T$，与冷却系数$d\in (0,1)$，初始化一个解$s$，计算$f(s)$；
+	\item 稍微修改该解得到新解$s'$，计算$f(s')$；
+	\item \begin{itemize}
+		      \item 如果$f(s')>f(s)$，则直接接受新解$s'$；
+		      \item 否则按照Metropolis准则，以$e^{-\frac{\Delta f}{T}}$的概率接受新解。
+	      \end{itemize}
+	\item 冷却，即$T\leftarrow Td$;
+	\item 当$T$足够小时退出，否则返回步骤2。
+\end{enumerate}
+$T$与$d$的作用是让变化越来越``保守''。在整个模拟退火的过程中要另外维护一个搜索到
+的最优解，以增加正确率。
+
+\subsubsection{参数选取}
+参数$T$与$d$的选取是玄学。。。可以结合从某解到最优解的最大/期望/最小步数考虑。
+\subsubsection{新解生成}
+注意计算新解的价值时尽量由旧解推出，以降低更新复杂度。在变化时要尽量
+避免价值差过大的变化（比如TSP中交换相邻城市比交换任意两个城市更好）。
+当然为了防止解在一个``盆地''中过分逗留，可以重新选取初始解或者选择恰当时机
+对当前解进行比较大的改变。随着温度的减小，对解的变动也应该减小。
+\subsubsection{分块模拟退火}
+对于多峰函数，将区间分成几块，在块内使用模拟退火（因为模拟退火利用相邻解的关系）。
+
+以上内容参考了Wikipeida-EN\footnote{
+	Simulated annealing - Wikipedia\\
+	\url{https://en.wikipedia.org/wiki/Simulated\_annealing}
+}
+\subsection{遗传算法}
+\index{G!Genetic Algorithm}
+遗传算法引入了生物学中的概念：遗传、变异、竞争与淘汰。
+
+算法步骤如下：
+\begin{enumerate}
+	\item 生成一些初始解，计算这些解的``适应度''；
+	\item 选取这些解的一部分较优解；
+	\item 通过较优解之间的配对交叉把自己的``基因''（编码）遗传给
+	      子代（可以加权），同时对子代的基因进行适当变异，加入下一代群体；
+	\item 迭代固定次数后退出，否则返回步骤2；
+	\item 输出计算历史中适应度最高的解。
+\end{enumerate}
+\subsection{A*}
+A*算法通过引入一个估价函数$h(x)$表示到目标点长度的估计值，
+在做最短路时使用$f(x)+h(x)$作为权重更新距离，可以达到比Dijkstra
+更好的性能。
+\subsection{梯度下降}
+\index{G!Gradient Descent}

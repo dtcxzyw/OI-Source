@@ -1,4 +1,58 @@
 \section{旋转卡壳}
 \index{R!Rotating Calipers}
-\subsection{思想}
-\subsection{典例}
+其主要思想是维护一对与多边形顶点相切的平行线（一个或两个凸多边形），切点
+称为对踵点对（两个多边形时称为并踵点对）。一般当某条平行线与凸多边形的某条边
+相切时，所求答案可能取得最值。维护平行线时计算其旋转到与下一条边相切的角度大小，
+然后取最小角度旋转。
+
+下面给出求对踵点对的算法：
+
+我的方法（计算角度）：算出每个向量到目标向量的角度后比较。
+\begin{lstlisting}
+bool cmpAngle(const Vec& a,const Vec& b) {
+    return cross(a,b)>eps;
+}
+Vec calcAngle(const Vec& src,const Vec& dst) {
+    return Vec(dot(src,dst),cross(src,dst));
+}
+\end{lstlisting}
+
+为了避免$atan2$精度损失，使用$Vec$维护角，其坐标值表示$(k\cos \theta,k\sin \theta)$。
+
+标准方法（枚举每个对踵点对）：
+\index{S!Shamos's Algorithm}
+\begin{lstlisting}
+void process(int i,int j);
+FT area(int a,int b,int c) {
+    return cross(P[b]-P[a],P[c]-P[a]);
+}
+void solve(int n) {
+    Pos i=(1,n),j(2,n);
+    while(ge(area(i,i+1,j+1),area(i,i+1,j))) {
+        int j0=++j;
+        while(j!=n) {
+            ++i;
+            process(i,j);
+            while(ge(area(i,i+1,j+1),area(i,i+1,j))) {
+                ++j;
+                if(i==j0 && j==n)
+                    return;
+                process(i,j);
+            }
+            if(eq(area(i,i+1,j+1),area(i,i+1,j))) {
+                if(i==j0 && j==n)
+                    process(i+1,j);
+                else
+                    process(i,j+1);
+            }
+        }
+    }
+}
+\end{lstlisting}
+注意下标在模$n$意义下右移。
+
+\index{*TODO!解释Shamos算法}
+
+上述内容参考了ACMaker的专栏\footnote{
+	\url{https://blog.csdn.net/ACMaker/article/details/3176910}
+}。
