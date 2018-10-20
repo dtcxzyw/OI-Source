@@ -1,2 +1,33 @@
-\section{分数规划}
+\section{01分数规划}
 \index{F!Fractional Programming}
+该问题可表述为有一堆物品，每个物品有价值$a_i$与代价$b_i$，
+询问选择的物品集合所能得到的$\displaystyle \frac{\sum_{i\in S}{a_i}}
+	{\sum_{i\in S}{b_i}}$的最大值。易知目标函数为凸。
+
+\subsection{二分答案法}
+
+设答案为$x$，存在点集$S$满足$\displaystyle \frac{\sum_{i\in S}{a_i}}
+	{\sum_{i\in S}{b_i}}\geq x$，将该式转化为$\displaystyle
+	\sum_{i\in S}{a_i}-x\cdot \sum{i\in S}{b_i}\geq x$。因此可二分答案$x$，
+对原数据进行一些修改，便可将原问题转化为解决一个判定问题（或是新的最优化问题，即检查
+$\displaystyle f(x)\sum_{i\in S}{a_i}-x\cdot \sum{i\in S}{b_i}$的最大值
+是否不小于0）。
+一般使用网络流/SPFA判负环/MST辅助判定。
+
+例如对于最小平均值环问题，二分环平均长度$x$，将每条边的长度减去$x$，然后
+判断负环，得到下一次迭代的二分范围。
+
+\subsection{Dinkelbach法}
+\index{D!Dinkelbach Method}
+易知每一个选择方案都对应着一条自变量为二分答案$x$的直线，其中横截距为该方案的目标函数值。
+若$f_S(x)\geq 0$则说明该直线所对应的横截距$\geq x$。
+
+在二分过程中检查二分点$x$的合法性时，有时会通过求$max\{f(x)\}$来判定，
+那么满足时仅仅令$L=x$就显得浪费了，因为检查下一二分点时可能仍然求了上一次二分点
+的最优解。Dinkelbach法的思路是维护答案的下界，使用最优解对应的直线横截距来当做下一次
+迭代的起点，这种做法比二分法更快。不过需要保存解这一要求可能限制了它的应用范围（编码更麻烦）。
+
+此法参考了tianxiang971016的博客\footnote{
+	01分数规划问题相关算法与题目讲解（二分法与Dinkelbach算法） - ztx
+	\url{https://blog.csdn.net/hzoi\_ztx/article/details/54898323}
+}。

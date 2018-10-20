@@ -58,3 +58,29 @@ A*算法通过引入一个估价函数$h(x)$表示到目标点长度的估计值
 更好的性能。
 \subsection{梯度下降}
 \index{G!Gradient Descent}
+梯度下降法用来找到局部最优值。其主要思想是利用当前点
+的梯度来寻找更优值。梯度在笛卡尔坐标系中被定义为一个向量，其坐标值为目标函数在
+对应基向量上的偏导数。若要寻找$f(x)$最小值，迭代时令
+$x_{n+1}=x_n-\gamma \nabla f(x_n)$。
+
+注意$\gamma$要小且不需要更改，因为随着算法的收敛，$\nabla f(x)$会越来越小。
+迭代时达到指定精度或者固定迭代次数后直接退出，注意要不断更换$\gamma$来
+保证算法的收敛（$\gamma$过大会导致波动幅度大，过小会导致收敛速度慢）。
+
+\paragraph{自适应步长Barzilai-Borwein Method}
+\index{B!Barzilai-Borwein Method}
+此外还有一种自适应设置步长$\gamma$的方法：Barzilai-Borwein Method，
+其表达式如下：
+\begin{eqnarray*}
+	D&=&\nabla f(x_n)-\nabla f(x_{n-1})\\
+	\gamma_n&=&(x_n-x_{n-1})^T\cdot \hat{D}\\
+\end{eqnarray*}
+
+例如求$f(x)=x^4-3x^3+2$的在$x_0=6$附近的最小值所对应的$x$：
+
+\lstinputlisting{Optmize/GD.cpp}
+
+上述内容参考了Wikipedia-EN\footnote{
+	Gradient descent - Wikipedia
+	\url{https://en.wikipedia.org/wiki/Gradient\_descent}
+}。
