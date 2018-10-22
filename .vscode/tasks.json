@@ -1,27 +1,59 @@
 {
     "version": "0.2.0",
-    "command": "g++",
-    "args": [
-        "-g",
-        "${file}",
-        "-o",
-        "bin/${fileBasenameNoExtension}.out",
-        "-Wall",
-        "-std=c++98",
-    ],
-    "problemMatcher": {
-        "owner": "cpp",
-        "fileLocation": [
-            "relative",
-            "${workspaceRoot}"
-        ],
-        "pattern": {
-            "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
-            "file": 1,
-            "line": 2,
-            "column": 3,
-            "severity": 4,
-            "message": 5
+    "tasks": [
+        {
+            "label": "g++",
+            "command": "g++",
+            "args": [
+                "-g",
+                "${file}",
+                "-o",
+                "bin/${fileBasenameNoExtension}.out",
+                "-Wall",
+                "-std=c++98",
+            ],
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceRoot}"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },
+        {
+            "label": "g++11",
+            "command": "g++",
+            "args": [
+                "-O2",
+                "${file}",
+                "-o",
+                "bin/${fileBasenameNoExtension}.out",
+                "-Wall",
+                "-std=c++11",
+            ],
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceRoot}"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
         }
-    }
+    ]
 }

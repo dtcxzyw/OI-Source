@@ -1,1 +1,43 @@
 \section{卡常}
+\subsection{取模}
+\begin{itemize}
+    \item 对于多个两整数乘积之和的取模（比如模意义下矩阵乘法），
+    可以设置一个阈值，（绝对值）超过该阈值才取模，最后再取一次取模。这种方法
+    在保证加法不溢出的情况下大幅减少取模次数，同时将值存储在寄存器内访问速度更快，
+    并且if的命中概率小，分支预测效率高。
+    \begin{lstlisting}
+    const Int64 end=std::numeric_limits<Int64>
+        ::max()-asInt64(mod-1)*(mod-1);
+    ...
+        for(int i=0;i<n;++i)
+            for(int j=0;j<n;++j) {
+                Int64 sum=0;
+                for(int k=0;k<n;++k) {
+                    sum+=asInt64(A[i][k])*B[k][j];
+                    if(sum>=end)
+                        sum%=mod;
+                }
+                C[i][j]=sum%mod;
+            }
+    \end{lstlisting}
+    \item 若可以肯定最终答案在整型范围内，可以允许暂时的加法溢出；
+    \item 若模意义加减操作多，则保证在所有计算过程中的数$\in[0,mod)$。
+    \begin{lstlisting}
+    int add(int a,int b) {
+        a+=b;
+        return a<mod?a:a-mod;
+    }
+    int sub(int a,int b) {
+        a-=b;
+        return a>=0?a:a+mod;
+    }
+    \end{lstlisting}
+    \item 若模意义乘法操作多，则仅保证中间数$\in (-mod,mod)$即可，没有必要
+    $\cdot =clamp(\cdot)$。在最后输出时$clamp$。
+\end{itemize}
+\subsection{矩阵乘法}
+
+\subsection{基于硬件的优化}
+\subsection{位运算}
+\subsection{搜索优化}
+\subsection{数组清零}
