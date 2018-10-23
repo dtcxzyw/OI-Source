@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <random>
-const int N = 1000, mod = 1000000007;
+const int N = 2000, mod = 1000000007;
 using Clock = std::chrono::high_resolution_clock;
 class Timer {
 private:
@@ -68,11 +68,36 @@ void mulOptimizedCache() {
             *cij = *eij % mod;
     }
 }
-void mulOptimizedUnfoldImpl() {}
-const int bsiz = 32;
-Int64 F[bsiz][bsiz], G[bsiz][bsiz];
-void mulOptimizedBlockImpl() {}
-void mulOptimizedBlock() {}
+void mulOptimizedUnfold() {
+    const int step = 16;
+    memset(E, 0, sizeof(E));
+    for(int i = 0; i < N; ++i)
+        for(int k = 0; k < N; ++k) {
+            Int64 aik = A[i][k];
+#define Unit(x)                           \
+    {                                     \
+        E[i][j + x] += aik * B[k][j + x]; \
+        if(E[i][j + x] >= end)            \
+            E[i][j + x] %= mod;           \
+    }
+
+            int j;
+            for(j = 0; j < N - step; j += step) {
+                Unit(0) Unit(1) Unit(2) Unit(3);
+                Unit(4) Unit(5) Unit(6) Unit(7);
+                Unit(8) Unit(9) Unit(10) Unit(11);
+                Unit(12) Unit(13) Unit(14) Unit(15);
+            }
+            while(j < N) {
+                Unit(0);
+                ++j;
+            }
+#undef Unit
+        }
+    for(int i = 0; i < N; ++i)
+        for(int j = 0; j < N; ++j)
+            C[i][j] = E[i][j] % mod;
+}
 #define test(func)                                 \
     {                                              \
         memset(C, 0, sizeof(C));                   \
@@ -98,6 +123,7 @@ int main() {
     test(mulStandard);
     test(mulOptimizedMod);
     test(mulOptimizedCache);
+    test(mulOptimizedUnfold);
     while(true)
         getchar();
     return 0;
