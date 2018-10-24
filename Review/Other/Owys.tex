@@ -98,7 +98,7 @@ int iabs(int x) {
 若$x$为非负则为$(x+0)\oplus x=x$，若$x$为负则为$(x-1)\oplus 0xffffffff=-x$（
 注意有符号右移时高位补符号位）。
 \subsubsection{去末尾1}
-\index{B!Brian Kernigan's Bit Counting}
+\index{B!Brian Kernigan's Bit\\ Counting}
 $v\&=v-1$，即使$v$末尾的$100\cdots$部分与$011\cdots$按位与。
 \subsubsection{取末尾0的数量}
 首先使用$w=v\&-v$取得最低位1，然后无符号乘以De Bruijn Sequences
