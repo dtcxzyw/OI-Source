@@ -1,7 +1,5 @@
 \section{Alpha-Beta剪枝}
-
 \subsection{Min-Max搜索}
-
 \index{M!Min-Max Search}
 
 核心在于搜索出对双方来说最好的操作。在实践中可以将对手的最优估价函数取反，
@@ -21,7 +19,6 @@
 \end{lstlisting}
 
 \subsubsection{例题}
-
 Luogu P4363 [九省联考2018]一双木棋chess
 \footnote{\url{https://www.luogu.org/problemnew/show/P4363}}
 
@@ -61,8 +58,9 @@ Alpha-Beta剪枝与Min-Max搜索的区别有二：
 \begin{enumerate}
     \item 对于对手来说，权值是相反数，因此$\alpha'=-\beta,\beta'=-\alpha$。
     \item $val$会更新$\alpha$的值,所以$val>=\beta$等价于$\alpha>\beta$,
-    已没有继续搜索的必要（对手要么只能接受$-\beta$,要么可以避开这条路径（因为
-    $\beta$值是由上一层节点递归计算同级节点得到的结果，决定权在上级)）。
+    已没有继续搜索的必要。对手要么只能接受$-\beta$,要么可以避开这条路径（因为
+    $\beta$值是由上一层节点递归计算同级节点得到的结果，而走哪条路径的决定权
+    在上级，即对手）。
 \end{enumerate}
 
 Alpha-Beta的效率严重依赖于搜索顺序：

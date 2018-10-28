@@ -90,7 +90,7 @@ SG函数的定义如下：$SG(x)=mex(S(x))$\index{S!SpragueGrundy Function}
 
 	      归纳证明：首先假设该引理对子游戏成立。
 
-	      设$d=b\oplus a$,$d$的最高位为k，则存在$SG(X_i)$的第k位为1
+	      设$d=b\oplus a$，$d$的最高位为k，则存在$SG(X_i)$的第k位为1
 	      ($d$的那一位由奇数个$SG(X_i)$贡献)。
 
 	      所以$SG(X_i)\oplus d<SG(X_i)$，由假设得$\exists_{X_i'\in
@@ -99,7 +99,7 @@ SG函数的定义如下：$SG(x)=mex(S(x))$\index{S!SpragueGrundy Function}
 	      结合$a=b\oplus d$得$a=SG(X_1)\oplus \cdots \oplus SG(X_i')
 		      \oplus \cdots \oplus SG(X_N)$
 
-	      因为$X_1,\cdots,X_i',\cdots,X_N\in S_X$，所以引理~\ref{SGBL1}得证。
+	      又因为$\left\{X_1,\cdots,X_i',\cdots,X_N\right\}\in S_X$，所以引理~\ref{SGBL1}得证。
 
 	\item
 	      \begin{lemma}\label{SGBL2}
@@ -108,9 +108,8 @@ SG函数的定义如下：$SG(x)=mex(S(x))$\index{S!SpragueGrundy Function}
 
 	      反证法：假设SG定理对子状态成立（这里貌似不严谨），\\且$\exists_{X' \in S_X},SG(X')=b$。
 
-	      那么就有$SG(X_i')=SG(X_i)$,由$mex$函数的定义可得$1$
-
-	      两式矛盾，引理~\ref{SGBL2}得证。
+	      那么就有$SG(X_i')=SG(X_i)$,由$mex$函数的定义可得两式矛盾，
+		  引理~\ref{SGBL2}得证。
 
 \end{enumerate}
 

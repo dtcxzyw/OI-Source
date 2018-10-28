@@ -63,3 +63,48 @@ $n_1*n_1,n_2*n_2$的两个小阶梯，满足$n_1+n_2=n-1$，分别分配$n_1,n_2
 \index{*TODO!Catalan应用证明}
 上述内容参考了Wikipedia-EN\footnote{Catalan number - Wikipedia
 	\url{https://en.wikipedia.org/wiki/Catalan\_number}}。
+\subsection{扩展}
+有n个1和m个-1(n>m)，这些数排成一个序列，需要满足序列每个位置上的前缀和>0，
+求序列方案数。
+
+该问题可转换为在方格纸上从$(0,0)$走到$(n,m)$，且不经过对角线$x=y$的路径数。
+
+考虑第一步走到哪个点：
+\begin{itemize}
+	\item 走到$(0,1)$，显然该走法的后继路径不合法，方案数为$\binomial{n+m-1}{n}$。
+	\item 走到$(1,0)$，若该走法的后继路径不合法，则该路径的从开始到第一次触碰到对角线的
+	路径沿对角线$x=y$对称后可使其一一映射到情况1的每条路径。
+\end{itemize}
+
+因此答案为无限制路径数-情况1方案数-情况2方案数=$\binomial{n+m}{n}-
+2\cdot\binomial{n+m-1}{n}=\binomial{n+m-1}{m}-\binomial{n+m-1}{m-1}$
+\subsubsection{变形a}
+$n\geq m$，满足前缀和$\geq 0$。
+
+把路径终点定为$(n+1,m)$，可将此问题转化为上一个问题（因为第一步必走$(1,0)$，
+等价于将起点和终点右移一位，相当于对角线左移），答案为
+$\binomial{n+m}{m}-\binomial{n+m}{m-1}$。
+\subsubsection{变形b}
+$n\geq m-r$，且满足前缀和$\geq -r,r\in \mathbb{Z}$。
+
+画图可知求的是从$(r,0)$走到$(r+n,m)$且不穿过对称轴$x=y$的方案数。
+
+该问题可分为两种情况：
+\begin{itemize}
+	\item $m<=r$,此时不管怎么走都满足条件，贡献为$\binomial{n+m}{n}$。
+	\item $m>r$，记对称轴$x=y$分别与$x=r$，$y=m$相交于点$A,B$，考虑第一次穿过
+	$AB$上的情况。对于$AB$上的某点$(x,x),x\in [r,m)$，无穿越到达该点的方案数为
+	$\binomial{x}{x-r}-\binomial{x}{x-r-1}$，穿越该点到达终点的方案数
+	为$\binomial{r+n-x}{m-x-1}$。
+\end{itemize}
+
+\paragraph{例题}
+Luogu P3336 [ZJOI2013]话旧
+\footnote{\url{https://www.luogu.org/problemnew/show/P3336}}
+
+容易发现题中x坐标相邻的点之间的函数图象方案是独立的，排序后对每对相邻点计算最值和方案数。
+方案数受到函数最小值为0的限制。计算组合数时使用CRT+Lucas。
+
+此题源代码有误（也许是分析错了）。
+
+\lstinputlisting{Source/Unclassified/Done/3336.cpp}

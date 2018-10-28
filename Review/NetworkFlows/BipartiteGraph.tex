@@ -1,7 +1,5 @@
 \section{二分图}
-\subsection{二分图的定义及其性质}
 \index{B!Bipartite Graph}
-二分图的顶点可分为两个集合，每条边的端点分别属于这两个集合。
 \subsection{二分图判定}
 \begin{property}
 	二分图中不存在奇环。
@@ -31,7 +29,7 @@
 
 \subsubsection{Hopcroft–Karp Algorithm}
 \index{H!Hopcroft–Karp Algorithm}
-暂时先坑着。
+暂时先坑着\sout{为什么不写Dinic呢}。
 \index{*TODO!Hopcroft–Karp算法}
 
 \subsubsection{例题}
@@ -53,20 +51,20 @@ Luogu P1129 [ZJOI2007]矩阵游戏
 
 对每个顶点运行匈牙利算法，若左右顶点顶标之和等于边权，则考虑连边；
 若无法为当前点找到匹配，则将访问到的左顶点顶标-1，右顶点顶标+1，
-等价于使答案上界-1（访问终点集合必为左顶点），重新为该点寻找匹配。
-把每个二分图当做完全二分图（不存在的边权值为0），迭代必定会结束。
+等价于使答案上界-1（DFS访问树中的叶子必为左顶点），重新为该点寻找匹配。
+把任意二分图当做完全二分图（不存在的边权值为0），迭代必定会结束。
 
 这种做法能够保证在找到最大匹配的情况下使权值和最大。
 \subsubsection{优化1}
 可以发现在左-1右+1后，原先等于左右顶点顶标之和的边仍然被经过，
-真正的关键在于如何突破最后的``瓶颈''，即令终点位置处的某条边从
+一个简单的思路是一次性突破``瓶颈''，即令下次增广时终点位置处的某条边从
 不可连边变为可连边，每次DFS增广时维护（顶标和-边权）的最小值$d$，
 若匹配失败则左$-d$右$+d$。
 
 这才是复杂度比较靠谱的算法（$O(n^3)$）。
 \subsubsection{优化2}
 在匹配每个点时，初始化所有右顶点的松弛函数$slack$为$\infty$，然后
-DFS时$slack$维护（顶标和-边权）的最小值。若匹配失败则$d$为未访问右
+DFS时$slack$维护（顶标和-边权）的最小值。若匹配失败则令$d$为未访问右
 顶点的$slack$函数最小值，左$-d$右$+d$，同时未访问节点的$slack-=d$。
 
 该优化的复杂度似乎没变，但实测该方法比优化1的效率更高（3x）。
@@ -84,17 +82,20 @@ void aug(int s) {
     int u=0;
     do {
         int v=pair[u],minh=inf,nxt;
-        flag[u]=true;// `等价于再次DFS后新访问到了点u`
+        flag[u]=true;
+        // `再次DFS后新访问到了点u和它的匹配点`
+        // `为点v找新匹配点`
         for(int i=1;i<=n;++i)
-            if(!vis[i]){
+            if(!flag[i]){
                 int delta=lh[v]+rh[i]-w[v][i];
                 if(delta<slack[i])
                     slack[i]=delta,pre[i]=u;
                     // `点i的匹配点有可能置换为u的匹配点，`
-                    // `以腾出u的位置`
+                    // `以腾出u的匹配点的空位`
                 if(minh>slack[i])
                     minh=slack[i],nxt=i;// `点i下次将被访问`
             }
+        //松弛
         for(int i=0;i<=n;++i)
             if(flag[i])lh[pair[i]]-=minh,rh[i]+=minh;
             else slack[i]-=minh;
