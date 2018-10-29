@@ -9,7 +9,7 @@ void preFlow(int n, int s, int t) {
     in[s] = inf;
     for(int i = 1; i <= n; ++i) {
         int u = id[i];
-        for(int j = last[j]; j; j = E[j].nxt) {
+        for(int j = last[u]; j; j = E[j].nxt) {
             int v = E[j].to;
             if(d[v] == d[u] + 1) {
                 int f =
@@ -22,7 +22,7 @@ void preFlow(int n, int s, int t) {
     in[f] = inf;
     for(int i = n; i >= 1; --i) {
         int u = id[i];
-        for(int j = last[j]; j; j = E[j].nxt) {
+        for(int j = last[u]; j; j = E[j].nxt) {
             int v = E[j].to;
             if(d[v] + 1 == d[u]) {
                 int f = std::min(
