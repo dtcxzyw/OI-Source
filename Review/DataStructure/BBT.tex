@@ -6,9 +6,8 @@ FHQTreap是一种比较好写的平衡二叉树，虽然效率不太高
 且对可持久化友好。
 FHQTreap的使用基于两个基本操作：split与merge。
 
-对于二叉搜索树的操作，由于FHQTreap本来就能够满足二叉搜索树的定义
-，因此操作方法相同（在对效率要求不高的情况下灵活地使用split和merge
-还可以减少代码量）。
+对于二叉搜索树的操作，由于FHQTreap本来就是一颗二叉搜索树，因此操作方法相同
+（若对效率要求不高，可以灵活地使用split和merge以减少代码量）。
 
 对于序列操作，使用子节~\ref{split}所述的splitKth即可完成区间提取。
 
@@ -28,7 +27,7 @@ split函数的作用是将一棵树按照权值或位置划分成两棵子树。
         if(u) {
             push(u);
             int lsiz=T[T[u].ls].siz;
-            //`决定当节点u为第k个时被分到哪棵子树`
+            //`lsiz(+1)决定当节点u为第k个时被分到哪棵子树`
             if(k<=lsiz) {
                 y=u;
                 split(T[u].ls,k,x,T[u].ls);
@@ -53,7 +52,6 @@ split函数的作用是将一棵树按照权值或位置划分成两棵子树。
             push(u);
             //`=决定当T[u].val==k时被分到哪棵子树`
             if(T[u].val<=k) {
-
                 x=u;
                 split(T[u].rs,k,T[u].rs,y);
             }
@@ -127,7 +125,7 @@ int getRand() {
 }
 \end{lstlisting}
 
-现在来试试说明它的优越性：
+现在尝试说明它的优越性：
 
 \begin{itemize}
 	\item 根据节~\ref{PrimitiveRoot}所述，如果$g$是模数$P$的一个原根，
@@ -135,9 +133,13 @@ int getRand() {
 	      由于2147483647是梅森素数，所以它一定存在原根。
 	      下列程序可证明48271是2147483647的一个原根：
 	      \lstinputlisting[title=RandomTestA.cpp]{DataStructure/RandomTestA.cpp}
-	\item 48271可以较早地使int溢出，从而避免出现$a$过小而导致``锯齿波''。
-	      下列程序可证明48271可以满足OI考试的需要：
-	      程序输出minc=7884 maxc=8515 except=8192 s2=88.492，可见数据还是蛮均匀的。
+	\item 48271是2147483647的一个大原根，可以较早地使int溢出，从而避免出现因
+	      $a$过小而导致产生``锯齿波''。
+
+          下列程序证明了48271可以满足OI考试的需要：
+          程序输出minc=7884 maxc=8515 except=8192 s2=88.492，
+          可见该算法生成的随机数还是蛮均匀的。
+    \item 模数为2147483647，随机数值域广。
 \end{itemize}
 
 参见cppreference\footnote{
@@ -160,7 +162,7 @@ Wikipedia-EN\footnote{
 \subsection{splay}\label{splay}
 \index{S!splay}
 
-由于Treap做LCT复杂度多一个log（而且我还看不懂），所以还是学一下好了。
+由于Treap做LCT复杂度多一个log（而且我看不懂），splay仍然无法被完全替代。
 
 splay主要由$rotate$和$splay$函数组成：
 
@@ -169,7 +171,7 @@ splay主要由$rotate$和$splay$函数组成：
 $rotate(u)$表示将节点$u$旋转到$u$的父亲上。
 
 主要思想是提取出父亲所在的子树，然后把节点$u$提为子树的根，最后把一个原来的儿子
-挂到原来的父亲下维护二叉树的形状。
+挂到原来的父亲下以维护二叉树的形状。
 
 具体步骤:
 \begin{enumerate}
@@ -179,8 +181,8 @@ $rotate(u)$表示将节点$u$旋转到$u$的父亲上。
 	\item 依次更新原父亲与自己。
 \end{enumerate}
 
-$rotate$前需要提前将标记下传（在$splay$中$push$）。在实践中可使用\\
-$connect(u,p,c)$把节点$u$挂到节点$p$的位置$c$下,$getPos(u)$获得
+$rotate$前需要提前将标记下传（在$splay$中$push$）。在实践中可使用辅助函数
+$connect(u,p,c)$把节点$u$挂到节点$p$的位置$c$下，$getPos(u)$获得
 节点$u$相对于父亲的位置。
 
 代码如下：
@@ -221,8 +223,8 @@ $splay$操作有单旋与双旋之分，其中单旋会被卡（原因见下面�
 
 \paragraph{双旋}
 
-双旋的区别在于当自己，父亲，爷爷在同一条直线上时，会通过多旋转一次来尽可能
-地减小树高，对链这种情况表现非常好。
+当自己，父亲，爷爷在同一条直线上时，会多旋转一次来尽可能地减小树高。
+这种做法在链上表现良好。
 
 代码如下：
 
@@ -241,13 +243,13 @@ void splay(int u,int p) {
 
 \paragraph{树根}
 
-显式维护树根是一件麻烦事，由于$getPos(root)$总是返回0，所以$T[0].c[0]$
-可以用来获得$root$。
+显式维护树根是一件麻烦事，容易发现$getPos(root)$总是返回0，所以$T[0].c[0]$
+即为$root$。
 
 \paragraph{二叉搜索树}
 
-对于二叉搜索树的操作，同子节~\ref{FHQTreap}相同，直接用二叉搜索树的
-操作即可，为了优化树高，每次调用完后对最近访问节点$u$调用$splay(u,0)$
+对于二叉搜索树的操作，同子节~\ref{FHQTreap}相同，直接当做二叉搜索树
+进行操作。为了优化树高，每次执行完操作后对最近访问节点$u$调用$splay(u,0)$
 （血泪史：[HNOI2002]营业额统计在$insert$重复时也要$splay$）。
 
 \paragraph{序列操作}
@@ -256,7 +258,7 @@ void splay(int u,int p) {
 
 \begin{enumerate}
 	\item 将节点$l-1 splay$到根节点；
-	\item 将节点$r+1 splay$到$l-1$的左儿子上；
+	\item 将节点$r+1 splay$到$l-1$的右儿子上；
 	\item 此时$r+1$的左子树就是目标区间。
 \end{enumerate}
 

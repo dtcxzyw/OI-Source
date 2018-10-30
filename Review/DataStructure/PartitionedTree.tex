@@ -1,10 +1,10 @@
 \section{划分树}
-划分树是一种类似于线段树但很少使用的数据结构，用来求解区间第k大问题，可用
-主席树代替，权当了解。
+划分树是一种类似于线段树但很少使用的数据结构，用来求解静态区间第k大问题。
+划分树可用主席树代替，权当了解。
 \subsection{构建}
-和线段树类似，将每一段区间在下一层分为两个子区间，即以这段区间的中位数将区
-间内的数划分为左右两部分，并且同一边的数之间相对次数不变。为了支持查询，还
-需要记录区间内每一个数及之前的数有多少个划分到左区间中。
+和线段树类似，在下一层中将每一段区间分为两个子区间，以这段区间的中位数为划分依据，
+并且被划分到同一边的数的相对次序不变。为了支持查询，还需要记录区间内每一个数及之前的数
+有多少个划分到左区间中。
 \subsubsection{注意事项}
 \begin{itemize}
     \item 由于每一层都只有n个数，所以只要每一层开n个数的数组即可，记$A[d]$为
@@ -26,7 +26,7 @@
 
 SP3946 MKTHNUM - K-th Number
 
-\lstinputlisting[title=PartitionedTree.cpp]
+\lstinputlisting[title=PartitionedTree]
 {DataStructure/PartitionedTree.cpp}
 
 以上内容参考了hchlqlz\footnote{划分树讲解 - hchlqlz

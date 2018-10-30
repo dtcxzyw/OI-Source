@@ -46,12 +46,12 @@ int query(int l, int r, int d, int nl, int nr, int k) {
         cr = cnt[d][nr], delta = cr - cl,
         m = (l + r) >> 1;
     if(k <= delta) {
-        int lb = l + cl;
+        int lb = l + (cl + 1) - 1;
         int le = l + cr - 1;
         return query(l, m, d + 1, lb, le, k);
     } else {
-        int rb = m + 1 + (nl - l - cl);
-        int re = rb + nr - nl - delta;
+        int rb = (m + 1) + ((nl - l) - cl);
+        int re = rb + ((nr - nl + 1) - delta) - 1;
         return query(m + 1, r, d + 1, rb, re,
                      k - delta);
     }

@@ -8,8 +8,16 @@
 一般的建图思路是通过流量限制来保证方案合法，然后控制费用计算最优代价。
 
 \subsection{使用Dijkstra实现费用流}
-\index{*TODO!MCMF with Dijkstra}
-其实即使有负权边，也是可以使用Dijkstra来求费用流的。
-留坑待补，参见Mogician的博客\footnote{
+其实即使有负权边，也是可以使用Dijkstra来求费用流的\sout{(但是仍然需要SPFA)}。
+
+核心思想是对原图适当地修改变为不带负权边的图。首先在迭代外用SPFA求从源点到每个点的最短路，
+记距离为$h[u]$，满足$h[u]+w[u][v]\geq h[v]$。将该式变形得$w[u][v]+h[u]-h[v]
+\geq 0$，令左式为边的新权值，就可以在迭代中使用Dijkstra求最短路了，记实际最短距离为
+$md[i]$，计算得到的最短距离为$dis[i]$。容易发现最短路径边权和中的$h[]$抵消后，可以得到
+$dis[i]=md[i]+h[S]-h[i]$，其中$h[S]=0$，那么实际距离比计算距离多$h[i]$。由此可得
+本次迭代产生的费用贡献为$(dis[T]+h[T])*minf$，并且需要在迭代结束前更新最短距离
+$h'[u]=h[u]+dis[u]$。
+
+上述内容参考了Mogician的博客\footnote{
     最大流与Dijkstra做费用流 - Mogician's blog - 洛谷博客
     \url{https://www.luogu.org/blog/Mogician/Network-Flow-Guide}}。
