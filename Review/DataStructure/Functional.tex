@@ -1,7 +1,7 @@
 \section{可持久化数据结构}
-可持久化数据结构的核心思想就是\emph{Copy On Write}(写时复制)，当一个对象将
+可持久化数据结构的核心思想是{\bfseries Copy On Write}(写时复制)，当一个对象将
 被改变时，简单地复制其整体，未修改的部分仍引用原对象的数据，达到节省拷贝时间与
-空间的目的。
+空间的目的。可持久化还容易支持历史查询操作。
 
 可持久化数据结构有主席树（可持久化线段树），可持久化可并堆，可持久化Trie，
 可持久化数组，可持久化并查集，可持久化平衡树等。
@@ -23,12 +23,13 @@
 可持久化并查集可使用可持久化数组实现。
 \subsection{优化}
 \subsubsection{标记永久化}
-将对整个区间的操作记录在管理此区间的节点，标记不下传，统计时参与计算。
+将对整个区间的操作记录在管理此区间的节点，标记不下传，统计时标记参与计算。
 此法节约了$push$的时间且对可持久化友好。
 \subsubsection{克隆开关}
-若已知按照原方法有一个节点不再被任何时间的数据结构引用时，直接在该节点上修改即可
-（当然也可以gc，比较麻烦）。
-因此在操作前可以设置一个$enableClone$开关，若为$false$则直接返回原节点即可。
+若已知按照原方法有一部分数据不再被任何时间的数据结构引用时，直接在该数据上修改
+（当然也可以gc，实现比较麻烦）。
+可以在操作前设置一个$enableClone$开关，若为$false$则直接返回原节点。
+
 代码如下：
 \begin{lstlisting}[title=cloneA]
 bool enableClone=true;
@@ -41,19 +42,10 @@ int cloneNode(int src) {
     return src;
 }
 \end{lstlisting}
-对于可持久化并查集，若使用路径压缩，则不好判断是否$clone$,在每个节点上记录其被
-创建时的时间戳，与当前版本时间戳比较即可。
+对于可持久化并查集，若使用路径压缩优化（实践中不太好用），则不好判断是否需要$clone$。
+可以在每个节点上记录其被创建时的时间戳，与当前版本时间戳比较。
+
 代码如下：
-\begin{lstlisting}[title=cloneB]
-int timeStamp=0;
-int cloneNode(int src) {
-    if(T[src].ts!=timeStamp) {
-        int id=allocNode();
-        T[id]=T[src];
-        T[id].ts=timeStamp;
-        return id;
-    }
-    return src;
-}
-\end{lstlisting}
-此法节约了复制节点时的时间与空间。
+\lstinputlisting{Source/Templates/FDSU.cpp}
+此法节约了复制节点时的时间与空间，但是路径压缩增加了修改的时间和空间，考场上最好写
+按秩合并。
