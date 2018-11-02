@@ -15,14 +15,15 @@
 
 接下来证明一定存在$(x,y)$使得$ax+by=(a,b)$成立：
 
-设$s$是$a$和$b$线性组合集中的最小正元素，对于某个整数组$(x,y)$有$ax+by=s$,
+设$s$是$a$和$b$的线性组合集中的最小正元素，对于某个整数二元组$(x,y)$有$ax+by=s$,
 令$q=[a/s],r=a \bmod s=a-q(ax+by)=a(1-qx)+b(-qy)$，所以$r$也是一个线性组合。
-因为$s$是线性组合集中的最小正元素，且$0\leq r \le s$，所以$r=0$，可得$s|a$。
+因为$s$是线性组合集中的最小正元素，且$0\leq r < s$，所以$r=0$，可得$s|a$。
 同理$s|b$，因此$s$是$a,b$的公约数，可得$(a,b) \geq s$。因为$(a,b)|ax+by$
 且$s>0$，所以$(a,b) \leq s$。结合$(a,b) \geq s$与$(a,b) \leq s$可得
 $s=(a,b)$。
 
-至于无穷多整数解嘛。。。拿最小公倍数调一调初始解$(x,y)$即可。
+以$(\frac{b}{(a,b)},\frac{-a}{(a,b)})$为步长给初始解
+$(x,y)$施加偏移可以得到无穷多整数解。
 
 证明参考了霜刃未曾试的博客\footnote{关于裴蜀定理的一些证明\\
 	\url{https://blog.csdn.net/discreeter/article/details/69833579}}与
@@ -45,12 +46,12 @@ $exgcd$（扩展欧几里得算法）可求出一组特殊的整数解。
     }
 \end{lstlisting}
 
-该算法由朴素$gcd$修改而来，因此同样讨论两种情况：
+该算法由朴素$gcd$修改而来，同样讨论两种情况：
 
 \begin{itemize}
-	\item $b=0$时，$gcd$值为$a$，因此有$a=1*a+0*b$。
+	\item $b=0$时，$gcd$值为$a$，有$a=1*a+0*b$。
 	\item $b\neq 0$时，考虑递归计算返回的一组解$(y',x')$满足
-	      $by'+(a-[\frac{a}{b}]b)x'=d$，可变形为$ax'+b(y'-[\frac{a}{b}]x')=d$，
+	      $by'+(a-[\frac{a}{b}]b)x'=d$，该式可变形为$ax'+b(y'-[\frac{a}{b}]x')=d$，
 	      因此本次递归返回$(x',y'-[\frac{a}{b}]x')$。
 \end{itemize}
 
@@ -60,8 +61,8 @@ $exgcd$（扩展欧几里得算法）可求出一组特殊的整数解。
 
 \subsubsection{原理}
 
-首先为了避免除法，将辗转相除法改为更相减损术，可以利用
-$gcd$函数的以下性质：
+首先为了避免除法操作，将辗转相除法改为更相减损术，然后利用
+$gcd$函数的以下性质进行优化：
 
 \begin{itemize}
 	\item \begin{property}\label{GCDC1}
@@ -89,17 +90,17 @@ $gcd$函数的以下性质：
 	\item 若此时$b$为0，则返回$a*2^k$,否则重复第4步。
 \end{enumerate}
 
-实际上就是利用性质~\ref{GCDC1}与~\ref{GCDC2}对更相减损术进行了优化。
+该算法利用性质~\ref{GCDC1}与~\ref{GCDC2}对更相减损术进行了优化。
 
 \subsubsection{位扫描优化}
 
-如果某个数末尾有多个0，则可以直接使用右移k位代替不断右移1位。
-下面是统计末尾0的个数k的方法：
+若某个数末尾有多个0，则可以直接右移多位来代替不断右移1位。
+以下是统计末尾0的个数k的方法：
 
 \begin{itemize}
-	\item GCC自带了对位扫描指令的封装，即$\_\_builtin\_$系列函数，
-	      直接使用$\_\_builtin\_ctz$函数即可。
-	\item Sean Eron Anderson 的\emph{Bit Twiddling Hacks}
+	\item GCC自带了对位扫描指令的封装，即$\_\_builtin\_$系列函数。
+	      $\_\_builtin\_ctz$函数返回了参数的末尾0个数。
+	\item Sean Eron Anderson 的{\bfseries Bit Twiddling Hacks}
 	      \footnote{\url{http://graphics.stanford.edu/~seander/bithacks.html}}
 	      中Counting consecutive trailing zero bits (or finding bit indices)
 	      一节介绍了计算末尾0个数的多种方法，这里只给出multiply and lookup法：
@@ -116,14 +117,11 @@ $gcd$函数的以下性质：
     \end{lstlisting}
 	      这里的神奇常数{\bfseries 0x077CB531U}与De Bruijn Sequences
 	      \index{D!De Bruijn Sequences}有关，在此不详细介绍。
-	      LUT可预处理得出（但是不太好记住0x077CB531U）。
+	      LUT可预处理得出。
 	      \index{*Constant!De Bruijn Sequences常数\\{\bfseries 0x077CB531U}}
 \end{itemize}
 
 \subsubsection{实现}
-
-设$conutTZ(x)$返回$x$末尾0的个数，代码如下：
-
 \begin{lstlisting}[title=gcdX]
 int gcdX(int a,int b) {
     if(a && b) {

@@ -8,13 +8,13 @@
 
 该定理是定理~\ref{ET}的特殊化，不证。
 
-利用定理~\ref{FLT}可知：
+由定理~\ref{FLT}可得：
 
 \begin{inference}
 	$a^{-1} \equiv a^{p-2} \pmod{p}$
 \end{inference}
 
-使用快速幂即可在$O(lgp)$的复杂度下求某个数的逆元。
+可使用快速幂在$O(lgp)$的复杂度下求某个数的逆元。
 
 \subsection{线性推逆元}
 
@@ -27,7 +27,7 @@
 
 再把$p \equiv 0 \pmod{q}$中的$p$用$qa+r$代替，两边同时乘上$(ar)^{-1}$，
 移项得$a^{-1}\equiv -qr^{-1} \pmod{q}$，即
-$a^{-1}\equiv -[\frac{p}{a}](p \bmod a) \pmod{p}$。
+$a^{-1}\equiv -[\frac{p}{a}](p \bmod a)^{-1} \pmod{p}$。
 
 代码如下：
 \begin{lstlisting}[title=inv]
@@ -43,18 +43,17 @@ for(int i=2;i<=n;++i)
 \index{E!Euler's Theorem}
 \begin{theorem}[Euler's Theorem]\label{ET}
 	~\\
-	对于任意互质正整数对$(a,n)$，有$a^\varphi(n) \equiv 1 \pmod{n}$
+	对于任意互质正整数对$(a,n)$，有$a^{\varphi(n)} \equiv 1 \pmod{n}$
 \end{theorem}
 证明：
 
-令$S=\{x|x\in Z^+ \land x \textrm{is coprime to n}\}$，则有限群$(S,\cdot_n)$的
-阶为$\varphi(n)$。
+令$S=\{[x]_n\in Z_n|(a,n)=1\}$，则有限群$(S,\cdot_n)$的阶为$\varphi(n)$。
 
 对于任意一个与$n$互质的正整数$a$，$a$的幂模$n$的值$a,a^2,\cdots,a^k$
 构成了一个子群，其中$a^k\equiv 1 \pmod{n}$。
 
 根据定理~\ref{LT}，有$k|\varphi(n)$，令$M=\varphi(n)/k$，有
-$a^\varphi(n)=a^{kM}=(a^k)^M=1^M\equiv 1 \pmod{n}$。
+$a^\varphi(n)=a^{kM}=(a^k)^M\equiv 1^M\equiv 1 \pmod{n}$。
 
 上述证明源自Wikipedia-EN\footnote{Euler's theorem - Wikipedia
 	\url{https://en.wikipedia.org/wiki/Euler's_theorem}}。
