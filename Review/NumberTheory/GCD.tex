@@ -98,7 +98,7 @@ $gcd$函数的以下性质进行优化：
 以下是统计末尾0的个数k的方法：
 
 \begin{itemize}
-	\item GCC自带了对位扫描指令的封装，即$\_\_builtin\_$系列函数。
+	\item GCC自带了对位扫描指令的封装，该系列内置函数以$\_\_builtin\_$为前缀。
 	      $\_\_builtin\_ctz$函数返回了参数的末尾0个数。
 	\item Sean Eron Anderson 的{\bfseries Bit Twiddling Hacks}
 	      \footnote{\url{http://graphics.stanford.edu/~seander/bithacks.html}}

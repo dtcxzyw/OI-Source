@@ -29,7 +29,6 @@ int main() {
         for(int j = i; j; j = (j - 1) & i)
             SP[i] += P[i ^ j];
     }
-    E[0] = 0.0;
     for(int i = 1; i < end; ++i) {
         FT csp = 0.0, fsp = SP[i] + P[i], se = 0.0;
         for(int s = i; s; s = (s - 1) & i) {

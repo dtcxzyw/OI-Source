@@ -2,15 +2,18 @@
 \index{P!Permutation Groups}
 {\bfseries 置换}是从$[1,n]$到$[1,n]$的一一映射。
 
-置换可以分解为多个循环，计算循环相关数据的方法为：枚举每一个节点
+置换可以分解为多个循环，计算循环相关数据的方法为：
+
+枚举每一个节点
 \begin{enumerate}
-    \item 若该节点已被访问，则跳过；
-    \item 顺着该节点对应的目标节点不断跳跃，标记已访问，直至跳跃到已访问点（即出发点）为止。
-    \item 这个环就是一个循环。
+	\item 若该节点已被访问，则跳过；
+	\item 顺着该节点对应的目标节点不断跳跃，给访问到的点打标记，直至跳跃到已访问点
+	      （即出发点）为止。
+	\item 这个环就是一个循环。
 \end{enumerate}
 \begin{theorem}
-    若对于一个置换有$n$个循环，长度分别为$l_1,l_2,\cdots,l_n$，
-    则该置换的循环节长度为$lcm(l_1,l_2,\cdots,l_n)$。
+	若对于一个置换有$n$个循环，长度分别为$l_1,l_2,\cdots,l_n$，
+	则该置换的循环节长度为$lcm(l_1,l_2,\cdots,l_n)$。
 \end{theorem}
 \paragraph{不动点}
 若一个状态$S$经由置换$f$置换后的状态与原状态相同，则状态$S$为$f$的不动点。
@@ -22,10 +25,10 @@
 \subsubsection{Burnside引理}
 \index{B!Burnside's Lemma}
 \begin{lemma}[Burnside's Lemma]
-    等价类数目为置换群$G$中所有置换的不动点数目的平均值。
-    \begin{displaymath}
-        |X/G|=\frac{1}{|G|}\sum_{g\in G}|X^g|
-    \end{displaymath}
+	等价类数目为置换群$G$中所有置换的不动点数目的平均值。
+	\begin{displaymath}
+		|X/G|=\frac{1}{|G|}\sum_{g\in G}|X^g|
+	\end{displaymath}
 \end{lemma}
 上述定理证明留坑待补。
 \index{*TODO!证明Burnside引理}
@@ -33,81 +36,89 @@
 \index{P!Pólya Enumeration Theorem}
 
 \begin{theorem}[Pólya Enumeration Theorem]
-    若对每一个节点进行$m$染色，置换$g$有$c(g)$个循环，则染色方案
-    等价类数目为$\displaystyle \frac{1}{|G|}\sum_{g\in G}m^{c(g)}$。
+	若对每一个节点进行$m$染色，置换$g$有$c(g)$个循环，则染色方案
+	等价类数目为$\displaystyle \frac{1}{|G|}\sum_{g\in G}m^{c(g)}$。
 \end{theorem}
 
 证明：一个循环内所有的节点颜色相同，不同循环颜色的选择是独立的，每一个循环颜色选择
 方案对应一个不动点，根据乘法原理可知$|X^g|=m^{c(g)}$。
 
 以上内容参考了QAQqwe的博客\footnote{Burnside引理与Polya定理
-\url{https://blog.csdn.net/liangzhaoyang1/article/details/72639208}}与
+	\url{https://blog.csdn.net/liangzhaoyang1/article/details/72639208}}与
 Wikipedia-EN\footnote{
-    Burnside's lemma - Wikipedia
-    \url{https://en.wikipedia.org/wiki/Burnside\%27s\_lemma}
+	Burnside's lemma - Wikipedia
+	\url{https://en.wikipedia.org/wiki/Burnside\%27s\_lemma}
 
-    Pólya enumeration theorem - Wikipedia
-    \url{https://en.wikipedia.org/wiki/P\%C3\%B3lya\_enumeration\_theorem}
+	Pólya enumeration theorem - Wikipedia
+	\url{https://en.wikipedia.org/wiki/P\%C3\%B3lya\_enumeration\_theorem}
 }。
 
 \subsubsection{常见题型}
 题型来自My\_ACM\_Dream的博客\footnote{polya|burnside定理的一些总结\\
-\url{https://blog.csdn.net/My\_ACM\_Dream/article/details/45312365}}。
+	\url{https://blog.csdn.net/My\_ACM\_Dream/article/details/45312365}}。
 
 \paragraph{正方形旋转}
 n*n正方形染色：
 \begin{itemize}
-    \item 旋转$0^\circ$，循环节数$n^2$。
+	\item 旋转$0^\circ$，循环节数$n^2$。
 	\item 旋转$90^\circ/270^\circ$，若$n$为偶数，循环节数$\frac{n^2}{4}$；
-	若$n$为奇数，循环节数$\frac{n^2-1}{4}+1$。
-    \item 旋转$180^\circ$，若$n$为偶数，循环节数$\frac{n^2}{2}$；若$n$为奇数，循环
-    节数$\frac{n^2-1}{2}+1$。
+	      若$n$为奇数，循环节数$\frac{n^2-1}{4}+1$。
+	\item 旋转$180^\circ$，若$n$为偶数，循环节数$\frac{n^2}{2}$；若$n$为奇数，循环
+	      节数$\frac{n^2-1}{2}+1$。
 \end{itemize}
 奇偶循环节数不同的原因是因为$n$为奇数时中间的点自成一个循环节。
 \paragraph{正方形反射(对称)}
 \begin{tabular}{|c|c|c|}
 	\hline
-			 & 对角反射& 对边中点反射\\
+	          & 对角反射            & 对边中点反射        \\
 	\hline
-	$n$为奇数 & $\frac{n^2-n}{2}+n$& $\frac{n^2-n}{2}+n$ \\
+	$n$为奇数 & $\frac{n^2-n}{2}+n$ & $\frac{n^2-n}{2}+n$ \\
 	\hline
-	$n$为偶数 & $\frac{n^2-n}{2}+n$& $\frac{n^2}{2}$\\
+	$n$为偶数 & $\frac{n^2-n}{2}+n$ & $\frac{n^2}{2}$     \\
 	\hline
 \end{tabular}
 \paragraph{环形旋转}
 对于一个有$n$个点的环，旋转$i$个点的置换的循环节数为$(n,i)$。
 
-证明：$i$最小乘上$\frac{n}{(n,i)}$才会被$n$整除，所以每一个循环节的长度为
-$\frac{n}{(n,i)}$，循环节个数为$(n,i)$。
+证明：每个循环节的长度为$\frac{[n,i]}{i}=\frac{n}{(n,i)}$，循环节个数为$(n,i)$。
 \paragraph{环形对称翻转}
 \begin{itemize}
 	\item $n$为奇数：只有n种置换（以一点一边中点为对称轴），循环节数为
-	$[\frac{n}{2}]+1$。
+	      $[\frac{n}{2}]+1$。
 	\item $n$为偶数：\begin{itemize}
-		\item 边边中点：$\frac{n}{2}$种，循环节数为$\frac{n}{2}$。
-		\item 点点：$\frac{n}{2}$种，循环节数为$\frac{n}{2}+1$。
-	\end{itemize}
+		      \item 边边中点：$\frac{n}{2}$种，循环节数为$\frac{n}{2}$。
+		      \item 点点：$\frac{n}{2}$种，循环节数为$\frac{n}{2}+1$。
+	      \end{itemize}
 \end{itemize}
 \paragraph{正方体旋转}
 注意是{\bfseries 棱边}置换。
 \begin{itemize}
 	\item 自身不变，置换1种，循环节12个，长度1；
 	\item 以对面中心为轴，旋转角为$90^\circ,180^\circ,270^\circ$，
-	轴有3种选择，共9种置换。
-	\begin{itemize}
-		\item $90^\circ/270^\circ$：循环节3个，长度4。
-		\item $180^\circ$：循环节6个，长度2。
-	\end{itemize}
-    \item 以对边中点为轴，旋转角为$180^\circ$，有6对边，置换数为6，
-    有5个长度为2的循环和2个长度为1的循环。
-    \item 以对顶点为轴，旋转角为$120^\circ,240^\circ$，有4对点，置换数为8，
-    均有4个长度为3的循环。
+	      轴有3种选择，共9种置换。
+	      \begin{itemize}
+		      \item $90^\circ/270^\circ$：循环节3个，长度4。
+		      \item $180^\circ$：循环节6个，长度2。
+	      \end{itemize}
+	\item 以对边中点为轴，旋转角为$180^\circ$，有6对边，置换数为6，
+	      有5个长度为2的循环和2个长度为1的循环。
+	\item 以对顶点为轴，旋转角为$120^\circ,240^\circ$，有4对点，置换数为8，
+	      均有4个长度为3的循环。
 \end{itemize}
 总置换数24。
+
+例题：UVA10601 Cubes
+
+暴力（矩阵变换+枚举排列）：
+\lstinputlisting{Source/Source/Groop/UVA10601.cpp}
+
+正解（统计每种颜色的数量，然后分类讨论）：
+\lstinputlisting{Source/Source/Groop/UVA10601X.cpp}
+
 \paragraph{$n$较小}
 \begin{itemize}
-    \item 颜色不限：裸Polya解决。
-    \item 颜色限制：裸Burnside解决。
+	\item 颜色不限：裸Polya解决。
+	\item 颜色限制：裸Burnside解决。
 \end{itemize}
 \paragraph{环形旋转且$n$较大}
 枚举循环节数（即$d=(n,i)$），利用欧拉函数与容斥解决。
