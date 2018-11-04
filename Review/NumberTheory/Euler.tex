@@ -47,16 +47,27 @@ for(int i=2;i<=n;++i)
 \end{theorem}
 证明：
 
-令$S=\{[x]_n\in Z_n|(a,n)=1\}$，则有限群$(S,\cdot_n)$的阶为$\varphi(n)$。
+令$S=\{[x]_n\in Z_n|(a,n)=1\}$（由与$n$互质的模$n$剩余类组成的集合），
+它与$\cdot_n$构成整数模$n$乘法群，$(S,\cdot_n)$的阶为$\varphi(n)$。
 
-对于任意一个与$n$互质的正整数$a$，$a$的幂模$n$的值$a,a^2,\cdots,a^k$
-构成了一个子群，其中$a^k\equiv 1 \pmod{n}$。
+接着有两种证明思路：
+\begin{itemize}
+	\item 对于任意一个与$n$互质的正整数$a$，$a$的幂模$n$的值$a,a^2,\cdots,a^k$
+	      构成了一个子群，其中$a^k\equiv 1 \pmod{n}$。
 
-根据定理~\ref{LT}，有$k|\varphi(n)$，令$M=\varphi(n)/k$，有
-$a^\varphi(n)=a^{kM}=(a^k)^M\equiv 1^M\equiv 1 \pmod{n}$。
+	      根据定理~\ref{LT}，有$k|\varphi(n)$，令$M=\varphi(n)/k$，有
+		  $a^{\varphi(n)}=a^{kM}=(a^k)^M\equiv 1^M\equiv 1 \pmod{n}$。
+	\item 根据定义得对于$[x]_n\in S$和$S$中的所有元素$[a_1]_n,[a_2]_n,\cdots,
+	[a_{\varphi(n)}]_n$，$[x]_n \cdot_n [a_i]_n$组成的集合仍然是$S$，因此有$x^{\varphi(n)}
+	[a_1]_n[a_2]_n\cdots[a_{\varphi(n)}]_n= (x[a_1]_n)(x[a_2]_n)\cdots
+	(x[a_{\varphi(n)}]_n)\equiv[a_1]_n[a_2]_n\cdots[a_{\varphi(n)}]_n\pmod{n}$，
+	两边消去可得$x^{\varphi(n)}\equiv 1\pmod{n}$。
+\end{itemize}
 
 上述证明源自Wikipedia-EN\footnote{Euler's theorem - Wikipedia
-	\url{https://en.wikipedia.org/wiki/Euler's_theorem}}。
+	\url{https://en.wikipedia.org/wiki/Euler's\_theorem}}和Eden Harder
+	的博客\footnote{RSA 加密周边 - Eden Harder
+		\url{http://edenharder.is-programmer.com/posts/43247.html}}。
 \subsection{扩展欧拉定理}
 \begin{theorem}\label{exEuler}
 	$\forall a\in \mathbb{Z},x,m\in \mathbb{Z^+},x\geq \varphi(m)
@@ -119,28 +130,28 @@ $a^\varphi(n)=a^{kM}=(a^k)^M\equiv 1^M\equiv 1 \pmod{n}$。
 
 \begin{lemma}\label{EEL2}
 	\begin{displaymath}
-		\forall p\textrm{ is a prime number},q\in \mathbb{Z^+}\ge 1,
+		\forall p\textrm{ is a prime number},q\in \mathbb{Z^+},q>1,
 		\varphi(p^q)\geq q.
 	\end{displaymath}
 \end{lemma}
 
 证明：首先有$\varphi(p^q)=(p-1)p^{q-1}$，当$p$固定时，$q$取2使得$\varphi(p^q)-q$
-最小，但该值仍非负。当$p=2,q=2$时，有$\varphi(p^q)=q$。
+最小，但该值仍非负。当且仅当$p=2,q=2$时，$\varphi(p^q)=q$。
 
 接下来证明定理~\ref{exEuler}：
 
 首先证明当$m$为素数$p$的幂$(m=p^q)$时成立：
 \begin{itemize}
-	\item 若$gcd(a,p)=1$，则$gcd(a,p^q)=1$，根据欧拉定理可证；
-	\item 若$gcd(a,p)=p$，由适用范围可知$x\geq p$,由引理~\ref{EEL2}可知
-	      $x \bmod \varphi(p^q) + \varphi(p^q) \geq p$,因此
+	\item 若$gcd(a,p)=1$，则$gcd(a,p^q)=1$，根据欧拉定理可证在该情况下成立；
+	\item 若$gcd(a,p)=p$，由适用范围可知$x\geq q$，由引理~\ref{EEL2}可知
+	      $x \bmod \varphi(p^q) + \varphi(p^q) \geq q$,因此
 	      $a^x\equiv 0 \equiv a^{x \bmod \varphi(p^q)+\varphi(p^q)} \pmod{p^q}$
 \end{itemize}
 
-对于任意$m$可根据算术基本定理分解为素数幂之积。因为$\varphi(p^q)|\varphi(m)$,所以有
+对于任意$m$，可根据算术基本定理将其分解为素数幂之积。因为$\varphi(p^q)|\varphi(m)$,所以有
 $a^x\equiv a^{x \bmod \varphi(p^q)+\varphi(p^q)}
 	\equiv a^{x \bmod \varphi(m)+\varphi(m)} \pmod{p^q}$。
-根据引理~\ref{EEL1}及其推论合并即可。
+根据引理~\ref{EEL1}及其推论合并这些式子可证明该定理。
 
 以上证明源自后缀自动机·张的文章\footnote{微小的欧拉定理EXT证明
 	\url{https://zhuanlan.zhihu.com/p/24902174}}。

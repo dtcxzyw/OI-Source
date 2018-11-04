@@ -113,7 +113,15 @@ $O(\sqrt{n}\lg n)$。
 \subsection{MITM}
 \index{M!Meet In The Middle}
 其主要思想是双向搜索（左+右/BSGS），然后使用hash表来查询满足题意
-的集合。
+的集合。双向BFS搜索可以有效地减少状态数。
+
+例题：Luogu P2324 [SCOI2005]骑士精神
+
+暴力搜索的状态数为$3^{15}$数量级，但是双向BFS搜索的状态数为$2*3^8$数量级，
+可以通过该题。每轮迭代中，两边各走一步，同时进行检测，这样做找到一组可行解就可以
+返回了。
+
+\lstinputlisting{Source/Source/Search/2324.cpp}
 \subsection{倍增}
 通过多一个$\lg$预处理跳跃$2^k$步的信息，以达到$\lg$级快速移动的目的。
 \subsection{随机化}

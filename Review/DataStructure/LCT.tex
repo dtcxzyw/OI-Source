@@ -80,13 +80,13 @@ $access(u)$的功能是使节点$u$与其LCT的根在同一棵$splay$内，
 \begin{lstlisting}[title=access]
 void access(u) {
     int v = 0;
-    while (u) {
+    do {
         splay(u);
         rs = v;
         update(u);
         v = u;
         u = T[u].p;
-    }
+    } while(u);
 }
 \end{lstlisting}
 
@@ -140,7 +140,7 @@ $makeRoot(u)$后使$T[u].p=v$即可，注意在link前要进行连通性检测�
     LCT（Link-Cut Tree）详解（蒟蒻自留地）
     \url{https://blog.csdn.net/saramanda/article/details/55253627}}。
 
-\subsection{技巧}
+\subsection{技巧/常见方法}
 \subsubsection{DSU优化连通性检测}
 如果可以保证处于同一连通块内的点不会再次分离（允许临时分离），
 可以使用本章~\ref{DSU}节所述的并查集代替~\ref{LCTFind}中昂贵的$find$。
@@ -150,3 +150,12 @@ $access(u)$后节点$u$到根节点的路径上的点在同一棵splay内，可�
 
 参见[SDOI2017]树点涂色\footnote{【P3703】[SDOI2017]树点涂色 - 洛谷
     \url{https://www.luogu.org/problemnew/show/P3703}}。
+\subsubsection{动态LCA}
+注意link/cut操作不能换根，换根会使树的形态改变导致LCA不同。
+求节点$u,v$的LCA时，首先$access(u)$开辟一条链，类似地$access(v)$再开辟一条链，
+$access(v)$时会与$access(u)$的链相交，交点即为LCA。在实现时可以直接令$access$函数
+返回$v$值作为与上一条链的交点（当$while(u)$为false时，说明在$u=T[u].p$之前的$u$是
+链的交汇点，然而程序返回时$u$赋给了$v$）。
+
+板子：SP8791 DYNALCA
+\lstinputlisting{Source/Source/LCT/SP8791.cpp}

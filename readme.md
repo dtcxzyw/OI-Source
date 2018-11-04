@@ -214,3 +214,7 @@
 - [ ] 扩展Dijkstra
 - [ ] Stoer-Wagner算法
 - [ ] Menon's identity
+- [ ] LCT维护子树信息和边权信息
+- [ ] 共价大爷游长沙技巧
+# Other
+- [ ] 使用Vim
