@@ -13,24 +13,26 @@ Pollard Rho算法可以期望在$\Theta(\sqrt{p})$次算术运算内得到$n$的
 具体证明参见算法导论\cite{ITA3}第5.4.1节中采用指示器随机变量的分析。
 
 询问是否存在$(x_i-x_j)|n$仍然不够高效，可以转换为询问是否存在$gcd(x_i-x_j,n)>1$。
-那么只要选取约$\sqrt[4]{n}$个数即可。
+只需要选取约$\sqrt[4]{n}$个数（因子大小为$O(\sqrt{n})$）。
 
-所以Pollard Rho使用如下策略：
+\index{*TODO!PollardRho时间复杂度证明}
+
+Pollard Rho采取如下策略：
 \begin{enumerate}
-    \item 随机在区间$[2,n-1]$中选取$k$个数；
+    \item 在区间$[2,n-1]$中随机选取$k$个数；
     \item 询问是否存在$gcd(x_i-x_j,n)>1$。
 \end{enumerate}
 
 在实践中把$k$个数存下是不可能的，可以每次把相邻的随机数当做$x_i,x_j$来测试。
-有一个简单有效的伪随机数生成函数：$f(x)=x^2+c \bmod n$。
+有一个简单有效的伪随机数生成函数：$f(x)=(x^2+c) \bmod n$。
 
 \subsection{Floyd判圈法}
-对于某些数据，可能会导致在找到因子前伪随机数生成函数却掉入死循环的情况，此时将
-永远找不到因子。遇到这种情况，应该及时退出迭代，修改随机数种子$x_0$与偏移$c$。
+某些输入可能会导致出现在找到某个因子前，伪随机数生成过程已掉入死循环的情况。
+遇到这种情况，应该及时退出迭代，并修改随机数种子$x_0$与偏移$c$重新迭代。
 
-如何判断是否掉入死循环呢？这里使用Floyd发明的方法：令$A,B$同时迭代生成随机数，
-$A_{i+1}=f(A_i),B_{i+1}=f(f(B_i))$，当$A_i=B_i$时，$B$至少比$A$多走了
-一圈，说明已经掉入了循环。
+如何判断是否掉入死循环呢？这里使用Floyd发明的方法：令$A_0=B_0=x_0$，同时迭代生成随机数，
+$A_{i+1}=f(A_i),B_{i+1}=f(f(B_i))$，当$A_i=B_i$时，$B$至少比$A$多走了一圈，
+说明已经掉入了循环。
 
 代码实现：
 \begin{lstlisting}[title=Pollard Rho]
@@ -39,25 +41,24 @@ int f(int x,int c,int n) {
 }
 int pollardRhoImpl(int n,int seed) {
     int c=rand()%n;
-    int a=f(seed,n),b=f(a,c,n);
+    int a=f(seed,c,n),b=f(a,c,n);
     while(a!=b) {
         int d=gcd(iabs(a-b),n);
         if(d!=1 && d!=n)
             return d;
-        a=f(a),b=f(f(b));
+        a=f(a,c,n),b=f(f(b,c,n),c,n);
     }
     return 0;
 }
 int pollardRho(int x) {
     int d=0;
-    do {
-        d=pollardRhoImpl(x,rand()%n);
-    } while(d);
+    do d=pollardRhoImpl(x,rand()%n);
+    while(!d);
     return d;
 }
 \end{lstlisting}
 
-以上内容参考了\emph{A Quick Tutorial on Pollard's Rho Algorithm}
+以上内容参考了{\bfseries A Quick Tutorial on Pollard's Rho Algorithm}
 \footnote{原文地址
 \url{www.cs.colorado.edu/~srirams/classes/doku.php/pollard\_rho\_tutorial}
 \\中文翻译
