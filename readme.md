@@ -216,5 +216,6 @@
 - [ ] Menon's identity
 - [ ] LCT维护子树信息和边权信息
 - [ ] 共价大爷游长沙技巧
+- [ ] Stoer-Wagner Algorithm
 # Other
 - [ ] 使用Vim

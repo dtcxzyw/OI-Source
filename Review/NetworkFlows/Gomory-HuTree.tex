@@ -1,0 +1,33 @@
+\section{最小割树}
+\index{G!Gomory–Hu Tree}
+\subsection{构造}
+考虑单次求最小割的过程，最小割将顶点集合一分为二，设求$u-v$的最小割$cut(u,v)$，
+顶点被分割为集合$U,V$。
+\begin{lemma}
+	$\forall x\in U,y\in V,cut(x,y)\leq cut(u,v)$
+\end{lemma}
+\paragraph{证明}
+若存在$x,y$使得$cut(x,y)>cut(u,v)$，则$cut(u,v)$无法把$x,y$分开，也就意味着无法把
+$u,v$分开，$cut(u,v)$不是割。
+
+然后对每个点集再次选择两个点求最小割，将其切分为两个集合，直到所有集合都只有一个点为止。
+每次求完最小割后给$u-v$连一条权重为$cut(u,v)$的边，这样做最后能得到一棵树。
+\begin{theorem}
+	$u-v$在树上的链上最小边权等于$cut(u,v)$。
+\end{theorem}
+\subsection{询问}
+建出树后可以使用倍增法或线段树+树链剖分$O(\lg n)$查询点对答案。
+
+板子：
+\lstinputlisting{Source/Templates/GHT.cpp}
+上述内容参考了UranusITS的博客\footnote{
+	[学习笔记]最小割树（Gomory-Hu Tree）
+	\url{http://www.cnblogs.com/coder-Uranus/p/9771919.html}
+}。
+
+\subsection{Gusfield算法}
+\index{G!Gusfield Algorithm}
+
+\subsection{应用}
+\subsubsection{k小割}
+\subsubsection{最小割计数}
