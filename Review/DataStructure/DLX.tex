@@ -1,0 +1,47 @@
+\section{DLX舞蹈链}
+\index{D!Dancing Links X}
+DLX用来求解精确覆盖问题。
+
+\paragraph{精确覆盖问题} 给定一个01矩阵，求使得每一列恰好有1个1的行集合。
+\subsection{X算法}
+X算法使用递归+回溯搜索可行解。
+
+算法步骤如下：
+\begin{enumerate}
+	\item 从矩阵中选取一行；
+	\item 将该行和该行所有1对应的列以及与该行冲突的行从矩阵中删除得到一个新矩阵。
+	\item 若该矩阵为空矩阵，则跳到步骤4；否则递归求解新矩阵的精确覆盖，若返回false则
+	      返回步骤1选取下一行；
+	\item 若选取的行全部为1，则返回true，否则返回false。
+\end{enumerate}
+\subsection{DLX}
+递归+回溯使得存储与维护矩阵既麻烦又费时。Donald E.Knuth使用双向链表
+来维护矩阵，这个数据结构被称为Dancing Links。它利用了双向链表删除与恢复的方便性。
+
+对于矩阵内的每一个1（此种矩阵一般为稀疏矩阵），维护其上下左右元素标号和自身坐标。
+每个元素既是所属行的链表元素，又是所属列的链表元素。每个列的链表还有链头$C_i$（即0行元素），
+这些链头又与总链头$head$串在一起，以便检查覆盖情况。
+
+算法步骤如下：
+
+记标示列链表链头$C$为将元素$C$所在列元素以及这些元素所在行元素删除，回标$C$为其逆操作。
+\begin{enumerate}
+	\item 检查$head.right$是否为自身，若是则覆盖完毕，输出答案栈内所有元素，返回true；
+	\item 记$C=head.right$，标示$C$，枚举$C$所在链表内的行$D$：
+	      \begin{enumerate}
+		      \item 标示元素$D$所在链表行元素对应列链表链头。
+		      \item 将其压入答案栈中；
+		      \item 递归求解，若返回true则退出，否则逆序回标，枚举下一行。
+	      \end{enumerate}
+	\item 回标$C$，返回false。
+\end{enumerate}
+
+{\bfseries 为了提高搜索效率可以维护每列1的个数，每次选取1个数最少的列遍历。}
+
+板子：
+\lstinputlisting{Source/Templates/DLX.cpp}
+
+上述内容参考了万仓一黍的博客\footnote{
+	跳跃的舞者，舞蹈链（Dancing Links）算法——求解精确覆盖问题
+	\url{http://www.cnblogs.com/grenet/p/3145800.html}
+}。

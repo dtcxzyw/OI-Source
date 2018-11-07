@@ -174,7 +174,7 @@
 - [ ] DC3
 - [ ] ISAP
 - [ ] IDA*
-- [ ] DLX
+- [x] DLX
 - [ ] 最小树型图
 - [ ] 单纯形算法
 - [ ] Johnson
@@ -193,9 +193,7 @@
 - [ ] Lindström–Gessel–Viennot lemma
 - [ ] 边分治
 - [ ] 链分治
-- [ ] 最小割树
-- [ ] k小割
-- [ ] 最小割计数
+- [x] 最小割树
 - [x] 势能分析线段树
 - [ ] 动态仙人掌
 - [ ] 弦图
@@ -216,6 +214,5 @@
 - [ ] Menon's identity
 - [ ] LCT维护子树信息和边权信息
 - [ ] 共价大爷游长沙技巧
-- [ ] Stoer-Wagner Algorithm
 # Other
 - [ ] 使用Vim

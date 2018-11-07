@@ -12,11 +12,11 @@ int read() {
     }
     return res;
 }
-const int size = 505;
+const int size = 855;
 namespace NetworkFlow {
     struct Edge {
         int to, nxt, f;
-    } E[3005];
+    } E[17005];
     int last[size], cnt = 1;
     void addEdge(int u, int v, int f) {
         ++cnt;
@@ -80,69 +80,16 @@ namespace NetworkFlow {
         return d[u] == -1;
     }
 }
-namespace GHT {
-    struct Edge {
-        int to, nxt, w;
-    } E[size * 2];
-    int last[size], cnt = 0;
-    void addEdge(int u, int v, int w) {
-        ++cnt;
-        E[cnt].to = v, E[cnt].nxt = last[u],
-        E[cnt].w = w;
-        last[u] = cnt;
-    }
-    int p[size][9], d[size], k[size][9];
-    void DFS(int u) {
-        for(int i = 1; i < 9; ++i) {
-            int pp = p[u][i - 1];
-            p[u][i] = p[pp][i - 1];
-            k[u][i] =
-                std::min(k[u][i - 1], k[pp][i - 1]);
-        }
-        for(int i = last[u]; i; i = E[i].nxt) {
-            int v = E[i].to;
-            if(p[u][0] != v) {
-                p[v][0] = u;
-                k[v][0] = E[i].w;
-                d[v] = d[u] + 1;
-                DFS(v);
-            }
-        }
-    }
-    int query(int u, int v) {
-        int res = 1 << 30;
-        if(d[u] < d[v])
-            std::swap(u, v);
-        int delta = d[u] - d[v];
-        for(int i = 0; i < 9; ++i)
-            if(delta & (1 << i)) {
-                res = std::min(res, k[u][i]);
-                u = p[u][i];
-            }
-        if(u == v)
-            return res;
-        for(int i = 8; i >= 0; --i)
-            if(p[u][i] != p[v][i]) {
-                res = std::min(
-                    res, std::min(k[u][i], k[v][i]));
-                u = p[u][i], v = p[v][i];
-            }
-        return std::min(res,
-                        std::min(k[u][0], k[v][0]));
-    }
-}
-int A[size];
+int A[size], c[size], ccnt = 0;
 void buildGHTImpl(int l, int r) {
     if(l == r)
         return;
     int s = A[l], t = A[r];
-    int w = NetworkFlow::dinic(s, t);
+    c[ccnt++] = NetworkFlow::dinic(s, t);
     int wp = l;
     for(int i = l; i <= r; ++i)
         if(NetworkFlow::query(A[i]))
             std::swap(A[wp++], A[i]);
-    GHT::addEdge(s, t, w);
-    GHT::addEdge(t, s, w);
     buildGHTImpl(l, wp - 1);
     buildGHTImpl(wp, r);
 }
@@ -151,8 +98,6 @@ void buildGHT(int n) {
     for(int i = 1; i <= n; ++i)
         A[i] = i;
     buildGHTImpl(1, n);
-    srand(19260817);
-    GHT::DFS(rand() % n + 1);
 }
 int main() {
     int n = read();
@@ -165,8 +110,8 @@ int main() {
         NetworkFlow::addEdge(v, u, w);
     }
     buildGHT(n);
-    int q = read();
-    while(q--)
-        printf("%d\n", GHT::query(read(), read()));
+    std::sort(c, c + ccnt);
+    ccnt = std::unique(c, c + ccnt) - c;
+    printf("%d\n", ccnt);
     return 0;
 }

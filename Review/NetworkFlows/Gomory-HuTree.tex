@@ -1,6 +1,8 @@
 \section{最小割树}
 \index{G!Gomory–Hu Tree}
-\subsection{构造}
+\subsection{Gusfield算法构造}
+\index{G!Gusfield Algorithm}
+
 考虑单次求最小割的过程，最小割将顶点集合一分为二，设求$u-v$的最小割$cut(u,v)$，
 顶点被分割为集合$U,V$。
 \begin{lemma}
@@ -15,6 +17,7 @@ $u,v$分开，$cut(u,v)$不是割。
 \begin{theorem}
 	$u-v$在树上的链上最小边权等于$cut(u,v)$。
 \end{theorem}
+时间复杂度$O(V^3E)$。
 \subsection{询问}
 建出树后可以使用倍增法或线段树+树链剖分$O(\lg n)$查询点对答案。
 
@@ -24,10 +27,3 @@ $u,v$分开，$cut(u,v)$不是割。
 	[学习笔记]最小割树（Gomory-Hu Tree）
 	\url{http://www.cnblogs.com/coder-Uranus/p/9771919.html}
 }。
-
-\subsection{Gusfield算法}
-\index{G!Gusfield Algorithm}
-
-\subsection{应用}
-\subsubsection{k小割}
-\subsubsection{最小割计数}

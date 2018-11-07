@@ -12,17 +12,21 @@ int read() {
     }
     return res;
 }
-const int size = 505;
+const int size = 155;
 namespace NetworkFlow {
     struct Edge {
         int to, nxt, f;
-    } E[3005];
-    int last[size], cnt = 1;
+    } E[6005];
+    int last[size], cnt;
     void addEdge(int u, int v, int f) {
         ++cnt;
         E[cnt].to = v, E[cnt].nxt = last[u],
         E[cnt].f = f;
         last[u] = cnt;
+    }
+    void clear(int siz) {
+        cnt = 1;
+        memset(last + 1, 0, sizeof(int) * siz);
     }
     int S, T, q[size], d[size], siz;
     bool BFS() {
@@ -84,16 +88,20 @@ namespace GHT {
     struct Edge {
         int to, nxt, w;
     } E[size * 2];
-    int last[size], cnt = 0;
+    int last[size], cnt;
+    void clear(int siz) {
+        cnt = 0;
+        memset(last + 1, 0, sizeof(int) * siz);
+    }
     void addEdge(int u, int v, int w) {
         ++cnt;
         E[cnt].to = v, E[cnt].nxt = last[u],
         E[cnt].w = w;
         last[u] = cnt;
     }
-    int p[size][9], d[size], k[size][9];
+    int p[size][8], d[size], k[size][8];
     void DFS(int u) {
-        for(int i = 1; i < 9; ++i) {
+        for(int i = 1; i < 8; ++i) {
             int pp = p[u][i - 1];
             p[u][i] = p[pp][i - 1];
             k[u][i] =
@@ -114,14 +122,14 @@ namespace GHT {
         if(d[u] < d[v])
             std::swap(u, v);
         int delta = d[u] - d[v];
-        for(int i = 0; i < 9; ++i)
+        for(int i = 0; i < 8; ++i)
             if(delta & (1 << i)) {
                 res = std::min(res, k[u][i]);
                 u = p[u][i];
             }
         if(u == v)
             return res;
-        for(int i = 8; i >= 0; --i)
+        for(int i = 7; i >= 0; --i)
             if(p[u][i] != p[v][i]) {
                 res = std::min(
                     res, std::min(k[u][i], k[v][i]));
@@ -151,12 +159,21 @@ void buildGHT(int n) {
     for(int i = 1; i <= n; ++i)
         A[i] = i;
     buildGHTImpl(1, n);
-    srand(19260817);
-    GHT::DFS(rand() % n + 1);
+    int rt = rand() % n + 1;
+    GHT::d[rt] = GHT::p[rt][0] = 0;
+    GHT::DFS(rt);
 }
-int main() {
+struct Query {
+    int id, lim, sum;
+    bool operator<(const Query& rhs) const {
+        return lim < rhs.lim;
+    }
+} Q[35];
+int ans[35];
+void foo() {
     int n = read();
     int m = read();
+    NetworkFlow::clear(n);
     while(m--) {
         int u = read();
         int v = read();
@@ -164,9 +181,42 @@ int main() {
         NetworkFlow::addEdge(u, v, w);
         NetworkFlow::addEdge(v, u, w);
     }
+    GHT::clear(n);
     buildGHT(n);
     int q = read();
-    while(q--)
-        printf("%d\n", GHT::query(read(), read()));
+    for(int i = 0; i < q; ++i) {
+        Q[i].id = i;
+        Q[i].lim = read();
+        Q[i].sum = 0;
+    }
+    std::sort(Q, Q + q);
+    Q[q].lim = 2147483647;
+    for(int i = 1; i <= n; ++i)
+        for(int j = i + 1; j <= n; ++j) {
+            int val = GHT::query(i, j);
+            int l = 0, r = q, pos = q;
+            while(l <= r) {
+                int m = (l + r) >> 1;
+                if(val <= Q[m].lim)
+                    pos = m, r = m - 1;
+                else
+                    l = m + 1;
+            }
+            ++Q[pos].sum;
+        }
+    ans[Q[0].id] = Q[0].sum;
+    for(int i = 1; i < q; ++i) {
+        Q[i].sum += Q[i - 1].sum;
+        ans[Q[i].id] = Q[i].sum;
+    }
+    for(int i = 0; i < q; ++i)
+        printf("%d\n", ans[i]);
+    puts("");
+}
+int main() {
+    srand(19260817);
+    int t = read();
+    while(t--)
+        foo();
     return 0;
 }

@@ -93,6 +93,7 @@ int main() {
                         printf("%d %d\n", i, v);
                 }
             }
+        puts("");
     }
     return 0;
 }
