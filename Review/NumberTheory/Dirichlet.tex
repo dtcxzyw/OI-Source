@@ -5,7 +5,7 @@
 \begin{displaymath}
 	(f*g)(n)=\sum_{d|n}{f(d)g(\frac{n}{d})}=\sum_{ab=n}{f(a)g(b)}
 \end{displaymath}
-狄利克雷卷积的乘法单位元为元函数$\epsilon$。
+由积性函数集合与狄利克雷卷积组成的群的乘法单位元为元函数$\epsilon$。
 
 狄利克雷卷积有如下性质：
 \begin{eqnarray*}
@@ -16,7 +16,7 @@
 \end{eqnarray*}
 \subsection{狄利克雷逆}
 \index{D!Dirichlet Inverse}
-已知数论函数$f$，求$g=f^{-1}$。
+已知数论函数$f$，求$g=f^{-1}$，满足$f*g=\epsilon$。
 \begin{itemize}
 	\item 当$n=1$时，有$(f*g)(1)=f(1)g(1)=\epsilon(1)=1$，
 	      解得$g(1)=\frac{1}{f(1)}$。
@@ -32,7 +32,7 @@
 \begin{property}
 	若数论函数$f,g$为积性函数，则$(f*g)^{-1}=f^{-1}*g^{-1}$。
 \end{property}
-\begin{property}
+\begin{property}\label{CMFP}
 	积性函数$f$为完全积性函数当且仅当$f^{-1}(n)=\mu(n)f(n)$。
 \end{property}
 证明：\begin{eqnarray*}
@@ -46,7 +46,8 @@
 \begin{itemize}
 	\item $1*\mu=\epsilon$\\
 	      参见定理~\ref{MobiusT}的证明。
-	\item $id^\alpha*(\mu\cdot id^\alpha)=\epsilon$
+	\item $id^\alpha*(\mu\cdot id^\alpha)=\epsilon$\\
+	      根据性质~\ref{CMFP}可证明。
 	\item $\displaystyle \varphi*(\sum_{d|n}{\mu(d)d})=\epsilon$\\
 	      由定理~\ref{PhiT}可得$id=\varphi*1$，两边同时乘上$\mu$
 	      可得$id*\mu=\varphi$，所以$\varphi^{-1}=id^{-1}*\mu^{-1}=id^{-1}*1$。
@@ -68,34 +69,42 @@
 莫比乌斯反演可表示为若$g=f*1$则$f=\mu*g$。
 证明：将$g=f*1$两边同时乘上$\mu$即可。
 证明源自Wikipedia-EN\footnote{Möbius inversion formula - Wikipedia\\
-\url{https://en.wikipedia.org/wiki/Mobius_inversion}}。
+	\url{https://en.wikipedia.org/wiki/Mobius_inversion}}。
 \subsection{常见技巧}
 \begin{itemize}
 	\item
-	对于数论函数$g,f$，
-	\begin{displaymath}
-		g(n)=\sum_{n|d}{f(d)}\Rightarrow
-		f(n)=\sum_{n|d}{\mu(d)g(\frac{d}{n})}
-	\end{displaymath}
+	      对于数论函数$g,f$，
+	      \begin{displaymath}
+		      g(n)=\sum_{n|d}{f(d)}\Rightarrow
+		      f(n)=\sum_{n|d}{\mu(d)g(\frac{d}{n})}
+	      \end{displaymath}
 	\item
-	若$\displaystyle n=\prod_{i=1}^m{{p_i}^{c_i}},g(n)=\sum_{d|n}{f(d)}$
-	且$f$为积性函数，将$g$看做$f*1$可知$g$也是积性函数，则$g(n)=\prod_{i=1}^m
-	{\sum_{j=0}^{c_i}{f(p_i^j)}}$。
+	      若$\displaystyle n=\prod_{i=1}^m{{p_i}^{c_i}},g(n)=\sum_{d|n}{f(d)}$
+	      且$f$为积性函数，将$g$看做$f*1$可知$g$也是积性函数，则$g(n)=\prod_{i=1}^m
+		      {\sum_{j=0}^{c_i}{f(p_i^j)}}$。
 	\item 交换内外求和顺序。
 	\item 枚举倍数，最大公约数等有共性的值并换元。
-	\item \begin{eqnarray*}
-		\sum_{i=1}^n{\sum_{d|i}{f(d)}}&=&
-		\sum_{\frac{i}{d}=1}^n{\sum_{d=1}^{[\frac{n}{\frac{i}{d}}]}{f(d)}}\\
-		&=&\sum_{t=1}^n{\sum_{d=1}^{[\frac{n}{t}]}{f(d)}}
-	\end{eqnarray*}
-	遇到前缀和后递归计算即可，线性筛预处理前$n^\frac{2}{3}$个值，时间复杂度$O(n^\frac{2}{3})$。
+	\item 在化简前缀和函数时可能会遇到如下式子：
+		\begin{eqnarray*}
+			ans(n)&=&\sum_{i=1}^n{f(i)}\\
+			&=&A(n)+B(n)\sum_{i=1}^n{\sum_{d|i}{f(d)}}\\
+			&=&A(n)+B(n)\sum_{\frac{i}{d}=1}^n{\sum_{d=1}^{[\frac{n}{\frac{i}{d}}]}{f(d)}}\\
+			&=&A(n)+B(n)\sum_{t=1}^n{\sum_{d=1}^{[\frac{n}{t}]}{f(d)}}\\
+			&=&A(n)+B(n)\sum_{t=1}^n{ans([\frac{n}{t}])}
+	      \end{eqnarray*}
+		线性筛预处理一部分前缀和（一般预处理规模为$n^{2/3}$，最终时间复杂度
+		$O(n^{2/3})$，大规模前缀和使用根号分块法递归计算。
+
+		注意这里可以使用存储Trick来Cache计算结果（多次询问使用map或时间戳数组
+		清零，下面只讨论单次询问的情况）。设预处理了前$k$个前缀和，其中$k\geq \sqrt{n}$。
+		那么$[\frac{n}{t}]>k$的值不超过$\sqrt{n}$个，并且$t$不同对应的值也不同。所以
+		可以以$t$为下标把计算结果存入另一个数组中。
 	\item 同时除以最大公约数使其互质，然后套用$\varphi$。
 	\item $\displaystyle [gcd(i,j)=1]=\sum_{k|gcd(i,j)}\mu(k)=
-	\sum_{k|i,k|j}\mu(k)$
+		      \sum_{k|i,k|j}\mu(k)$
 	\item $\displaystyle \sum_{i=1}^n{i}=
-	\sum_{i=1}^n{\sum_{d|i}\varphi(d)}=
-	\sum_{d=1}^n{\varphi(d)\cdot[\frac{n}{d}]}$
+		      \sum_{i=1}^n{\sum_{d|i}\varphi(d)}=
+		      \sum_{d=1}^n{\varphi(d)\cdot[\frac{n}{d}]}$
 	\item $(id\cdot\varphi)*id=id^2$
 \end{itemize}
 更多技巧待补充。
-\index{*TODO!数论解题技巧}
