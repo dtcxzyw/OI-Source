@@ -46,17 +46,17 @@ Nathan Fine的证明：
 \subsection{ExLucas}
 对于模数为合数的情况，将$p$质因数分解，即
 $\displaystyle p=\sum_{i=1}^k{p_i^{c_i}}$。
-然后用求出$\binomial{n}{m} \bmod{p_i^{c_i}}$的值，最后CRT合并即可。
+然后用求出$\binomial{n}{m} \bmod{p_i^{c_i}}$的值，最后使用CRT合并。
 
-首先将求组合数转换为求阶乘，对于$n!$提出p的倍数，
+首先将求组合数转换为求阶乘，但要从$n!$提出p的倍数最后处理，
 即\begin{displaymath}
 	n!=\prod_{i=1}^n{i^{[(n,i)=1]}}\cdot p^{[\frac{n}{p}]}\cdot
 	\prod_{i=1}^{[\frac{n}{p}]}i
 \end{displaymath}
 \begin{itemize}
-	\item 第一部分：前$[\frac{n}{p_i^{c_i}}]$块的答案相等，计算一块后快速幂即可，
-	      最后不完整的一块暴力计算。
-	\item 第二部分：由于分子分母都有因子$p$，单独拆出来算。
+	\item 第一部分：前$[\frac{n}{p_i^{c_i}}]$块的答案相等，计算整块后快速幂，
+	      末尾不完整的块暴力计算。
+	\item 第二部分：由于组合数中分子分母都有因子$p$，单独拆出来算。
 
 	统计次数代码：
 	\begin{lstlisting}

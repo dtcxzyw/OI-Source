@@ -2,7 +2,7 @@
 \index{P!Permutation Groups}
 {\bfseries 置换}是从$[1,n]$到$[1,n]$的一一映射。
 
-置换可以分解为多个循环，计算循环相关数据的方法为：
+一个置换可以分解为多个内部循环，计算循环相关信息的方法为：
 
 枚举每一个节点
 \begin{enumerate}
@@ -12,7 +12,7 @@
 	\item 这个环就是一个循环。
 \end{enumerate}
 \begin{theorem}
-	若对于一个置换有$n$个循环，长度分别为$l_1,l_2,\cdots,l_n$，
+	若一个置换内部有$n$个循环，长度分别为$l_1,l_2,\cdots,l_n$，
 	则该置换的循环节长度为$lcm(l_1,l_2,\cdots,l_n)$。
 \end{theorem}
 \paragraph{不动点}
@@ -60,13 +60,13 @@ Wikipedia-EN\footnote{
 \paragraph{正方形旋转}
 n*n正方形染色：
 \begin{itemize}
-	\item 旋转$0^\circ$，循环节数$n^2$。
-	\item 旋转$90^\circ/270^\circ$，若$n$为偶数，循环节数$\frac{n^2}{4}$；
-	      若$n$为奇数，循环节数$\frac{n^2-1}{4}+1$。
-	\item 旋转$180^\circ$，若$n$为偶数，循环节数$\frac{n^2}{2}$；若$n$为奇数，循环
-	      节数$\frac{n^2-1}{2}+1$。
+	\item 旋转$0^\circ$，循环数$n^2$。
+	\item 旋转$90^\circ/270^\circ$，若$n$为偶数，循环数$\frac{n^2}{4}$；
+	      若$n$为奇数，循环数$\frac{n^2-1}{4}+1$。
+	\item 旋转$180^\circ$，若$n$为偶数，循环数$\frac{n^2}{2}$；若$n$为奇数，循环数
+		  $\frac{n^2-1}{2}+1$。
 \end{itemize}
-奇偶循环节数不同的原因是因为$n$为奇数时中间的点自成一个循环节。
+奇偶循环数不同的原因是因为当$n$为奇数时中间的点自成一个循环。
 \paragraph{正方形反射(对称)}
 \begin{tabular}{|c|c|c|}
 	\hline
@@ -78,27 +78,28 @@ n*n正方形染色：
 	\hline
 \end{tabular}
 \paragraph{环形旋转}
-对于一个有$n$个点的环，旋转$i$个点的置换的循环节数为$(n,i)$。
+对于一个有$n$个点的环，旋转$i$个点的置换的循环数为$(n,i)$。
 
-证明：每个循环节的长度为$\frac{[n,i]}{i}=\frac{n}{(n,i)}$，循环节个数为$(n,i)$。
+证明：每个循环的长度为$\frac{[n,i]}{i}=\frac{n}{(n,i)}$，循环数为$(n,i)$。
 \paragraph{环形对称翻转}
 \begin{itemize}
-	\item $n$为奇数：只有n种置换（以一点一边中点为对称轴），循环节数为
+	\item $n$为奇数：只有n种置换（以一点一边中点为对称轴），循环数为
 	      $[\frac{n}{2}]+1$。
-	\item $n$为偶数：\begin{itemize}
-		      \item 边边中点：$\frac{n}{2}$种，循环节数为$\frac{n}{2}$。
-		      \item 点点：$\frac{n}{2}$种，循环节数为$\frac{n}{2}+1$。
+	\item $n$为偶数，按照对称轴分类：
+		  \begin{itemize}
+		      \item 边边中点：$\frac{n}{2}$种，循环数为$\frac{n}{2}$。
+		      \item 点点：$\frac{n}{2}$种，循环数为$\frac{n}{2}+1$。
 	      \end{itemize}
 \end{itemize}
 \paragraph{正方体旋转}
 注意是{\bfseries 棱边}置换。
 \begin{itemize}
-	\item 自身不变，置换1种，循环节12个，长度1；
+	\item 自身不变，置换1种，循环12个，长度1；
 	\item 以对面中心为轴，旋转角为$90^\circ,180^\circ,270^\circ$，
 	      轴有3种选择，共9种置换。
 	      \begin{itemize}
-		      \item $90^\circ/270^\circ$：循环节3个，长度4。
-		      \item $180^\circ$：循环节6个，长度2。
+		      \item $90^\circ/270^\circ$：循环3个，长度4。
+		      \item $180^\circ$：循环6个，长度2。
 	      \end{itemize}
 	\item 以对边中点为轴，旋转角为$180^\circ$，有6对边，置换数为6，
 	      有5个长度为2的循环和2个长度为1的循环。
@@ -109,10 +110,13 @@ n*n正方形染色：
 
 例题：UVA10601 Cubes
 
-暴力（矩阵变换+枚举排列）：
+暴力（矩阵变换+枚举排列检查不动点）：
 \lstinputlisting{Source/Source/Groop/UVA10601.cpp}
 
-正解（统计每种颜色的数量，然后分类讨论）：
+正解：
+首先统计每种颜色的数量，然后分类讨论，每种情况的贡献为置换数*循环方案数。
+若一种置换的所有循环长度相等，则使用排列组合知识求解（solve函数）；否则枚举
+短循环的颜色，令剩余循环长度相等，对剩余颜色和循环调用solve求解。
 \lstinputlisting{Source/Source/Groop/UVA10601X.cpp}
 
 \paragraph{$n$较小}

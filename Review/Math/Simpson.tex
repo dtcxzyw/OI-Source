@@ -11,7 +11,7 @@ Simpson积分是用二次函数来拟合等距三点$(l,f(l)),(m,f(m)),(r,f(r))\
 
 \subsection{自适应Simpson}
 当Simpson未能精确拟合函数值时，将其区间二分拟合。判断拟合程度
-可以与子区间积分之和相比较。
+可以将当前积分与子区间积分之和相比较。
 
 \begin{lstlisting}
 typedef double FT;

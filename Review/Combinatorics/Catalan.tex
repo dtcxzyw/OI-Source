@@ -11,7 +11,6 @@ Catalan数（记为$C_n$）满足如下关系：
 \begin{eqnarray}
 	C_0&=&C_1=1\\
 	C_{n+1}&=&\sum_{i=0}^n{C_iC_{n-i}}\label{CT2}\\
-	&=&\sum_{i=1}^n{C_iC_{n+1-i}}\label{CT3}\\
 	C_n&=&\frac{4n-2}{n+1}C_{n-1}\\
 	C_n&=&\binomial{2n}{n}-\binomial{2n}{n+1}=\frac{1}{n+1}\binomial{2n}{n}\\
 	C_n&=&\prod_{k=2}^n\frac{n+k}{k}
@@ -24,6 +23,10 @@ Catalan数（记为$C_n$）满足如下关系：
 \begin{displaymath}
 	C_n\sim\frac{4^n}{\sqrt{\pi} n^\frac{3}{2}}
 \end{displaymath}
+
+\begin{theorem}
+	$C_n$为奇数当且仅当$n=2^k-1$。
+\end{theorem}
 \subsection{常见应用}
 \subsubsection{括号序列，出栈序列，网格行走}
 \paragraph{括号序列} 给定$2n$个位置填上左右括号使括号匹配（对于每一个位置之前的
@@ -42,24 +45,21 @@ $C_{n_1}C_{n_2}$。
 \paragraph{有$n$个节点的二叉树}
 通过等式~\ref{CT2}理解：枚举左右子树大小，满足左右子树节点数为$n-1$。
 \paragraph{有$n+1$个叶子节点的满二叉树}
-通过等式~\ref{CT3}理解：枚举左右子树叶子节点数，满足其和为$n+1$。
+满二叉树去掉叶子节点后是一颗二叉树，并且在满二叉树中叶子节点比非叶子节点多一个。
 \subsubsection{阶梯填充}
 用$n$个长方形填充$n*n$的阶梯的方案数为$C_n$。
 
-不严格证明：填充一个以直角顶点与阶梯顶点为对顶点的长方形，使其分为大小为
-$n_1*n_1,n_2*n_2$的两个小阶梯，满足$n_1+n_2=n-1$，分别分配$n_1,n_2$
-个长方形的份额，就成为子问题了。该分析满足等式\ref{CT2}。
+证明：填充一个以直角顶点与某阶梯顶点为对顶点的长方形，使其分为大小为
+$n_1*n_1,n_2*n_2$的两个小阶梯，满足$n_1+n_2=n-1$。按大小把长方形数量份额分配给两个子问题
+（$n*n$的阶梯至少需要$n$个长方形，所以必须严格按照大小比例分配）。该分析满足等式\ref{CT2}。
 \subsubsection{凸包分割}
 将$n+2$个顶点的凸包分为三角形的方案数为$C_n$。
-
-猜想：最终将分为$n$个三角形。
 
 证明留坑待补。
 \subsubsection{圆上点连线}
 将圆上的$2n$个点两两配对连线，所连$n$条线段不相交的方案数为$C_n$。
 
 证明留坑待补。
-
 \index{*TODO!Catalan应用证明}
 上述内容参考了Wikipedia-EN\footnote{Catalan number - Wikipedia
 	\url{https://en.wikipedia.org/wiki/Catalan\_number}}。

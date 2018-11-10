@@ -30,7 +30,7 @@
     $E[aX]=aE[X]$
 \end{theorem}
 \begin{theorem}
-    若随机变量X,Y独立且期望有定义时，$E[XY]=E[X]E[Y]$。
+    若随机变量X,Y独立且期望$E[XY]$有定义时，$E[XY]=E[X]E[Y]$。
 \end{theorem}
 有一个十分常用的优化：
 \begin{displaymath}
@@ -41,7 +41,7 @@
 \index{J!Jensen's Inequality}
 \begin{theorem}[Jensen's Inequality]
     若函数$f(x)$为凸函数（即对于任意$x,y$和$\lambda\in [0,1]$，有
-    $f(\lambda x+(1-\lambda)y)\leq\lambda f(x)+(1-\lambda)f(y)$）
+    $f(\lambda x+(1-\lambda)y)\geq\lambda f(x)+(1-\lambda)f(y)$）
     ，则$E[f(X)]\geq f(E[X])$。
 \end{theorem}
 \begin{theorem}
@@ -78,8 +78,8 @@ $Var[X]$表示随机变量$X$的方差。
 \end{theorem}
 \section{高斯消元求期望}
 对于一般的图，可以列出每个点期望之间的线性关系，构造出
-方程组后高斯消元即可。注意矩阵是否为稀疏矩阵，若为稀疏矩阵
+方程组后高斯消元求解。注意要判断矩阵是否为稀疏矩阵，若为稀疏矩阵，继续研究其特殊性质，
 一般可以不断地递推求解一元一次方程得到所有解。
 
-但是当碰到{\bfseries 树}时，一般的套路是将方程表达为$dp[u]=k\cdot dp[p]+b$
-的形式，自底向上推到根后再从根往下推即可。
+求{\bfseries 树}上期望时，一般的套路是将方程表达为$dp[u]=k\cdot dp[p]+b$
+的形式，自底向上把方程推到根后再从根往下推数值解。

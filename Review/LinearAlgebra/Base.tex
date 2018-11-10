@@ -55,17 +55,17 @@ void cook() {
     for(int i=bitSize;i>=0;--i)
         for(int j=i-1;j>=0;--j)
             if(b[i]&(1<<j))b[i]^=b[j];
-    for(int i=bitSize;i>=0;--i)
+    for(int i=0;i<=bitSize;++i)
         if(b[i])
             vb[vcnt++]=b[i];
 }
 \end{lstlisting}
-计算第k小时扫描一遍k即可。
+计算第k小时扫描一遍k，按k的比特位异或对应的基向量。
 \begin{lstlisting}
 int kth(int k) {
     if(k>(1<<vcnt))return -1;
     int res=0;
-    for(int i=0;i<cnt;++i)
+    for(int i=0;i<vcnt;++i)
         if(k&(1<<i))
             res^=vb[i];
     return res;

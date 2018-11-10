@@ -5,7 +5,7 @@
 \subsection{牛顿迭代法}
 已知函数$G(z)$，求函数$F(z) \bmod{z^n}$满足$G(F(z))\equiv 0 \pmod{z^n}$。
 
-令$n=2^t$，若$n$不为2的幂，补齐后截断即可。
+令$n=2^t$，若$n$不为2的幂，补0到2的幂，输出时截断。
 
 当$t=0$时，简单地令$F(z)$的常数项为0。
 
@@ -104,7 +104,7 @@
 \begin{displaymath}
     e^{F(z)i}=\cos F(z)+\sin F(z) i
 \end{displaymath}
-在复数域上做多项式exp即可。
+在复数域上做多项式exp。
 \subsection{进制转换}
 将$A$进制数转换为$B$进制数。
 
@@ -126,7 +126,7 @@ $B$进制下的值。
 求$A(z_0),A(z_1),\cdots,A(z_{n-1})$。
 
 将要求的$x$分为两半，那么左右两半对应的插值多项式的次数为$[\frac{n}{2}]$，
-只要求出这两个插值多项式后递归计算即可。
+求出这两个插值多项式后递归计算。
 
 对于左半部分，考虑多项式$\displaystyle B(z)=\prod_{i=0}^
 {[\frac{n}{2}]}(z-z_i)$，满足$deg(B)=[\frac{n}{2}]$。
@@ -141,7 +141,7 @@ $A(z)=R(z)$。那么可以两边同时模$B(z)$，达到次数减半的效果。
 
 对待插值点分治，假设求出了左半部分插值多项式$A_{left}(z)$，构造出左半部分的$B(z)$
 使其满足$A(z)=A_{left}(z)+A_{right}(z)B(z)$，那么左半部分的点都将在$A(z)$上。
-仅考虑右半部分即可：
+仅考虑右半部分：
 \begin{displaymath}
     \forall(x_i,y_i)\in P_{right},y_i=A_{left}(x_i)+A_{right}(x_i)B(x_i)
 \end{displaymath}
@@ -158,7 +158,7 @@ $A(z)=R(z)$。那么可以两边同时模$B(z)$，达到次数减半的效果。
 
 \begin{itemize}
     \item $p\leq 1e6$：线性预处理逆元+lucas；
-    \item $n<p$：可知$n!$与$p$互质，求$n!$即可。
+    \item $n<p$：可知$n!$与$p$互质，因此只要求$n!$。
     可构造多项式：
     \begin{eqnarray*}
         Q(x)&=&\sum_{i=1}^{\sqrt{n}}{(x+i)}\\
@@ -166,7 +166,7 @@ $A(z)=R(z)$。那么可以两边同时模$B(z)$，达到次数减半的效果。
     \end{eqnarray*}
     卷积出$Q(x)$后在$i\sqrt{n}=0,\sqrt{n},\cdots,(\sqrt{n}-1)\sqrt{n}$上
     多点求值即可，时间复杂度$O(\sqrt{n}\lg^2 n)$。
-    \item $n\geq p$：结合上述两种做法即可，易知第二种做法最多只执行一次。
+    \item $n\geq p$：结合上述两种做法，易知第二种做法最多只执行一次。
 \end{itemize}
 
 以上内容参考了picks

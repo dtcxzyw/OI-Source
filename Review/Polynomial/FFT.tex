@@ -117,7 +117,7 @@ FFT采用分治策略，假设$n$是2的幂（不足补0），其步骤如下：
 以上内容来自算法导论\cite{ITA3}第30章 多项式与快速傅里叶变换。
 \subsection{迭代FFT实现}
 \subsubsection{单位复数根预处理}
-一般可以确定FFT所需最大规模，在所有FFT前预处理即可。
+一般可以确定FFT所需最大规模，因此可以在FFT前预处理。
 \begin{lstlisting}
 typedef double FT;
 typedef std::complex<FT> Complex;
@@ -147,7 +147,7 @@ void initRev(int k) {
 }
 \end{lstlisting}
 \subsubsection{在线位逆序置换}
-在分治FFT时，需要不同规模的位逆序置换，预处理到数组上显然不适用，这里使用时间复杂度
+在分治FFT时，需要不同规模的位逆序置换，预处理置换数组不太适用。这里介绍的是时间复杂度
 $O(n)$，空间复杂度$O(1)$的在线算法。
 \begin{lstlisting}
 void rev(int* A,int n) {

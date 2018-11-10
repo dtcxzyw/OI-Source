@@ -11,9 +11,9 @@ BSGS法（Baby Step Giant Step）用来求解类似于$a^x\equiv b\pmod{P}$的�
 
 \begin{enumerate}
     \item 若$a$为$P$的倍数，则特判$b$是否为$0$，算法结束；
-    \item 令$m=\lceil\sqrt{P}\rceil,x=im-j$，移项得$x^im\equiv bx^j\pmod{P}$；
-    \item 枚举$bx^j$的值，按$j$从小到大覆盖存入HashTable；
-    \item 枚举$(x^m)^i$的值，按$i$从小到大在HashTable中查询，存在则返回$im-j$；
+    \item 令$m=\lceil\sqrt{P}\rceil,x=im-j$，移项得$a^{im}\equiv ba^j\pmod{P}$；
+    \item 枚举$ba^j$的值，按$j$从小到大{\bfseries 覆盖}存入HashTable；
+    \item 枚举$(a^m)^i$的值，按$i$从小到大在HashTable中查询，存在则返回$im-j$；
     \item 返回无解。
 \end{enumerate}
 
@@ -25,12 +25,12 @@ ExBSGS可解决$a,P$不互质的问题。主要思路是将原方程化为普通
     \item 将$A,B$初始化为$1,0$；
     \item 令$d=(a,P)$,
     \begin{itemize}
-        \item 若$d\mid b$，则提出一个$d$，即$A*=a/d,b/=d,P/=d,++B$；
+        \item 若$d\mid b$，则提出一个因子$d$，即$A*=a/d,b/=d,P/=d,++B$；
         \item 若$d\nmid b$，则特判$b$是否为$A$，$b=A$则$x=B$，$b\neq A$则无解；
     \end{itemize}
     \item 重复第2步直至$d=1$。
 \end{enumerate}
-令$x=im-j+B$然后按照普通BSGS做即可，注意在BSGS前要暴力检查$x\in[0,B)$的解。
+令$x=im-j+B$转化为普通BSGS，{\bfseries 注意在BSGS前要暴力检查$x\in[0,B)$是否可行}。
 
 代码如下：
 \lstinputlisting{Source/Templates/exBSGS.cpp}
