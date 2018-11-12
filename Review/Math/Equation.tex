@@ -1,18 +1,19 @@
 \section{常见数学公式与应用}
 \subsection{常见公式}
 \begin{eqnarray*}
-	\textrm{平方和}&~\sum_{k=1}^n{k^2}&=\frac{n(n+1)(2n+1)}{6}\\
-	\textrm{立方和}&~\sum_{k=1}^n{k^3}&=\frac{n^2(n+1)^2}{4}\\
+	\textrm{平方和}&~\displaystyle \sum_{k=1}^n{k^2}&=\frac{n(n+1)(2n+1)}{6}\\
+	\textrm{立方和}&~\displaystyle \sum_{k=1}^n{k^3}&=\frac{n^2(n+1)^2}{4}\\
 	\textrm{无穷递减几何级数}&~\forall |x|<1,\sum_{k=0}^\infty{x^k}
 	&=\frac{1}{1-x}\\
-	\textrm{调和级数}&~H_n=\sum_{k=1}^n{\frac{1}{k}}&=\ln n+\gamma+\varepsilon_n\\
-	\textrm{Leibniz formula for π}&~\sum_{k=0}^\infty{\frac{(-1)^k}{2k+1}}
+	\textrm{调和级数}&~H_n=\displaystyle \sum_{k=1}^n{\frac{1}{k}}&
+	=\ln n+\gamma+\varepsilon_n\\
+	\textrm{Leibniz formula for}~\pi&~\displaystyle \sum_{k=0}^\infty{\frac{(-1)^k}{2k+1}}
 	&=\arctan 1=\frac{\pi}{4}\\
-	\textrm{Wallis' product}&~\prod_{k=1}^\infty{\frac{2k}{2k-1}
+	\textrm{Wallis' product}&~\displaystyle \prod_{k=1}^\infty{\frac{2k}{2k-1}
 		\cdot\frac{2k}{2k+1}}&=\frac{\pi}{2}\\
-	\textrm{Basel problem}&~\zeta(2)=\sum_{k=1}^\infty{\frac{1}{k^2}}
+	\textrm{Basel problem}&~\zeta(2)=\displaystyle \sum_{k=1}^\infty{\frac{1}{k^2}}
 	&=\frac{\pi^2}{6}\\
-	\textrm{素数倒数和}&~\sum_{p\in P,p\leq n}{\frac{1}{p}}&=
+	\textrm{素数倒数和}&~\displaystyle \sum_{p\in P,p\leq n}{\frac{1}{p}}&=
 	\ln \ln x+M+O(\frac{1}{\ln x})，
 	M\approx 0.26149721\index{M!Meissel–Mertens Constant}
 \end{eqnarray*}
@@ -38,7 +39,7 @@ $\varepsilon_n\approx\frac{1}{2n}$，
 \end{displaymath}
 
 当$x_i=\frac{\frac{l}{2}}{i}$时等号恒成立，此时
-伸长量$\displaystyle L=\sum_{i=1}^n{x_i}=\frac{l}{2}H_n$。
+伸长量$\displaystyle L=\sum_{i=1}^n{x_i}=\frac{l}{2}H_n\cdot l$。
 
 注意在计算调和级数时，小规模用暴力，大规模用$O(1)$近似。
 
@@ -58,18 +59,11 @@ $\varepsilon_n\approx\frac{1}{2n}$，
     \sum_{k=1}^n{\frac{1}{2k-1}}=H_{2n-1}-\frac{1}{2}H_{n-1}$。
 \end{itemize}
 
+证明留坑待补。
+\index{*TODO!吉普车问题证明}
+
 该问题源自Wikipedia-EN\footnote{Jeep problem - Wikipedia
 	\url{https://en.wikipedia.org/wiki/Jeep\_problem}}。
-\subsubsection{蚂蚁在橡胶绳上}
-
-一只蚂蚁在$1km$长的橡胶绳上以$1cm/s$的速度爬行，同时绳子以$1km/s$的速度拉伸，
-蚂蚁是否可以到达绳子的另一端？
-
-答案为是，可用离散方法或积分方法解决，时间$T=\frac{c}{v}(e^{\frac{v}{\alpha}}-1)$。
-$c$为初始绳长，$v$为伸长速度，$\alpha$为蚂蚁运动速度。
-
-该问题源自Wikipedia-EN\footnote{Ant on a rubber rope - Wikipedia
-	\url{https://en.wikipedia.org/wiki/Ant\_on\_a\_rubber\_rope}}。
 
 以上内容参考了Wikipedia-EN\footnote{Harmonic series (mathematics) - Wikipedia
 	\url{https://en.wikipedia.org/wiki/Harmonic\_series\_(mathematics)}}。

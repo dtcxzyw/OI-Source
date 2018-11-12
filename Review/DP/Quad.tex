@@ -12,7 +12,7 @@
 对于$a\leq b\leq c\leq d$，有$f(a,d)+f(b,c)\geq f(a,c)+f(b,d)$。
 
 \begin{theorem}
-    若$w$函数满足上述两个性质，$dp$函数也满足四边形不等式性质。
+    若$w$函数满足上述两个性质，则$dp$函数满足四边形不等式性质。
 \end{theorem}
 
 \begin{theorem}
@@ -20,7 +20,7 @@
     $s(i,j)\leq s(i,j+1)\leq s(i+1,j+1)$。
 \end{theorem}
 
-那么可以缩小转移点的搜索范围：
+根据该定理可以缩小转移点的搜索范围：
 \begin{displaymath}
     dp[i][j]=min(dp[i][k]+dp[k+1][j])+w[i][j],s[i][j-1]\leq k \leq s[i+1][j]
 \end{displaymath}
