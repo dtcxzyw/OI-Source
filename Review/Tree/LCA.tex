@@ -95,9 +95,15 @@ int getLca(int u, int v) {
 \subsection{Tarjan}
 当查询离线时，可使用Tarjan算法。
 
+代码如下：
 \lstinputlisting[title=Tarjan]{Tree/Tarjan.cpp}
 
-原理与欧拉序+ST表法类似，当节点分别在两棵不同的子树时，若另一节点已处理完毕，
-他的祖先肯定是LCA（因为LCA处还没有遍历完，未合并到更高的祖先上去）。
+算法正确性证明：
+\begin{itemize}
+    \item 若询问的两个节点在一条从根节点出发的链上，则第二被访问的
+    节点为深度较深的节点，而深度较浅的节点的父亲仍然是自己；
+    \item 若询问的两个节点在LCA的左右子树上，则第二被访问的节点
+    被访问时，第一被访问节点的祖先已被置为LCA。
+\end{itemize}
 
 \paragraph{优化} 可以把find改为用队列实现，迭代更新父亲。

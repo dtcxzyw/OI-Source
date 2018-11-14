@@ -9,6 +9,12 @@
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage{ulem}
+\usepackage{minitoc}
+\setcounter{minitocdepth}{2}
+\setlength{\mtcindent}{24pt}
+\renewcommand{\mtcfont}{\small\rm}
+\renewcommand{\mtcSSfont}{\small\bf}
+\dominitoc[n]
 \lstset{
     columns=fixed,
     frame=none,
@@ -65,10 +71,12 @@
 当前共\pageref{LastPage}页，\input{../latex/charcnt}字。
 
 项目地址：\url{https://github.com/dtcxzyw/OI-Source}
+
 \shorttoc{简略目录}{0}
 \renewcommand\contentsname{目录}
 \tableofcontents
 \mainmatter
+\adjustmtc
 \include{GameTheory/GameTheory}
 \include{NetworkFlows/NetworkFlows}
 \include{DataStructure/DataStructure}

@@ -2,7 +2,7 @@
 以下方法只适用于静态树。
 \subsection{轻重链剖分}
 对于每个节点，选取其子树最大的儿子作为重儿子，其余节点为轻儿子。
-然后将连续的重儿子串成一条链（由DFS序体现），每条链上最浅的节点为链头，
+然后将连续的重儿子串成一条链（DFS序上连续），每条链上最浅的节点为链头，
 链内每个节点都指向链头方便跨越轻边跳跃到上一条链。
 
 \begin{lstlisting}
@@ -40,20 +40,20 @@ void buildChain(int u) {
 {\bfseries 注意调用buildChain前要先$top[1]=1$。}
 
 \begin{property}
-    剖分后的任意点到根经过的轻边与重链的数目为$O(\lg n)$级别。
+	剖分后的任意点到根经过的轻边与重链的数目为$O(\lg n)$级别。
 \end{property}
 证明：
 \begin{itemize}
-    \item 由于每个轻儿子的大小不超过父亲大小的一半，所以每次经过一次
-    轻边时，所在子树大小增加一半，所以最多经过$O(\lg n)$条轻边。
-    \item 重链是由轻边连接的，所以重链数=轻边数+1，因此经过重链数也是
-    $O(\lg n)$级别的。
+	\item 由于每个轻儿子的大小不超过父亲大小的一半，所以每次经过一次
+	      轻边时，所在子树大小增加一半，所以最多经过$O(\lg n)$条轻边。
+	\item 重链是由轻边连接的，所以重链数=轻边数+1，因此经过重链数也是
+	      $O(\lg n)$级别的。
 \end{itemize}
 
 \subsubsection{在链上统计中的应用}
 在线段树中需要保证操作链上的节点尽可能连续，
 使用轻重链剖分后的DFS序保证了经过重链数为$O(\lg n)$级别，
-搭配线段树可在$O(\lg^2 n)$内单次修改/查询。
+搭配线段树可在$O(\lg^2 n)$内单次链上修改/查询。
 
 模板与求LCA类似：
 \begin{lstlisting}
@@ -107,41 +107,41 @@ void apply(int u,int v) {
 
 血泪史：CF1009F Dominant Indices
 
-{\bfseries 要注意树退化成一条链的情况，对每个点$O(\textrm{最长链长})$扫一遍会退化为
-$O(n^2)$，考虑同时继承重儿子的答案，以次长链长为更新长度扫描更新答案}
+	{\bfseries 要注意树退化成一条链的情况，对每个点$O(\textrm{最长链长})$扫一遍会退化为
+		$O(n^2)$，考虑同时继承重儿子的答案，以次长链长为更新长度扫描更新答案}
 
 \lstinputlisting{Source/Source/CBD/CF1009F.cpp}
 
 \subsubsection{快速求k级祖先}
 \paragraph{预处理}
 \begin{enumerate}
-    \item 使用树上倍增$O(n\lg n)$计算第$2^k$级祖先。
-    \item 对每条长链预处理长链顶的前``链长''个祖先，以及链上的所有点的编号。
+	\item 使用树上倍增$O(n\lg n)$计算第$2^k$级祖先。
+	\item 对每条长链预处理长链顶的前``链长''个祖先，以及链上的所有点的编号。
 \end{enumerate}
 
 \paragraph{查询}
 
 \begin{theorem}\label{DBCBD}
-    任意一点的$k$级祖先所在的链长一定大于等于$k$。
+	任意一点的$k$级祖先所在的链长一定大于等于$k$。
 \end{theorem}
 证明：
 \begin{itemize}
-    \item 若该点与$k$级祖先在同一长链，显然定理成立。
-    \item 否则，$k$级祖先所在长链的叶节点肯定不比自己浅，定理同样成立。
+	\item 若该点与$k$级祖先在同一长链，显然定理成立。
+	\item 否则，$k$级祖先所在长链的叶节点肯定不比自己浅，定理同样成立。
 \end{itemize}
 
 步骤如下：
 \begin{enumerate}
-    \item 用倍增数组跳$k$的最高位,设剩余层数为$k'$，有$k'<\frac{k}{2}$；
-    \item 由定理~\ref{DBCBD}得当前节点所在链的链长严格大于$k'$，利用链头
-    向上/向下的数组即可$O(1)$查询。
+	\item 用倍增数组跳$k$的最高位,设剩余层数为$k'$，有$k'<\frac{k}{2}$；
+	\item 由定理~\ref{DBCBD}得当前节点所在链的链长严格大于$k'$，利用链头
+	      向上/向下的数组即可$O(1)$查询。
 \end{enumerate}
 
 预处理$O(n\lg n)$，查询$O(1)$。
 
 长链剖分参考了MoebiusMeow的博客\footnote{长链剖分随想 - MoebiusMeow
-    \url{https://www.cnblogs.com/meowww/p/6403515.html}
+	\url{https://www.cnblogs.com/meowww/p/6403515.html}
 }
 与后缀自动机·张的文章\footnote{长链剖分之O(nlgn)-O(1)求k级祖先
-    \url{https://zhuanlan.zhihu.com/p/25984772}
+	\url{https://zhuanlan.zhihu.com/p/25984772}
 }。
