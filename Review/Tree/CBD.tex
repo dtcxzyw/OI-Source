@@ -98,24 +98,26 @@ void apply(int u,int v) {
 令同一条链上的点共享一块dp存储区，统计当前节点信息时，直接继承重儿子的信息，
 然后暴力合并轻儿子的链的信息。
 
-复杂度证明：注意每条轻儿子所在的链合并到长链上的复杂度是$O(\textrm{链长})$，
-而父亲继承重儿子信息的复杂度为$O(1)$，所以最终复杂度为$O(n)$。
-
 为了能够让父亲$O(1)$继承重儿子的信息，按照重儿子优先的DFS序分配dp数组起始位置。
 此时父亲的dp起点恰好在重儿子dp起点的前一位，满足深度上的相对关系，信息可以$O(1)$继承。
 空间复杂度也为$O(n)$。
 
+复杂度证明：注意每个轻儿子（链头）子树信息合并到长链上的复杂度是$O(\textrm{轻儿子长链长})$，
+而链链不相交，因此总复杂度$O(n)$；而父亲继承重儿子信息的复杂度为$O(1)$，总复杂度$O(n)$。
+所以最终复杂度为$O(n)$。
+
 血泪史：CF1009F Dominant Indices
 
 	{\bfseries 要注意树退化成一条链的情况，对每个点$O(\textrm{最长链长})$扫一遍会退化为
-		$O(n^2)$，考虑同时继承重儿子的答案，以次长链长为更新长度扫描更新答案}
+        $O(n^2)$，考虑同时继承重儿子的答案，以次长链长为更新长度扫描更新答案。也就是说
+    重儿子信息必须$O(1)$处理。}
 
 \lstinputlisting{Source/Source/CBD/CF1009F.cpp}
 
 \subsubsection{快速求k级祖先}
 \paragraph{预处理}
 \begin{enumerate}
-	\item 使用树上倍增$O(n\lg n)$计算第$2^k$级祖先。
+	\item 使用树上倍增$O(n\lg n)$预处理第$2^k$级祖先。
 	\item 对每条长链预处理长链顶的前``链长''个祖先，以及链上的所有点的编号。
 \end{enumerate}
 
@@ -138,6 +140,8 @@ void apply(int u,int v) {
 \end{enumerate}
 
 预处理$O(n\lg n)$，查询$O(1)$。
+
+{\bfseries 注意取最高位的复杂度要为$O(1)$，参见~\ref{Bitwise}节。}
 
 长链剖分参考了MoebiusMeow的博客\footnote{长链剖分随想 - MoebiusMeow
 	\url{https://www.cnblogs.com/meowww/p/6403515.html}

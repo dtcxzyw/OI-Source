@@ -16,10 +16,10 @@ Purfer Sequence用来表示树的结构（注意这里的树{\bfseries 带标号
 \end{property}
 \subsection{恢复原树}
 \begin{enumerate}
-	\item 统计节点在Purfer Sequence在节点中出现的次数得到每个点的度数，记为$d[u]$；
-	\item 对于序列中的每一个数$v$，选取$d[u]=1$且标号最小的节点$u$，连接$(u,v)$，
-	      然后$--d[u],--d[v]$（实际上只需在平衡树上删除点$u$，$--d[v]$后检查是否要
-	      插入点$v$）；
+	\item 统计节点在Purfer Sequence中出现的次数得到每个点的度数，记为$d[u]$；
+	\item 对于序列中的每一个编号$v$，选取$d[u]=1$且标号最小的节点$u$，连接$(u,v)$，
+		  然后$--d[u],--d[v]$（实际上只需用平衡树维护度数为1的节点，
+		  在平衡树上删除点$u$，$--d[v]$后判断是否要插入点$v$）；
 	\item 将剩下两个$d[u]=1$的点连边。
 \end{enumerate}
 \subsection{计数应用}
