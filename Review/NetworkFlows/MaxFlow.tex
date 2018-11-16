@@ -60,6 +60,34 @@ Dinic的计算流程如下：
 		      \url{https://www.cnblogs.com/Lyush/p/3204099.html}}
 \end{itemize}
 
+\paragraph{板子}
+
+常规优化：
+\lstinputlisting{Source/Templates/DinicA.cpp}
+
+玄学优化（注意在随机数据下表现可能更差）：
+
+\begin{itemize}
+	\item 伸缩操作：首先按照边的容量从大到小排序，然后按照
+	$cap>=2^k,2^(k-1),\cdots,2^0$加边，每加一组边跑一次Dinic。
+	时间复杂度$O(VE\lg C)$。
+	\item 延迟加反向边：建图时仍然加正反向边，但是第一次Dinic
+	时避开反向边，第二次Dinic时才考虑反向边。
+	\item 不退流跑，一次性退流：BFS失败时才退流，若退流后仍然失败才退出迭代。
+\end{itemize}
+
+这些优化参见kczno1的博客\footnote{
+	论如何用dinic ac 最大流 加强版
+	\url{http://kczno1.blog.uoj.ac/blog/3375}}。
+
+参考代码：
+
+常规优化+伸缩操作+延迟加反向边（实践中还是这个比较好用）：
+\lstinputlisting{Source/Templates/DinicB.cpp}
+
+kczno1的最新做法-不退流跑，一次性退流：
+\lstinputlisting{Source/Templates/DinicC.cpp}
+
 \subsubsection{当Dinic遇上LCT}
 
 留坑待补。
@@ -71,8 +99,12 @@ Dinic的计算流程如下：
 \index{*TODO!ISAP算法}
 \subsection{HLPP算法}
 \index{H!Highest-label push–relabel\\ algorithm}
-留坑待补。
+
+HLPP算法使用``推送-重贴标签''方法，其时间复杂度为$O(V^2\sqrt{E})$。虽然时间复杂度
+比Dinic优，但由于HLPP算法上界较紧，在实践中往往跑不过Dinic。
+
 \index{*TODO!HLPP算法}
+
 \subsection{最大流与最小割}
 
 \index{M!Max-flow min-cut theorem}
