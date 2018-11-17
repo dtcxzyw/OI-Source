@@ -168,11 +168,11 @@
 # Advance
 - [ ] 带花树
 - [ ] 线段树分治
-- [ ] HLPP
+- [x] HLPP
 - [ ] min_25筛
 - [ ] Berlekamp-Massey
 - [ ] DC3
-- [ ] ISAP
+- [x] ISAP
 - [ ] IDA*
 - [x] DLX
 - [ ] 最小树型图
@@ -215,5 +215,8 @@
 - [ ] LCT维护子树信息和边权信息
 - [ ] 共价大爷游长沙技巧
 - [ ] FFT字符串通配
+# Compare
+- [ ] 最大流算法效率比较
+- [ ] 平衡树效率比较
 # Other
 - [ ] 使用Vim

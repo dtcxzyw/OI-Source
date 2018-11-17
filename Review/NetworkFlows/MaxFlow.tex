@@ -1,4 +1,6 @@
 \section{最大流}
+Dinic与ISAP属于Ford-Fulkerson方法中的SAP（Shortest Augment Path）系。
+而HLPP属于Push–Relabel算法。
 \subsection{Dinic算法}
 \index{D!Dinic}
 个人比较喜欢使用Dinic算法\sout{（因为我只会这个）}。
@@ -8,9 +10,6 @@ Dinic的计算流程如下：
 	\item BFS建分层图，若找不到增广路则退出；
 	\item DFS在分层图上找增广路并修改流量,重复步骤1。
 \end{enumerate}
-
-附上板子：
-\lstinputlisting[title=Dinic]{Source/Source/'Network Flows'/2764.cpp}
 
 时间复杂度证明：
 
@@ -60,10 +59,10 @@ Dinic的计算流程如下：
 		      \url{https://www.cnblogs.com/Lyush/p/3204099.html}}
 \end{itemize}
 
-\paragraph{板子}
+\subsubsection{板子}
 
 常规优化：
-\lstinputlisting{Source/Templates/DinicA.cpp}
+\lstinputlisting[title=DinicA]{Source/Templates/DinicA.cpp}
 
 玄学优化（注意在随机数据下表现可能更差）：
 
@@ -83,10 +82,10 @@ Dinic的计算流程如下：
 参考代码：
 
 常规优化+伸缩操作+延迟加反向边（实践中还是这个比较好用）：
-\lstinputlisting{Source/Templates/DinicB.cpp}
+\lstinputlisting[title=DinicB]{Source/Templates/DinicB.cpp}
 
 kczno1的最新做法-不退流跑，一次性退流：
-\lstinputlisting{Source/Templates/DinicC.cpp}
+\lstinputlisting[title=DinicC]{Source/Templates/DinicC.cpp}
 
 \subsubsection{当Dinic遇上LCT}
 
@@ -94,16 +93,99 @@ kczno1的最新做法-不退流跑，一次性退流：
 \index{*TODO!Dinic with LCT}
 
 \subsection{ISAP算法}
-\index{I!ISAP}
-留坑待补。
-\index{*TODO!ISAP算法}
+\index{I!Improved Shortest Augment Path}
+
+Dinic每次BFS计算分层图的过程为找最短增广路的过程。每次BFS
+重新计算层次编号$d$似乎有些浪费，因此ISAP在Dinic的基础上用
+DFS直接修改层次编号的方式来优化算法。ISAP的时间复杂度仍然为$O(V^2E)$。
+记数组$d[u]$为残存网络中点$u$到汇点的最短距离，为了编码方便让$d[T]=1$。
+
+算法步骤如下：
+\begin{itemize}
+	\item 迭代DFS增广，若找不到满足$d[u]=d[v]+1$的可增广边则说明此时的最短路标号
+	已经过时，为了让点$u$可增广，令$d[u]=min\{d[v]\}+1$。
+	\item 若$d[S]>|V|$则说明已不存在简单增广路径，退出迭代。
+\end{itemize}
+
+\subsubsection{优化}
+\begin{itemize}
+	\item 若数组$d$被初始化为0，则DFS需要$O(n^2)$的时间来初始化
+	数组$d$。可以在增广前从汇点开始BFS$O(n+m)$预处理数组$d$。
+	\item gap优化：维护每种层次编号的数量$gap[d]$，若$gap[d]=0$则说明
+	出现了断层，不存在新的增广路。此时简单地令$d[S]=n+1$结束算法。
+	\item 类似Dinic可以使用当前弧优化，{\bfseries 但在层次标号被修改后要重置链头}。
+	\item 层次标号的修改是连续的，每次增广完后$++d[u]$。
+	\item 流量用完后直接退出。
+\end{itemize}
+
+板子（代码似乎比DinicA还短而且跑得比DinicB还快）：
+\lstinputlisting[title=ISAP]{Source/Templates/ISAP.cpp}
+
+{\bfseries 注意$mf=0$时直接返回不要更新层次标号。}
+
+ISAP算法参考了permui的博客\footnote{ 最大流算法-ISAP - permui
+\url{https://www.cnblogs.com/owenyu/p/6852664.html}}。
+
 \subsection{HLPP算法}
 \index{H!Highest-label push–relabel\\ algorithm}
 
-HLPP算法使用``推送-重贴标签''方法，其时间复杂度为$O(V^2\sqrt{E})$。虽然时间复杂度
-比Dinic优，但由于HLPP算法上界较紧，在实践中往往跑不过Dinic。
+\sout{算法导论\cite{ITA3}~26.4节讲的推送-重贴标签算法是$O(V^3)$的。。。}
 
-\index{*TODO!HLPP算法}
+HLPP算法使用``推送-重贴标签''算法，其时间复杂度为$O(V^2\sqrt{E})$。虽然时间复杂度
+比Dinic优，但由于HLPP算法上界较紧，在实践中往往跑不过Dinic（加了优化后表现还行）。
+
+\subsubsection{推送-重贴标签算法}
+
+以水流类比网络流，每条边都是一根有流量限制的水管，允许每个点暂时存储一些多余的水，
+称为超额流。特别地，源汇点可以长期存储无限多的水。其它点需要伺机将自身的超额流推送
+出去，这里给每个节点再引入一个``高度''参数，规定流量只能往低处走。固定源点的高度为$V$。
+当某个节点高于源点时，它的超额流将退回给源点。{\bfseries 注意高度可以达到$2V-1$}
+
+该算法由两个基本操作组成：
+\begin{itemize}
+	\item ``推送''：一个节点把自己的超额流推送给高度比自己低1的节点（源点无高度差限制）。
+	\item ``重贴标签''：当一个节点无法推送完超额流时，将自身高度加到
+	连边有残存流量的最低邻接点的高度+1。
+\end{itemize}
+
+首先令S的出边满流，然后维护超额流节点队列，每次取出节点对其进行推送或重贴标签操作。
+直至不存在超额流节点。时间复杂度$O(V^2E)$。
+
+\subsubsection{前置重贴标签算法}
+
+每次重贴标签时将节点移至队首，可将时间复杂度优化至$O(V^3)$。
+
+参见算法导论\cite{ITA3}~第26.5节。
+
+\subsubsection{HLPP实现与优化}
+
+使用优先队列以高度为关键字维护超额流节点，每次选取最高标号的节点进行``推送-重贴标签''。
+
+优化：
+\begin{itemize}
+	\item gap优化：当一个点被重贴标签后，若没有其他点拥有其原来的高度，
+	高于此高度的点就无法把流量推送到汇点。将这些点的高度全部设为$V+1$使其流量
+	流回源点。
+	\item 高度预计算（我因此而TLE多次）：将$d$初始化为每个点到汇点的最短路径长。
+	{\bfseries 注意源点的高度固定为$V$。}
+	\item 使用桶维护优先队列：注意到高度值的范围不大，使用桶来维护较为快速。
+\end{itemize}
+
+板子：
+
+优先队列版：
+\lstinputlisting[title=HLPPA]{Source/Templates/HLPPA.cpp}
+
+桶版（参考PM250的代码\footnote{
+	R13845988 评测详情
+	\url{https://www.luogu.org/record/show?rid=13845988}
+}，自己不会用vector然后就用set代替了，常数大好多）：
+\lstinputlisting[title=HLPPB]{Source/Templates/HLPPB.cpp}
+
+HLPP算法参考了Mr\_Spade的博客\footnote{
+	网络最大流——最高标号预流推进
+	\url{https://www.cnblogs.com/Mr-Spade/p/9636935.html}
+}。
 
 \subsection{最大流与最小割}
 
