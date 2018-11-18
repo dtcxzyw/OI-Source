@@ -37,7 +37,7 @@
 		\Leftrightarrow g(n)=\sum_{i=0}^n{(-1)^{n-i}\binomial{n}{i}f(i)}
 	\end{displaymath}
 \end{inference}
-把$g(i)$代入后把外面的$(-1)^i$丢进去即可。
+把$g(i)$代入后把外面的$(-1)^i$丢进去可证。
 \subsubsection{错位排序问题}
 求$n$个人均站错位置的方案数。
 
@@ -46,7 +46,7 @@
 显然$f(n)=n!$且$\displaystyle f(n)=\sum_{i=0}^n{\binomial{n}{i} g(i)}$，
 由推论~\ref{BII}得
 \begin{eqnarray*}
-	g(n)&=&\sum{i=0}^n{(-1)^{n-i}\binomial{n}{i}i!}\\
+	g(n)&=&\sum_{i=0}^n{(-1)^{n-i}\binomial{n}{i}i!}\\
 	&=&\sum_{i=0}^n{(-1)^{n-i}\frac{n!}{(n-i)!}}\\
 	&=&n!\cdot\sum_{i=0}^n{\frac{(-1)^i}{i!}}
 \end{eqnarray*}
@@ -56,9 +56,9 @@
 记$f(k)$为使用$k$种颜色，相邻球不同色，不要求用上所有颜色的染色方案数，
 $g(k)$为使用$k$种颜色的方案数。
 
-那么有$f(k)=k(k-1)^{n-1}$且$f(k)=\sum_{i=0}^k{\binomial{k}{i}g(i)}$。
+那么有$f(k)=k(k-1)^{n-1}$且$\displaystyle f(k)=\sum_{i=0}^k{\binomial{k}{i}g(i)}$。
 
-同理可得$g(k)=\sum_{i=2}^k{(-1)^{k-i}\binomial{k}{i}k(k-1)^{n-1}}$。
+同理可得$\displaystyle g(k)=\sum_{i=2}^k{(-1)^{k-i}\binomial{k}{i}k(k-1)^{n-1}}$。
 
 \subsection{斯特林反演}
 \begin{theorem}
@@ -85,7 +85,7 @@ $g(k)$为使用$k$种颜色的方案数。
 \end{inference}
 证明同~\ref{BI}节所述。
 \subsection{多重子集反演}
-一个数的质因数分解可以对应一个多重子集，莫比乌斯反演即可。
+一个数的质因数分解可以对应一个多重子集，考虑莫比乌斯反演。
 
 以上内容参考了vfleaking的幻灯片
 \footnote{炫酷反演魔术 \url{http://vfleaking.blog.uoj.ac/slide/87\#}}

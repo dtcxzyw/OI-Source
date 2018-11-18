@@ -118,7 +118,7 @@ void makeRoot(int u) {
 首先$access(u),splay(u)$让$u$成为LCT根所在的splay的根。
 然后查询splay的最小节点就是根节点（注意推送翻转标记）。
 \subsubsection{link}
-$makeRoot(u)$后使$T[u].p=v$即可，注意在link前要进行连通性检测。
+$makeRoot(u)$后使$T[u].p=v$，注意在link前要进行连通性检测。
 \subsubsection{cut}
 
 \begin{itemize}

@@ -112,7 +112,7 @@ FFT采用分治策略，假设$n$是2的幂（不足补0），其步骤如下：
 	&\Rightarrow& V_nV_n^{-1}=I_n
 \end{eqnarray*}
 所以逆DFT的矩阵就是DFT矩阵的$\frac{1}{n}$，用$\omega_n^{-1}$代替$\omega_n$，
-对多项式的DFT做一次DFT后除以$n$即可得到原多项式。
+对多项式的DFT再做一次DFT后除以$n$就能得到原多项式。
 
 以上内容来自算法导论\cite{ITA3}第30章 多项式与快速傅里叶变换。
 \subsection{迭代FFT实现}
@@ -136,7 +136,7 @@ void init(int n) {
 \subsubsection{离线位逆序置换}
 为了做迭代FFT，我们需要置换原多项式的系数，第$i$个系数被换到基于$2^k$的$i$的位逆序上。
 若FFT的规模不变，比如求多项式乘法之类的简单问题，可预处理位逆序置换数组后，按照数组下标
-置换即可（规定$i<rev[i]$保证只置换1次）。
+置换（规定$i<rev[i]$保证只置换1次）。
 \begin{lstlisting}
 int rev[size];
 void initRev(int k) {
@@ -252,7 +252,7 @@ MTT主要用来解决模数不满足NTT条件的卷积问题，可以使用拆�
 绕开限制。
 
 设模数为$M$,解决方法是找一个$k\geq\sqrt{M}$，将序列$a(n)$拆为2个新序列
-$a_0(n)=a(n)/p,a_1(n)=a(n)\% p$，两两相乘后按照系数合并即可，共4次DFT，
+$a_0(n)=a(n)/p,a_1(n)=a(n)\% p$，两两相乘后按照系数合并。共4次DFT，
 4次IDFT。
 
 优化：

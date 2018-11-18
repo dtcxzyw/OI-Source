@@ -168,8 +168,7 @@ int KM(int n) {
 \paragraph{最小可相交路径覆盖}
 
 先用Floyd求出传递闭包，转化为最小不相交路径覆盖问题。
-
-证明：如果要从a走到b，直接连边即可，这样就可以避开中间点的限制。
+因为如果要从a走到b，直接连边可以避开中间点的流量限制。
 
 以上内容参考了罗茜\footnote{二分图详解及总结
 	\url{https://www.cnblogs.com/alihenaixiao/p/4695298.html}},

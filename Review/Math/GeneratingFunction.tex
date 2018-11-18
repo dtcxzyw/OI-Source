@@ -71,7 +71,7 @@ $B_n$满足等式：
 若整数$\displaystyle n=\sum_{i=1}^k{p_i}$，
 则整数$n$可以分解为$B_k$种因子的乘积。
 \subsubsection{贝尔数计算}
-\paragraph{DFS}若要得到不同方案的状态表示，限制下阶段DFS的集合大小即可避免重复计算。
+\paragraph{DFS}若要得到不同方案的状态表示，限制下阶段DFS的集合大小以避免重复计算。
 \paragraph{贝尔三角形}
 与推杨辉三角形类似，递推方法如下：
 \begin{eqnarray*}
@@ -82,7 +82,7 @@ $B_n$满足等式：
 \end{eqnarray*}
 使用滚动数组优化空间。
 \paragraph{生成函数法}
-利用Bell数的生成函数$e^{e^x-1}$，多项式exp即可。
+利用Bell数的生成函数$e^{e^x-1}$，计算多项式exp。
 \subsection{自然数幂求和}
 
 记$B_n$为第$i$个伯努利数，其中$B_0=1$。
@@ -104,9 +104,9 @@ $O(k^2)$预处理。
 \begin{eqnarray*}
     F(x)&=&\sum_{i=0}^\infty{B_i\cdot\frac{x^i}{i!}}\\
     &=&\frac{x}{e^x-1}\\
-	&=&\frac{1}{\sum_{i=0}^\infty{\frac{x^i}{(i+1)!}}}
+	&=&\frac{1}{\displaystyle \sum_{i=0}^\infty{\frac{x^i}{(i+1)!}}}
 \end{eqnarray*}
-$O(k\lg k)$多项式求逆即可、
+$O(k\lg k)$多项式求逆解决。
 
 以上内容参考了\_rqy\footnote{生成函数简介 | \_rqy's Blog\\
 	\url{https://rqy.moe/\%E7\%AE\%97\%E6\%B3\%95/generating-function/}

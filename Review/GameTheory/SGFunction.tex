@@ -44,8 +44,8 @@
 	      \end{property}
 \end{itemize}
 
-要判断哪个玩家必胜，只要使用SG函数和SG定理计算出先手所在状态（即初始状态）是必胜点
-还是必败点即可。
+要判断哪个玩家必胜，一般使用SG函数和SG定理计算出先手所在状态（即初始状态）是必胜点
+还是必败点。
 
 SG函数的定义如下：$SG(x)=mex(S(x))$\index{S!SpragueGrundy Function}
 
@@ -123,6 +123,6 @@ PhilipsWeng\footnote{SG定理
 Luogu P2575 高手过招\footnote{\url{https://www.luogu.org/problemnew/show/P2575}}
 
 每行棋子可视为一个子游戏，状压后使用DFS计算SG函数值，然后利用定理~\ref{SGB}计算整个
-游戏的SG函数值即可。
+游戏的SG函数值。
 
 \lstinputlisting[title=Luogu P2575]{Source/Source/'Game Theory'/2575.cpp}

@@ -117,7 +117,7 @@ $B$进制下的值。
     +A^{\frac{n}{2}}\sum_{i=0}^{\frac{n}{2}}{a_{i+\frac{n}{2}}A^i}
 \end{displaymath}
 
-预处理出$A^i$对应的$B$进制数，然后分治即可，FFT优化右边的卷积。
+预处理出$A^i$对应的$B$进制数，然后分治，同时使用FFT优化右边的卷积。
 
 时间复杂度$O(n \lg^2 n)$。
 
@@ -149,9 +149,8 @@ $A(z)=R(z)$。那么可以两边同时模$B(z)$，达到次数减半的效果。
 \begin{displaymath}
     A_{right}(x_i)=\frac{y_i-A_{left}(x_i)}{B(x_i)}
 \end{displaymath}
-那么可利用多点求值得到一组新的插值点，递归求解。
+那么可利用多点求值得到一组新的插值点，递归求解。时间复杂度$O(n \lg^3 n)$。
 
-求出$A_{right}(z)$后合并即可，时间复杂度$O(n \lg^3 n)$。
 \subsection{组合数取模}
 
 求$\binomial{n}{m} \bmod{p}$的值，其中$p$为质数，$n,m\leq 1e9$。
@@ -165,7 +164,7 @@ $A(z)=R(z)$。那么可以两边同时模$B(z)$，达到次数减半的效果。
         n!&=&\sum_{i=0}^{\sqrt{n}-1}{Q(i\sqrt{n})}
     \end{eqnarray*}
     卷积出$Q(x)$后在$i\sqrt{n}=0,\sqrt{n},\cdots,(\sqrt{n}-1)\sqrt{n}$上
-    多点求值即可，时间复杂度$O(\sqrt{n}\lg^2 n)$。
+    多点求值，时间复杂度$O(\sqrt{n}\lg^2 n)$。
     \item $n\geq p$：结合上述两种做法，易知第二种做法最多只执行一次。
 \end{itemize}
 

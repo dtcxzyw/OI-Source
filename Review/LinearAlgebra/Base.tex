@@ -24,7 +24,7 @@ bool insert(int x) {
 \end{lstlisting}
 按位遍历进行高斯消元，如果被消为0则可被原基构造。
 \subsection{合并}
-将一个线性基内的所有数插到另一个线性基进去即可。
+暴力将一个线性基内的所有数插到另一个线性基进去。
 \subsection{存在性查询}
 按位扫描进行高斯消元，如果被消为0则在基的张成中。
 \subsection{最大值}
@@ -36,7 +36,7 @@ int maxv() {
     return res;
 }
 \end{lstlisting}
-由于线性基可以构造出所有可能的值，因此从高位到低位贪心即可。
+由于线性基可以构造出所有可能的值，因此从高位到低位贪心就能得到最大值。
 \subsection{最小值}
 \begin{lstlisting}
 int minv() {

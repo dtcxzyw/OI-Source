@@ -6,8 +6,9 @@ BSGS法（Baby Step Giant Step）用来求解类似于$a^x\equiv b\pmod{P}$的�
 
 以下为求解最小非负整数解的方法：
 
-首先根据定理~\ref{ET}可知$x$的最小非负整数解小于$\varphi(P)=P-1$。将x的值域
-分为高低两部分，分别用$O(\sqrt{P})$的复杂度枚举值即可。
+首先根据定理~\ref{ET}可知$x$的最小非负整数解小于$\varphi(P)=P-1$。将x表示为
+$\sqrt{P}$进制数，分别用$O(\sqrt{P})$的复杂度枚举值，一半存入HashTable，另一半
+查询是否有匹配值。注意参数的枚举顺序。
 
 \begin{enumerate}
     \item 若$a$为$P$的倍数，则特判$b$是否为$0$，算法结束；

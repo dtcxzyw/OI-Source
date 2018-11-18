@@ -16,7 +16,7 @@
 \end{eqnarray*}
 令$a=j/v[i],b=j\%v[i]$，将方程转换为：
 \begin{displaymath}
-    dp[i][j]=max(dp[i-1][b+k*v[i]]-k*w[i])+a*w[i],a-end\leq k \leq a
+    dp[i][b+a*v[i]]=max(dp[i-1][b+k*v[i]]-k*w[i])+a*w[i],a-end\leq k \leq a
 \end{displaymath}
 此时$k$表示比$a$少取$k$件。
 

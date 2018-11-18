@@ -1,4 +1,12 @@
 \section{平衡二叉树}
+\subsection{二叉搜索树性质}
+\begin{property}
+    向二叉搜索树中插入新节点$u$（节点关键字不重复），该节点
+    要么是其前驱的右儿子，要么是其后继的左儿子。
+\end{property}
+\paragraph{证明} $u$的前驱后继在插入节点$u$前互为前驱后继，
+若前驱有右儿子则说明前驱比后继高，后继没有左儿子，节点$u$成为后继的左儿子。
+反之亦然。
 \subsection{FHQTreap}\label{FHQTreap}
 \index{F!FHQTreap}
 FHQTreap是一种比较好写的平衡二叉树，虽然效率不太高
@@ -9,7 +17,7 @@ FHQTreap的使用基于两个基本操作：split与merge。
 对于二叉搜索树的操作，由于FHQTreap本来就是一颗二叉搜索树，因此操作方法相同
 （若对效率要求不高，可以灵活地使用split和merge以减少代码量）。
 
-对于序列操作，使用子节~\ref{split}所述的splitKth即可完成区间提取。
+对于序列操作，使用子节~\ref{split}所述的splitKth完成区间提取。
 
 \subsubsection{split}\label{split}
 
@@ -216,7 +224,7 @@ $splay$操作有单旋与双旋之分，其中单旋会被卡（原因见下面�
 
 \paragraph{单旋}
 
-单旋的思路很简单,不断地把自己旋转到父亲的位置上即可。
+单旋的思路很简单，就是不断地把自己旋转到父亲的位置上。
 
 但是当原树是一条链时，单旋$splay$后仍然是一条链，树的高度并没有得到优化，
 因此可以构造数据使得每次$splay$都达到最坏时间复杂度$O(n)$。
