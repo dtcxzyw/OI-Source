@@ -14,7 +14,9 @@ int compare(int id, const std::string& exec) {
         return 2;
     auto out = "tmp.out";
     auto cmd = "./" + exec + " <" + in + " >" + out;
-    system(cmd.c_str());
+    int res = system(cmd.c_str());
+    if(res != 0)
+        return 0;
     std::ifstream outf(out);
     using Iter = std::istream_iterator<int>;
     return std::equal(Iter(outf), Iter(),

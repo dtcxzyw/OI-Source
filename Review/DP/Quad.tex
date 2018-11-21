@@ -1,5 +1,5 @@
 \section{四边形不等式优化}
-在区间动规时通常会推出以下状态转移方程：
+在解区间动规题时通常会推出以下状态转移方程：
 \begin{displaymath}
     dp[i][j]=min(dp[i][k]+dp[k+1][j])+w[i][j],i\leq k <j
 \end{displaymath}
@@ -25,8 +25,8 @@
     dp[i][j]=min(dp[i][k]+dp[k+1][j])+w[i][j],s[i][j-1]\leq k \leq s[i+1][j]
 \end{displaymath}
 
-\paragraph{复杂度分析} 即对于每一个左端点，最多扫一遍右边所有点，
-时间复杂度降为$O(n^2)$。
+\paragraph{复杂度分析} 对于每一个左端点，最多扫一遍右边所有点，
+因此时间复杂度降为$O(n^2)$。
 
 \paragraph{优化} 计算$w[i][j]$时要考虑区间统计方面的优化（如前缀和）。
 

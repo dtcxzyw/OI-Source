@@ -34,8 +34,9 @@ int lca(int u,int v){
     return p[u][0];
 }
 \end{lstlisting}
-预处理$O(n\lg n)$，查询$O(\lg n)$。
+预处理$O(n\lg n)$，单次查询$O(\lg n)$。
 \subsection{树链剖分}
+树链剖分内容参见第~\ref{CBDW}节。
 树链剖分后，如果在同一条链上则返回较浅者，否则令链头较深的节点向上跳。
 
 \begin{lstlisting}
@@ -49,11 +50,12 @@ int lca(int u,int v) {
 \end{lstlisting}
 
 两趟DFS预处理$O(n)$。
-由于树链剖分后重链不超过$\lg n$条，所以查询也是$O(\lg n)$的，但树链剖分的常数比倍增法小。
+由于树链剖分后重链不超过$\lg n$条，所以单次查询也是$O(\lg n)$的，但树链剖分的常数比倍增法小。
 \subsection{欧拉序+ST表}
 考虑DFS序，显然两个来自节点$i$的不同子树的点的LCA为节点$i$，那么可以在
-DFS完一棵子树后加入节点$i$的深度作为隔板，查询ST表上访问时间戳最小值。为了
-应对点对在一条到根的链上的情况，同时也为了节点$i$一个时间戳，在遍历节点$i$之初就插入一个隔板。
+DFS完一棵子树后加入节点$i$的深度作为隔板，维护ST表查询区间内深度最小的节点编号。为了
+应对点对在一条到根的链上的情况，同时也为了节点$i$给一个访问时间戳，
+在遍历节点$i$之初就插入一个隔板。
 \begin{lstlisting}
 int icnt = 0, A[size * 2][18], L[size], d[size];
 void DFS(int u) {
@@ -91,7 +93,7 @@ int getLca(int u, int v) {
 }
 \end{lstlisting}
 
-预处理$O(n\lg n)$，查询$O(1)$。
+预处理$O(n\lg n)$，单次查询$O(1)$。
 \subsection{Tarjan}
 当查询离线时，可使用Tarjan算法。
 

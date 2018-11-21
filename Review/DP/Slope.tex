@@ -4,41 +4,41 @@
 \begin{displaymath}
     dp[i]=min(a[i]*b[j]+c[i]+d[j])
 \end{displaymath}
-使用斜率优化。
+考虑使用斜率优化。
 
-以下推导假设$a[i]$递减且$b[j]$递增。
+以下推导假设$a[i]$单调递减且$b[j]$单调递增：
 
-设决策点$j<k<i$，且从点$k$转移到$i$优于点$j$，
-易证从点$k$转移到$i+1$同样优于点$j$，这就是决策单调性。
+设决策点$j<k<i$，且从点$k$转移到$i$不差于从点$j$转移到$i$，
+易证从点$k$转移到$i+1$同样不差于从点$j$转移到$i+1$。称该性质为决策单调性。
 
-接下来考虑点$k$比点$j$更优的条件：
+接下来考虑点$k$不比点$j$更差的条件：
 \begin{eqnarray*}
     a[i]*b[j]+c[i]+d[j]&\geq&a[i]*b[k]+c[i]+d[k]\\
-    \Leftrightarrow -a[i]&\geq&\frac{d[j]-d[k]}{b[j]-b[k]}
+    \Rightarrow -a[i]&\geq&\frac{d[k]-d[j]}{b[k]-b[j]}
 \end{eqnarray*}
 
 记斜率
 \begin{displaymath}
-    slope(i,j)=\frac{d[i]-d[j]}{b[i]-b[j]}
+    slope(i,j)=\frac{d[j]-d[i]}{b[j]-b[i]}
 \end{displaymath}
 
-可以发现使用单调队列维护，记$q[b]$为队首，$q[e-1]$为队尾：
+斜率可以使用单调队列维护，记$q[b]$为队首，$q[e-1]$为队尾：
 \begin{itemize}
-    \item 若$-a[i]\geq slope(q[b],q[b+1])$，则表明$q[b+1]$比$q[b]$更优，
+    \item 若$-a[i]\geq slope(q[b],q[b+1])$，则表明$q[b+1]$不比$q[b]$更差，
     弹出$q[b]$。
     \item 若$slope(q[e-2],q[e-1])\geq slope(q[e-1],i)$，则说明若
     $q[e-2]$被弹出，$q[e-1]$一定被弹出，所以$q[e-1]$无效，可以先弹出。
 \end{itemize}
 
-从``形''的角度理解，单调队列相当于维护了一个下凸壳。
+从``形''的角度理解，单调队列维护了一个下凸壳。
 \subsection{应用}
 主要过程就是研究决策单调性满足的条件，然后选取适当的数据结构维护信息，快速dp。
 
 实际应用中需注意以下几点：
 \begin{itemize}
-    \item 比较斜率时尽量使用乘法。
-    \item 若斜率单调，使用单调队列，否则使用二分法（使用类似线性规划的思路找到切点）。
-    \item 若横坐标单调，使用单调队列，否则使用平衡树维护凸壳。
+    \item 比较斜率时尽量使用乘法避免精度误差。
+    \item 若$a[i]$单调，使用单调队列，否则使用二分法（使用类似线性规划的思路找到切点）。
+    \item 若$b[i]$单调，使用单调队列，否则使用平衡树维护凸壳。
 \end{itemize}
 
 以上内容参考了MashiroSky的博客\footnote{斜率优化学习笔记 - MashiroSky

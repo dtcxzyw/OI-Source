@@ -1,7 +1,7 @@
 \section{单调队列优化}
 当状态转移方程为如下形式时
 \begin{displaymath}
-    dp[i][j]=max(dp[i-1][j-k]+w(i,j,k))+c(i,j),l \leq k \leq r
+    dp[i][j]=max(dp[i-1][j-k]+w(i-1,j-k))+c(i,j),l \leq k \leq r
 \end{displaymath}
 可以使用单调队列优化。
 
