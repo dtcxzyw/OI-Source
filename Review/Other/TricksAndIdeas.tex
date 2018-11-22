@@ -148,7 +148,7 @@ $O(\sqrt{n}\lg n)$。
 此法可保证优先队列的规模和时间复杂度在可接受的范围内。
 
 有时甚至可以直接使用队列来代替优先队列（即$a->a',b->b',a<b\Rightarrow a'<b'$时）。
-\subsection{可删堆}
+\subsection{可删堆}\label{MultiSet}
 一个简单的方法是使用$std::multiset$，但是其常数很大；
 更保险的做法是使用两个优先队列（已加入/已删除）来完成操作：
 \begin{itemize}

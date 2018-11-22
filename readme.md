@@ -1,3 +1,6 @@
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/dtcxzyw/OI-Source.svg?style=popout-square)
+![GitHub All Releases](https://img.shields.io/github/downloads/dtcxzyw/OI-Source/total.svg?style=popout-square)
+
 # Review
 ## 博弈论
 - [x] nim系列游戏
@@ -216,7 +219,12 @@
 - [ ] 共价大爷游长沙技巧
 - [ ] FFT字符串通配
 - [ ] fractional cascading
-# Compare
+- [ ] boruvka算法-CF888G
+- [ ] 动态DP
+# Research
+- [ ] 卡SPFA
+- [ ] 卡Hash [By dacin21](https://codeforces.com/blog/entry/60442)
+- [ ] 卡并查集
 - [ ] 最大流算法效率比较
 - [ ] 平衡树效率比较
 # Other
