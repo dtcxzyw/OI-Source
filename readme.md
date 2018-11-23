@@ -174,7 +174,6 @@
 - [x] HLPP
 - [ ] min_25筛
 - [ ] Berlekamp-Massey
-- [ ] DC3
 - [x] ISAP
 - [ ] IDA*
 - [x] DLX
@@ -198,16 +197,12 @@
 - [ ] 链分治
 - [x] 最小割树
 - [x] 势能分析线段树
-- [ ] 动态仙人掌
 - [ ] 弦图
 - [ ] Hall定理
 - [ ] 近似算法
-- [ ] DoubleArrayTrie
 - [ ] 笛卡尔树 O(n)-O(1) RMQ
 - [ ] Raney 引理
-- [ ] SA-IS算法
 - [x] 快速凸包
-- [ ] Chan's algorithm
 - [x] 康托展开
 - [ ] ETT
 - [ ] Top-Tree
@@ -227,5 +222,11 @@
 - [ ] 卡并查集
 - [ ] 最大流算法效率比较
 - [ ] 平衡树效率比较
+- [ ] NTR算法 [By raffica](https://www.zhihu.com/question/268382638)
+- [ ] DC3
+- [ ] SA-IS算法
+- [ ] Chan's algorithm
+- [ ] DoubleArrayTrie
+- [ ] 动态仙人掌
 # Other
 - [ ] 使用Vim

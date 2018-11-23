@@ -21,55 +21,32 @@ void addEdge(int u, int v) {
     E[cnt].to = v, E[cnt].nxt = last[u];
     last[u] = cnt;
 }
-bool use[esiz], flag[size], vis[size];
-int st[size], top = 0, ec[esiz];
-void scan(int u) {
-    vis[u] = flag[u] = true;
-    for(int i = last[u]; i; i = E[i].nxt) {
-        int v = E[i].to;
-        if(flag[v]) {
-            ++ec[i];
-            int ct = top;
-            while(ct && E[st[ct]].to != v) {
-                int id = st[ct];
-                ++ec[id];
-                --ct;
-            }
-        }
-        if(!use[i]) {
-            use[i] = true;
-            st[++top] = i;
-            scan(v);
-            --top;
-            use[i] = false;
+int q[size];
+bool topSort(int n, int* in) {
+    int qcnt = 0;
+    for(int i = 1; i <= n; ++i)
+        if(!in[i])
+            q[++qcnt] = i;
+    for(int i = 1; i <= qcnt; ++i) {
+        int u = q[i];
+        for(int j = last[u]; j; j = E[j].nxt) {
+            int v = E[j].to;
+            if(--in[v] == 0)
+                q[++qcnt] = v;
         }
     }
-    flag[u] = false;
+    return qcnt == n;
 }
-int ban;
-bool DFS(int u) {
-    vis[u] = flag[u] = true;
-    for(int i = last[u]; i; i = E[i].nxt) {
-        int v = E[i].to;
-        if(i != ban && (flag[v] || DFS(v)))
-            return true;
-    }
-    flag[u] = false;
+int in[size], tmp[size];
+bool solve(int n) {
+    for(int i = 1; i <= n; ++i)
+        if(in[i]) {
+            memcpy(tmp + 1, in + 1, sizeof(int) * n);
+            --tmp[i];
+            if(topSort(n, tmp))
+                return true;
+        }
     return false;
-}
-bool solve(int n, int m) {
-    for(int i = 1; i <= n; ++i)
-        if(!vis[i])
-            scan(i);
-    memset(vis, 0, sizeof(vis));
-    ban = 1;
-    for(int i = 2; i <= m; ++i)
-        if(ec[ban] < ec[i])
-            ban = i;
-    for(int i = 1; i <= n; ++i)
-        if(!vis[i] && DFS(i))
-            return false;
-    return true;
 }
 int main() {
     int n = read();
@@ -78,7 +55,8 @@ int main() {
         int u = read();
         int v = read();
         addEdge(u, v);
+        ++in[v];
     }
-    puts(solve(n, m) ? "YES" : "NO");
+    puts(solve(n) ? "YES" : "NO");
     return 0;
 }

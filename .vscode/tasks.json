@@ -14,8 +14,7 @@
                 "-std=c++98",
                 "-D_FORTIFY_SOURCE=2",
                 "-fstack-protector-all",
-                "-fsanitize=address",
-                "-fsanitize=undefined"
+                "-fsanitize=address"
             ],
             "problemMatcher": {
                 "owner": "cpp",
