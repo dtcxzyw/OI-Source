@@ -4,7 +4,7 @@ Luogu P4234 最小差值生成树\footnote{【P4234】最小差值生成树 - �
 	\url{https://www.luogu.org/problemnew/show/P4234}
 }
 
-按照Kruskal的处理顺序处理生成树，当遇到环时删掉环上权值最小的边，换上自己即可。
+按照Kruskal的处理顺序处理生成树，当遇到环时删掉环上权值最小的边，然后连上自己。
 
 \subsection{Prim算法}
 
@@ -44,7 +44,7 @@ int prim(int n) {
 }
 \end{lstlisting}
 
-当边数较大时，可以考虑使用Prim或优先队列+Kruskal法。
+当边数较大时，可以考虑使用Prim或优先队列+Kruskal（参见第~\ref{PQS}\\节）。
 
 \subsection{次小生成树}
 步骤如下：

@@ -1,11 +1,11 @@
 \section{差分约束系统}
 差分约束系统是一堆形如$x_i-x_j\leq c_k$的不等式组成的不等式组。
 
-若要构造$x_i-x_j=c_k$，加双向不等式约束即可。
+$x_i-x_j=c_k$等价于$x_i-x_j\leq c_k,x_j-x_i\leq -c_k$。
 
 \subsection{与最短/长路的关系}
 对不等式$x_i-x_j\leq c_k$进行变形得$x_i\leq x_j+c_k$，把$x_i$看做点$i$
-到源点的距离，该不等式就等价于从点$j$向点$i$连了一条距离为$c_k$边。
+到源点的距离，该不等式就是三角不等式，等价于从点$j$向点$i$连了一条距离为$c_k$边。
 如此便可以将差分约束问题转换为最短路问题。最长路的分析类似。
 
 \subsection{判断是否有可行解}
@@ -20,17 +20,15 @@
     x_v-x_u&\leq& w_1\\
     x_u-x_v&\leq& w_2\\
 \end{eqnarray*}
-两式相加得$0\leq w_1+w_2$，与$w_1+w_2>0$矛盾。
+两式相加得$0\leq w_1+w_2$，与$w_1+w_2<0$矛盾。
 
 使用SPFA判负环有DFS与BFS两种方法。
 
-首先用一个超级源连接所有点，保证图的连通。
+首先用一个超级源连接所有点，保证图的连通，边权具体情况具体分析。
 
 \begin{itemize}
     \item DFS-SPFA:松弛时递归下去，当存在环时说明存在负权环。
-
-    注：使用setjmp/longjmp较为方便，记得把调用过程中修改的变量设为
-    {\bfseries volatile}。
+    \sout{使用setjmp/\\longjmp较为方便。}
     \item BFS-SPFA:当某节点{\bfseries 入队次数}（注意不是被松弛次数）大于等于节点
     总数时，存在负权环。
 \end{itemize}
@@ -52,7 +50,8 @@ Luogu P4578 [FJOI2018]所罗门王的宝藏
     x_i-y_j&\leq& c_k\\
     y_j-x_i&\leq& -c_k\\
 \end{eqnarray*}
-双向连边后判负环即可。
+双向连边后SPFA判负环。
 
 \subsection{求解}
 最短路的距离就是一组可行解，对这组可行解任意加减一个常数可以得到另一个可行解。
+一般要求最小非负解。

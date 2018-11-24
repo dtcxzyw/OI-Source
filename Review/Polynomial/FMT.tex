@@ -1,0 +1,57 @@
+\section{快速莫比乌斯变换/反演}
+\index{F!Fast Mobius Transformation}
+快速莫比乌斯变换用于计算集合并卷积。
+快速莫比乌斯反演其实就是其逆变换。
+实际上这就是FWT的非递归形式。
+
+给定数组$f,g$，求$f*g$的集合并卷积$\displaystyle h[k]=\sum_{i|j==k}{f[i]g[j]}$，
+数组规模为$2^n$。
+
+记数组$F$为$f$的莫比乌斯变换，满足$\displaystyle F[i]=\sum_{i\&j==j}{f[j]}$
+（实际上就是子集和）。同理计算数组$g$的莫比乌斯变换$G$。令$H[i]=F[i]*G[i]$，会发现
+$\displaystyle H[i]=\sum_{i\&j==j}{h[j]}$。
+
+接下来考虑如何从$f$快速推出$F$：枚举每一个比特位，对每一比特位做前缀和，这样就可以保证
+得到正确结果。时间复杂度$O(2^nn)$。
+\begin{lstlisting}
+int end = 1 << n;
+for(int i = 1; i < end; i <<= 1)
+    for(int j = 0; j < end; ++j)
+        if(j & i)
+            A[j] += A[j ^ i];
+\end{lstlisting}
+
+逆变换只要将其倒着做就可以了（从高到低枚举与从低到高枚举等价，$A$值改变
+的影响不会传递，所以不必控制枚举顺序）。
+\begin{lstlisting}
+int end = 1 << n;
+for(int i = 1; i < end; i <<= 1)
+    for(int j = 0; j < end; ++j)
+        if(j & i)
+            A[j] -= A[j ^ i];
+\end{lstlisting}
+
+用容斥可得$\displaystyle h[i]=\sum_{i\&j==j}{(-1)^{|I|-||J|}H[j]}$，其中$|I|$表示
+$i$对应的集合$I$的大小。
+
+\paragraph{例题}
+Luogu P3175 [HAOI2015]按位或\footnote{
+    【P3175】[HAOI2015]按位或 - 洛谷
+    \url{https://www.luogu.org/problemnew/show/P3175}
+}
+
+记$a_i$为走$i$步的概率，答案为$\displaystyle \sum_{k=1}^\infty{k(a_i-a_{i-1})}=
+-\sum_{k=1}^\infty a_i$。令概率数组为集合幂级数$f$，定义乘法运算为集合幂卷积，可知答案
+为$f$的等比数列求和，若其收敛则其答案为$\left(\frac{1}{f-1}\right)_{2^n-1}$。计算
+$f$的莫比乌斯变换$F$，那么$F$的幂就是$F$每一项的幂组合起来的序列。那么$F$的等比数列求和
+就是${\frac{1}{F_i-1}}$，最后使用容斥计算出$f_n$，不必做反演。
+
+代码：
+\lstinputlisting{Source/Templates/FMT.cpp}
+
+上述内容参考了liu\_runda的博客\footnote{
+    bzoj4036[HAOI2015]set 按位或
+    \url{https://www.cnblogs.com/liu-runda/p/6443577.html}
+    不会FWT的选手计算集合并卷积的方法
+    \url{http://liu-runda.blog.uoj.ac/blog/2360}
+}。

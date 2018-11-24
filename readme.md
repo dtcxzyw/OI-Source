@@ -189,7 +189,7 @@
 - [ ] 拉格朗日乘数法
 - [ ] 常系数齐次线性递推
 - [ ] 拉格朗日反演
-- [ ] 快速莫比乌斯变换
+- [x] 快速莫比乌斯变换
 - [ ] 支配树
 - [ ] Segment tree beats
 - [ ] Lindström–Gessel–Viennot lemma
