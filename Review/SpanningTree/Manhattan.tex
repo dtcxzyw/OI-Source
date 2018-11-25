@@ -2,26 +2,26 @@
 \subsection{分析}
 由于$E=O(V^2)$，显然不能使用常规Kruskal法。
 
-考虑曼哈顿距离的特性，以每个点为原点建坐标系，将坐标系每$45\circ$分成一块区域，
-发现这个点到每个区域最多只会连离它最近的点，预处理每个点到八个区域的最近点即可，
+考虑曼哈顿距离的特性，以每个点为原点建坐标系，将坐标系每$45^\circ$分成一块区域，
+发现这个点到每个区域最多只会连离它最近的点，因此只需预处理每个点到八个区域的最近点，
 边数缩减为$O(V)$。根据对称性可只考虑一半的区域，最多加入$4V$条边。
 
 接下来思考如何查询最近点（仅处理右半区域，以下左右分别指逆时针和顺时针）：
 
 \begin{itemize}
-	\item 首先考虑y正半轴向右$45\circ$的点，发现若以点$P$为原点，
+	\item 首先考虑y正半轴向右$45^\circ$的点，发现若以点$P$为原点，
 	      落在该区域的点$Q$满足：
 	      \begin{eqnarray*}
 		      x_P&\leq& x_Q\\
 		      x_Q-y_Q&\leq& x_P-y_P\\
 	      \end{eqnarray*}
-	      等号至少取一边即可，因为其它区域可以覆盖到边界。
+	      仅一个不等式满足等号就足够了，因为其它区域可以覆盖到这个边界。
 
 	      因为$|PQ|=(x_Q+y_Q)-(x_P+y_P)$，所以要查询满足要求且$x+y$的取最小时
 	      对应的点。
 
 	      按照$x$从大到小排序，对$x-y$离散，使用树状数组维护$x+y$前缀最小值与对应的点。
-	\item 对于其它三个区域的点，可以使用坐标变换得到：
+	\item 对于其它三个区域的点，可以使用坐标变换得到（连续变换）：
 	      \begin{enumerate}
 		      \item y正半轴向右：直接做；
 		      \item x正半轴向左：交换$x,y$；
@@ -35,7 +35,7 @@
 }。
 \subsection{实现}
 \begin{lstlisting}
-struct Node{
+struct Node {
     int id,val;
     Node(int id,int val):id(id),val(val) {}
     void update(const Node& rhs) {
@@ -65,13 +65,13 @@ int A[size];
 int find(int x,int siz) {
     return std::lower_bound(A+1,A+siz+1,x)-A;
 }
-struct Pos{
+struct Pos {
     int x,y,id;
     bool operator<(const Pos& rhs) const {
         return x>rhs.x;
     }
 } P[size];
-struct Edge{
+struct Edge {
     int u,v,w;
     Edge(int u,int v,int w):u(u),v(v),w(w) {}
 } E[4*size];
@@ -97,7 +97,7 @@ int buildGraph(int n) {
             Node p=query(pos);
             int sum=P[i].x+P[i].y;
             if(p.id!=-1)
-                E[++ecnt]=Edge(P[i].id,p.id,p.val+sum);
+                E[++ecnt]=Edge(P[i].id,p.id,p.val-sum);
             modify(pos,Node(P[i].id,sum));
         }
     }

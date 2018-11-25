@@ -22,7 +22,7 @@
 \paragraph{等价类}
 满足等价关系的状态属于同一等价类。
 
-\subsubsection{Burnside引理}
+\subsection{Burnside引理}
 \index{B!Burnside's Lemma}
 \begin{lemma}[Burnside's Lemma]
 	等价类数目为置换群$G$中所有置换的不动点数目的平均值。
@@ -32,7 +32,7 @@
 \end{lemma}
 上述定理证明留坑待补。
 \index{*TODO!证明Burnside引理}
-\subsubsection{Polya定理}
+\subsection{Pólya定理}
 \index{P!Pólya Enumeration Theorem}
 
 \begin{theorem}[Pólya Enumeration Theorem]
@@ -53,7 +53,7 @@ Wikipedia-EN\footnote{
 	\url{https://en.wikipedia.org/wiki/P\%C3\%B3lya\_enumeration\_theorem}
 }。
 
-\subsubsection{常见题型}
+\subsection{常见题型}
 题型来自My\_ACM\_Dream的博客\footnote{polya|burnside定理的一些总结\\
 	\url{https://blog.csdn.net/My\_ACM\_Dream/article/details/45312365}}。
 
@@ -128,3 +128,46 @@ n*n正方形染色：
 枚举循环节数（即$d=(n,i)$），利用欧拉函数与容斥解决。
 \paragraph{有染色限制}
 使用dp与矩阵快速幂解决。
+
+\subsection{完全图染色问题}
+有一个由$n$个点（$n\leq 60$）组成的完全图，每条边可被染成$m$种颜色
+中的一种，求本质不同的染色图数。
+
+若使用Pólya定理解决，可以发现$|G|$的规模达到$N!$，显然枚举置换过不了。
+
+考虑将点置换转换为边置换，即$(u,v)\rightarrow (P_u,P_v)$。
+
+然后将其分为2种情况：
+\begin{itemize}
+	\item 若点置换内有一个循环长度为$L$，则对应边置换内
+	有$\left[\frac{L}{2}\right]$个循环。
+
+	证明：所有端点在点置换循环上距离（定义为最短路）相等的边构成一个等价类，
+	而等价类数目有$\left[\frac{L}{2}\right]$个。
+
+	\item 若点置换内有两个循环长度分别为$L_1,L_2$，则对应边置换内有
+	$(L_1,L_2)$个循环。
+
+	证明：使两个循环都置换到原状态需要$[L_1,L_2]$次，即每个循环的大小。
+	而总边数为$L_1L_2$，因此循环数为$(L_1,L_2)$。
+\end{itemize}
+
+接下来考虑枚举点置换的循环，记这些循环的长度为$L_1,L_2,\cdots,L_k$。
+首先DFS枚举保证$L_1\geq L_2 \geq \cdots \geq L_k>0$，即求$n$的划分方案。
+
+然后对于某个划分可以由上文方法求出对应置换的循环节个数，接着考虑该划分对应的置换数。
+总置换数为$N!$，将$n$个点分配给这些循环，去掉内部排列导致的方案重复，要除以
+$\displaystyle \prod_{i=1}^k{L_i!}$。对于每一个循环，一旦首位固定，其它位的排列顺序
+不同也会构造出不同的置换，方案数再乘以$\displaystyle \prod_{i=1}^k{(L_i-1)!}$。实际上
+只需除以$\displaystyle \prod_{i=1}^k{L_i}$，可以理解为一个固定的有向环可以任意指定起点。
+等长循环的排列顺序会造成方案重复，记长度为$L$的循环数为$c_L$，再除以
+$\displaystyle \prod_{i=1}^n{c_i!}$。最终置换数为
+\begin{displaymath}
+	\frac{N!}{\prod_{i=1}^k{L_i}\prod_{i=1}^n{c_i!}}
+\end{displaymath}
+分子的$N!$与Burnside引理的系数相消。
+
+代码（[HNOI2009]图的同构记数）：
+\lstinputlisting{Source/Source/Groop/4727.cpp}
+
+上述内容参考了陈瑜希的论文《Pólya计数法的应用》。

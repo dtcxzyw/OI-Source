@@ -117,7 +117,7 @@
 - [x] 后缀仙人掌
 - [x] 后缀自动机
 - [x] PAM
-- [x] KMP/ExKMP
+- [x] KMP
 - [x] Manacher
 - [x] Huffman
 - [x] 表达式解析
@@ -164,8 +164,6 @@
 ## 理论
 - [x] 主定理
 - [x] NP完全性
-- [ ] 摊还分析
-- [ ] 拟阵
 - [x] 数值编码
 -----
 # Advance
@@ -216,6 +214,7 @@
 - [ ] fractional cascading
 - [ ] boruvka算法-CF888G
 - [ ] 动态DP
+- [ ] ExKMP(Z Algorithm)
 # Research
 - [ ] 卡SPFA
 - [ ] 卡Hash [By dacin21](https://codeforces.com/blog/entry/60442)
@@ -228,5 +227,7 @@
 - [ ] Chan's algorithm
 - [ ] DoubleArrayTrie
 - [ ] 动态仙人掌
+- [ ] 摊还分析
+- [ ] 拟阵
 # Other
 - [ ] 使用Vim
