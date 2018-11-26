@@ -20,7 +20,7 @@ SAM使用最简状态表示。SAM是一个DAG，任何从初始状态出发的�
 $a$表示的所有子串是$b$表示的所有子串的后缀。那么$\forall r\in Right(b),r\in Right(a)$。
 又因为$Right(a)\neq Right(b)$，所以$Right(b) \subset Right(a)$。
 
-若$Right(s)\subset Right(fa)$，将$fa->s$连边，构成了一棵Parent树。
+若$Right(s)\subset Right(fa)$，将$fa\rightarrow s$连边，构成了一棵Parent树。
 可以发现$r_{fa}=l_s-1$，因此存储状态时只要存储$r_s$即可。
 \subsection{构造}
 与回文自动机类似，按顺序调用$extend$函数插入字符，时间复杂度$O(n)$。
@@ -28,7 +28,7 @@ $a$表示的所有子串是$b$表示的所有子串的后缀。那么$\forall r\
 对于每一个状态，维护其转移函数$nxt$，区间右端$len$，Parent树上父亲$link$。
 SAM内维护一个末状态$last$，初始状态为1，表示空串。
 
-插入步骤记为$SAM(T)->SAM(Tx)$，即增加了Tx的后缀。
+插入步骤记为$SAM(T)\rightarrow SAM(Tx)$，即增加了Tx的后缀。
 其中已加入的串为$T$，记$len(T)=L$。
 步骤如下：
 \begin{enumerate}

@@ -36,8 +36,8 @@ $f+low_e$单位的流量，这时需要额外给点$u$提供$low_e$单位的流�
 
 \begin{enumerate}
     \item 先求出可行流；
-    \item 在残量网络上跑$S->T$的最大流；
-    \item 答案即为可行流中$T->S$的流量+最大流流量。
+    \item 在残量网络上跑$S\rightarrow T$的最大流；
+    \item 答案即为可行流中$T\rightarrow S$的流量+最大流流量。
 \end{enumerate}
 
 正确性证明：
@@ -52,9 +52,9 @@ $f+low_e$单位的流量，这时需要额外给点$u$提供$low_e$单位的流�
 
 \begin{enumerate}
     \item 先求出可行流；
-    \item 在残量网络上跑$T->S$的最大流；
-    \item 答案即为可行流中$T->S$的流量-最大流流量。
-    $T->S$的最大流相当于将$S->T$的流量减至最小。
+    \item 在残量网络上跑$T\rightarrow S$的最大流；
+    \item 答案即为可行流中$T\rightarrow S$的流量-最大流流量。
+    $T\rightarrow S$的最大流相当于将$S\rightarrow T$的流量减至最小。
 \end{enumerate}
 
 利用性质~\ref{LFB}我们仍然能保证该流是一个可行流。

@@ -1,7 +1,7 @@
 \section{虚树}
 在多次询问的树型dp问题中，若遇到询问总点数与树的大小同数量级的情况，
 可以在每次询问中将询问节点建成一棵``虚树''，然后对虚树做树型dp。
-这样做可以有效地降低dp规模（$\displaystyle qT(n)->
+这样做可以有效地降低dp规模（$\displaystyle qT(n)\rightarrow
 \sum_{i=1}^q{\left(O(m_i\lg m_i)+T(O(2m_i))\right)}$）。
 
 \subsubsection{构造过程}
@@ -16,9 +16,9 @@
     \item 对于剩下每一个节点$u$：
     \begin{enumerate}
         \item 计算自己与栈顶节点$v$的$lca$；
-        \item 若栈中第二个节点$p$的深度比$lca$大，则连接$p->v$，弹出$v$。
+        \item 若栈中第二个节点$p$的深度比$lca$大，则连接$p\rightarrow v$，弹出$v$。
         重复该步骤直至不满足条件；
-        \item 若$lca$比$v$浅，连接$lca->v$，弹出$v$。
+        \item 若$lca$比$v$浅，连接$lca\rightarrow v$，弹出$v$。
         \item 若栈为空或$v$比$lca$浅，加入节点$lca$。
         \item 加入节点$u$。
     \end{enumerate}
@@ -34,8 +34,8 @@ $lca$有两种可能：
     首先不断地跳$v$直至$u$和$v$在虚树上的直接祖先为$lca$，
     然后记此时栈顶为$p$，继续分类：
     \begin{itemize}
-        \item $p$为$lca$，连接$lca->v$后把$v$换成$u$。
-        \item $p$为$lca$的祖先，连接$lca->v$后把$v$换成$lca$与$u$。
+        \item $p$为$lca$，连接$lca\rightarrow v$后把$v$换成$u$。
+        \item $p$为$lca$的祖先，连接$lca\rightarrow v$后把$v$换成$lca$与$u$。
         \item $lca$为原链头的祖先（对应空栈），把链全部折叠后加入节点$lca$与$u$。
     \end{itemize}
 \end{itemize}

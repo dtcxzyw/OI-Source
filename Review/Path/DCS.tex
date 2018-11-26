@@ -14,7 +14,8 @@ $x_i-x_j=c_k$等价于$x_i-x_j\leq c_k,x_j-x_i\leq -c_k$。
     当图中存在负权环路时，该差分约束系统无可行解。
 \end{theorem}
 
-证明：从负权环路中拆出一条边，记边为$(u->v，w_1)$，其它边合并得$(v->u,w_2)$，
+证明：从负权环路中拆出一条边，记边为$(u\rightarrow >v，w_1)$，
+其它边合并得$(v\rightarrow u,w_2)$，
 有$w_1+w_2<0$，将边还原成不等式组：
 \begin{eqnarray*}
     x_v-x_u&\leq& w_1\\

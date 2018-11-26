@@ -5,17 +5,16 @@
 无向图中点双连通的极大子图称为点双连通分量。
 
 可以发现当找到一个割点时，就已经访问了一个点双连通分量，所以在Tarjan算法求割点
-的基础上记录栈中元素即可。注意一个割点可能属于多个点双，因此割点的编号是无意义的，
+的基础上记录栈中元素就能得到点双。注意一个割点可能属于多个点双，因此割点的编号是无意义的，
 并且需要记录的元素是边而不是点。
 
 \begin{lstlisting}
 int dfn[size], low[size], st[size], top = 0, col[size],
     ccnt = 0;
-bool cut[size];
+std::vector<int> bcc[size];
 void DFS(int u, int p) {
     static int icnt = 0;
     dfn[u] = low[u] = ++icnt;
-    int child = 0;
     for(int i = last[u]; i; i = E[i].nxt) {
         int v = E[i].to;
         if(dfn[v]) {
@@ -27,24 +26,22 @@ void DFS(int u, int p) {
         else {
             st[++top] = i;
             DFS(v, u);
-            ++child;
             low[u] = std::min(low[u], low[v]);
             if(dfn[u] <= low[v]) {
-                cut[u] = true;
-                int c = ++ccnt;
-                while(true) {
-                    int eid = st[top--];
+                int c = ++ccnt,eid;
+                do {
+                    eid = st[top--];
                     int eu = E[eid ^ 1].to;
                     int ev = E[eid].to;
+                    if(col[eu] != c)
+                        bcc[c].push_back(eu);
+                    if(col[ev]!=c)
+                        bcc[c].push_back(ev);
                     col[eu] = col[ev] = c;
-                    if(u == eu && v == ev)
-                        break;
-                }
+                } while(eid != i);
             }
         }
     }
-    if(!p && child == 1)
-        cut[u] = false;
 }
 \end{lstlisting}
 
