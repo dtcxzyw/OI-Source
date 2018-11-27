@@ -36,3 +36,6 @@
 }
 \subsection{拓扑排序判环}
 若拓扑排序无法使得所有点都入队则说明存在环。
+可以通过枚举点，将其度数-1取得删掉一条边的效果。
+例如CF915D Almost Acyclic Graph：
+\lstinputlisting{Source/Source/TopSort/CF915D.cpp}
