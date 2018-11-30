@@ -41,8 +41,11 @@ const char* const key[] = {
     "algorithm", "cctype", "MST", "bid", "begin",
     "end", "Node", "val", "src", "sum", "delta", "sub",
     "memcpy", "memset", "scan", "last", "cur", "bit",
-    "dst", "move", "calc", "swap"
-                           ""
+    "dst", "move", "calc", "swap", "exgcd",
+    "convexHull", "Vec", "Line", "cross", "dot",
+    "length", "area", "HPI", "dir", "ori", "tmp",
+    "Circle", "dis", "#include", "#define", "angle"
+                                            ""
 };
 constexpr int size = std::extent<decltype(key)>::value,
               cnt = 5, fac = 1000;

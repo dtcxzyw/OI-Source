@@ -3,8 +3,12 @@
 \paragraph{仙人掌} 任意一条边最多只存在于一个环中的无向连通图叫做仙人掌。
 \subsubsection{仙人掌的判定}
 假设整个图已经连通，可以先对仙人掌进行DFS，记录DFS序与点的深度。然后
-树上差分求出经过这条边的环数。判定的同时还可以把仙人掌取环变成一棵森林。
+树上差分求出经过这条边的环数。判定的同时还可以把仙人掌去环变成森林。
 \begin{lstlisting}
+void initGraph(int n) {
+    memset(last, n);
+    cnt = 1;
+}
 bool flag[size];
 int p[size], d[size], id[size], icnt;
 void DFS(int u) {
@@ -55,6 +59,32 @@ bool graph2Forest(int n) {
 首先可以使用类似Tarjan的算法判断是否出现了环，然后对于环和桥分别dp，
 将环的信息记录在环上节点在DFS树上最浅的节点上（即在回到环上最浅点时
 另外dp），这样向上转移时就和桥一样了。
+
+模板：
+\begin{lstlisting}
+int d[size], p[size], dfn[size], low[size], icnt = 0;
+void DFS(int u) {
+    dfn[u] = low[u] = ++icnt;
+    for(int i = last[u]; i; i = E[i].nxt) {
+        int v = E[i].to;
+        if(v == p[u])
+            continue;
+        if(!dfn[v]) {
+            p[v] = u;
+            d[v] = d[u] + 1;
+            DFS(v);
+        }
+        low[u] = std::min(low[u], low[v]);
+        if(low[v] > dfn[u])
+            //'转移桥边' v->u
+    }
+    for(int i = last[u]; i; i = E[i].nxt) {
+        int v = E[i].to;
+        if(p[v] != u && dfn[u] < dfn[v])
+            solveRing(u, v);//'计算环' v->u
+    }
+}
+\end{lstlisting}
 \subsection{圆方树}
 圆方树是解决仙人掌问题的利器，主要思想是把仙人掌构造为一棵树，然后使用
 熟悉的树上操作来处理。
@@ -76,16 +106,15 @@ void tarjan(int u) {
     dfn[u]=low[u]=++icnt;
     for(int i=last[u];i;i=E[i].nxt) {
         int v=E[i].to;
-        if(dfn[v]) {
-            if(v!=p[u])
-                low[u]=std::min(low[u],dfn[v]);
-        }
-        else {
+        if(v==p[u])
+            continue;
+        if(!dfn[v]) {
             p[v]=u;
             d[v]=d[u]+1;
             DFS(v);
             low[u]=std::min(low[u],low[v]);
         }
+        else low[u]=std::min(low[u],dfn[v]);
         if(dfn[u]<low[v])
             //add u->v
     }
@@ -98,8 +127,11 @@ void tarjan(int u) {
 ncnt=n;
 \end{lstlisting}
 
+还有一种简洁的建树方法：
+参见\url{https://blog.csdn.net/qq\_36551189/article/details/81047872}
+
 圆方树具有以下性质：
-\paragraph{子仙人掌} 以$r$为根的仙人掌上点$p$的子仙人掌为去掉$p$到$r$的连通块后
+\paragraph{子仙人掌} 以$r$为根的仙人掌上点$p$的子仙人掌为去掉$p$到$r$的简单路径的边后
 点$p$所在的连通块。
 \begin{property}
     以$r$为根仙人掌上点$p$的子仙人掌对应圆方树上点$p$的子树。
@@ -121,7 +153,7 @@ ncnt=n;
     \item 若LCA为方点，则说明该路径经过了环上的两个点，但走哪一侧还未知。
     首先计算询问的这两个点分别在哪棵子树中，计算两条路径的答案，接下来只要考虑
     环上路径即可。
-    询问子树时需要对是否为重儿子进行分类：
+    询问子树时需要对在LCA环上的祖先是否为重儿子进行分类，jump函数计算该点的编号：
     \begin{lstlisting}
     int jump(int u,int lca) {
         int res;

@@ -18,7 +18,7 @@ int compare(int id, const std::string& exec) {
     if(res != 0)
         return 0;
     std::ifstream outf(out);
-    using Iter = std::istream_iterator<int>;
+    using Iter = std::istream_iterator<long long>;
     return std::equal(Iter(outf), Iter(),
                       Iter(stdof)) ?
         1 :
