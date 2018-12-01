@@ -87,7 +87,7 @@ $\varphi(x)$即表示分母为$x$的最简分数个数。
 Wikipedia-EN\footnote{Arithmetic function - Wikipedia
 	\url{https://en.wikipedia.org/wiki/Arithmetic\_function}}。
 \subsection{线性筛}
-主要思路是每次拿当前的数和已经筛出的质数构造成新的合数并将其筛去。
+主要思路是每次拿当前的数和已经筛出的素数构造成新的合数并将其筛去。
 
 代码如下：
 \begin{lstlisting}[title=Euler]
@@ -108,13 +108,13 @@ void pre(int n) {
 注意到case 1中的优化，它保证了每个合数最多被筛1次，从而使时间复杂度变为$O(n)$，
 并且增加了一个性质：合数只被其最小质因子筛去。
 接下来证明该优化的正确性：当$i\bmod p_j=0$时，有$i=kp_j$，
-若要用$p_{j+x}$筛去后面的合数$ip_{j+x}=kp_jp_{j+x}$，可知该合数未来将被合数$kp_{j+x}$与质数
+若要用$p_{j+x}$筛去后面的合数$ip_{j+x}=kp_jp_{j+x}$，可知该合数未来将被合数$kp_{j+x}$与素数
 $p_j$筛去，直接跳出不会影响结果，且保证合数被最小质因子筛除，便于质因数分解。
 \subsection{积性函数筛}
 \subsubsection{欧拉函数}
 \begin{itemize}
 	\item $\varphi(1)=1$；
-	\item 若$i$为质数，则$\varphi(i)=i-1$；
+	\item 若$i$为素数，则$\varphi(i)=i-1$；
 	\item 若$i \bmod p_j=0$，则说明$ip_j$存在至少两个因子$p_j$，因此
 	      $\varphi(ip_j)=\varphi(i)p_j$；
 	\item 若$i \bmod p_j\neq 0$，则根据积性函数性质可得
@@ -123,7 +123,7 @@ $p_j$筛去，直接跳出不会影响结果，且保证合数被最小质因子
 \subsubsection{莫比乌斯函数}
 \begin{itemize}
 	\item $\mu(1)=1$；
-	\item 若$i$为质数，则$\mu(i)=-1$；
+	\item 若$i$为素数，则$\mu(i)=-1$；
 	\item 若$i \bmod p_j=0$，则说明$ip_j$存在至少两个因子$p_j$，因此
 	      $\mu(ip_j)=0$。注意若数组已清零则不赋值；
 	\item 若$i \bmod p_j\neq 0$，则根据积性函数性质可得
@@ -133,7 +133,7 @@ $p_j$筛去，直接跳出不会影响结果，且保证合数被最小质因子
 记数组$A_i$为$i$中最小质因子的次数。
 \begin{itemize}
 	\item $\tau(1)=1,A_1=0$；
-	\item 若$i$为质数，则$\tau(i)=2,A_i=1$；
+	\item 若$i$为素数，则$\tau(i)=2,A_i=1$；
 	\item 若$i \bmod p_j=0$，则说明$ip_j$存在至少两个因子$p_j$，因此
 	      $\tau(ip_j)=\tau(i)\cdot\frac{A_i+2}{A_i+1}$且$A_{ip_j}=A_i+1$；
 	\item 若$i \bmod p_j\neq 0$，则根据积性函数性质可得
@@ -147,7 +147,7 @@ $p_j$筛去，直接跳出不会影响结果，且保证合数被最小质因子
 记数组$low_i$为$i$中最小质因子的幂，$sum_i$为$i$中最小质因子的贡献。
 \begin{itemize}
 	\item $\sigma(1)=1,low_1=1,sum_1=1$；
-	\item 若$i$为质数，则$\sigma(i)=i+1,low_i=i,sum_i=i+1$；
+	\item 若$i$为素数，则$\sigma(i)=i+1,low_i=i,sum_i=i+1$；
 	\item 若$i \bmod p_j=0$，则说明$ip_j$存在至少两个因子$p_j$，因此
 	      $\sigma(ip_j)=\sigma(i)\cdot\frac{sum_{ip_j}}{sum_i}$且
 	      $low_{ip_j}=low_i*p_j,sum_{ip_j}=sum_i+low_{ip_j}$；
@@ -160,7 +160,7 @@ $p_j$筛去，直接跳出不会影响结果，且保证合数被最小质因子
 要求能够快速推出$f({p_i}^{c_i})$的值。
 \begin{itemize}
 	\item $f(1)=1,sum_1=？？？$；
-	\item 若$i$为质数，则$f(i)=sum_i=？？？$；
+	\item 若$i$为素数，则$f(i)=sum_i=？？？$；
 	\item 若$i \bmod p_j=0$，则说明$ip_j$存在至少两个因子$p_j$，因此
 	      $f(ip_j)=f(i)\cdot\frac{sum_{ip_j}}{sum_i}$；
 	\item 若$i \bmod p_j\neq 0$，则根据积性函数性质可得

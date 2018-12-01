@@ -73,7 +73,7 @@
 - [x] 背包
 - [x] 数位动规
 - [ ] 插头dp
-- [ ] LCIS
+- [x] LCIS
 ### dp优化
 - [x] 单调队列
 - [x] 斜率优化
@@ -216,6 +216,8 @@
 - [ ] 动态DP
 - [ ] ExKMP(Z Algorithm)
 - [ ] 二维FFT
+- [ ] 欧几里得距离MST[By zball](https://www.cnblogs.com/tmzbot/p/6203547.html)
+- [ ] 超大斐波那契数取模[By ACdreamer](https://blog.csdn.net/ACdreamers/article/details/25616461)
 # Research
 - [ ] 卡SPFA
 - [ ] 卡Hash [By dacin21](https://codeforces.com/blog/entry/60442)

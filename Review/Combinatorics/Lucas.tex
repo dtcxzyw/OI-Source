@@ -2,7 +2,7 @@
 \index{L!Lucas's Theorem}
 \subsection{Lucas定理}
 \begin{theorem}[Lucas's Theorem]
-	对于非负整数$n,m$以及质数$p$，若
+	对于非负整数$n,m$以及素数$p$，若
 	\begin{eqnarray*}
 		n&=&\sum_{i=0}^k{n_ip^i}\\
 		m&=&\sum_{i=0}^k{m_ip^i}
@@ -13,13 +13,13 @@
 	\end{displaymath}
 \end{theorem}
 Nathan Fine的证明：
-对于质数$p$与整数$n$满足$1\leq n <p$，有
+对于素数$p$与整数$n$满足$1\leq n <p$，有
 \begin{lemma}
 	\begin{displaymath}
 		p|\binomial{p}{n}=\frac{p\cdot(p-1)\cdots(p-n+1)}{n\cdot(n-1)\cdots 1}
 	\end{displaymath}
 \end{lemma}
-证明：注意到$p$是质数且与分母的每一个数互质，不可被分母的因子约去，所以最终值必有因子$p$。
+证明：注意到$p$是素数且与分母的每一个数互质，不可被分母的因子约去，所以最终值必有因子$p$。
 那么可用普通生成函数表达为：
 \begin{displaymath}
 	(1+x)^p\equiv 1+x^p \pmod{p}
@@ -66,7 +66,7 @@ $\displaystyle p=\sum_{i=1}^k{p_i^{c_i}}$。
 	\end{lstlisting}
 	\item 第三部分：成为了一个新阶乘，递归解决。
 \end{itemize}
-对于单个质数幂计算复杂度$O(p_i^{c_i})$。
+对于单个素数幂计算复杂度$O(p_i^{c_i})$。
 
 以上内容参考了Candy?的博客\footnote{[Lucas定理]【学习笔记】 - Candy?
 	\url{https://www.cnblogs.com/candy99/p/6637629.html}}。

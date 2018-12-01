@@ -5,8 +5,8 @@
 #include <string>
 #include <type_traits>
 const char* const key[] = {
-    "continute", "friend", "true", "decltype", "goto",
-    "reinterpret_cast", "try", "asm", "defult", "if",
+    "continue", "friend", "true", "decltype", "goto",
+    "reinterpret_cast", "try", "asm", "default", "if",
     "return", "typedef", "auto", "delete", "inline",
     "short", "typeid", "bool", "do", "int", "signed",
     "typename", "break", "double", "long", "long long",
@@ -44,11 +44,12 @@ const char* const key[] = {
     "dst", "move", "calc", "swap", "exgcd",
     "convexHull", "Vec", "Line", "cross", "dot",
     "length", "area", "HPI", "dir", "ori", "tmp",
-    "Circle", "dis", "#include", "#define", "angle"
-                                            ""
+    "Circle", "dis", "#include", "#define", "angle",
+    "[i]", "%mod", "phi"
+                   ""
 };
 constexpr int size = std::extent<decltype(key)>::value,
-              cnt = 5, fac = 1000;
+              cnt = 5, fac = 700;
 int id[size];
 using Clock = std::chrono::high_resolution_clock;
 int main() {
@@ -58,6 +59,7 @@ int main() {
     std::shuffle(id, id + size, dev);
     int count = 0;
     auto beg = Clock::now();
+    std::cout.precision(0);
     for(int i = 0; i < size; i += cnt) {
         int end = std::min(size, i + cnt);
         std::string str;
@@ -67,6 +69,7 @@ int main() {
         }
         str.pop_back();
         auto limit = 1000000LL * str.size() * fac;
+        Clock::duration t;
         while(true) {
             std::cout << "P " << str << std::endl
                       << "A ";
@@ -74,17 +77,21 @@ int main() {
             auto beg = Clock::now();
             std::string input;
             std::getline(std::cin, input);
-            auto t = Clock::now() - beg;
+            t = Clock::now() - beg;
             if(input == str && t.count() <= limit)
                 break;
             std::cout << (input != str ? "WA" : "TLE")
                       << std::endl;
         }
+        auto mt = t.count() * 1e-9 / 60;
+        std::cout << "group " << i / cnt << " ("
+                  << std::fixed << (100.0 * end / size)
+                  << "%) " << (str.size() / mt)
+                  << " char/min" << std::endl;
     }
-    double t =
-        (Clock::now() - beg).count() * 1e-9 / 60;
-    std::cout << (count / t) << "char/min"
-              << std::endl;
+    auto t = (Clock::now() - beg).count() * 1e-9 / 60;
+    std::cout << std::fixed << (count / t)
+              << " char/min" << std::endl;
     while(true)
         ;
     return 0;

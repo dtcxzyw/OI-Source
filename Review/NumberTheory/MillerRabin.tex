@@ -56,7 +56,7 @@ bool witness(int x, int base) {
 以上内容参考了算法导论\cite{ITA3}第31.8节。
 \subsection{实现细节}
 \begin{itemize}
-    \item 在MillerRabin之前可先用前几个质数筛掉大部分的合数。
+    \item 在MillerRabin之前可先用前几个素数筛掉大部分的合数。
     \item 如果数据范围在4759123141内，即在$uint32\_t$范围内，
     只用2,7,61为基数判断。
     \item 如果数据范围在$10^{16}$内，使用2,3,7,61,24251作为基数，

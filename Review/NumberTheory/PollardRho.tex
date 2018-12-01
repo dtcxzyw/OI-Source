@@ -5,7 +5,7 @@ Pollard Rho算法可以期望在$\Theta(\sqrt{p})$次算术运算内得到$n$的
 \subsection{利用Birthday Trick提高效率}
 \subsubsection{朴素随机算法}
 考虑每次随机选择一个数$x\in [2,n-1]$，若$x|n$，则$x$为$n$的一个因子，最坏情况下
-（$n$为两质数之积）期望测试次数为$\frac{n-2}{2}$。
+（$n$为两素数之积）期望测试次数为$\frac{n-2}{2}$。
 \subsubsection{Birthday Trick}
 \index{B!Birthday Trick}
 可以把问题转换为选取$k$个数$x$，每次询问是否存在$(x_i-x_j)|n$。

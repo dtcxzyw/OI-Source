@@ -1,9 +1,9 @@
 \section{快速数论变换NTT}
 \subsection{NTT原理}
 NTT的原理与FFT类似，即找到单位根$x$满足$x^n\equiv 1 \pmod{p}$。
-NTT模数$p$需满足$p$为质数且$p=r\cdot 2^k+1$。
+NTT模数$p$需满足$p$为素数且$p=r\cdot 2^k+1$。
 
-根据定理~\ref{FLT}可知若模数$p$为质数则有$x^{p-1}\equiv 1 \pmod{p}$,
+根据定理~\ref{FLT}可知若模数$p$为素数则有$x^{p-1}\equiv 1 \pmod{p}$,
 所以当$n|(p-1)$时才能进行NTT。
 
 根据~\ref{PrimitiveRoot}节所述，$p$必有原根，设$p$的原根为$g$，则

@@ -1,0 +1,34 @@
+\section{LCIS}
+LCIS即Longest Common Increasing Subsequence，最长公共上升子序列。
+注意这个问题不能用LCS+LIS解决。
+
+输入长度为$n$的数组A和长度为$m$的数组B。
+\subsection{常规dp}
+记$dp[i][j]$为数组A的前$i$个元素与数组B的前$j$个元素中，以$B[j]$为结尾的最长
+公共上升子序列长度。
+
+接下来分类讨论状态转移方程：
+\begin{itemize}
+    \item $A[i]=B[j]$，则考虑将$A[i]$与$B[j]$匹配。显然转移位置的第一维为
+    $i-1$，第二维只能枚举$B[k]<B[j]$转移。
+    \item 若不匹配则直接继承$dp[i-1][j]$的值。
+\end{itemize}
+
+综上所述，状态转移方程为：
+\begin{displaymath}
+    dp[i][j]=\left\{\begin{array}{lr}
+        dp[i-1][j]&\textrm{if~}A[i]\neq B[j]\\
+        max\left\{dp[i-1][k]\right\}+1 (0\leq k <j \wedge B[k]<B[j])&
+        \textrm{if~}A[i]=B[j]
+    \end{array}\right.
+\end{displaymath}
+时间复杂度$O(nm^2)$。
+\subsection{优化}
+注意到第一层循环后$A[i]$是固定的，而枚举取$max$的情况仅在$A[i]=B[j]$时出现。
+因此可以在第一层循环内维护一个最优转移值，当$A[i]>B[j]$时更新该值，当$A[i]=B[j]$时
+用该值更新，时间复杂度$O(nm)$。如果不需要输出方案还可以滚动数组节省空间。
+
+上述内容参考了ojnQ的博客\footnote{
+    LCIS 最长公共上升子序列问题DP算法及优化
+    \url{https://www.cnblogs.com/WArobot/p/7479431.html}
+}。

@@ -1,4 +1,88 @@
 \section{二次剩余与三次剩余}
-留坑待补。
+\subsection{勒让德符号}
+\index{L!Legendre Symbol}
+定义勒让德符号：
+\begin{displaymath}
+	\Legendre{a}{p}=
+	\left\{\begin{array}{lr}
+		0  & a\equiv 0 \pmod{p}                  \\
+		1  & \exists x,x^2\equiv a \pmod{p}      \\
+		-1 & \not \exists x,x^2\equiv a \pmod{p}
+	\end{array}\right.
+\end{displaymath}
+勒让德符号是完全积性函数，即
+\begin{displaymath}
+	\Legendre{ab}{p}=\Legendre{a}{p}\Legendre{b}{p}
+\end{displaymath}
+\subsubsection{与斐波那契数列的关系}
+\begin{theorem}
+	若$p$为素数，则
+	\begin{displaymath}
+		F_{p-\Legendre{p}{5}}\equiv 0 \pmod{p}
+	\end{displaymath}
+	\begin{displaymath}
+		F_p\equiv \Legendre{p}{5} \pmod{p}
+	\end{displaymath}
+\end{theorem}
+该定理用于求超大斐波那契数取模。
+\subsubsection{二次互反律}
+\index{Q!Quadratic Reciprocity Law}
+\begin{theorem}
+	若$p,q$为不同的奇素数，则
+	\begin{displaymath}
+		\Legendre{p}{q}\Legendre{q}{p}=(-1)^\frac{(p-1)(q-1)}{4}
+	\end{displaymath}
+\end{theorem}
+此外有两个补充结论：
+\begin{theorem}
+    \begin{displaymath}
+        \Legendre{-1}{p}=(-1)^\frac{p-1}{2}=\left\{\begin{array}{lr}
+            1 & \textrm{if~} p\equiv 1\pmod{4}\\
+            -1 & \textrm{if~} p\equiv 3\pmod{4}\\
+        \end{array}\right.
+    \end{displaymath}
+\end{theorem}
+\begin{theorem}
+    \begin{displaymath}
+        \Legendre{2}{p}=(-1)^\frac{p^2-1}{8}=\left\{\begin{array}{lr}
+            1 & \textrm{if~} p\equiv 1,7\pmod{4}\\
+            -1 & \textrm{if~} p\equiv 3,5\pmod{4}\\
+        \end{array}\right.
+    \end{displaymath}
+\end{theorem}
 \subsection{二次剩余}
+\index{Q!Quadratic Residue}
+求解二次剩余即求解下列同余方程：
+\begin{displaymath}
+	x^2\equiv a \pmod{p}
+\end{displaymath}
+\subsubsection{欧拉判别准则}
+\index{E!Euler's Criterion}
+\begin{theorem}[Euler's Criterion]
+    若$p$为奇素数且$p\nmid a$，则
+    \begin{displaymath}
+        \Legendre{a}{p}\equiv a^\frac{p-1}{2}\pmod{p}
+    \end{displaymath}
+\end{theorem}
+\subsubsection{模奇素数}
+这里使用ACdreamer介绍的Cipolla随机化算法。
+\index{C!Cipolla's Algorithm}
+\begin{theorem}
+    设$b$满足$\omega=b^2-a$不是模$p$的二次剩余，则
+    $x\equiv (b+\sqrt{\omega})^\frac{p-1}{2}\pmod{p}$是
+    方程$x^2\equiv a\pmod{p}$的解。
+\end{theorem}
+证明：
+
+\subsubsection{模奇素数幂}
+\subsubsection{模2的幂}
+\subsubsection{模合数}
+
+上述内容参考了Miskcoo\footnote{
+	[数论]二次剩余及计算方法
+	\url{http://blog.miskcoo.com/2014/08/quadratic-residue}
+}和ACdreamer\footnote{
+    二次同余方程的解
+    \url{https://blog.csdn.net/acdreamers/article/details/10182281}
+}的博客与百度百科（勒让德符号，二次互反律与欧拉判别准则）。
 \subsection{三次剩余}
