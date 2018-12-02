@@ -45,8 +45,8 @@ const char* const key[] = {
     "convexHull", "Vec", "Line", "cross", "dot",
     "length", "area", "HPI", "dir", "ori", "tmp",
     "Circle", "dis", "#include", "#define", "angle",
-    "[i]", "%mod", "phi"
-                   ""
+    "[i]", "%mod", "phi", "pos", "aug", "intersect"
+                                        ""
 };
 constexpr int size = std::extent<decltype(key)>::value,
               cnt = 5, fac = 700;
