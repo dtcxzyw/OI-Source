@@ -45,11 +45,16 @@ const char* const key[] = {
     "convexHull", "Vec", "Line", "cross", "dot",
     "length", "area", "HPI", "dir", "ori", "tmp",
     "Circle", "dis", "#include", "#define", "angle",
-    "[i]", "%mod", "phi", "pos", "aug", "intersect"
-                                        ""
+    "[i]", "%mod", "phi", "pos", "aug", "intersect",
+    "final", "override", "random_shuffle",
+    "next_permutation", "nth_element", "push_heap",
+    "pop_heap", "Yes", "No", "No Solution", "maxv",
+    "minv", "?:", "equal", "inf", "eps", "reset",
+    "pair", "first", "second", "time", "clock"
+                                       ""
 };
 constexpr int size = std::extent<decltype(key)>::value,
-              cnt = 5, fac = 700;
+              cnt = 10, fac = 500;
 int id[size];
 using Clock = std::chrono::high_resolution_clock;
 int main() {

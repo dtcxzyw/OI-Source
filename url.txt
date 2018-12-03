@@ -159,3 +159,4 @@ https://www.cnblogs.com/ywwyww/p/8511463.html
 最小割建模思路 https://www.cnblogs.com/jszkc/p/7310257.html
 莫队 https://www.cnblogs.com/RabbitHu/p/MoDuiTutorial.html
 树上分块 https://www.cnblogs.com/hua-dong/p/8275227.html
+一些整理 http://hzq84621.is-programmer.com/posts/210500.html

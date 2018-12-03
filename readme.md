@@ -177,13 +177,11 @@
 - [x] DLX
 - [ ] 最小树型图
 - [ ] 单纯形算法
-- [ ] Johnson
-- [ ] ECC+ECM
+- [x] Johnson
 - [ ] 通用筛法
-- [ ] ID3
 - [ ] 平面性算法
 - [ ] 点定位
-- [ ] 二次剩余
+- [x] 二次剩余、三次剩余、高次剩余
 - [ ] 拉格朗日乘数法
 - [ ] 常系数齐次线性递推
 - [ ] 拉格朗日反演
@@ -195,16 +193,14 @@
 - [ ] 链分治
 - [x] 最小割树
 - [x] 势能分析线段树
-- [ ] 弦图
+- [ ] 弦图、最大势算法
 - [ ] Hall定理
 - [ ] 近似算法
-- [ ] 笛卡尔树 O(n)-O(1) RMQ
 - [ ] Raney 引理
 - [x] 快速凸包
 - [x] 康托展开
 - [ ] ETT
 - [ ] Top-Tree
-- [ ] 最大势算法
 - [ ] 扩展Dijkstra
 - [ ] Stoer-Wagner算法
 - [ ] Menon's identity
@@ -217,9 +213,13 @@
 - [ ] ExKMP(Z Algorithm)
 - [ ] 二维FFT
 - [ ] 欧几里得距离MST[By zball](https://www.cnblogs.com/tmzbot/p/6203547.html)
-- [ ] 超大斐波那契数取模[By ACdreamer](https://blog.csdn.net/ACdreamers/article/details/25616461)
+- [ ] 洲阁筛
 # Research
+- [ ] ECC+ECM
+- [ ] 笛卡尔树 O(n)-O(1) RMQ
+- [ ] ID3
 - [ ] 卡SPFA
+- [ ] 超大斐波那契数取模[By ACdreamer](https://blog.csdn.net/ACdreamers/article/details/25616461)
 - [ ] 卡Hash [By dacin21](https://codeforces.com/blog/entry/60442)
 - [ ] 卡并查集
 - [ ] 最大流算法效率比较
@@ -234,3 +234,4 @@
 - [ ] 拟阵
 # Other
 - [ ] 使用Vim
+- [ ] 学习十指打字
