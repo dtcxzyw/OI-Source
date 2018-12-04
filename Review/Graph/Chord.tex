@@ -1,5 +1,5 @@
 \section{弦图}
-\index{C!Chord}
+以下所述的图均为无向图。
 \subsection{相关概念}
 \subsubsection{团}
 \index{C!Clique}
@@ -9,14 +9,62 @@
 一个不是其它团的子集的团。
 \subsubsection{最大团}
 \index{M!Maximum Clique}
-点数最大的团，记团数为$\omega(G)$。
+点数最大的团。
 \subsubsection{最小染色}
 \index{M!Minimum Coloring}
 $\chi(G)$为使得相邻点颜色不同的最小颜色数。
-
-\subsection{完美消除序列}
-\subsection{最大势算法}
+\subsubsection{弦}
+\index{C!Chord}
+连接环中不相邻两点的边。
+\subsubsection{弦图}
+\index{C!Chordal Graph}
+图中任意长度大于3的环都至少有一根弦。
+\subsubsection{诱导子图}
+\index{I!Included Subgraph}
+诱导子图$G'=(V',E')$，其中$V'\subseteq V,E'=\{(u,v)|u,v\in V',(u,v)\in E\}$。
+\begin{lemma}
+    弦图的诱导子图仍然是弦图。
+\end{lemma}
 \subsection{弦图判定}
+\subsubsection{单纯点}
+\index{S!Simplicial Vertex}
+点$u$为单纯点当且仅当点$u$以及其邻接点构成的诱导子图是一个团。
+\begin{lemma}
+    弦图至少有一个单纯点，若其不为完全图则至少有两个不相邻的单纯点。
+\end{lemma}
+\subsubsection{完美消除序列}
+\index{P!Perfect Elimination Ordering}
+点集的序列$v_1,v_2,\cdots,v_n$是完美消除序列当且仅当$v_i$在$\{v_i,v_{i+1},\cdots,v_n\}$
+的诱导子图上是单纯点。
+\begin{theorem}
+    图$G$是弦图当且仅当其存在完美消除序列。
+\end{theorem}
+充分性：使用数学归纳法假设弦图的真诱导子图有完美消除序列，由上文两个引理得
+该弦图的完美消除序列可由单纯点$u$+剩余点的诱导子图的完美消除序列得到。
+
+必要性：设出现在完美消除序列中的某点为$u$，根据完美消除序列的定义得与$u$相连的所有点中
+点对之间有连边，故不存在长度$>3$的无弦环。
+\subsubsection{朴素判定算法}
+每次找到一个单纯点$v$并加入完美消除序列中，然后删除$v$及其连边。
+直到所有点都被删除或找不到单纯点为止。时间复杂度$O(n^4)$。
+\subsubsection{最大势算法}
+维护每个点是否被标号以及相邻标号点的数量。每次选择未被标号且相邻标号点数量
+最多的点标号。序列顺序与标号顺序相反。使用链表而不是优先队列实现，时空复杂度为$O(n+m)$。
+
+\begin{theorem}
+    若该图是弦图，则最大势算法生成的是完美消除序列。
+\end{theorem}
+证明留坑待补。
+\index{*TODO!最大势算法正确性证明}
+
+接下来要判断这个序列是否为完美消除序列。设$v_i$与${v_{i+1},v_{i+2},\cdots,v_n}$中
+的$u_1,u_2,\cdots,u_k$相邻，仅需检查$u_1$是否与$u_2,\cdots,u_k$是否全相邻
+（若全相邻则不仅保证了$u_1$到$u_2,\cdots,u_k$的相邻，
+还会触发$u_2$到$u_3,\cdots,u_k$的检查，以此类推可以遍历到整个团的边）。
+时间复杂度$O(n+m)$。
+
+模板：
+\lstinputlisting{Source/Templates/MCS.cpp}
 \subsection{弦图的极大团}
 \subsection{弦图的点染色}
 \subsection{弦图的最大独立集与最小点覆盖}

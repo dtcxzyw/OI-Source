@@ -78,10 +78,10 @@ int main() {
         while(true) {
             std::cout << "P " << str << std::endl
                       << "A ";
-            count += str.size();
             auto beg = Clock::now();
             std::string input;
             std::getline(std::cin, input);
+            count += input.size();
             t = Clock::now() - beg;
             if(input == str && t.count() <= limit)
                 break;
