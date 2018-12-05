@@ -50,8 +50,9 @@ const char* const key[] = {
     "next_permutation", "nth_element", "push_heap",
     "pop_heap", "Yes", "No", "No Solution", "maxv",
     "minv", "?:", "equal", "inf", "eps", "reset",
-    "pair", "first", "second", "time", "clock"
-                                       ""
+    "pair", "first", "second", "time", "clock", "eval",
+    "heap", "hash", "LUT", "clone"
+                           ""
 };
 constexpr int size = std::extent<decltype(key)>::value,
               cnt = 10, fac = 500;
