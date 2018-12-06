@@ -188,22 +188,20 @@
 - [x] 快速莫比乌斯变换
 - [ ] 支配树
 - [ ] Segment tree beats
-- [ ] Lindström–Gessel–Viennot lemma
+- [x] Lindström–Gessel–Viennot lemma
 - [ ] 边分治
 - [ ] 链分治
 - [x] 最小割树
 - [x] 势能分析线段树
 - [x] 弦图、最大势算法
 - [ ] Hall定理
-- [ ] 近似算法
-- [ ] Raney 引理
+- [x] Raney引理
 - [x] 快速凸包
 - [x] 康托展开
 - [ ] ETT
 - [ ] Top-Tree
 - [ ] 扩展Dijkstra
 - [ ] Stoer-Wagner算法
-- [ ] Menon's identity
 - [ ] LCT维护子树信息和边权信息
 - [ ] 共价大爷游长沙技巧
 - [ ] FFT字符串通配
@@ -215,6 +213,7 @@
 - [ ] 欧几里得距离MST[By zball](https://www.cnblogs.com/tmzbot/p/6203547.html)
 - [ ] 洲阁筛
 # Research
+- [ ] 近似算法
 - [ ] ECC+ECM
 - [ ] 笛卡尔树 O(n)-O(1) RMQ
 - [ ] ID3

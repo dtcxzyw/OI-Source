@@ -3,16 +3,16 @@
 \index{T!Tournament}
 竞赛图是一个无向完全图被定向后得到的图。
 \begin{theorem}
-    竞赛图缩点后是一条链。
+	竞赛图缩点后是一条链。
 \end{theorem}
 \subsubsection{竞赛图判定}
 竞赛图可以用来指示两两选手比赛的胜负，判定比分是否
 合法即判定是否存在合法的竞赛图。
 \index{L!Landau's Theorem}
 \begin{theorem}[Landau's Theorem]
-对于一个有序的竞赛图度数序列/得分序列$0\leq s_1 \leq s_2 \leq \cdots \leq s_n$，
-有$\displaystyle \forall 1\leq k\leq n,\sum_{i=1}^k{s_i}\geq \binomial{k}{2}$
-，当$k=n$时等号必须成立。
+	对于一个有序的竞赛图度数序列/得分序列$0\leq s_1 \leq s_2 \leq \cdots \leq s_n$，
+	有$\displaystyle \forall 1\leq k\leq n,\sum_{i=1}^k{s_i}\geq \binomial{k}{2}$
+	，当$k=n$时等号必须成立。
 \end{theorem}
 对度数/胜利场数排序后逐个判断即可。
 \subsection{最小平均值环}
@@ -24,18 +24,40 @@
 \index{P!Planar Graph}
 以下仅讨论$V\geq 3$的情况：
 \begin{property}
-    $E\leq 3V-6$
+	$E\leq 3V-6$
 \end{property}
 \begin{property}
-    $F\leq 2V-4$
+	$F\leq 2V-4$
 \end{property}
 使用这些性质可以限制边数以加速平面图判定。
 
 上述内容参考了Wikipedia-EN\footnote{Planar graph - Wikipedia
-    \url{https://en.wikipedia.org/wiki/Planar\_graph}
+	\url{https://en.wikipedia.org/wiki/Planar\_graph}
 }
 \subsection{拓扑排序判环}
 若拓扑排序无法使得所有点都入队则说明存在环。
 可以通过枚举点，将其度数-1取得删掉一条边的效果。
 例如CF915D Almost Acyclic Graph：
 \lstinputlisting{Source/Source/TopSort/CF915D.cpp}
+\subsection{Lindström–Gessel–Viennot Lemma}
+\index{L!Lindström–Gessel\\–Viennot Lemma}
+给定一个DAG，以及$n$个起点$a_1,a_2,\cdots,a_n$和对应终点$b_1,b_2,\cdots,b_n$，
+求这$n$条点不相交（包括终点）路径的方案数。
+
+根据Lindström–Gessel–Viennot Lemma,记$e(a_i,b_j)$为$a_i\rightarrow b_j$的
+路径方案数，答案为\begin{displaymath}
+	det\left(\left[\begin{array}{cccc}
+			e(a_1,b_1) & e(a_1,b_2) & \cdots & e(a_1,b_n) \\
+			e(a_2,b_1) & e(a_2,b_2) & \cdots & e(a_2,b_n) \\
+			\vdots     & \vdots     & \ddots & \vdots     \\
+			e(a_n,b_1) & e(a_n,b_2) & \cdots & e(a_2,b_n) \\
+		\end{array}\right]\right)
+\end{displaymath}
+\subsubsection{推广}
+实际上$e(a_i,b_j)$为$a_i\rightarrow b_j$的所有路径上边权积之和，
+类似Matrix-Tree定理的讨论可扩展到边权相关问题。
+
+上述内容参考了Wikipedia-EN\footnote{
+	Lindström–Gessel–Viennot lemma - Wikipedia
+	\url{https://en.wikipedia.org/wiki/Lindstr\%C3\%B6m\%E2\%80\%93Gessel\%E2\%80\%93Viennot\_lemma}
+}。

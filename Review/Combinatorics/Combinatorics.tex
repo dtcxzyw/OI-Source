@@ -4,7 +4,8 @@
 \input{Combinatorics/Stirling}
 \input{Combinatorics/Lucas}
 \input{Combinatorics/Permutation}
-\section{其它公式}
+\section{其它公式与定理}
+\subsection{常用公式}
 \begin{theorem}
     \begin{displaymath}
         \sum_{i=0}^n\binomial{i}{k}=\binomial{n+1}{k+1}
@@ -56,3 +57,23 @@
     \sum_{k=0}^m{\binomial{k-n-1}{k}}\\
     &=&\binomial{m-n}{m} \textrm{(展开后不断合并最左边两项))}
 \end{eqnarray*}
+\subsection{Raney引理}
+\index{R!Raney Lemma}
+\begin{lemma}[Raney Lemma]
+	设整数序列为$A_1,A_2,\cdots,A_n$，记前缀和$S_k=\displaystyle \sum_{i=1}^k{A_k}$，
+	满足$S_n=1$。则在该序列的循环表示中，有且只有一个序列满足所有前缀和均大于0。
+    任何一种循环表示都和自身不同。
+\end{lemma}
+证明留坑待补。
+\index{*TODO!Raney引理证明}
+
+\paragraph{例题} SP9507 MARIO2 - Mario and Mushrooms
+
+可将循环同构的序列归类，根据Raney引理，每类序列只有1个序列满足题意。
+
+\lstinputlisting{Source/Source/Count/SP9507.cpp}
+
+上述内容参考了兔子大天使的博客\footnote{
+	Raney引理
+	\url{https://blog.csdn.net/duxingstar/article/details/6406022}
+}。

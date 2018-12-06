@@ -24,19 +24,19 @@ const char* const key[] = {
     "split", "998244353", "size", "siz", "modify",
     "query", "build", "DFS", "dinic", "MCMF", "dp",
     "mod", "powm", "solve", "check", "col", "dfn",
-    "low", "sub", "write", "output", "input", "FFT",
-    "init", "pre", "NTT", "alloc", "create", "icnt",
-    "ecnt", "ccnt", "cnt", "id", "find", "getRandom",
-    "splay", "push", "update", "topSort", "extend",
-    "gcd", "lucas", "inv", "fac", "std", "sort",
-    "unique", "lower", "upper", "_bound", "root", "fa",
-    "LCA", "son", "len", "fabs", "sqrt", "vector",
-    "map", "set", "multi", "erase", "priority_queue",
-    "unordered_", "prev", "next", "nxt", "iterator",
-    "freopen", "getchar", "scanf", "printf", "string",
+    "low", "write", "output", "input", "FFT", "init",
+    "pre", "NTT", "alloc", "create", "icnt", "ecnt",
+    "ccnt", "cnt", "id", "find", "getRandom", "splay",
+    "push", "update", "topSort", "extend", "gcd",
+    "lucas", "inv", "fac", "std", "sort", "unique",
+    "lower", "upper", "_bound", "root", "fa", "LCA",
+    "son", "len", "fabs", "sqrt", "vector", "map",
+    "set", "multi", "priority_queue", "unordered_",
+    "prev", "next", "nxt", "iterator", "freopen",
+    "getchar", "scanf", "printf", "string",
     "push_back", "pop_back", "insert", "erase",
-    "count", "clear", "reserve", "find", "stream",
-    "arr", "top", "psiz", "gauss", "queue", "cstdio",
+    "count", "clear", "reserve", "stream", "arr",
+    "top", "psiz", "gauss", "queue", "cstdio",
     "cstring", "cmath", "climits", "cstdlib",
     "algorithm", "cctype", "MST", "bid", "begin",
     "end", "Node", "val", "src", "sum", "delta", "sub",
@@ -51,8 +51,9 @@ const char* const key[] = {
     "pop_heap", "Yes", "No", "No Solution", "maxv",
     "minv", "?:", "equal", "inf", "eps", "reset",
     "pair", "first", "second", "time", "clock", "eval",
-    "heap", "hash", "LUT", "clone"
-                           ""
+    "heap", "hash", "LUT", "clone", "old", "link",
+    "Mat"
+    ""
 };
 constexpr int size = std::extent<decltype(key)>::value,
               cnt = 10, fac = 500;
