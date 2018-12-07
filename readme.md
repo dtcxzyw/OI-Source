@@ -194,7 +194,7 @@
 - [x] 最小割树
 - [x] 势能分析线段树
 - [x] 弦图、最大势算法
-- [ ] Hall定理
+- [x] Hall定理
 - [x] Raney引理
 - [x] 快速凸包
 - [x] 康托展开
@@ -206,7 +206,7 @@
 - [ ] 共价大爷游长沙技巧
 - [ ] FFT字符串通配
 - [ ] fractional cascading
-- [ ] boruvka算法-CF888G
+- [x] boruvka算法-CF888G
 - [ ] 动态DP
 - [ ] ExKMP(Z Algorithm)
 - [ ] 二维FFT
@@ -231,6 +231,7 @@
 - [ ] 动态仙人掌
 - [ ] 摊还分析
 - [ ] 拟阵
+- [ ] A Randomized Linear-Time Algorithm to Find Minimum Spanning Trees
 # Other
 - [ ] 使用Vim
 - [ ] 学习十指打字

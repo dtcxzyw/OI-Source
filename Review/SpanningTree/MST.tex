@@ -93,3 +93,21 @@ Matrix-Tree定理求方案数，方案数之积即为答案。
 bzoj 1016: [JSOI2008]最小生成树计数 （矩阵树定理+最小生成树）
 \url{https://blog.csdn.net/clover\_hxy/article/details/69397184}
 }。
+\subsection{Boruvka算法}
+\index{B!Borůvka's Algorithm}
+当边数较大时，还可以使用Boruvka算法，该算法像多路的Kruskal算法。
+
+算法步骤如下：
+\begin{enumerate}
+    \item 把每个点初始化为一个联通块。
+    \item 对每个联通块查询其连出的最小权值边。
+    \item 加入所有边，若边权两两不同则不可能出现环。一般用并查集判环。
+    \item 重复步骤2直至生成树构造完毕。
+\end{enumerate}
+
+由于每次迭代后联通块数至少减少一半，共需合并$O(\lg n)$次。每次合并后
+由于联通块的变化而重建数据结构的复杂度是可以接受的。插入时需要把联通块
+编号存入，维护联通块编号的最值，以便于查询时排除块内边。
+
+模板（CF888G Xor-MST）：
+\lstinputlisting{Source/Templates/Boruvka.cpp}

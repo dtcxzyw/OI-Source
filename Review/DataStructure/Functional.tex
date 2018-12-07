@@ -14,6 +14,8 @@
 \end{itemize}
 \subsection{可持久化Trie}
 若遇到求区间xor最大值之类的问题，使用可持久化Trie。
+对于and,or最大值问题，可以在插入完数后把整棵子树加到另一棵子树上去，
+查询时只需考虑一边的子树。
 \subsection{可持久化数组}
 可持久化数组有两种实现：
 \begin{itemize}

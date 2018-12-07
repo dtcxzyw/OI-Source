@@ -177,3 +177,49 @@ justPassBy\footnote{有向无环图（DAG）的最小路径覆盖
 不可不戒\footnote{二分图:最大独立集\&最大匹配\&最小顶点覆盖
 	\url{https://blog.csdn.net/lezg\_bkbj/article/details/9872189}}
 的博客。
+\subsection{Hall定理}
+\index{H!Hall's Marriage Theorem}
+Hall定理用于判断二分图是否存在完美匹配。
+\begin{theorem}\label{Hall}
+    二分图$G=\{V1,V2,E\},|V1|\leq|V2|$存在完美匹配当且仅当$V1$中任意$k$个顶点
+    至少与$V2$中任意$k$个顶点相连。
+\end{theorem}
+\paragraph{证明}
+充分性：假设二分图$G$不存在完美匹配，记$G$的最大匹配为$M$，$V1$上至少有一点
+$u$不在$M$上。由条件可知点$u$有一条不在$M$上的边，记对面的点为$v$。若点$v$不在
+$M$上，则与$M$为最大匹配矛盾；否则尝试使用匈牙利算法寻找增广路，记涉及到的$V1$的子集
+为$S$，则右边至少有$|S|$个节点与其相连，因而存在增广路，与$M$为最大匹配矛盾。
+
+必要性：由于二分图$G$有完美匹配，$V1$的$k$个顶点至少与各自的匹配相连。
+
+还有一个比较有用的推论：
+\begin{inference}
+   对于二分图$G=\{V1,V2,E\},|V1|\leq|V2|$，若存在整数$t$，满足$V1$中
+   任意节点的度数$\geq t$，$V2$中任意节点的度数$\leq t$，则$G$存在完美匹配。
+\end{inference}
+
+\paragraph{例题}
+[POI2009]LYZ-Ice Skates
+
+由定理~\ref{Hall}可以考虑枚举所有集合，但复杂度无法接受，考虑排掉一些显然不优的集合。
+选出的集合可以分为3类：
+\begin{itemize}
+    \item 脚的大小连续；
+    \item 脚的大小不连续但是鞋号区间连续，把中间未被选中的脚的大小选中，但是鞋号区间不变，
+    可以有更充分的证据证明不存在完美匹配；
+    \item 脚的大小不连续且鞋号区间不连续，这个集合可以根据鞋号区间的连续性分为
+    前两种集合，每个集合是独立的子问题。
+\end{itemize}
+因此只需考虑脚的大小连续的集合。
+
+记脚的大小为$i$的人数有$a_i$个，根据定理有$\displaystyle \sum_{i=l}^r{a_i}
+\leq (r+d-l+1)*k$。让右端为常数，化简得$\sum_{i=l}^r{a_i-k}\leq d*k$，
+可用线段树维护最大子段和。
+
+代码：
+\lstinputlisting{Source/Templates/Hall.cpp}
+
+上述内容参考了Feynman1999的博客\footnote{
+    Hall定理（二分图匹配问题，Hungary算法基础）
+    \url{https://blog.csdn.net/feynman1999/article/details/76037603}
+}。
