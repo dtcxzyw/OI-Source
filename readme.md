@@ -201,7 +201,7 @@
 - [ ] ETT
 - [ ] Top-Tree
 - [ ] 扩展Dijkstra
-- [ ] Stoer-Wagner算法
+- [x] Stoer-Wagner算法
 - [ ] LCT维护子树信息和边权信息
 - [ ] 共价大爷游长沙技巧
 - [ ] FFT字符串通配
@@ -236,3 +236,4 @@
 - [ ] 使用Vim
 - [ ] 学习十指打字
 - [ ] 集训队互测题2018
+- [ ] PKUWC2018

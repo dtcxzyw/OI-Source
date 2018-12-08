@@ -212,8 +212,27 @@ HLPP算法参考了Mr\_Spade的博客\footnote{
 结合引理~\ref{MCA}与~\ref{MCB}可得最大流=最小割。
 \subsection{无向图最小割}
 \subsubsection{Stoer-Wagner Algorithm}
-留坑待填。
-\index{*TODO!Stoer-Wagner Algorithm}
-\subsubsection{Dinic法}
-连边时给正反向边的残余流量都初始化为割边代价，然后跑Dinic。
-\index{*TODO!证明无向图最短路Dinic法的正确性}
+\index{S!Stoer-Wagner Algorithm}
+若需要求全局最小割，使用Stoer-Wagner Algorithm。
+
+算法步骤如下：
+\begin{enumerate}
+	\item 任意指定一个节点作为初始点集；
+	\item 查询到点集内的点边权和的最大的点集外的点；
+	\item 合并最后加入的两个节点$s,t$并更新最小割；
+	\item 重复第一步直至整个图被合并。
+\end{enumerate}
+具体做法见代码。边权可用优先队列维护，时间复杂度$O(|V||E|\lg |E|)$。
+
+模板（SP12056 FZ10B - Nubulsa Expo）：
+\lstinputlisting{Source/Templates/Stoer-Wagner.cpp}
+
+这题$|V|$比较小所以可以用邻接矩阵存图，$O(|V|^3)$解决。
+
+\index{*TODO!证明无向图最小割算法的正确性}
+上述内容参考了Oyking的博客\footnote{
+	全局最小割StoerWagner算法详解
+	\url{https://www.cnblogs.com/oyking/p/7339153.html}
+}。
+\subsubsection{流量构造法}
+若指定源汇点，连边时给正反向边的残余流量都初始化为割边代价，然后跑Dinic。
