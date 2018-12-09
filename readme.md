@@ -170,7 +170,7 @@
 - [ ] 带花树
 - [ ] 线段树分治
 - [x] HLPP
-- [ ] min_25筛
+- [x] min_25筛
 - [ ] Berlekamp-Massey
 - [x] ISAP
 - [ ] IDA*
@@ -200,7 +200,6 @@
 - [x] 康托展开
 - [ ] ETT
 - [ ] Top-Tree
-- [ ] 扩展Dijkstra
 - [x] Stoer-Wagner算法
 - [ ] LCT维护子树信息和边权信息
 - [ ] 共价大爷游长沙技巧
@@ -211,7 +210,7 @@
 - [ ] ExKMP(Z Algorithm)
 - [ ] 二维FFT
 - [ ] 欧几里得距离MST[By zball](https://www.cnblogs.com/tmzbot/p/6203547.html)
-- [ ] 洲阁筛
+- [ ] 类欧几里得算法
 # Research
 - [ ] 近似算法
 - [ ] ECC+ECM

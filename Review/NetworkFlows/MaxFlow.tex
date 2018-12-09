@@ -228,8 +228,10 @@ HLPP算法参考了Mr\_Spade的博客\footnote{
 \lstinputlisting{Source/Templates/Stoer-Wagner.cpp}
 
 这题$|V|$比较小所以可以用邻接矩阵存图，$O(|V|^3)$解决。
+\lstinputlisting{Source/Templates/Stoer-WagnerV3.cpp}
 
-\index{*TODO!证明无向图最小割算法的正确性}
+不知为何两种方法在SPOJ上都TLE了。
+\index{*TODO!证明无向图最小割算法的正确性并修改模板}
 上述内容参考了Oyking的博客\footnote{
 	全局最小割StoerWagner算法详解
 	\url{https://www.cnblogs.com/oyking/p/7339153.html}
