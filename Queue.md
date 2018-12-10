@@ -1,3 +1,6 @@
 - [ ] LOJ#6053. 简单的函数
 - [ ] UOJ#188. 【UR #13】Sanrd
 - [ ] UOJ#42. 【清华集训2014】Sum
+- [ ] P2743 [USACO5.1]乐曲主题Musical Themes
+- [ ] P5074 Eat the Trees
+- [ ] P5091【模板】欧拉定理

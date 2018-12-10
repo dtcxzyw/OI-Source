@@ -5,8 +5,9 @@
 #include <iostream>
 #include <iterator>
 #include <string>
-int compare(int id, const std::string& exec) {
-    std::string sid = std::to_string(id);
+int compare(int id, const std::string& exec,
+            const std::string& app) {
+    auto sid = app + std::to_string(id);
     auto in = "data/" + sid + ".in";
     auto stdo = "data/" + sid + ".out";
     std::ifstream stdof(stdo);
@@ -25,17 +26,22 @@ int compare(int id, const std::string& exec) {
         0;
 }
 int main() {
-    std::string name;
-    std::cin >> name;
+    std::string name, app;
+    std::cin >> name >> app;
+    if(app == "null")
+        app.clear();
     int c1 = 0, c2 = 0;
     while(true) {
         ++c1;
-        int res = compare(c1, name + ".out");
+        int res = compare(c1, name + ".out", app);
         if(res == 2)
             break;
         printf("%d %s\n", c1, res ? "AC" : "WA");
         c2 += res;
     }
-    printf("Score:%d\n", c2 * 100 / (c1 - 1));
+    if(c1 != 1)
+        printf("Score:%d\n", c2 * 100 / (c1 - 1));
+    else
+        puts("No Input!!!");
     return 0;
 }

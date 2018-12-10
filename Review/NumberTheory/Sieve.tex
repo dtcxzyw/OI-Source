@@ -3,8 +3,8 @@
 \subsection{约数函数前缀和}
 求$\displaystyle \sum_{i=1}^n{\sigma(i)},n\leq 10^{12}$。
 \begin{eqnarray*}
-	\sum_{i=1}^n{\sigma(i)}&=&\sum_{i=1}^n{\sum_{d|i}d}\\
-	&=&\sum_{d=1}^n{d[\frac{n}{d}]}
+    \sum_{i=1}^n{\sigma(i)}&=&\sum_{i=1}^n{\sum_{d|i}d}\\
+    &=&\sum_{d=1}^n{d[\frac{n}{d}]}
 \end{eqnarray*}
 由于$[\frac{n}{d}]$存在许多连续相同的值，使用根号分块法可做到$O(\sqrt{n})$。
 \subsection{欧拉函数前缀和}
@@ -12,14 +12,14 @@
 由定理~\ref{PhiT}可得
 $\displaystyle \varphi(n)=n-\sum_{d|n,d<n}{\varphi(d)}$。
 \begin{eqnarray*}
-	ans(n)&=&\sum_{i=1}^n{\varphi(i)}\\
-	&=&\sum_{i=1}^n{\left(i-\sum_{d|i,d<i}{\varphi(d)}\right)}\\
-	&=&\frac{n(n+1)}{2}-\sum_{i=2}^{n}{\sum_{d|i,d<i}{\varphi(d)}}\\
-	&=&\frac{n(n+1)}{2}-\sum_{\frac{i}{d}=2}^n
-	{\sum_{d=1}^{[\frac{n}{\frac{i}{d}}]}{\varphi(d)}}\\
-	&=&\frac{n(n+1)}{2}-\sum_{t=2}^n
-	{\sum_{d=1}^{[\frac{n}{t}]}{\varphi(d)}}\\
-	&=&\frac{n(n+1)}{2}-\sum_{t=2}^n{ans([\frac{n}{t}])}
+    ans(n)&=&\sum_{i=1}^n{\varphi(i)}\\
+    &=&\sum_{i=1}^n{\left(i-\sum_{d|i,d<i}{\varphi(d)}\right)}\\
+    &=&\frac{n(n+1)}{2}-\sum_{i=2}^{n}{\sum_{d|i,d<i}{\varphi(d)}}\\
+    &=&\frac{n(n+1)}{2}-\sum_{\frac{i}{d}=2}^n
+    {\sum_{d=1}^{[\frac{n}{\frac{i}{d}}]}{\varphi(d)}}\\
+    &=&\frac{n(n+1)}{2}-\sum_{t=2}^n
+    {\sum_{d=1}^{[\frac{n}{t}]}{\varphi(d)}}\\
+    &=&\frac{n(n+1)}{2}-\sum_{t=2}^n{ans([\frac{n}{t}])}
 \end{eqnarray*}
 同理使用分块+递归询问区间和来计算答案。为了降低复杂度，应该先线性筛预处理前一部分值。
 当预处理$k=n^\frac{2}{3}$时可以取到复杂度$T(n)=O(n^\frac{2}{3})$。
@@ -28,10 +28,10 @@ $\displaystyle \varphi(n)=n-\sum_{d|n,d<n}{\varphi(d)}$。
 由定理~\ref{MobiusT}可得
 $\displaystyle \mu(n)=[n=1]-\sum_{d|n,d<n}{\mu(d)}$。
 \begin{eqnarray*}
-	ans(n)&=&\sum_{i=1}^n{\mu(i)}\\
-	&=&\sum_{i=1}^n{\left([i=1]-\sum_{d|i,d<i}{\mu(d)}\right)}\\
-	&=&1-\sum_{i=1}^n{\sum_{d|i,d<i}{\mu(d)}}\\
-	&=&1-\sum_{t=2}^n{ans([\frac{n}{t}])}
+    ans(n)&=&\sum_{i=1}^n{\mu(i)}\\
+    &=&\sum_{i=1}^n{\left([i=1]-\sum_{d|i,d<i}{\mu(d)}\right)}\\
+    &=&1-\sum_{i=1}^n{\sum_{d|i,d<i}{\mu(d)}}\\
+    &=&1-\sum_{t=2}^n{ans([\frac{n}{t}])}
 \end{eqnarray*}
 \subsection{其它函数前缀和}
 主要思路是使用狄利克雷卷积构造出一个简单的前缀和函数，且用于卷积的另一个函数也容易计算。
@@ -41,26 +41,26 @@ $\displaystyle \sum_{i=1}^n{A(n)},n\leq 10^{9}$。
 
 先化简$A(n)$:
 \begin{eqnarray*}
-	A(n)&=&\sum_{i=1}^n\frac{i}{(n,i)}\\
-	&=&\sum_{d|n}{\sum_{i=1}^n{[(n,i)=d]\cdot\frac{i}{d}}}\\
-	&=&\sum_{d|n}{\sum_{\frac{i}{d}=1}^{\frac{n}{d}}
-	{[(\frac{n}{d},\frac{i}{d})=1]\cdot\frac{i}{d}}}\\
-	&=&\frac{1}{2}\left(1+\sum_{d|n}{d\cdot\varphi(d)}\right)
+    A(n)&=&\sum_{i=1}^n\frac{i}{(n,i)}\\
+    &=&\sum_{d|n}{\sum_{i=1}^n{[(n,i)=d]\cdot\frac{i}{d}}}\\
+    &=&\sum_{d|n}{\sum_{\frac{i}{d}=1}^{\frac{n}{d}}
+    {[(\frac{n}{d},\frac{i}{d})=1]\cdot\frac{i}{d}}}\\
+    &=&\frac{1}{2}\left(1+\sum_{d|n}{d\cdot\varphi(d)}\right)
 \end{eqnarray*}
 
 那么答案即为$\displaystyle \frac{1}{2}\left(n+\sum_{t=1}^n
-	{\sum_{d=1}^{[\frac{n}{t}]}{d\cdot\varphi(d)}}\right)$。
+    {\sum_{d=1}^{[\frac{n}{t}]}{d\cdot\varphi(d)}}\right)$。
 
 考虑计算$\displaystyle \sum_{d=1}^n{d\cdot\varphi(d)}$的值：
 
 易知$(id\cdot\varphi)*id=id^2$，因为\begin{displaymath}
-	\sum_{d|n}d\cdot*\varphi(d)\cdot\frac{n}{d}=
-	n\cdot\sum_{d|n}\varphi(d)=n^2
+    \sum_{d|n}d\cdot*\varphi(d)\cdot\frac{n}{d}=
+    n\cdot\sum_{d|n}\varphi(d)=n^2
 \end{displaymath}
 
 所以有\begin{eqnarray*}
-	\frac{n(n+1)(2n+1)}{6}&=&\sum_{i=1}^n{(id\cdot\varphi)*id}\\
-	&=&\sum_{t=1}^n{t\cdot\sum_{d=1}^{[\frac{n}{t}]}{d\cdot\varphi(d)}}
+    \frac{n(n+1)(2n+1)}{6}&=&\sum_{i=1}^n{(id\cdot\varphi)*id}\\
+    &=&\sum_{t=1}^n{t\cdot\sum_{d=1}^{[\frac{n}{t}]}{d\cdot\varphi(d)}}
 \end{eqnarray*}
 
 \subsection{复杂度分析}
@@ -68,49 +68,96 @@ $\displaystyle \sum_{i=1}^n{A(n)},n\leq 10^{9}$。
 \index{*TODO!筛法复杂度分析}
 
 以上例题来自skywalkert的博客\footnote{浅谈一类积性函数的前缀和\\
-	\url{https://blog.csdn.net/skywalkert/article/details/50500009}}。
+    \url{https://blog.csdn.net/skywalkert/article/details/50500009}}。
 
 \subsection{min\_25筛}
 这里求和的积性函数$F$满足$F(p)$是一个关于$p$的低阶多项式且能够快速求出$F(p^k)$。
 据说min\_25筛踩爆洲阁筛，那我就不学洲阁筛了。在此附上洲阁筛教程\footnote{
-	洲阁筛学习 | \_\_debug's Home\\
-	\url{http://debug18.com/posts/calculate-the-sum-of-multiplicative-function/}
+    洲阁筛学习 | \_\_debug's Home\\
+    \url{http://debug18.com/posts/calculate-the-sum-of-multiplicative-function/}
 }。
 
 \subsubsection{预处理}
 首先考虑求$\displaystyle \sum_{p\leq n}{F(p)}$。
 
-记$g(n,j)$为满足$x$为$n$以内质数，或者$x$的最小质因子$>p_j$的$F(x)$之和，
+记$g(n,j)$为满足$x$为$n$以内素数，或者$x$的最小质因子$>p_j$的$F(x)$之和，
 所求值即为$g(n,|P|)$。考虑$g(n,j)$如何从$g(n,j-1)$转移。易知最小质因子为
-$p_j$的合数为$p_j^2$，若其$>n$，则$g(n,j)$与$g(n,j-1)$都只求质数的积性函
+$p_j$的合数为$p_j^2$，若其$>n$，则$g(n,j)$与$g(n,j-1)$都只求素数的积性函
 数值之和，所以$g(n,j)=g(n,j-1)$。若$p_j^2\leq n$，则转移时会损失掉一些
 $F(x)$，满足$x$的最小质因子为$p_j$。考虑提出$x$的$p_j$，满足$\frac{x}{p_j}$
 的最小质因子$\geq p_j$，计算$\frac{x}{p_j}$的积性函数和，发现$g(\frac{n}{p_j},j-1)$
 包括了它们，又因为$\frac{n}{p_j}\geq p_j > p_{j-1}$，所以要扣除
-$\displaystyle \sum_{p<p_j}F(p)$。由于积性函数$F$的特殊性，类似于完全积性函数，
-再乘上$F(p_j)$即为需要减去的值???
-
-\index{*TODO!证明Min\_25筛的正确性}
+$\displaystyle \sum_{p<p_j}F(p)$。{\bfseries 由于积性函数$F$的特殊性，
+把不同次数的项拆开算，单项为完全积性函数，乘上$F(p_j)$即为需要减去的值。}
 
 综上，有\begin{displaymath}
-	g(n,j)=\left\{\begin{array}{lr}
-		g(n,j-1)        & p_j^2>n   \\
-		g(n,j-1)-F(p_j)(g(\frac{n}{p_j},j-1)-\sum_{p<p_j}{F(p)}) & p_j^2\leq n \\
-	\end{array}\right.
+    g(n,j)=\left\{\begin{array}{lr}
+        g(n,j-1)        & p_j^2>n   \\
+        g(n,j-1)-F(p_j)(g(\frac{n}{p_j},j-1)-\sum_{p<p_j}{F(p)}) & p_j^2\leq n \\
+    \end{array}\right.
 \end{displaymath}
 
-预处理质数时只需要筛$\sqrt{n}$内的质数，边界$g(n,0)$是所有数按照质数的处理方式
+预处理素数时只需要筛$\sqrt{n}$内的素数，边界$g(n,0)$是所有数按照素数的处理方式
 计算的值之和，由于最后只需要$g(n,|P|)$，无需考虑$g(n,0)$的意义。
 
-实质上$g(n,j)$就是埃氏筛法筛完$p_j$后未被筛的合数以及质数的积性函数值之和。
-\subsubsection{求和}
+实质上$g(n,j)$就是埃氏筛法筛完$p_j$后未被筛的合数以及素数的积性函数值之和。
 
-时间复杂度为$O(\frac{n^\frac{3}{4}}{\lg n})$，空间复杂度为$\sqrt{n}$。
+接下来尝试求出所有的$g(x,|P|),x=\lfloor \frac{n}{i}\rfloor$。
+这里有一个存储上的trick：由于$\lfloor \frac{n}{i}\rfloor$有连续重复项，
+最多$2\sqrt{n}$个，对于$x=\lfloor \frac{n}{i}\rfloor>\sqrt{n}$，把它
+映射到$\lfloor \frac{n}{x}\rfloor$上存储，这样保证了空间复杂度为$O(\sqrt{n})$。
+
+由于最后只要$g(x,|P|)$，$g$数组只要开1维滚动更新。
+
+伪代码如下：
+\begin{lstlisting}
+int g[2][sqsiz],q[2*sqsiz];
+int& getG(int x) {
+    if(x<=sqr) return g[0][x];
+    return g[1][n/x];
+}
+void calcG() {
+    int m=0,i=1;
+    while(i<=n) {
+        int val=n/i;
+        q[++m]=val;
+        getG(val)=f(val);
+        i=n/val+1;
+    }
+    for(int i=1;i<=psiz;++i) {
+        int cp=p[i],cp2=cp*cp;
+        for(int j=1;j<=m && cp2<=q[j];++j) {
+            int k=q[j],&val=getG(k);
+            val=sub(val,mul(f(cp),getG(k/cp)-sumf[i-1]));
+        }
+    }
+}
+\end{lstlisting}
+\subsubsection{求和}
+记$S(n,j)$为$n$以内最小质因子大于等于$p_j$的积性函数值和。
+所求答案即为$S(n,1)+f(1)$。
+
+把$S(n,j)$分为素数和合数求解：
+\begin{itemize}
+    \item 对于素数部分，$g(n,|P|)$代表了素数积性函数值和，再扣去不满足
+    最小质因子要求的素数，最终贡献为$g(n,|P|)-\displaystyle \sum_{p<p_j}F(p)$。
+    \item 对于合数部分，枚举其最小质因子$p_k$及其幂次$c$，单独贡献为\\
+    $F(p_k^c)S(\frac{n}{p_k^c},k+1)+F(p_k^{c+1})$。注意此处的$F\cdot S$直接利用
+    了积性函数的定义，因为$S$部分无$p_k$因子。由于$S$不处理$n=1$的部分，需要另外加上
+    $F(p_k^{c+1})$。
+\end{itemize}
+
+递归的边界条件为$n\leq 1 \vee n<p_j$，无需记忆化。
+
+时间复杂度为$O(\frac{n^\frac{3}{4}}{\lg n})$，空间复杂度为$O(\sqrt{n})$。
+
+模板（LOJ\#6053. 简单的函数）：
+\lstinputlisting{Source/Templates/min_25.cpp}
 
 上述内容参考了小蒟蒻yyb\footnote{
-	min\_25筛
-	\url{https://www.cnblogs.com/cjyyb/p/9185093.html}
+    min\_25筛
+    \url{https://www.cnblogs.com/cjyyb/p/9185093.html}
 }和租酥雨\footnote{
-	Min\_25 筛
-	\url{https://www.cnblogs.com/zhoushuyu/p/9187319.html}
+    Min\_25 筛
+    \url{https://www.cnblogs.com/zhoushuyu/p/9187319.html}
 }的博客。
