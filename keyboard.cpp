@@ -56,7 +56,7 @@ const char* const key[] = {
                                               ""
 };
 constexpr int size = std::extent<decltype(key)>::value,
-              cnt = 10, fac = 400;
+              cnt = 5, fac = 333;
 int id[size];
 using Clock = std::chrono::high_resolution_clock;
 int main() {
@@ -95,10 +95,13 @@ int main() {
                   << std::fixed << (100.0 * end / size)
                   << "%) " << (str.size() / mt)
                   << " char/min" << std::endl;
+        {
+            auto t = (Clock::now() - beg).count() *
+                1e-9 / 60;
+            std::cout << std::fixed << (count / t)
+                      << " char/min" << std::endl;
+        }
     }
-    auto t = (Clock::now() - beg).count() * 1e-9 / 60;
-    std::cout << std::fixed << (count / t)
-              << " char/min" << std::endl;
     while(true)
         ;
     return 0;

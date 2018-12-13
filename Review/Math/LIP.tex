@@ -38,3 +38,6 @@ F_i(x)=\left\{\begin{array}{ll}
     受单个点的影响大。可以考虑使用最小二乘逼近来消除噪声，或者使用样条。
     \item $\Theta(n^2)$拉格朗日插值法的时间复杂度并没有比FFT插值方法优。
 \end{itemize}
+\subsection{求解自然数幂和}\label{psum}
+易知$F_k(n)=\displaystyle \sum_{i=0}^n{i^k}$是一个$k+1$次多项式。
+预处理出$F_k$在$1,\cdots,k+2$上的值，插值出多项式。

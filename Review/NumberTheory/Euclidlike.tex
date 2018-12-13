@@ -1,0 +1,57 @@
+\section{类欧几里得算法}
+已知$k_1,k_2,a,b,c,n$，求
+\begin{displaymath}
+    F(k_1,k_2,a,b,c,n)=\sum_{x=0}^n{x^{k_1}
+    {\left \lfloor\frac{ax+b}{c}\right \rfloor}^{k_2}}
+\end{displaymath}
+
+其中$k_1,k_2$较小。
+
+以下除法操作均指向下取整除法，$\lambda$为易求得的常数。讨论多种情况的处理方法:
+\begin{itemize}
+    \item 若$an+b<c \wedge k_2\neq 0$，直接返回0。
+    \item 若$k_2=0 \vee a=0$，答案为$\lambda \displaystyle \sum_{x=0}^n{x^{k_1}}$。
+    利用~\ref{psum}所述方法求解。
+    \item $a\geq c \vee b\geq c$：
+
+    令$\displaystyle F(k_1,k_2,a,b,c,n)=\\\sum_{x=0}^n{x^{k_1}
+    ((a/c)x+(b/c)+((a \bmod c) \cdot x+(b\bmod c))/c)^{k_2}}$，
+    对指数为$k_2$的部分进行多项式展开，可以拆出类似$\sum{\lambda F}$的形式，
+    递归求解。
+
+    \item 否则$a<c \wedge b<c \wedge k_2 \neq 0$，
+    使用类似求期望的技巧，枚举指数为$k_2$的幂并差分，记$m=(an+b)/c$，
+    有\begin{eqnarray*}
+        F(k_1,k_2,a,b,c,n)&=&\sum_{i=0}^{m-1}{\left(
+            ((i+1)^{k_2}-i^{k_2})\sum_{x=0}^n{
+                x^{k_1}[(ax+b)/c>i]
+            }
+        \right)}\\
+        &=&\sum_{i=0}^{m-1}{\left(
+            ((i+1)^{k_2}-i^{k_2})\sum_{x=0}^n{
+                x^{k_1}[x>(ic+c-b-1)/a]
+            }
+        \right)}\\
+        &=&\sum_{i=0}^{m-1}{((i+1)^{k_2}-i^{k_2})}
+        \cdot \sum_{x=0}^n{x^{k_1}}\\
+        & &-\sum_{i=0}^{m-1}{\left(
+            ((i+1)^{k_2}-i^{k_2})\sum_{x=0}^{(ic+c-b-1)/a}{
+                x^{k_1}
+            }
+        \right)}
+    \end{eqnarray*}
+    前一部分可以插值求出，后一部分把多项式$\displaystyle \sum_{i=0}^n{i^k}=
+    \sum_{i=0}^{k+1}{c_i\cdot n^i}$
+    展开，化为$\sum{\lambda F}$的形式递归求解。
+\end{itemize}
+
+实现时可以令函数返回$g(n,a,b,c)=R^{k_1\cdot k_2}$存储所有需要的值，避免重复计算。
+递归层数为$O(\lg n)$。
+
+模板（LOJ\#138）:
+\lstinputlisting{Source/Templates/Euclidlike.cpp}
+
+上述内容参考了fjzzq2002的博客\footnote{
+    类欧几里得算法
+    \url{https://www.cnblogs.com/zzqsblog/p/8904010.html}
+}。

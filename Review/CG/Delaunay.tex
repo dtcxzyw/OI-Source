@@ -1,0 +1,21 @@
+\section{Delaunay剖分}
+\subsection{定义与性质}
+Delaunay剖分是一种三角剖分，满足每个三角形的外接圆内（不包括边界）都没有点。
+
+\begin{property}
+    若一条边在某个内部（包括边界）没有其它点的圆上，则该边在Delaunay剖分上。
+\end{property}
+证明：
+
+\subsection{剖分算法}
+目前最快的方法是分治法，时间复杂度$O(n\lg n)$。
+
+\subsection{平面欧几里得距离MST}
+\begin{property}
+    环上最大权边必有一条不在MST上。
+\end{property}
+
+上述内容参考了zball的博客\footnote{
+    Delaunay剖分与平面欧几里得距离最小生成树
+    \url{https://www.cnblogs.com/tmzbot/p/6203547.html}
+}。

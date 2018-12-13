@@ -171,7 +171,7 @@
 - [ ] 线段树分治
 - [x] HLPP
 - [x] min_25筛
-- [ ] Berlekamp-Massey
+- [ ] Berlekamp-Massey[By fjzzq2002](https://www.cnblogs.com/zzqsblog/p/6877339.html)
 - [x] ISAP
 - [ ] IDA*
 - [x] DLX
@@ -198,7 +198,7 @@
 - [x] Raney引理
 - [x] 快速凸包
 - [x] 康托展开
-- [ ] ETT
+- [ ] ETT(Euler Tour Tree)
 - [ ] Top-Tree
 - [x] Stoer-Wagner算法
 - [ ] LCT维护子树信息和边权信息
@@ -210,7 +210,11 @@
 - [ ] ExKMP(Z Algorithm)
 - [ ] 二维FFT
 - [ ] 欧几里得距离MST[By zball](https://www.cnblogs.com/tmzbot/p/6203547.html)
-- [ ] 类欧几里得算法
+- [x] 类欧几里得算法
+- [ ] 利用powerful number求积性函数前缀和[By fjzzq2002](https://www.cnblogs.com/zzqsblog/p/9904271.html)
+- [ ] 最小方差生成树
+- [ ] 牛顿级数差分
+- [ ] 格林公式[By Trinkle](http://trinkle.blog.uoj.ac/blog/1519)
 # Research
 - [ ] 近似算法
 - [ ] ECC+ECM
