@@ -1,0 +1,66 @@
+\section{Z Algorithm/扩展KMP}
+\index{Z!Z Algorithm}
+给定一个字符串$P$，记$Z(i)$为以$P$的第$i$个字符为首（从0开始）的后缀与$P$
+的LCP长度。
+\subsection{求解}
+核心思想类似于Manacher算法，利用之前的计算结果尽可能减少
+暴力匹配操作。
+
+算法步骤如下：
+\begin{enumerate}
+    \item 首先有$Z(0)=|P|$。
+    \item 维护当前$i+Z(i)-1$的最大值，其中$i>0$，记为$R$；同时维护$R$对应的$i$，
+    记为$L$。
+    \item 考虑已经维护了当前$L,R$和$Z[0\cdots i-1]$，求$Z(i)$并更新$L,R$。
+    \begin{itemize}
+        \item 若$i>R$，直接从$i$开始暴力匹配，然后令$L=i,R=i+Z(i)-1$；
+        \item 否则$i\leq R$，那么有$P[i-L\cdots R-L]=P[i\cdots R]$。
+        然后有$Z(i)\geq min(Z(i-L),R-i+1)$。
+        考虑$Z(i-L)$与$R-i+1$的关系：
+        \begin{itemize}
+            \item 若$Z(i-L)<R-i+1$，则不必继续匹配，令$Z(i)=Z(i-L)$。
+            \item 否则从$Z(i)=R-i+1$开始暴力匹配，更新$L,R$。
+        \end{itemize}
+    \end{itemize}
+\end{enumerate}
+
+模板：
+\begin{lstlisting}
+int L=0,R=0;
+for(int i=1;i<n;++i) {
+    if(i>R) {
+        L=R=i;
+        while(R<n && P[R-L]==P[R])
+            ++R;
+        Z[i]=R-L;
+        --R;
+    }
+    else {
+        if(Z[i-L]<R-i+1)
+            Z[i]=Z[i-L];
+        else {
+            L=i;
+            while(R<n && P[R-L]==P[R])
+                ++R;
+            Z[i]=R-L;
+            --R;
+        }
+    }
+}
+\end{lstlisting}
+
+时间复杂度$O(|P|)$。
+\subsection{应用}
+Z Algorithm等价于ExKMP。ExKMP用来求解串$S$的每一个后缀$S_i$与另一个串$T$的
+LCP长度。
+
+使用Z Algorithm可以解决：构造新串$T+\mathrm{分隔符}+S$，运行Z Algorithm，
+$S$部分的$Z$值就是所求答案。实际上无需构造新串，由于分隔符的存在，可以分两次对
+$T$与$S$运行算法。
+
+上述内容参考了yashem66的译文\footnote{
+    Z-function/Z Algorithm的构造与应用
+    \url{https://blog.csdn.net/qq\_33330876/article/details/72844491}
+    原文：Z Algorithm
+    \url{http://codeforces.com/blog/entry/3107}
+}。

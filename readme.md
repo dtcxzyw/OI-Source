@@ -207,7 +207,7 @@
 - [ ] fractional cascading
 - [x] boruvka算法-CF888G
 - [ ] 动态DP
-- [ ] ExKMP(Z Algorithm)
+- [x] ExKMP(Z Algorithm)
 - [ ] 二维FFT
 - [ ] 欧几里得距离MST[By zball](https://www.cnblogs.com/tmzbot/p/6203547.html)
 - [x] 类欧几里得算法
@@ -215,6 +215,7 @@
 - [ ] 最小方差生成树
 - [ ] 牛顿级数差分
 - [ ] 格林公式[By Trinkle](http://trinkle.blog.uoj.ac/blog/1519)
+- [ ] 三元环[By tan90°](https://www.luogu.org/blog/KingSann/fou-chang-yong-di-hei-ke-ji-san-yuan-huan-post)
 # Research
 - [ ] 近似算法
 - [ ] ECC+ECM

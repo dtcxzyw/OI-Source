@@ -1,21 +1,69 @@
 \section{Delaunay剖分}
+{\bfseries 本篇未完工！！！}
+\index{D!Delaunay Triangulation}
 \subsection{定义与性质}
-Delaunay剖分是一种三角剖分，满足每个三角形的外接圆内（不包括边界）都没有点。
+Delaunay剖分是一种三角剖分，其边满足以它为弦的外接圆内没有其它点（包括边界）。
+以下内容忽视四点共圆的情况。
 
 \begin{property}
-    若一条边在某个内部（包括边界）没有其它点的圆上，则该边在Delaunay剖分上。
+   Delaunay剖分能够最大化最小角。
 \end{property}
-证明：
+
+\begin{property}
+   二维Delaunay剖分上任意两点间的最短路径不超过它们的欧几里得距离的
+   $\frac{4\pi}{3\sqrt{3}}\approx 2.418$倍。
+\end{property}
+
+\begin{property}
+    Delaunay剖分中每个三角形的外接圆内（不包括边界）都没有其它点。
+\end{property}
+
+\begin{property}
+    一个点集的Delaunay剖分是唯一的。
+\end{property}
 
 \subsection{剖分算法}
 目前最快的方法是分治法，时间复杂度$O(n\lg n)$。
+
+算法步骤如下：
+
+\paragraph{预处理} 将点集按照x坐标升序排序，若x坐标相同则比较y坐标，顺序不限。
+
+分治主过程：
+
+\paragraph{判定}若点数不超过3则连边返回（注意连的边可能在后续处理中被删除）。
+
+\paragraph{划分}把点集划分为等大的子集并递归处理。
+
+\paragraph{合并}
+\begin{enumerate}
+    \item 首先选择一条基准边，该边的两个端点分别来自两个集合，
+    不与两集合的边相交，且高度最低???
+    \item 插入该基准边。
+    \item
+\end{enumerate}
+
+\index{*TODO!Delaunay剖分实现}
 
 \subsection{平面欧几里得距离MST}
 \begin{property}
     环上最大权边必有一条不在MST上。
 \end{property}
 
+结合Delaunay剖分的定义可知，若一条边$(u,v)$不在Delaunay剖分上，则
+存在点$w$在以$u,v$为直径的圆内，那么在$u,v,w$三点连成的环中，$u,v$是
+唯一最长边，可以提前删去。
+
+所以可以先求出点集的Delaunay剖分，然后对剖分做MST。由于Delaunay剖分
+是平面图，边数不超过$3|V|-6$，保证了MST的时间复杂度。
+
 上述内容参考了zball的博客\footnote{
-    Delaunay剖分与平面欧几里得距离最小生成树
+    Delaunay剖分与平面欧几里得距离最小生成树\\
     \url{https://www.cnblogs.com/tmzbot/p/6203547.html}
+}、Wikipedia-EN\footnote{
+    Delaunay triangulation - Wikipedia\\
+\url{https://en.wikipedia.org/wiki/Delaunay\_triangulation}
+}与Samuel Peterson的文章\footnote{
+    COMPUTING CONSTRAINED DELAUNAY TRIANGULATIONS IN THE PLANE\\
+    \url{http://www.geom.uiuc.edu/\~samuelp/del\_project.html}
 }。

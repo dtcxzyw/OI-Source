@@ -24,7 +24,9 @@ int getH(int x) {
     static int cur = 1;
     while(cur < x) {
         ++cur;
-        h[cur] = (h[cur - 1] + h[cur - 2] * asInt64(cur - 1)) % mod;
+        h[cur] = (h[cur - 1] +
+                  h[cur - 2] * asInt64(cur - 1)) %
+            mod;
     }
     return h[x];
 }
@@ -61,7 +63,7 @@ bool graph2Forest(int n) {
     memset(flag, n);
     DFS(1);
     memset(tag, n);
-    for(int i = 1; i <= cnt; i += 2) {
+    for(int i = 2; i <= cnt; i += 2) {
         int u = E[i].to, v = E[i ^ 1].to;
         if(d[u] < d[v])
             std::swap(u, v);
