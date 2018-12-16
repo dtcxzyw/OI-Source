@@ -1,0 +1,70 @@
+\section{带花树}
+\index{B!Blossom Algorithm}
+带花树主要用来解决无向图最大匹配与完美匹配问题。
+\subsection{无向图最大匹配}
+尝试使用匈牙利算法计算无向图最大匹配，即每次选取一个未匹配点，
+以此为树根，DFS遍历出交错树。
+
+定义交错树上的``奇点''为距树根距离为奇数的点，``偶点''为距树根
+距离为偶数的点。
+
+那么对于二分图有如下两种情况：
+\begin{itemize}
+    \item 奇点连到偶点：一定走匹配边。
+    \item 偶点连到奇点：一定走未匹配边。
+\end{itemize}
+
+但是对于无向图来说有一点不同：
+\begin{itemize}
+    \item 奇点连到偶点：一定走匹配边。
+    \item 偶点连到奇点：一定走未匹配边。
+    \item 偶点连到偶点：一定走未匹配边。此时我们把交错树上的两个偶点的
+    交错路径以及偶点到偶点的边形成的奇环称为``花''，树根称为``花托''。
+\end{itemize}
+
+考虑跨过偶点到偶点的边，可以发现原先的奇点可以变为偶点，然后可以走未匹配边延伸出
+更多的交错路径。既然花上的点都可以是偶点，不妨将其直接缩为一个偶点，这就是``缩花''。
+一朵花至少有3个点，因此最多缩花$\frac{|V|}{2}$次，这里使用并查集缩花。
+
+其余步骤与匈牙利算法类似：
+
+遍历未匹配点尝试建立交错树以寻找增广路径：
+
+使用BFS遍历，队列仅维护偶点。
+\begin{itemize}
+    \item 若走到未访问点：
+    \begin{itemize}
+        \item 若该点已匹配：
+        \item 若该点未匹配：找到增广路径，翻转链上边的匹配状态后返回true。
+    \end{itemize}
+    \item 若走到已访问点：
+    \begin{itemize}
+        \item 若该点为奇点：由于该点已访问，什么也不要做。
+        \item 若该点为偶点：缩花，参数为两个偶点标号$u,v$。
+    \end{itemize}
+\end{itemize}
+
+缩花：
+\begin{enumerate}
+    \item 使用DSU找出花托，即$LCA(u,v)$。
+    \item 两遍调用缩花的一边并把奇点标记为偶点，加入队列。
+\end{enumerate}
+
+假设并查集复杂度为$O(1)$，算法时间复杂度$O(|V||E|)$。
+二分图最大匹配中的Greedy Matching仍然适用。
+
+模板：
+\lstinputlisting{Source/Templates/Blossom.cpp}
+
+\subsection{Micali-Vazirani Algorithm}
+该算法仍然用于求无向图最大匹配，时间复杂度$O(\sqrt{|V|}|E|)$。
+
+\subsection{无向图最大权匹配}
+
+上述内容参考了江任捷的演算法筆記\footnote{
+    演算法筆記 - Matching
+    \url{http://www.csie.ntnu.edu.tw/\~u91029/Matching.html}
+}与permui的博客\footnote{
+    一般图最大匹配-带花树算法
+    \url{https://www.cnblogs.com/owenyu/p/6858508.html}
+}。

@@ -24,3 +24,7 @@
 - [ ] CF 427D
 - [x] CF 126B
 - [ ] 【GDOI2014】beyond
+# Blossom Algorithm
+- [ ] UVa 11439
+- [x] UOJ#79. 一般图最大匹配
+- [ ] UOJ#81. 一般图最大权匹配
