@@ -57,14 +57,48 @@
 \lstinputlisting{Source/Templates/Blossom.cpp}
 
 \subsection{Micali-Vazirani Algorithm}
-该算法仍然用于求无向图最大匹配，时间复杂度$O(\sqrt{|V|}|E|)$。
+\index{M!Micali-Vazirani Algorithm}
+该算法也用于求无向图最大匹配，时间复杂度$O(\sqrt{|V|}|E|)$。
 
+由于找不到中文资料，暂时先坑着。
+参考Silvio Micali与Vijay V. Vazirani的论文\cite{MMG}。
+\subsection{近线性复杂度的随机匹配算法}
+这里介绍的是2011年由Anant Jindal, Gazal Kochar, Manjish Pal
+提出的基于马尔科夫链和Glauber Dynamics的随机算法，参见论文\cite{AGM}。
+
+算法步骤如下（调用下述算法$10\lg n$次）：
+\begin{enumerate}
+    \item 令$M_0$为任意匹配，$p=2^{|E|}$。
+    \item 迭代$k=10|E|\lg|V|$次更新$M_i$。
+    \begin{enumerate}
+        \item 随机取边$e$；
+        \item 令$M'$有$\frac{p}{1+p}$的概率为$M_i\cup \{e\}$，
+        有$\frac{1}{1+p}$的概率为$M_i \backslash \{e\}$。
+        \item 若$M'$为匹配则令$M_{i+1}=M'$，否则$M_{i+1}=M_i$。
+    \end{enumerate}
+    \item 输出$M_k$。
+\end{enumerate}
+
+时间复杂度$O(|E|\lg^2|V|)$，算法正确率为
+$1-\left(\frac{169}{189}\right)^{10\lg n}$。
+
+模板（不正确，待修复）：
+
+为了防止错过最优解，我还加入了备份操作，最坏时间复杂度$O(|V|^2)$。
+
+\lstinputlisting{Source/Templates/AGM.cpp}
+
+\index{*TODO!最大匹配随机算法实现}
 \subsection{无向图最大权匹配}
 
 上述内容参考了江任捷的演算法筆記\footnote{
     演算法筆記 - Matching
     \url{http://www.csie.ntnu.edu.tw/\~u91029/Matching.html}
-}与permui的博客\footnote{
+}、permui\footnote{
     一般图最大匹配-带花树算法
     \url{https://www.cnblogs.com/owenyu/p/6858508.html}
-}。
+}和hcsoso\footnote{
+    Maximum matching in general graphs
+    \url{https://finiteplayground.wordpress.com/2011/07/15/
+    maximum-matching-in-general-graphs/}
+}的博客。
