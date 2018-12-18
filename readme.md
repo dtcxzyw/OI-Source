@@ -167,13 +167,13 @@
 - [x] 数值编码
 -----
 # Advance
-- [ ] 带花树
+- [x] 带花树
 - [ ] 线段树分治
 - [x] HLPP
 - [x] min_25筛
 - [ ] Berlekamp-Massey[By fjzzq2002](https://www.cnblogs.com/zzqsblog/p/6877339.html)
 - [x] ISAP
-- [ ] IDA*
+- [x] IDA*
 - [x] DLX
 - [ ] 最小树型图
 - [ ] 单纯形算法
@@ -211,12 +211,17 @@
 - [ ] 二维FFT
 - [ ] 欧几里得距离MST[By zball](https://www.cnblogs.com/tmzbot/p/6203547.html)
 - [x] 类欧几里得算法
-- [ ] 利用powerful number求积性函数前缀和[By fjzzq2002](https://www.cnblogs.com/zzqsblog/p/9904271.html)
+
 - [ ] 最小方差生成树
 - [ ] 牛顿级数差分
 - [ ] 格林公式[By Trinkle](http://trinkle.blog.uoj.ac/blog/1519)
 - [ ] 三元环[By tan90°](https://www.luogu.org/blog/KingSann/fou-chang-yong-di-hei-ke-ji-san-yuan-huan-post)
+- [ ] 闭包[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Closure.html)
+- [ ] b-Matching[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Matching2.html#2)
+- [ ] Stable Matching[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Matching2.html#3)
+- [ ] Chinese Postman Problem[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Circuit.html#4)
 # Research
+- [ ] 利用powerful number求积性函数前缀和[By fjzzq2002](https://www.cnblogs.com/zzqsblog/p/9904271.html)
 - [ ] 近似算法
 - [ ] ECC+ECM
 - [ ] 笛卡尔树 O(n)-O(1) RMQ
@@ -237,6 +242,14 @@
 - [ ] 拟阵
 - [ ] A Randomized Linear-Time Algorithm to Find Minimum Spanning Trees
 - [ ] Micali-Vazirani Algorithm
+- [ ] Maximum Matchings via Glauber Dynamics
+- [ ] Dial's Algorithm
+- [ ] Gabow's Algorithm
+- [ ] Nardelli-Proietti-Widmayer Algorithm
+- [ ] Karger's Algorithm
+- [ ] 最优化方法[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Optimization.html)
+- [ ] 迭代求解线性方程组
+- [ ] 求根、不动点与特征点的关系[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/RootFinding.html#5)
 # Other
 - [ ] 使用Vim
 - [ ] 学习十指打字

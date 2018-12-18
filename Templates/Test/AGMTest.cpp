@@ -9,7 +9,7 @@ using Clock = std::chrono::high_resolution_clock;
 using IntType = REng::result_type;
 bool A[505][505];
 bool test() {
-    int n = 200;
+    int n = 100;
     int m = 1000;
     REng rnd(Clock::now().time_since_epoch().count());
     std::uniform_int_distribution<> uid(1, n);

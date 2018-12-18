@@ -43,20 +43,11 @@ int main() {
         ka = std::max(k1, mink), mp = n >> 1;
     IntType p = std::numeric_limits<IntType>::max() /
         ((IntType(1) << m) + 1);
-    if((IntType(1) << m) == 0)
-        p = 0;
+    if(IntType(1) << m == 0)
+        p = 1;
     while(ka--) {
         memset(match + 1, 0, sizeof(int) * n);
         int k = k1 * m, cur = 0;
-        int maxp = uid(rnd);
-        while(maxp--) {
-            int eid = uid(rnd);
-            int u = E[eid].u, v = E[eid].v;
-            if(match[u] == 0 && match[v] == 0) {
-                match[u] = v, match[v] = u;
-                ++cur;
-            }
-        }
         while(k--) {
             int eid = uid(rnd);
             int u = E[eid].u, v = E[eid].v;
