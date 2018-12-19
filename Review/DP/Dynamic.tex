@@ -1,0 +1,49 @@
+\section{动态dp}
+动态dp与常规dp的区别就是加上了多次修改与询问。
+\subsection{序列DDP}
+\subsubsection{区间最值问题}
+一般使用线段树维护区间信息。
+\paragraph{例题 小白逛公园}
+使用线段树维护区间最大子段和。
+\lstinputlisting{Source/Source/DDP/4513.cpp}
+\subsection{树上DDP}
+树上DDP一般使用线段树+树链剖分+矩阵乘法。
+
+考虑动态最大带权独立集问题：
+\subsubsection{描述dp转移}
+记$f_u$为不选点$u$的子树最大带权独立集，
+$g_u$为选点$v$的子树最大带权独立集。
+
+那么对于点$u$的子树$T_u$有
+\begin{eqnarray*}
+    f_u&=&\sum_{(u,v)\in T_u}{max(f_v,g_v)}\\
+    g_u&=&w_u+\sum_{(u,v)\in T_u}{f_v}
+\end{eqnarray*}
+
+类似于算法导论\cite{ITA3}中解决所有节点对最短路径问题时
+介绍的类矩阵乘法，这里把对单个儿子$v$的转移视为左乘一个由点$u$当前dp状态决定
+的转移矩阵，把$(f_v,g_v)$视作向量。其中矩阵乘法的定义需要修改：乘法变为加法，
+加法变为取max，这个新的乘法操作仍然满足结合律。单位阵$I_n$的主对角线上为0，其余
+元素为$-\infty$。
+
+所以转移式如下：
+\begin{displaymath}
+    \left[
+    \begin{array}{cc}
+        f_u&f_u\\
+        g_u&-\infty
+    \end{array}\right]
+    \left[
+    \begin{array}{c}
+        f_v\\g_v
+    \end{array}\right]  =
+    \left[
+    \begin{array}{c}
+        f'_u\\g'_u
+    \end{array}\right]
+\end{displaymath}
+
+此时已经将dp转移转化为矩阵乘法的形式。
+\subsubsection{修改}
+\subsection{全局平衡二叉树}
+\subsection{基于链的分治优化树上动态DP}

@@ -207,11 +207,11 @@
 - [ ] fractional cascading
 - [x] boruvka算法-CF888G
 - [ ] 动态DP
+- [ ] 基于链的分治优化树上动态DP
 - [x] ExKMP(Z Algorithm)
 - [ ] 二维FFT
 - [ ] 欧几里得距离MST[By zball](https://www.cnblogs.com/tmzbot/p/6203547.html)
 - [x] 类欧几里得算法
-
 - [ ] 最小方差生成树
 - [ ] 牛顿级数差分
 - [ ] 格林公式[By Trinkle](http://trinkle.blog.uoj.ac/blog/1519)
@@ -220,6 +220,7 @@
 - [ ] b-Matching[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Matching2.html#2)
 - [ ] Stable Matching[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Matching2.html#3)
 - [ ] Chinese Postman Problem[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Circuit.html#4)
+- [ ] 启发式分裂[By zsy](https://blog.csdn.net/DSL_HN_2002/article/details/81193576)
 # Research
 - [ ] 利用powerful number求积性函数前缀和[By fjzzq2002](https://www.cnblogs.com/zzqsblog/p/9904271.html)
 - [ ] 近似算法
