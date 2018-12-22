@@ -207,7 +207,6 @@
 - [ ] fractional cascading
 - [x] boruvka算法-CF888G
 - [x] 动态DP
-- [ ] 基于链的分治优化树上动态DP
 - [x] ExKMP(Z Algorithm)
 - [ ] 二维FFT
 - [ ] 欧几里得距离MST[By zball](https://www.cnblogs.com/tmzbot/p/6203547.html)
@@ -253,6 +252,8 @@
 - [ ] 最优化方法[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Optimization.html)
 - [ ] 迭代求解线性方程组
 - [ ] 求根、不动点与特征点的关系[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/RootFinding.html#5)
+- [ ] Karmarkar's algorithm
+- [ ] Mehrotra predictor-corrector method
 # Other
 - [ ] 使用Vim
 - [ ] 学习十指打字
