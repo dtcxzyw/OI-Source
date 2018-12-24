@@ -56,7 +56,7 @@ const char* const key[] = {
                                               ""
 };
 constexpr int size = std::extent<decltype(key)>::value,
-              cnt = 10, fac = 300;
+              cnt = 10, fac = 285;
 int id[size];
 using Clock = std::chrono::high_resolution_clock;
 int main() {
