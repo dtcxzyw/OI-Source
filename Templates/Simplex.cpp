@@ -1,19 +1,6 @@
 #include <algorithm>
 #include <cmath>
 #include <iostream>
-int read() {
-    int res = 0, c;
-    bool flag = false;
-    do {
-        c = getchar();
-        flag |= c == '-';
-    } while(c < '0' || c > '9');
-    while('0' <= c && c <= '9') {
-        res = res * 10 + c - '0';
-        c = getchar();
-    }
-    return flag ? -res : res;
-}
 int getRandom() {
     static int seed = 2354;
     return seed = seed * 48271LL % 2147483647;
@@ -60,7 +47,7 @@ bool init() {
 }
 bool simplex() {
     if(!init()) {
-        puts("Infeasible");
+        std::cout << "Infeasible" << std::endl;
         return false;
     }
     while(true) {
@@ -83,7 +70,7 @@ bool simplex() {
                 }
             }
         if(l == 0) {
-            puts("Unbounded");
+            std::cout << "Unbounded" << std::endl;
             return false;
         }
         pivot(l, e);
@@ -112,7 +99,7 @@ int main() {
                 ans[id[n + i]] = A[i][0];
             for(int i = 1; i <= n; ++i)
                 std::cout << std::fixed << ans[i]
-                          << std::endl;
+                          << ' ';
         }
     }
     return 0;

@@ -223,6 +223,8 @@
 - [ ] minmax容斥
 - [ ] 有标号的DAG计数[By yyb](https://www.cnblogs.com/cjyyb/p/10134575.html)
 - [ ] CZT[By myy 再探快速傅里叶变换](http://www.doc88.com/p-4912876232995.html)
+- [ ] 优化形式幂级数计算的牛顿法的常数[By negiizhao](http://negiizhao.blog.uoj.ac/blog/4671)
+- [ ] 回滚莫队
 # Research
 - [ ] 利用powerful number求积性函数前缀和[By fjzzq2002](https://www.cnblogs.com/zzqsblog/p/9904271.html)
 - [ ] 近似算法
@@ -260,3 +262,4 @@
 - [ ] 学习十指打字
 - [ ] 集训队互测题2018
 - [ ] PKUWC2018
+- [ ] Ynoi2019模拟赛[By OldDriverTree](http://olddrivertree.blog.uoj.ac/blog/4656)
