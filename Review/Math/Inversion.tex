@@ -92,3 +92,41 @@ $g(k)$为使用$k$种颜色的方案数。
 和Miskcoo的博客\footnote{反演魔术：反演原理及二项式反演 – Miskcoo's Space.
 	\url{http://blog.miskcoo.com/2015/12/inversion-magic-binomial-inversion}
 }。
+\subsection{最值反演（minmax容斥）}
+\subsubsection{一般形式}
+记集合为$S$，$max(S)$为集合$S$的最大元素，$min(S)$为集合$S$的最小元素。
+有
+\begin{eqnarray*}
+	max(S)&=&\sum_{T\subseteq S}{(-1)^{|T|+1}min(T)}\\
+	min(S)&=&\sum_{T\subseteq S}{(-1)^{|T|+1}max(T)}
+\end{eqnarray*}
+
+证明（以第一个式子为例）：记$x=max(S)$（如果集合可重，就给相同元素编号使其不相等，
+下面仅考虑不可重集合的情况）。当且仅当$T=\{x\}$时贡献才含有$x$项。对于$T\neq \{x\}$，
+设$y=min(T)$，设$S$中$\geq y$的元素有$k$个，有$k>1$，由于在这$k$个中选择奇数个与
+选择偶数个的方案数相同（使用二项式定理可证明），最终$y$的贡献会被抵消。
+
+仅仅用来求最值没多大用处，但是可以考虑在外面再套上一层函数$f$，
+等式仍然成立。这样就可以用简单函数套容斥来计算所需值。
+\subsubsection{期望形式}
+由期望的线性性质可以推出在$max(S/T)$与$min(S/T)$外再套上一层
+期望后等式仍然成立。
+
+一般的套路是每位都有一定的概率从0变为1，求全部变为1的期望步数。
+最值反演后转换为至少1位变为1的期望步数。
+
+例题「HAOI2015」按位或留坑待补。
+\subsubsection{推广}
+$S$的第$k$大$max_k(S)$满足如下等式：
+
+\begin{displaymath}
+	max_k(S)=\sum_{T\subseteq S}{(-1)^{|T|+k}\binomial{|T|-1}{k-1}min(T)}
+\end{displaymath}
+
+证明留坑待补。
+\index{*TODO!最值反演推广证明}
+
+上述内容参考了Mr\_Spade的博客\footnote{
+	min-max容斥/最值反演及其推广
+	\url{http://www.cnblogs.com/Mr-Spade/p/9636968.html}
+}。

@@ -52,8 +52,13 @@ const char* const key[] = {
     "minv", "?:", "equal", "inf", "eps", "reset",
     "pair", "first", "second", "time", "clock", "eval",
     "heap", "hash", "LUT", "clone", "old", "link",
-    "Mat", "asInt64", "foo", "Int64", "mulm", "main"
-                                              ""
+    "Mat", "asInt64", "foo", "Int64", "mulm", "main",
+    "point", "SSSP", "color", "clamp", "rotate",
+    "access", "down", "simplex", "pivot", "gen",
+    "0.5772156649", "0x077CB531U", "469762049",
+    "1004535809", "2281701377", "48271", "2147483647",
+    "makeRoot", "isRoot", "test"
+                          ""
 };
 constexpr int size = std::extent<decltype(key)>::value,
               cnt = 10, fac = 285;

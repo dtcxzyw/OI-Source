@@ -45,7 +45,7 @@ $m$个约束的系数，大小为$n$的向量$b$表示由这$m$个约束的常�
 \subsubsection{松弛型}
 单纯形算法需要把不等式约束转换为等式约束。
 对于每一个约束$f_i(x)\leq b_i$，引入一个非负松弛变量$x_{n+i}$使得
-$x_{n+i}=b_i-f_i(x)$。记目标函数值为$z$，则也可以引入等式$z=cx$。实际上基本变量
+$x_{n+i}=b_i-f_i(x)$。记目标函数值为$z$，则也可以引入等式$z=c^Tx$。实际上基本变量
 与目标函数值都被表示为常数+非基本变量线性加权和的形式。在此称等式左边的变量为
 {\bfseries 基本变量}，等式右边变量称为{\bfseries 非基本变量}。等式组的变量不同时
 出现于等号两边，基本变量也不会出现两次。事实上，这些约束把基本变量与目标函数值表示为
@@ -74,7 +74,7 @@ $x_{n+i}=b_i-f_i(x)$。记目标函数值为$z$，则也可以引入等式$z=cx$
 \begin{displaymath}
     A[i][0]+\mathrm{目标函数值}z=\sum_{j=1}^n{A[i][j]x_{id[j]}}
 \end{displaymath}
-该式可由$z=cx$推导。
+该式可由$z=c^Tx$推导。
 
 或
 \begin{displaymath}
@@ -197,7 +197,31 @@ $pivot(k,n_B)$，这样就得到了线性规划$B$的一个基本可行解。
 只能指望Mehrotra predictor–corrector method了）。
 \lstinputlisting{Source/Templates/SimplexSLP.cpp}
 \subsection{对偶线性规划}
+标准型的对偶线性规划为：
+\begin{itemize}
+    \item 最小化$b^Ty$
+    \item 满足约束$A^Ty\geq c$
+    \item $y\geq 0$
+\end{itemize}
+
+标准型和它的对偶线性规划最优值相等，即$c^Tx=b^Ty$。
 \subsection{全幺模矩阵}
+\index{T!Totally Unimodular Matrix}
+
+
+一个矩阵$A$是{\bfseries 全幺模矩阵}的充分条件如下：
+\begin{itemize}
+    \item $A$的元素仅有-1，0，1。
+    \item 每列最多有2个非0数。
+    \item 行可以分为2个集合，根据列来划分集合：
+    \begin{itemize}
+        \item 若列中有2个同号非0数，两行不在同一集合
+        \item 若列中有2个异号非0数，两行在同一集合
+    \end{itemize}
+\end{itemize}
+
+若线性规划的系数矩阵$A$为全幺模矩阵，可以把目标函数中系数为0的变量去除。
+任何最大流以及最小费用最大流问题的线性规划矩阵都是全幺模矩阵。
 
 上述内容参考了算法导论\cite{ITA3}第29章与Angel\_Kitty的博客\footnote{
     线性规划之单纯形法【超详解+图解】

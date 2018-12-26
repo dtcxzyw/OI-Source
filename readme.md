@@ -176,7 +176,7 @@
 - [x] IDA*
 - [x] DLX
 - [ ] 最小树型图
-- [ ] 单纯形算法
+- [x] 单纯形算法
 - [x] Johnson
 - [ ] 通用筛法
 - [ ] 平面性算法
@@ -242,7 +242,7 @@
 - [ ] SA-IS算法
 - [ ] Chan's algorithm
 - [ ] DoubleArrayTrie
-- [ ] 动态仙人掌
+- [ ] 用动态圆方树实现动态仙人掌[By Isrothy](http://isrothy.blog.uoj.ac/blog/3631)
 - [ ] 摊还分析
 - [ ] 拟阵
 - [ ] A Randomized Linear-Time Algorithm to Find Minimum Spanning Trees
@@ -257,9 +257,11 @@
 - [ ] 求根、不动点与特征点的关系[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/RootFinding.html#5)
 - [ ] Karmarkar's algorithm
 - [ ] Mehrotra predictor-corrector method
+- [ ] 维护双向加字符的字符串[By 傅笙芳](https://zhuanlan.zhihu.com/p/51880239)
 # Other
 - [ ] 使用Vim
 - [ ] 学习十指打字
 - [ ] 集训队互测题2018
 - [ ] PKUWC2018
 - [ ] Ynoi2019模拟赛[By OldDriverTree](http://olddrivertree.blog.uoj.ac/blog/4656)
+- [ ] LOJ分块题
