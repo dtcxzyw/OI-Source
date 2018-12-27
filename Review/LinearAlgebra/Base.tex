@@ -71,3 +71,11 @@ int kth(int k) {
     return res;
 }
 \end{lstlisting}
+
+\paragraph{注意事项}
+\begin{itemize}
+    \item 要求第$k$大异或和，输入的$k$要-1。
+    \item 如果要求异或的子集非空，则需考虑$0$是否能被构造。
+    当且仅当输入各向量{\bfseries 线性无关}时（即输入向量数=B中非0向量数），
+    $0$不可被构造（仅有平凡解）。因此若$0$可被构造则$k$要-1，否则$k$不变。
+\end{itemize}

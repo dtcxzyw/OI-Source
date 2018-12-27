@@ -220,11 +220,13 @@
 - [ ] Stable Matching[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Matching2.html#3)
 - [ ] Chinese Postman Problem[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Circuit.html#4)
 - [ ] 启发式分裂[By zsy](https://blog.csdn.net/DSL_HN_2002/article/details/81193576)
-- [ ] minmax容斥
+- [x] minmax容斥
 - [ ] 有标号的DAG计数[By yyb](https://www.cnblogs.com/cjyyb/p/10134575.html)
 - [ ] CZT[By myy 再探快速傅里叶变换](http://www.doc88.com/p-4912876232995.html)
 - [ ] 优化形式幂级数计算的牛顿法的常数[By negiizhao](http://negiizhao.blog.uoj.ac/blog/4671)
 - [ ] 回滚莫队
+- [ ] 原根对1求离散对数[By Dance Of Faith](https://www.cnblogs.com/Dance-Of-Faith/p/9905786.html)
+- [ ] 集合选数最值一类问题[By tkandi](https://www.cnblogs.com/tkandi/p/9375509.html)
 # Research
 - [ ] 利用powerful number求积性函数前缀和[By fjzzq2002](https://www.cnblogs.com/zzqsblog/p/9904271.html)
 - [ ] 近似算法
