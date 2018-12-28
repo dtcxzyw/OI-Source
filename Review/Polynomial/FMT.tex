@@ -1,4 +1,4 @@
-\section{快速莫比乌斯变换/反演}
+\section{快速莫比乌斯变换/反演}\label{FMT}
 \index{F!Fast Mobius Transformation}
 快速莫比乌斯变换用于计算集合并卷积。
 快速莫比乌斯反演其实就是其逆变换。
@@ -31,8 +31,13 @@ for(int i = 1; i < end; i <<= 1)
             A[j] -= A[j ^ i];
 \end{lstlisting}
 
-用容斥可得$\displaystyle h[i]=\sum_{i\&j==j}{(-1)^{|I|-||J|}H[j]}$，其中$|I|$表示
-$i$对应的集合$I$的大小。
+用容斥可得$\displaystyle h[i]=\sum_{i\&j==j}{(-1)^{|I|-|J|}H[j]}$，其中$|I|$
+表示$i$对应的集合$I$的大小。
+
+证明：该式的$H[j]$子集中含有$h[i]$当且仅当$i==j$，贡献为$h[i]$。考虑其余$h[k]$对
+$H[j]$的贡献，以及它们在式中最终对$h[i]$的贡献，设$d=|I|-|K|$，$h[k]$对$h[i]$的贡献
+为$\displaystyle \sum_{i=0}^{2^d-1}{(-1)^{d-|i|}}$。由于选择奇数位与选择偶数位的
+方案数相等，贡献为0。
 
 \paragraph{例题}
 Luogu P3175 [HAOI2015]按位或\footnote{
@@ -40,11 +45,14 @@ Luogu P3175 [HAOI2015]按位或\footnote{
     \url{https://www.luogu.org/problemnew/show/P3175}
 }
 
-记$a_i$为走$i$步的概率，答案为$\displaystyle \sum_{k=1}^\infty{k(a_i-a_{i-1})}=
--\sum_{k=1}^\infty a_i$。令概率数组为集合幂级数$f$，定义乘法运算为集合幂卷积，可知答案
-为$f$的等比数列求和，若其收敛则其答案为$\left(\frac{1}{f-1}\right)_{2^n-1}$。计算
-$f$的莫比乌斯变换$F$，那么$F$的幂就是$F$每一项的幂组合起来的序列。那么$F$的等比数列求和
-就是${\frac{1}{F_i-1}}$，最后使用容斥计算出$f_n$，不必做反演。
+记$a_i$为走$i$步到达目标状态的概率，答案为$\displaystyle \sum_{k=1}^
+\infty{k(a_k-a_{k-1})}=-\sum_{k=0}^\infty a_k$。令概率数组为集合幂级数$f$，
+定义乘法运算为集合幂卷积，可知答案为$f$的无限递减几何级数第$2^n-1$项的倒数，
+若其收敛则其答案为$\left(\frac{1}{f-1}\right)_{2^n-1}$。计算$f$的莫比乌斯变换$F$，
+那么函数$T(f)$对应序列${T(F_i)}$。记$G_i={\frac{1}{F_i-1}}$，
+最后使用容斥计算出$g_{2^n-1}$，不必做反演。
+
+若有解则$F_{2^n-1}=1$，此时对应的$G_{2^n-1}$应该为0，所以容斥时不考虑目标状态项。
 
 代码：
 \lstinputlisting{Source/Templates/FMT.cpp}

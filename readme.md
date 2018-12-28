@@ -260,6 +260,7 @@
 - [ ] Karmarkar's algorithm
 - [ ] Mehrotra predictor-corrector method
 - [ ] 维护双向加字符的字符串[By 傅笙芳](https://zhuanlan.zhihu.com/p/51880239)
+- [ ] 排序网络
 # Other
 - [ ] 使用Vim
 - [ ] 学习十指打字

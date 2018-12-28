@@ -80,8 +80,7 @@ bool foo(int n, int m) {
         if(v0) {
             for(int j = G.last[u]; j; j = G.E[j].nxt) {
                 int v = G.E[j].to;
-                if(v != v0 && id[v] > id[u] &&
-                   !link[v0][v])
+                if(id[v] > id[v0] && !link[v0][v])
                     return false;
             }
         }
