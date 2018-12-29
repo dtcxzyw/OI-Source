@@ -14,12 +14,12 @@
 	有$\displaystyle \forall 1\leq k\leq n,\sum_{i=1}^k{s_i}\geq \binomial{k}{2}$
 	，当$k=n$时等号必须成立。
 \end{theorem}
-对度数/胜利场数排序后逐个判断即可。
+对度数/胜利场数排序后逐个判断其合法性。
 \subsection{最小平均值环}
 对于一个有向图，找出平均值最小的环。
 
 类似于分数规划的思想，对平均值进行二分，将所有边权减去二分值，
-若存在负环则说明存在环的平均值小于该二分值，不断二分即可。
+若存在负环则说明存在环的平均值小于该二分值。
 \subsection{平面图性质}
 \index{P!Planar Graph}
 以下仅讨论$V\geq 3$的情况：
@@ -50,12 +50,12 @@
 			e(a_1,b_1) & e(a_1,b_2) & \cdots & e(a_1,b_n) \\
 			e(a_2,b_1) & e(a_2,b_2) & \cdots & e(a_2,b_n) \\
 			\vdots     & \vdots     & \ddots & \vdots     \\
-			e(a_n,b_1) & e(a_n,b_2) & \cdots & e(a_2,b_n) \\
+			e(a_n,b_1) & e(a_n,b_2) & \cdots & e(a_n,b_n) \\
 		\end{array}\right]\right)
 \end{displaymath}
 \subsubsection{推广}
 实际上$e(a_i,b_j)$为$a_i\rightarrow b_j$的所有路径上边权积之和，
-类似Matrix-Tree定理的讨论可扩展到边权相关问题。
+类似Matrix-Tree定理扩展的讨论（参见第~\ref{MatrixTree}节）可扩展到边权相关问题。
 
 上述内容参考了Wikipedia-EN\footnote{
 	Lindström–Gessel–Viennot lemma - Wikipedia

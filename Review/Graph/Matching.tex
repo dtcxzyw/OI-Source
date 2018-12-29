@@ -34,7 +34,7 @@
 \begin{itemize}
     \item 若走到未访问点：
     \begin{itemize}
-        \item 若该点已匹配：
+        \item 若该点已匹配：将该点加入队列后退出，继续遍历交错树。
         \item 若该点未匹配：找到增广路径，翻转链上边的匹配状态后返回true。
     \end{itemize}
     \item 若走到已访问点：
