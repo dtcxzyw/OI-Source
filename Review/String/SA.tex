@@ -18,7 +18,7 @@
 \lstinputlisting{Source/Templates/SA.cpp}
 \subsection{最长公共前缀}
 \index{L!Longest Common Prefix}
-定义$LCP(i,j)$为第$i$个后缀与第$j$个后缀的最长公共前缀。
+定义$LCP(i,j)$为第$i$个后缀与第$j$个后缀（指排名而不是位置）的最长公共前缀。
 
 显然LCP函数有两个性质：
 \begin{itemize}
@@ -27,23 +27,27 @@
 \end{itemize}
 所以只要考虑$LCP(i,j),i<j$的情况。
 \begin{theorem}[LCP Theorem]
-    $LCP(i,j)=min{LCP(k-1,k)},i<k\leq j$
+    \begin{displaymath}
+        LCP(i,j)=min\{LCP(k-1,k)\},i<k\leq j
+    \end{displaymath}
 \end{theorem}
 要证明该定理可先证明下列引理：
 \begin{lemma}[LCP Lemma]
-    $LCP(i,j)=min(LCP(i,k),LCP(k,j)),i<k<j$
+    \begin{displaymath}
+       LCP(i,j)=min(LCP(i,k),LCP(k,j)),i<k<j
+    \end{displaymath}
 \end{lemma}
 \paragraph{证明}
 首先根据传递性显然有$LCP(i,j)\geq min(LCP(i,k),LCP(k,j))$。
 
-其次考虑到$i,j,k$是后缀的排名且$i<j<k$，所以$LCP(i,j)>min(LCP(i\\,k),LCP(k,j))$
-不可能成立，即$LCP(i,j)\leq min(LCP(i,k),LCP(k,j))$。该引理得证。
+其次考虑到$i,j,k$是后缀的排名且$i<k<j$，有$LCP(i,j)\leq LCP(i,k)$且
+$LCP(i,j)\leq LCP(k,j)$，即$LCP(i,j)\leq min(LCP(i,k),LCP(k,j))$。
+该引理得证。
 
-因此设$height[i]=LCP(i-1,i),height[1]=0$，求出height数组后
-使用ST表即可$O(1)$询问LCP。
+因此设$height[i]=LCP(i-1,i),height[1]=0$，求出height数组后构建ST表$O(1)$询问LCP。
 
-考虑在原串上相邻后缀的关系，显然两个后缀右移1位的$LCP'\geq LCP-1$，
-快速转移后继续向后比较即可。
+按照原串顺序预处理$height$数组。考虑在原串上相邻后缀的关系，显然两个后缀右移1位的
+$LCP'\geq LCP-1$，用此性质快速转移后继续向后暴力匹配。
 
 \begin{lstlisting}
 void cook(int n) {
@@ -66,7 +70,7 @@ void cook(int n) {
 \subsection{应用}
 一般思想是二分LCP长度，对height数组进行分组。若遇到多串
 将其用未出现字符连在一块求后缀数组。对于回文串/翻转系列问题将
-反串一起加入即可。遇到连续重复子串考虑错位匹配。
+反串一起加入计算。连续重复子串问题使用错位匹配解决。
 \subsubsection{可重叠最长重复子串}
 该子串一定是某两个后缀的LCP，而LCP在height数组中取最小值，因此
 答案为height最大值。

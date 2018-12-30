@@ -7,6 +7,7 @@
 - [ ] P5105 不强制在线的动态快速排序
 - [ ] LOJ#129. Lyndon 分解
 - [ ] 「HDU6184」Counting Stars-三元环
+- [ ] LOJ##141. 回文子串
 # Min_25 筛
 - [x] LOJ#6053. 简单的函数
 - [ ] UOJ#188. 【UR #13】Sanrd
@@ -67,7 +68,7 @@
 - [ ] LOJ#2020. 「AHOI / HNOI2017」礼物
 - [ ] LOJ#2554. 「CTSC2018」青蕈领主
 # 后缀数组/后缀自动机
-- [ ] LOJ#111. 后缀排序
+- [x] LOJ#111. 后缀排序
 - [ ] LOJ#544. 「LibreOJ β Round #7」Array Poisonous Suffix Problem
 - [ ] LOJ#2033. 「SDOI2016」生成魔咒
 - [ ] LOJ#2059. 「TJOI / HEOI2016」字符串
@@ -78,7 +79,9 @@
 - [ ] LOJ#6041. 「雅礼集训 2017 Day7」事情的相似度
 - [ ] LOJ#6198. 谢特
 # AC自动机
-- [ ] LOJ#2180. 「BJOI2017」魔法咒语
+- [x] LOJ#2180. 「BJOI2017」魔法咒语
+# KMP
+- [ ] LOJ#2272. 「SDOI2017」文本校正
 # 线性基
 - [ ] LOJ#2312. 「HAOI2017」八纵八横
 - [x] LOJ#114. k 大异或和
@@ -141,3 +144,12 @@
 - [ ] LOJ#2155. 「POI2011 R1」同谋者 Conspiracy
 - [ ] LOJ#6036. 「雅礼集训 2017 Day4」编码
 - [ ] LOJ#6157. A ^ B Problem
+# 点分治
+- [ ] LOJ#2179. 「BJOI2017」树的难题
+- [ ] LOJ#2259. 「FJOI2014」最短路径树问题
+- [ ] LOJ#2339. 「WC2018」通道
+- [ ] LOJ#2341. 「WC2018」即时战略
+- [ ] LOJ#2553. 「CTSC2018」暴力写挂
+- [ ] LOJ#2558. 「LNOI2014」LCA
+- [ ] LOJ#2497. 「PA 2017」Banany
+# 虚树

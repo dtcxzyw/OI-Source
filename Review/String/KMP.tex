@@ -1,8 +1,11 @@
 \section{KMP算法}
 \index{K!Knuth–Morris–Pratt Algorithm}
-\subsection{常规KMP}
-KMP算法通过预处理nxt数组来避免重复匹配，$nxt[i]$指长度为$i$的模式串前缀
-在模式串的前缀中的最长后缀长度（除自身外）。
+
+KMP算法通过预处理nxt数组来避免重复匹配。考虑在长度为$i$的模式串前缀$S_i$
+的非自身前缀$P_j$中，满足$P_j$是$S_i$后缀的$P_j$。定义$nxt[i]$为最长的满足条件的
+$P_j$长度。
+
+以下字符串下标从0开始，nxt数组下标从1开始。
 \subsubsection{预处理}
 可以利用之前的预处理信息跳nxt来找到最长后缀。
 \begin{lstlisting}
@@ -34,11 +37,6 @@ void match(const char* str,int len) {
     }
 }
 \end{lstlisting}
-\subsection{ExKMP}
-ExKMP用来计算主串的每个后缀与模式串的最长公共前缀。
 
-留坑待补。
-
-参见Star\_Feel的博客\footnote{算法导论————EXKMP
-    \url{https://www.cnblogs.com/Never-mind/p/7776543.html}
-}。
+ExKMP已被更好理解的Z Algorithm取代，故不再补充该内容。
+Z Algorithm参见第~\ref{ZA}节。

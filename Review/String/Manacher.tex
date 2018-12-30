@@ -14,7 +14,7 @@ Manacher算法用来求解最长回文串问题。主要思想是利用之前的
         \item
         \begin{itemize}
             \item 若当前位置$i\geq maxr$，设$RL[i]=1$；
-            \item 否则令$RL[i]=min(RL[pos-(pos-i)],maxr-i+1)$（因为
+            \item 否则令$RL[i]=min(RL[pos-(i-pos)],maxr-i+1)$（因为
             此时$i$到$maxr$的部分和$i$以$pos$为轴的对称部分对称，而那个
             部分已经被处理过了）。
         \end{itemize}

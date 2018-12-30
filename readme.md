@@ -227,6 +227,7 @@
 - [ ] 回滚莫队
 - [ ] 原根对1求离散对数[By Dance Of Faith](https://www.cnblogs.com/Dance-Of-Faith/p/9905786.html)
 - [ ] 集合选数最值一类问题[By tkandi](https://www.cnblogs.com/tkandi/p/9375509.html)
+- [ ] 区间加多项式问题[By riteme](https://riteme.github.io/blog/2018-1-28/interval-polynomial.html)
 # Research
 - [ ] 利用powerful number求积性函数前缀和[By fjzzq2002](https://www.cnblogs.com/zzqsblog/p/9904271.html)
 - [ ] 近似算法
@@ -261,6 +262,7 @@
 - [ ] Mehrotra predictor-corrector method
 - [ ] 维护双向加字符的字符串[By 傅笙芳](https://zhuanlan.zhihu.com/p/51880239)
 - [ ] 排序网络
+- [ ] 超现实数 方展鹏-《浅谈如何解决不平等博弈问题》
 # Other
 - [ ] 使用Vim
 - [ ] 学习十指打字
@@ -268,3 +270,4 @@
 - [ ] PKUWC2018
 - [ ] Ynoi2019模拟赛[By OldDriverTree](http://olddrivertree.blog.uoj.ac/blog/4656)
 - [ ] LOJ分块题
+- [ ] 整理引用的Bib与协议问题

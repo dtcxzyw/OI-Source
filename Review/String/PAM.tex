@@ -22,7 +22,7 @@ fail指针重新在父亲的fail链上找。然后把该节点挂在父亲下。
 最后重置last,++T[last].cnt结束加入。
 \subsubsection{后处理}
 注意自身的fail肯定是自己的子回文串，最后做一次后处理，按照节点编号的逆序
-往上累加cnt即可。
+往上累加cnt。
 \subsubsection{代码}
 \lstinputlisting{Source/Templates/PAM.cpp}
 \subsection{应用}
@@ -33,9 +33,9 @@ extend该前缀的所有字符后，PAM的$siz-1$就是本质不同的回文串�
 cnt就是它的出现次数。
 \subsubsection{统计串S的回文串的个数}
 答案即为后处理后的cnt之和。
-\subsubsection{统计以节点$i$结尾的回文串个数}
+\subsubsection{统计以下标$i$结尾的回文串个数}
 对每个节点记录其在fail树上的深度，fail链上的节点所代表的回文串都是
-自己的后缀回文串，所以答案即为深度。
+自己的后缀回文串，所以答案即为加入第$i$字符后last节点的深度。
 
 以上内容参考了poursoul的博客\footnote{
     Palindromic Tree——回文树【处理一类回文串问题的强力工具】

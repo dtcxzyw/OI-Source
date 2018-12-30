@@ -1,13 +1,13 @@
 \section{AC自动机}
 \index{A!Aho–Corasick Algorithm}
-AC自动机基于Trie树实现，原理是在Trie树上匹配字符串，
+AC自动机基于Trie树实现，原理类似于KMP算法，即在Trie树上匹配字符串，
 失配时根据fail指针跳到下一匹配位置。
 \subsection{构造}
-首先建出Trie，然后对Trie按BFS序确定fail指针，fail指针
-指向它的在Trie中的最长后缀（这个字符串是某个模式串的前缀），BFS序
-可以保证最长的性质。
+首先建出Trie，然后对Trie按BFS序确定fail指针，fail指针指向它的在Trie中的
+最长后缀（根据Trie树的性质，这个后缀也是某个模式串的前缀），BFS序遍历可以
+保证其长度最长。
 
-为了简化找fail指针的过程，可以设一个虚拟节点0，root为1，令root的
+为了简化找fail指针的代码，可以设一个虚拟节点0，root编号为1，令root的
 fail为0，0的所有儿子全设为root，这样就可以避免判断是否到达root，
 同时令找不到后缀的节点的fail为root。
 
@@ -15,6 +15,8 @@ fail为0，0的所有儿子全设为root，这样就可以避免判断是否到�
 const int root=1;
 int q[size];
 void cook() {
+    for(int i=0;i<26;++i)
+        T[0].nxt[i]=root;
     T[root].fail=0;
     int b=0,e=1;
     q[b]=root;
@@ -32,12 +34,10 @@ void cook() {
         }
     }
 }
-for(int i=0;i<26;++i)
-    T[0].nxt[i]=root;
 \end{lstlisting}
-在实际应用中可以让无儿子$v$的节点$u$继承其fail的对应儿子，
-省去了在Trie上不断跳fail指针的时间，如果不希望影响Trie的形态
-（比如需要DFS）可以另外开个quick数组。
+
+还有一种更加简洁快速的cook过程。让无儿子$v$的节点$u$继承其fail的对应儿子，
+省去了在Trie上不断跳fail指针的时间。这种cook方式不会影响fail树的建立。
 \begin{lstlisting}
 int q[size];
 void cook() {
@@ -68,7 +68,7 @@ void match(const char* str) {
     int p=0;
     while(*str) {
         int c=*str-'a';
-        //`注意如果使用继承优化就不需要跳fail了`
+        //`注意如果使用继承fail优化就不需要跳fail了`
         while(p && !T[p].nxt[c])
             p=T[p].fail;
         p=T[p].nxt[c];
@@ -76,7 +76,7 @@ void match(const char* str) {
         int cp=p;
         while(cp) {
             if(T[cp].cnt)
-                //match
+                //`处理匹配字符串`
             cp=T[cp].fail;
         }
         ++str;
@@ -90,7 +90,8 @@ void match(const char* str) {
 从fail向自己连边，可以得到一棵fail树。将代表某个模式串的节点称为终结点，
 那么fail树上某个终结点是它子树内的终结点的后缀。
 
+\paragraph{例题 NOI2011 阿狸的打字机}
 对于多次询问求第$x$个字符串在第$y$个字符串中出现次数的问题，模拟字符串$y$在AC
 自动机上跑的过程，查询匹配时跳fail扫一遍相当于在fail树上将自己的权值传给父亲。
-因此先建出fail树，计算DFS序，（尽量按照字典序）让$y$在AC自动机上跑，把经过的
-每个节点都标记，最后求询问中所有$x$的子树权值和，使用树状数组很容易实现。
+因此先建出fail树，按DFS序平铺为序列，（尽量按照字典序）让$y$在AC自动机上跑，
+记录节点被经过的次数，最后求询问中所有$x$的子树权值和，使用树状数组很容易实现。

@@ -20,10 +20,13 @@ int compare(int id, const std::string& exec,
         return 0;
     std::ifstream outf(out);
     using Iter = std::istream_iterator<std::string>;
-    return std::equal(Iter(outf), Iter(),
-                      Iter(stdof)) ?
-        1 :
-        0;
+    bool flag =
+        std::equal(Iter(outf), Iter(), Iter(stdof));
+    outf.seekg(std::ios::beg);
+    stdof.seekg(std::ios::beg);
+    flag &=
+        std::equal(Iter(stdof), Iter(), Iter(outf));
+    return flag;
 }
 int main() {
     std::string name, app;
