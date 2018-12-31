@@ -228,6 +228,8 @@
 - [ ] 原根对1求离散对数[By Dance Of Faith](https://www.cnblogs.com/Dance-Of-Faith/p/9905786.html)
 - [ ] 集合选数最值一类问题[By tkandi](https://www.cnblogs.com/tkandi/p/9375509.html)
 - [ ] 区间加多项式问题[By riteme](https://riteme.github.io/blog/2018-1-28/interval-polynomial.html)
+- [ ] 扩展Dijkstra IOI2011 crocodile BZOJ 2622 [2012国家集训队测试]深入虎穴
+- [x] 子序列自动机
 # Research
 - [ ] 利用powerful number求积性函数前缀和[By fjzzq2002](https://www.cnblogs.com/zzqsblog/p/9904271.html)
 - [ ] 近似算法

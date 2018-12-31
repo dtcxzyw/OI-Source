@@ -5,7 +5,7 @@
 SAM使用最简状态表示。SAM是一个DAG，任何从初始状态出发的路径对应一个子串。
 
 定义$ST(str)$为接受$str$后转移到的状态，$Right(s)$为能够转移到
-该状态的字符串的end位置集合（即字符串末端的下一位，且编号从0开始）。
+该状态的子串的end位置集合（即字符串末端的下一位，且编号从0开始）。
 给定状态$Right$集合的元素$r$，再确定子串长度$len$，就可以识别子串$[r-len,r)$。
 发现若$l\in Right(s),r\in Right(s),l<r$，有$m\in Right(s),l\leq m \leq r$。
 所以一个状态$s$映射了一段长度区间内的，末尾出现位置集合相同所有子串。
@@ -17,11 +17,11 @@ SAM使用最简状态表示。SAM是一个DAG，任何从初始状态出发的�
 \end{property}
 \paragraph{证明} 因为状态$a,b$表示的子串无交集，所以$[l_a,r_a]$与$[l_b,r_b]$
 无交集。设$r_a<l_b$，对于任意终结点$r\in Right(a) \cap Right(b)$，有
-$a$表示的所有子串是$b$表示的所有子串的后缀。那么$\forall r\in Right(b),r\in Right(a)$。
+$a$表示的任意子串是$b$表示的某个子串的后缀。那么$\forall r\in Right(b),r\in Right(a)$。
 又因为$Right(a)\neq Right(b)$，所以$Right(b) \subset Right(a)$。
 
 若$Right(s)\subset Right(fa)$，将$fa\rightarrow s$连边，构成了一棵Parent树。
-可以发现$r_{fa}=l_s-1$，因此存储状态时只要存储$r_s$即可。
+可以发现$r_{fa}=l_s-1$，因此存储状态时只需存储$r_s$。
 \subsection{构造}
 与回文自动机类似，按顺序调用$extend$函数插入字符，时间复杂度$O(n)$。
 
@@ -120,6 +120,48 @@ Parent树是反串的后缀树。
 与Candy?\footnote{[后缀自动机]【学习笔记】
     \url{https://www.cnblogs.com/candy99/p/6374177.html}
 }和dwjshift\footnote{
-    用SAM建广义后缀树 « dwjshift's Blog
+    用SAM建广义后缀树 $\ll$ dwjshift's Blog
     \url{http://dwjshift.logdown.com/posts/304570}
 }的博客。
+
+\subsection{序列自动机}
+类比后缀自动机，序列自动机上的每条路径对应一个子序列。
+
+\subsubsection{构造}
+序列自动机的构造比较简单，即预处理$nxt[i][j]$表示位置$i$后的第一个字符$j$
+出现的位置。存在一个简单的$O(n|\alpha|)$DP：
+\begin{lstlisting}
+for(int i=n;i>=1;--i) {
+    for(int j=0;j<26;++j)
+        nxt[i-1][j]=nxt[i][j];
+    nxt[i-1][P[i]-'a']=i;
+}
+\end{lstlisting}
+
+维护可持久化数组可以把时间复杂度降到$O(n\lg |\alpha|)$，在字符集比较大的时候
+使用。
+\subsubsection{应用}
+下列序列数统计均指本质不同的序列。
+\paragraph{子序列个数}
+记$dp[i]$为从位置$i$开始的子序列个数，位置$i$的字符自成一个子序列，
+并且它与$nxt[i][j]$位置的方案构成了本质不同的子序列，因此有
+\begin{displaymath}
+    dp[i]=1+\sum_j{dp[nxt[i][j]]}
+\end{displaymath}
+使用记忆化搜索或者逆序dp。
+\paragraph{公共子序列个数}
+预处理出两个字符串的序列自动机后，使用记忆化搜索在序列自动机上跑。
+\paragraph{回文子序列个数}
+对原串和反串构建序列自动机，求这两个串的公共子序列数。
+记记忆化搜索调用为$DFS(x,y)$，$x,y$分别为在这两个串上的匹配位置，有
+$x\leq n+1-y$，等号成立意味着该回文序列为奇序列。但是奇序列不一定满足
+其等号成立，如果记忆化搜索搜索到一个偶回文序列，删掉该回文序列中心的一个字符，
+就会出现新的奇回文序列，因此在搜索时若满足$x+y<n+1$，要补上该奇序列的贡献。
+\paragraph{求满足存在指定子序列要求的最长公共子序列}
+给定串$A,B,C$，求$A,B$的最长公共子序列$S$，要求$C$是$S$的子序列。
+再给$DFS$增加一个状态记录其在$C$上匹配的位置后记忆化搜索。
+
+上述内容参考了pig\_dog\_baby的博客\footnote{
+    序列自动机（一个数组而已...）及经典例题
+    \url{https://blog.csdn.net/pig\_dog\_baby/article/details/81145857}
+}。
