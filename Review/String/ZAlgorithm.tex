@@ -9,8 +9,8 @@
 算法步骤如下：
 \begin{enumerate}
     \item 首先有$Z(0)=|P|$。
-    \item 维护当前$i+Z(i)-1$的最大值，其中$i>0$，记为$R$；同时维护$R$对应的$i$，
-    记为$L$。
+    \item 维护当前已匹配的最右端，即$max\{i+Z(i)-1\}$，其中$i>0$，记为$R$；
+    同时维护$R$对应的$i$，记为$L$。
     \item 考虑已经维护了当前$L,R$和$Z[0\cdots i-1]$，求$Z(i)$并更新$L,R$。
     \begin{itemize}
         \item 若$i>R$，直接从$i$开始暴力匹配，然后令$L=i,R=i+Z(i)-1$；
@@ -54,13 +54,16 @@ for(int i=1;i<n;++i) {
 Z Algorithm等价于ExKMP。ExKMP用来求解串$S$的每一个后缀$S_i$与另一个串$T$的
 LCP长度。
 
-使用Z Algorithm可以解决：构造新串$T+\mathrm{分隔符}+S$，运行Z Algorithm，
+使用Z Algorithm可以解决：构造新串$T+\textrm{分隔符}+S$，运行Z Algorithm，
 $S$部分的$Z$值就是所求答案。实际上无需构造新串，由于分隔符的存在，可以分两次对
 $T$与$S$运行算法。
 
 上述内容参考了yashem66的译文\footnote{
-    Z-function/Z Algorithm的构造与应用
+    译文：Z-function/Z Algorithm的构造与应用
+
     \url{https://blog.csdn.net/qq\_33330876/article/details/72844491}
+
     原文：Z Algorithm
+
     \url{http://codeforces.com/blog/entry/3107}
 }。

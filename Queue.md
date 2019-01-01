@@ -156,3 +156,5 @@
 - [ ] LOJ#2558. 「LNOI2014」LCA
 - [ ] LOJ#2497. 「PA 2017」Banany
 # 虚树
+# kdtree
+- [ ] LOJ#6016. 崂山白花蛇草水

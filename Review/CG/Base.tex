@@ -2,9 +2,8 @@
 以下内容主要讨论二维空间中的计算几何。
 \subsection{点，向量，直线，半平面的表示}
 点与向量由2个坐标表示；半平面和直线由直线上一点$ori$与
-直线的方向向量$dir$表示；直线上的一点可表示为$ori+dir*t$，通过控制$t$的取值还可以
-表示射线或线段；
-可以人为规定半平面的顺时针/逆时针$180^\circ$为半平面所在点集，
+直线的方向向量$dir$表示；直线上的一点可表示为$ori+dir*t$，通过控制参数$t$的取值
+还可以表示射线或线段；可以人为规定半平面的顺时针/逆时针$180^\circ$为半平面所在点集，
 通过叉积来判断点在半平面的哪一边。
 \begin{lstlisting}
 typedef double FT;
@@ -21,12 +20,14 @@ struct Line {
 };
 \end{lstlisting}
 \subsection{点乘与叉乘}
+\subsubsection{点乘}
 向量点乘$dot(a,b)=a.x*b.x+a.y*b.y=|a||b|cos<a,b>$，一般用来
-判断与法向量的夹角，以及辅助叉乘计算两向量夹角。点乘满足加法分配律和交换律。
-
+判断与法向量的夹角以及在某个向量上的投影长度。点乘满足加法分配律和交换律。
+\subsubsection{叉乘}
 向量叉乘$cross(a,b)=a.x*b.y-b.x*a.y=|a||b|sin<a,b>$，这是两向量
 构成的平行四边形的有向面积。一般用来判断向量的相对方向以及计算多边形的面积。
-叉乘满足$cross(a,b)=-cross(b,a)$和加法分配律。
+叉乘满足$cross(a,b)=-cross(b,a)$和加法分配律（将其视作线性变换
+$T:a\rightarrow cross(a,b)$或$T:b\rightarrow cross(b,a)$可证）。
 
 \begin{theorem}[拉格朗日公式]
 	cross(a,cross(b,c))=b*dot(a,c)-c*dot(a,b)
@@ -41,14 +42,19 @@ struct Line {
 	\end{array}\right)
 \end{displaymath}
 其方向满足右手定则（右手四指与大拇指垂直，食指指向向量$a$，其余三指指向向量$b$，
-大拇指方向即为叉乘方向），长度满足
-$|cross(a,b)|=|a||b|sin<a,b>$。
-
+大拇指方向即为叉乘方向），模长满足$|cross(a,b)|=|a||b|sin<a,b>$。
+\subsubsection{体积计算}
 结合点乘和叉乘可得点$A$与点$B,C,D$所组成的三棱锥$A-BCD$的有向体积为
 \begin{displaymath}
-	V=|\frac{1}{6}dot(\overrightarrow{BA},cross(\overrightarrow{BC},
+	V=\frac{1}{6}|dot(\overrightarrow{BA},cross(\overrightarrow{BC},
 	\overrightarrow{BD}))|
 \end{displaymath}
+其中$\overrightarrow{N}=cross(\overrightarrow{BC},\overrightarrow{BD})$
+的方向为法向，模长为底面面积的2倍。$|dot(\overrightarrow{BA},\overrightarrow{N})|$
+又给其模长增加了高的因子。套椎体体积公式可得上式。
+\subsubsection{极角计算}
+点乘可以得到$x=|a||b|cos<a,b>$，叉乘可以得到$y=|a||b|sin<a,b>$，将$(x,y)$
+看做在半径为$|a||b|$的圆上的点，极角为$atan2(x,y)$。
 \subsection{点到直线的距离}
 设偏移向量$delta=p-ori$：
 \begin{itemize}
@@ -57,9 +63,8 @@ $|cross(a,b)|=|a||b|sin<a,b>$。
 	\item 计算$|cross(delta,dir)|$可得偏移向量与方向向量构成的平行四边形的面积，
 	      根据面积公式得到$d=|\frac{cross(delta,dir)}{|dir|}|$。
 \end{itemize}
-叉乘法的运算量少且精度较高，总是被选用。
+叉乘法的运算量少且精度较高，能够指示半平面方向，建议选用。
 \subsection{直线、线段的交点}
-先上代码：
 \begin{lstlisting}
 Vec intersect(const Line& a,const Line& b) {
     Vec delta=a.ori-b.ori;
@@ -67,42 +72,42 @@ Vec intersect(const Line& a,const Line& b) {
     return a.ori+a.dir*t;
 }
 \end{lstlisting}
-\paragraph{证明} 首先可以发现两直线的方向向量都已经被单位化了。
-然后通过两个直角三角形中边与$sin$的关系可证。
+证明留坑待补。
+\index{*TODO!直线相交正确性证明}
 
 线段相交也是如此，但首先要判断两线段是否相交。将该问题转换为
 两线段是否互相平分。设线段为$a-b,c-d$，首先判断$a-b$平分$c-d$，
 即$c,d$分别位于$a-b$两边，有$cross(c-a,b-a)*cross(d-a,b-a)\leq 0$，
-同理对$c-d$做一遍即可。
+同理对$c-d$也做一遍。
 \subsection{判定点是否在多边形内}
 \subsubsection{随机射线法}
 从点P开始随机引出一条射线，计算其与多边形的边的交点个数，若为奇数次则
 在多边形内。注意射线恰好经过点时要重新选择方向。
 \subsubsection{旋转角法}
-从点P与多边形的一个点开始不断旋转到下一个点，直至转完一圈为止。
+从点P与多边形的一个点开始，不断旋转到下一个点，直至转完一圈为止。
 此时若点P旋转了$0^\circ$，则在多边形外；若点$P$旋转了$360^\circ$，
-则在多边形内。旋转角可以使用$atan2(cross(a,b),dot(a,b))$计算，以
+则在多边形内。旋转角可以使用前文所述方法计算，为了避免精度问题，以
 $\pi(180^\circ)$为界进行比较。
 \subsubsection{半平面法}
 若该多边形为凸多边形，以每条边构造半平面，使用叉积判断是否在半平面内，
 若点在所有半平面内则在多边形内。
 \subsection{向量的旋转}
-根据复数乘法的规律：模长相乘，幅角相加。构造逆时针旋转$\theta$单位旋转向量
-$e^\theta=\cos \theta+\sin \theta i$，将原向量乘以该向量即可得到旋转后的向量：
+根据复数乘法的规律：模长相乘，幅角相加。构造逆时针旋转角度$\theta$的单位旋转向量
+$e^{\theta i}=\cos \theta+\sin \theta i$，将原向量乘以该向量即可得到旋转后的向量：
 $(x\cos \theta-y\sin \theta,x\sin \theta+y\cos \theta)$。
+
+有时对点坐标以某点为原点进行旋转变换，然后按照x轴顺序贪心计算是一个不错的骗分方法。
 \subsection{坐标系的切换}
-在同一$d$维坐标空间中的点$P$与单位正交向量$b_1,b_2,\ldots,b_d$，以
+有同一$d$维坐标空间中的点$P$与单位正交向量组$b_1,b_2,\cdots,b_d$，以
 该向量组为新坐标空间的基向量，那么点$P$在新坐标空间的坐标值为它在
-这些向量上的投影。
+这些向量上的投影长度。
 
-在三维空间中，新坐标空间的$+x$轴为$T$，$+y$轴为$B$，$+z$轴为$N$，将
-$TBN$组成一个矩阵（从上到下）$A$，则$P'=AP$。因为$TBN$为单位正交向量，
-所以有$AA^T=I$，可得$P=A^TP'$。
-
-在实际应用中使用随机坐标系切换+贪心快速判断。
+事实上，将点$P$在新坐标系上的坐标$P'$变换回旧坐标系意味着$P'$左乘矩阵
+$T={b_1,b_2,\cdots,b_d}$，即$TP'=P$。由于矩阵$T$的特殊性，
+有$T^{-1}=T^T$。因此$P'=T^TP$，即投影长度。
 \subsection{点、向量、法向量的坐标变换}
 可以使用一个矩阵$R^{d*d}$来表示$d$维空间中的旋转，缩放，坐标系切换，
-引入齐次坐标（即给向量再加一维，非透视投影时恒为1）可支持平移（仅对于点的变换有效）。
+引入齐次坐标（即给向量再加一维，非透视投影时恒为1）可支持平移（仅对于点的变换有意义）。
 
 在三维空间下使用$4*4$的矩阵来表示对坐标的变换。
 
@@ -146,10 +151,10 @@ $TBN$组成一个矩阵（从上到下）$A$，则$P'=AP$。因为$TBN$为单位
 $V$，满足$N^T\cdot V=0$。那么对于变换后的两向量仍然
 要保持垂直，即$N^TT'^{-1} \cdot T'V=0$，对左边进行转置得到$N'=(T'^{-1})^TN$。
 \subsection{反射与折射}
-以下的入射向量与出射向量均为单位向量。
+以下的入射向量、出射向量与法向量均为单位向量。
 \subsubsection{反射}
 根据反射定律，反射向量由水平方向的向量$I_x$减去垂直方向的向量$I_y$。
-若法向量$N$为单位向量，有
+列出方程组：
 \begin{eqnarray*}
     I&=&I_x+I_y\\
     I_y&=&N\cdot dot(I,N)\\
@@ -181,7 +186,7 @@ $V$，满足$N^T\cdot V=0$。那么对于变换后的两向量仍然
 \begin{lstlisting}
 Vec refract(Vec I,Vec N,FT eta) {
     FT idn=dot(I,N);
-    FT cosO2=1.0-eta*eta*(1-idn*idn);
+    FT cosO2=1.0-eta*eta*(1.0-idn*idn);
     if(cosO2<0.0)return Vec();
     FT k=eta*idn+sqrt(cosO2);
     return I*eta-k*N;
@@ -202,8 +207,8 @@ Vec refract(Vec I,Vec N,FT eta) {
 \end{theorem}
 \subsection{切比雪夫距离}
 切比雪夫距离是两点坐标之差的最小值。
-分别考虑到原点曼哈顿距离和切比雪夫距离为1的点集$P,Q$，
-发现将$P$绕原点$45^\circ$后缩放$\sqrt{2}$倍后等于$Q$。
+分别考虑到原点曼哈顿距离和切比雪夫距离为1的点$P,Q$，
+发现将$P$绕原点旋转$45^\circ$再缩放$\sqrt{2}$倍后等于$Q$。
 
 因此$P(x,y)\rightarrow Q(x+y,x-y)$，$Q(x,y)
 \rightarrow P(\frac{x+y}{2},\frac{x-y}{2})$。
@@ -218,8 +223,12 @@ Vec refract(Vec I,Vec N,FT eta) {
     \item 已知$\sin \theta$求$\cos \theta$：$sqrt(1.0-cosTheta*cosTheta)$
     可能会因为传入$sqrt$的参数小于0而返回$nan$，在调用数学函数前要clamp到定义域内
     或特判。
-    \item 若表示的范围越界，则可以使用对数之和表示数。
-    \item 技巧：若要维护$set<FT>$，在比较器中引入$eps$自动完成去重工作。
+    \item 若乘积表示的范围越界，则可以使用对数加表示数乘。
+    \item 技巧：若要维护$std::set<FT>$，在比较器中引入$eps$自动完成去重工作。
+    \item 多个量级相差巨大的浮点数相加减时要尽量使每次相加的两个数量级差不多。
+    比如连加应该要从小到大累加。
+    \item 二分时尽量固定迭代次数而不是用eps比较。
+    \item 一些判定性问题可以使用模意义下的数代替浮点数解决。
 \end{itemize}
 
 为了辅助判断两个值的大小关系，引入一个符号函数$sign$：
@@ -228,8 +237,6 @@ int sign(FT x) {
     return (x>eps)-(x<-eps);
 }
 \end{lstlisting}
-
-\index{*TODO!计算几何中的精度问题}
 
 该内容参考了Ac\_smile的博客\footnote{计算几何中的精度问题\\
     \url{https://www.cnblogs.com/acsmile/archive/2011/05/09/2040918.html}

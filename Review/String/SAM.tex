@@ -12,18 +12,14 @@ SAM使用最简状态表示。SAM是一个DAG，任何从初始状态出发的�
 设其长度区间为$[l_s,r_s]$。
 
 \subsubsection{状态Right集合之间的关系}
-\begin{property}
+\begin{property}\label{SRP}
 若状态$a,b$的$Right$集合有交集，则必满足一个集合是另一个集合的真子集。
 \end{property}
-\paragraph{证明} 因为状态$a,b$表示的子串无交集，所以$[l_a,r_a]$与$[l_b,r_b]$
-无交集。设$r_a<l_b$，对于任意终结点$r\in Right(a) \cap Right(b)$，有
-$a$表示的任意子串是$b$表示的某个子串的后缀。那么$\forall r\in Right(b),r\in Right(a)$。
-又因为$Right(a)\neq Right(b)$，所以$Right(b) \subset Right(a)$。
 
-若$Right(s)\subset Right(fa)$，将$fa\rightarrow s$连边，构成了一棵Parent树。
+若$Right(s)\subsetneq Right(fa)$，将$fa\rightarrow s$连边，构成了一棵Parent树。
 可以发现$r_{fa}=l_s-1$，因此存储状态时只需存储$r_s$。
 \subsection{构造}
-与回文自动机类似，按顺序调用$extend$函数插入字符，时间复杂度$O(n)$。
+与回文自动机类似，按顺序调用$extend$函数插入字符，时空复杂度$O(n)$。
 
 对于每一个状态，维护其转移函数$nxt$，区间右端$len$，Parent树上父亲$link$。
 SAM内维护一个末状态$last$，初始状态为1，表示空串。
@@ -32,22 +28,23 @@ SAM内维护一个末状态$last$，初始状态为1，表示空串。
 其中已加入的串为$T$，记$len(T)=L$。
 步骤如下：
 \begin{enumerate}
-    \item 新建节点$s$，设$s.len=last.len+1$。
-    \item 所有表示$T$后缀的节点，即满足位置$L\in Right(c)$的状态$c$。
-    显然$ST(T)$满足该条件，因为$Right(ST(T))=\{L\}$。易知$ST(T)$在Parent
-    树上到根的链上节点都有$L$，考虑这些节点。对于其中一个节点$c$，
-    若要使$c$能够转移$x$，需要$\forall{r\in Right(c)},str[r]=x$。
-    对于没有转移$x$的节点$c$，将其转移$x$设为$s$。显然这一段从$last$开始是连续的
-    一段，找到有转移的节点后直接退出，开始讨论另一种情况。
+    \item 新建状态$s$，设$s.len=last.len+1$。
+    \item 接下来考虑$s$能被哪些状态转移。所有表示$T$后缀的状态$c$，都满足位置
+    $L+1 \in Right(c)$。显然$last=ST(T)$满足该条件，因为$Right(last)=\{L+1\}$。
+    由性质~\ref{SRP}知在Parent树上$last$到根的链上状态的Right集合都有元素$L+1$。
+    对于先前不能转移字符$x$的状态$c$，将其转移$x$设为$s$。
+    显然从$last$到根连续有一段状态先前不能转移，因此设置转移直至遇到已有转移的状态才
+    退出迭代，开始处理不能直接设置转移的情况。
     \item \begin{itemize}
-        \item 若不存在已有转移的节点，使$s.link=1$后退出。
-        \item 设有转移的节点$p$的转移节点为$q$，若$p.len+1=q.len$，令
-        $s.link=q$，否则克隆节点$q$为$cq$，其中$cq.len=p.len+1$，在Parent
-        树上把$q$换为$cq$，同时令$s.link=q.link=cq$。
+        \item 若不存在已有转移的状态，令$s.link=1$后退出。
+        \item 设已有转移的状态$p$的转移状态为$q$，若$p.len+1=q.len$，则
+        $Right(s)\subsetneq Right(q)$，因此令$s.link=q$。
+        否则克隆状态$q$为$cq$，其中$cq.len=p.len+1$，在Parent树上把链上状态转移
+        $q$换为$cq$，同时令$s.link=q.link=cq$。
     \end{itemize}
-    \index{*TODO!理解SAM中克隆节点的原因}
     \item 更新$last=s$。
 \end{enumerate}
+\index{*TODO!重新描述SAM性质与构建}
 注意SAM的点数不超过2n-2，边数不超过3n-3（转移边+Parent树边）。
 
 代码如下：
@@ -89,21 +86,21 @@ struct SAM {
 \subsection{Parent树}
 注意Parent树上的父亲是儿子的后缀，因此匹配子串时可以
 在转移边上跑，不行就跳Parent树的link（等同于fail树）。
-\subsection{后缀树}
+\subsection{Parent树与后缀树的联系}
 Parent树是反串的后缀树。
 \subsection{计数问题}
-对于每一个节点维护一个$right$值表示当前状态的Right集合大小。
-新增节点时该节点贡献了1，但注意克隆节点并没有贡献，所以克隆后令$cq.right=0$。
+对于每一个状态维护一个$right$值表示当前状态的Right集合大小。
+新增状态时该状态贡献了1，但注意克隆状态并没有贡献，所以克隆后令$cq.right=0$。
 最后拓扑排序dp就可以得到真实right值。
 
-节点$s$表示了$s.len-s.link.len$个本质不同的子串，每种子串有$s.right$个。
+状态$s$表示了$s.len-s.link.len$个本质不同的子串，每种子串有$s.right$个。
 
 优化：拓扑排序时可以按照len进行分层基数排序。
 \subsection{线性构造后缀数组}
-首先构造出SAM，发现last到根的链上的节点分别代表每一个后缀。对这些节点进行
+首先构造出SAM，发现last到根的链上的状态分别代表每一个后缀。对这些状态进行
 标记，按照字典序DFS，维护DFS子串的长度$d$，通过遍历顺序得到$sa$数组。
 
-注意对于跑单条链的情况可以使用类似并查集的方法压缩。
+注意对于跑单条链的情况要使用路径压缩优化。
 
 代码如下：
 \lstinputlisting{Source/Templates/SAM2SA.cpp}
@@ -111,7 +108,7 @@ Parent树是反串的后缀树。
 有两种构造方法：
 \begin{itemize}
     \item 在线：插入一个字符串之前将$last$重置，时间复杂度为O(Trie大小*字符集大小
-    +叶子节点深度和)。
+    +叶子状态深度和)。
     \item 离线：先建出Trie，BFS插入，插入时把父亲在SAM上的编号当做$last$，
     时间复杂度为O(Trie大小*字符集大小)。
 \end{itemize}
@@ -122,7 +119,8 @@ Parent树是反串的后缀树。
 }和dwjshift\footnote{
     用SAM建广义后缀树 $\ll$ dwjshift's Blog
     \url{http://dwjshift.logdown.com/posts/304570}
-}的博客。
+}的博客。Menci的博客写得更详细，一些性质的证明请移步
+\url{https://oi.men.ci/suffix-automaton-notes/}。
 
 \subsection{序列自动机}
 类比后缀自动机，序列自动机上的每条路径对应一个子序列。
@@ -150,6 +148,8 @@ for(int i=n;i>=1;--i) {
 \end{displaymath}
 使用记忆化搜索或者逆序dp。
 \paragraph{公共子序列个数}
+例题 「FJOI2016」所有公共子序列问题
+
 预处理出两个字符串的序列自动机后，使用记忆化搜索在序列自动机上跑。
 \paragraph{回文子序列个数}
 对原串和反串构建序列自动机，求这两个串的公共子序列数。

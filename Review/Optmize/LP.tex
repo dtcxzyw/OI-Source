@@ -72,7 +72,7 @@ $x_{n+i}=b_i-f_i(x)$。记目标函数值为$z$，则也可以引入等式$z=c^T
 在实现中用$A[m][n]$表示约束和目标函数，$id[1\cdots n]$表示等式右边每列的非基本
 变量编号，$id[n+1\cdots n+m]$表示等式左边每列的基本变量编号。$A[i][0]$满足
 \begin{displaymath}
-    A[i][0]+\mathrm{目标函数值}z=\sum_{j=1}^n{A[i][j]x_{id[j]}}
+    A[i][0]+\textrm{目标函数值}z=\sum_{j=1}^n{A[i][j]x_{id[j]}}
 \end{displaymath}
 该式可由$z=c^Tx$推导。
 

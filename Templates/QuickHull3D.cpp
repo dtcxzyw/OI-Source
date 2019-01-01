@@ -2,13 +2,14 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
+#include <iostream>
 const int size = 2005;
-typedef double FT;
-const FT eps = 1e-7;
+typedef long double FT;
+const FT eps = 1e-10;
 FT getOffset() {
     static int seed = 54343;
     seed = seed * 48271LL % 2147483647;
-    return seed / 2147483647.0 * 1e-12;
+    return seed / 2147483647.0 * 1e-12L;
 }
 struct Vec {
     FT x, y, z;
@@ -16,6 +17,12 @@ struct Vec {
     Vec(FT x, FT y, FT z) : x(x), y(y), z(z) {}
     Vec operator-(const Vec& rhs) const {
         return Vec(x - rhs.x, y - rhs.y, z - rhs.z);
+    }
+    Vec operator+(const Vec& rhs) const {
+        return Vec(x + rhs.x, y + rhs.y, z + rhs.z);
+    }
+    Vec operator*(FT k) const {
+        return Vec(x * k, y * k, z * k);
     }
 } P[size];
 Vec cross(const Vec& a, const Vec& b) {
@@ -31,6 +38,7 @@ FT length2(const Vec& a) {
 }
 struct Plane {
     Vec a, b, c, N;
+    Plane() {}
     Plane(const Vec& a, const Vec& b, const Vec& c)
         : a(a), b(b), c(c), N(cross(b - a, c - a)) {}
     FT area2() const {
@@ -84,19 +92,40 @@ void quickHull(int n) {
         if(cc > maxv)
             maxv = cc, cv = P[i];
     }
-    int beg = partition(0, n, Plane(lv, rv, cv));
-    partition(beg, n, Plane(rv, lv, cv));
+    Plane bp(lv, rv, cv);
+    maxv = eps;
+    for(int i = 0; i < n; ++i) {
+        FT cc = fabs(bp.vol6(P[i]));
+        if(cc > maxv)
+            maxv = cc, cv = P[i];
+    }
+    Vec ps[4] = { lv, rv, bp.c, cv };
+    Vec mid = (lv + rv + bp.c + cv) * 0.25;
+    int beg = 0;
+    for(int i = 0; i < 4; ++i) {
+        Vec np[3];
+        int cnt = 0;
+        for(int j = 0; j < 4; ++j)
+            if(i != j)
+                np[cnt++] = ps[j];
+        Plane tp(np[0], np[1], np[2]);
+        if(tp.vol6(mid) > eps)
+            tp = Plane(np[0], np[2], np[1]);
+        beg = partition(beg, n, tp);
+    }
 }
 int main() {
+    freopen("testdata.in", "r", stdin);
     int n;
-    scanf("%d", &n);
+    std::cin >> n;
     for(int i = 0; i < n; ++i) {
-        scanf("%lf%lf%lf", &P[i].x, &P[i].y, &P[i].z);
+        std::cin >> P[i].x >> P[i].y >> P[i].z;
         P[i].x += getOffset();
         P[i].y += getOffset();
         P[i].z += getOffset();
     }
     quickHull(n);
-    printf("%.3lf\n", ans * 0.5);
+    std::cout.precision(3);
+    std::cout << std::fixed << ans * 0.5;
     return 0;
 }
