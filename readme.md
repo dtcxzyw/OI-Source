@@ -213,6 +213,7 @@
 - [x] 类欧几里得算法
 - [ ] 最小方差生成树
 - [ ] 牛顿级数差分
+- [ ] 拟牛顿法
 - [ ] 格林公式[By Trinkle](http://trinkle.blog.uoj.ac/blog/1519)
 - [ ] 三元环[By tan90°](https://www.luogu.org/blog/KingSann/fou-chang-yong-di-hei-ke-ji-san-yuan-huan-post)
 - [ ] 闭包[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Closure.html)
@@ -230,9 +231,11 @@
 - [ ] 区间加多项式问题[By riteme](https://riteme.github.io/blog/2018-1-28/interval-polynomial.html)
 - [ ] 扩展Dijkstra IOI2011 crocodile BZOJ 2622 [2012国家集训队测试]深入虎穴
 - [x] 子序列自动机
-- [ ] 三维凸包与Delaunay剖分的关系[By 刘汝佳](https://wenku.baidu.com/view/e2e2d86f58fafab069dc02f8.html)
 - [ ] 行列式的几何意义
+- [ ] Dilworth定理
+- [ ] 杨氏矩阵
 # Research
+- [ ] 三维凸包与Delaunay剖分的关系[By 刘汝佳](https://wenku.baidu.com/view/e2e2d86f58fafab069dc02f8.html)
 - [ ] 利用powerful number求积性函数前缀和[By fjzzq2002](https://www.cnblogs.com/zzqsblog/p/9904271.html)
 - [ ] 近似算法
 - [ ] ECC+ECM
