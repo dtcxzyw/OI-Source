@@ -2,9 +2,9 @@
 \subsection{取模}\label{mod}
 \begin{itemize}
     \item 对于多个两整数乘积之和的取模（比如模意义下矩阵乘法），
-    可以设置一个阈值，（绝对值）超过该阈值才取模，最后再取一次取模。这种方法
+    可以设置一个阈值，（绝对值）超过该阈值才取模，最后再做一次取模。这种方法
     在保证加法不溢出的情况下大幅减少取模次数，同时将值存储在寄存器内访问速度更快，
-    并且if的命中概率小，分支预测效率高。
+    并且if分支的命中概率小，分支预测效率高。
     \begin{lstlisting}
     const Int64 end=std::numeric_limits<Int64>
         ::max()-asInt64(mod-1)*(mod-1);
@@ -20,7 +20,7 @@
                 C[i][j]=sum%mod;
             }
     \end{lstlisting}
-    \item 若可以肯定最终答案在整型范围内，可以允许暂时的加法溢出；
+    \item 若可以肯定最终答案在整型范围内且只有加减运算，可以允许暂时的加法溢出；
     \item 若模意义加减操作多，则保证在所有计算过程中的数$\in[0,mod)$。
     \begin{lstlisting}
     int add(int a,int b) {
@@ -32,15 +32,15 @@
         return a>=0?a:a+mod;
     }
     \end{lstlisting}
-    \item 若模意义乘法操作多，则仅保证中间数$\in (-mod,mod)$即可，没有必要
-    $\cdot =clamp(\cdot)$。在最后输出时$clamp$。
+    \item 若模意义乘法操作多，则仅保证中间数$\in (-mod,mod)$，没有必要
+    $\cdots =clamp(\cdots)$。在最后输出时$clamp$。
 \end{itemize}
 \subsection{矩阵乘法}
 不同优化下的矩阵乘法性能差异巨大，下面记录一些常用的优化。
 \begin{itemize}
     \item 见~\ref{mod}第一点；
     \item 考虑访问矩阵时cache的连续性，
-    发现按照$i,j,k$访问时$B[k][j]$的访问位置跳跃较大，无法cache，性能较低；
+    发现按照$i,j,k$访问时$B[k][j]$的访问位置跳跃较大，cache性能较低；
     但是如果按照$i,k,j$的顺序计算，就可以使$C[i][j]$与$B[k][j]$的访问位置连续，
     提高访问速度；
     \item 在第3层循环内进行循环展开。
@@ -62,12 +62,12 @@ mulOptimizedUnfold 11096.677 ms AC
 比原始算法快了接近10倍，可见对矩阵乘法进行优化还是很划算的。
 \subsection{基于硬件的优化}
 \begin{itemize}
-    \item 循环展开：指定一个步长，满步长区间硬编码，；
-    \item 多路并行：在循环展开的同时避免修改同一变量，即保持循环间的独立，
-    这样有助于CPU流水线的并行；
+    \item 循环展开：指定一个步长，满步长区间硬编码，剩余部分暴力；
+    \item 多路并行：在循环展开的同时避免修改同一变量，即保持循环间的写独立，
+    这样避免CPU流水线被打断；
     \item Cache优化：尽可能保证循坏时访问位置连续；
-    \item 尽可能使用临时变量，这样可以保持数据在寄存器中，
-    最后再写回数组。
+    \item 尽可能地使用临时变量，这样可以保持数据在寄存器中，最后再写回数组。
+    不仅减少了寻址时间，还能简化代码编写。
 \end{itemize}
 \subsection{位运算}\label{Bitwise}
 \subsubsection{符号判断}
@@ -83,6 +83,7 @@ int sign(int x) {
     return (x>0)-(x<0);
 }
 \end{lstlisting}
+
 此法同样适用于浮点数符号的判断。
 \subsubsection{判断异号}
 \begin{lstlisting}
@@ -95,8 +96,9 @@ int iabs(int x) {
     return (x+mask)^mask;
 }
 \end{lstlisting}
-若$x$为非负则为$(x+0)\oplus x=x$，若$x$为负则为$(x-1)\oplus 0xffffffff=-x$（
-注意有符号右移时高位补符号位）。
+
+若$x$为非负则为$(x+0)\oplus 0=x$，若$x$为负则为
+$(x-1)\oplus \textrm{0xffffffff}=-x$（注意有符号右移时高位补符号位）。
 \subsubsection{去末尾1}
 \index{B!Brian Kernigan's Bit\\ Counting}
 $v\&=v-1$，即使$v$末尾的$100\cdots$部分与$011\cdots$按位与。
@@ -115,12 +117,13 @@ int countTZ(int x) {
 \begin{lstlisting}
 for(int i=S;i;i=(i-1)&S)
 \end{lstlisting}
+
 可以理解为每次都做一次忽略S非零位的减法，从全集开始枚举自然能够
 枚举所有子集。
 \subsubsection{右起连续的0/1取反}
 0->1：x|(x-1)，1->0：x\&(x+1)
 \subsubsection{取右边连续的1}
-(x\^(x+1))>>1
+$(x \oplus (x+1))>>1$
 \subsubsection{取最高位1}
 \begin{lstlisting}
 int getHighest(int x) {
@@ -129,6 +132,7 @@ int getHighest(int x) {
     return x^(x>>1);
 }
 \end{lstlisting}
+
 其原理为倍增长度使最高位右边全置1，最后清空除最高位外的位。
 
 以上算法参考了Sean Eron Anderson的文章\footnote{
@@ -160,6 +164,6 @@ int getHighest(int x) {
     }
     \end{lstlisting}
     \item 对于bool数组无需清零，使用int记录其最后一次被标记为true的时间戳
-    $timeStamp$，若时间戳与当前时间戳相等则为true，将当前时间戳+1即可$O(1)$清零。
+    $timeStamp$，若时间戳与当前时间戳相等则为true，将当前时间戳+1可实现$O(1)$清零。
     对于其它值的存储也可以如此清零（std::pair<时间戳，实际数据>）。
 \end{itemize}
