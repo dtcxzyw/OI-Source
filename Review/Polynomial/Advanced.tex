@@ -37,14 +37,14 @@
 注意当$t=0$时可能需要用二次剩余在模意义下开根。
 
 \subsection{多项式求逆}
-对于给定的$A(z)$，求$F(z) \pmod z^n$，使得$F(z)\cdot A(z)\equiv 1\pmod{z^n}$。
+对于给定的$A(z)$，求$F(z) \pmod{z^n}$，使得$F(z)\cdot A(z)\equiv 1\pmod{z^n}$。
 
 构造方程$F(z)\cdot A(z)-1\equiv 0\pmod{z^n}$，
 同理可得
 \begin{eqnarray*}
     F(z)&\equiv& F_0(z)-\frac{F_0(z)A(z)-1}{A(z)} \pmod{z^{2^{t+1}}}\\
     &\equiv& F_0(z)-(F_0(z) A(z)-1){F_0(z)} \pmod{z^{2^{t+1}}}
-    \textrm{~（考虑最小非0项可知可乘$F_0(z)$代替$F(z)$）}\\
+    \textrm{~（考虑最小非0项，可用$F_0(z)$代替$F(z)$）}\\
     &\equiv& 2F_0(z)-F_0^2(z)A(z) \pmod{z^{2^{t+1}}}
 \end{eqnarray*}
 \subsection{多项式取模}
