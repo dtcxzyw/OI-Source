@@ -1,51 +1,62 @@
-\section{多项式高级操作}
+\section{多项式高级算法}
 {\bfseries 警告：慎卡常导致编码/调试困难。}
 
 {\bfseries 优化：分治到小规模时直接暴力。}
 \subsection{牛顿迭代法}
 已知函数$G(z)$，求函数$F(z) \bmod{z^n}$满足$G(F(z))\equiv 0 \pmod{z^n}$。
 
-令$n=2^t$，若$n$不为2的幂，补0到2的幂，输出时截断。
+\sout{令$n=2^t$，若$n$不为2的幂，补0到2的幂，输出时截断。}
 
-当$t=0$时，简单地令$F(z)$的常数项为0。
+当$n=1$时，多项式退化为数，直接求解。
 
-若已知$G(F_0(z)) \equiv 0\pmod{z^{2^t}}$，
-可以计算$G(F(z))$在$F_0(z)$上的泰勒展开：
+记$h=\left\lfloor\frac{n+1}{2}\right\rfloor$，
+若已知$G(F_0(z)) \equiv 0\pmod{z^h}$，
+尝试计算$G(F(z))$在$F_0(z)$处的泰勒展开：
 \begin{displaymath}
     G(F(z))=\sum_{i=0}^\infty{\frac{G^{(i)}(F_0(z))}{i!}\cdot (F(z)-F_0(z))^i}
 \end{displaymath}
-由于$F(z)$与$F_0(z)$后$2^t$项均相等，所以它们之差的平方的最小非0项次数$\geq 2^{t+1}$，
-因此仅前两项有效，即
+可以发现$F(z)$与$F_0(z)$的后$h$项均相等，所以两多项式之差的$n\geq 2$次方多项式的
+最小非0项次数$\geq n$，模$z^n$意义下无贡献，因此仅前两项展开有效，即
 \begin{displaymath}
-    G(F(z))\equiv G(F_0(z))+G'(F_0(z))(F(z)-F_0(z)) \pmod{z^{2^{t+1}}}
+    G(F(z))\equiv G(F_0(z))+G'(F_0(z))(F(z)-F_0(z)) \pmod{z^n}
 \end{displaymath}
-结合$G(F(z))\equiv 0 \pmod{z^{2^{t+1}}}$可得到新的$F_0(z)$:
+结合$G(F(z))\equiv 0 \pmod{z^n}$可得到新的$F_0(z)$:
 \begin{displaymath}
-    F(z)\equiv F_0(z)-\frac{G(F_0(z))}{G'(F_0(z))} \pmod{z^{2^{t+1}}}
+    F(z)\equiv F_0(z)-\frac{G(F_0(z))}{G'(F_0(z))} \pmod{z^n}
 \end{displaymath}
 这就是牛顿迭代法。
+
+\subsubsection{注意事项}
+\begin{itemize}
+    \item 使用FFT加速卷积后及时取模，即把不需要的位置0。
+    \item 卷积时使用$>2$倍模次数的2的幂作为卷积规模，因为至少需要这么多项
+    才能确定多项式系数。
+\end{itemize}
+
 \subsection{多项式开方}
-对于给定的$A(z)$，求$F(z) \pmod z^n$，使得$F^2(z)\equiv A(z)\pmod{z^n}$。
+对于给定的$A(z)$，求$F(z) \pmod{z^n}$，使得$F^2(z)\equiv A(z)\pmod{z^n}$。
 
 构造方程$F^2(z)-A(z)\equiv 0\pmod{z^n}$，
 同理可得
 \begin{eqnarray*}
-    F(z)&\equiv& F_0(z)-\frac{F_0(z)^2-A(z)}{2F_0(z)} \pmod{z^{2^{t+1}}}\\
-    &\equiv& \frac{F_0(z)^2+A(z)}{2F_0(z)} \pmod{z^{2^{t+1}}}
+    F(z)&\equiv& F_0(z)-\frac{F_0(z)^2-A(z)}{2F_0(z)} \pmod{z^n}\\
+    &\equiv& \frac{F_0(z)^2+A(z)}{2F_0(z)} \pmod{z^n}
 \end{eqnarray*}
 
 注意当$t=0$时可能需要用二次剩余在模意义下开根。
 
 \subsection{多项式求逆}
+{\bfseries 多项式求逆是基于牛顿迭代法的多项式算法的基本工具。}
+
 对于给定的$A(z)$，求$F(z) \pmod{z^n}$，使得$F(z)\cdot A(z)\equiv 1\pmod{z^n}$。
 
 构造方程$F(z)\cdot A(z)-1\equiv 0\pmod{z^n}$，
 同理可得
 \begin{eqnarray*}
-    F(z)&\equiv& F_0(z)-\frac{F_0(z)A(z)-1}{A(z)} \pmod{z^{2^{t+1}}}\\
-    &\equiv& F_0(z)-(F_0(z) A(z)-1){F_0(z)} \pmod{z^{2^{t+1}}}
-    \textrm{~（考虑最小非0项，可用$F_0(z)$代替$F(z)$）}\\
-    &\equiv& 2F_0(z)-F_0^2(z)A(z) \pmod{z^{2^{t+1}}}
+    F(z)&\equiv& F_0(z)-\frac{F_0(z)A(z)-1}{A(z)} \pmod{z^n}\\
+    &\equiv& F_0(z)-(F_0(z) A(z)-1){F_0(z)} \pmod{z^n}
+    \textrm{~（考虑两因式最小非0项，$F_0(z)$可替$F(z)$）}\\
+    &\equiv& 2F_0(z)-F_0^2(z)A(z) \pmod{z^n}
 \end{eqnarray*}
 \subsection{多项式取模}
 给定一个$n$次多项式$A(z)$与$m$次多项式$B(z)$（$m\leq n$），
@@ -92,6 +103,8 @@
     F(z)&=&F_0(z)-(\ln F_0(z)-A(z))F_0(z)\\
     &=&F_0(z)(1-\ln F_0(z)+A(z))
 \end{eqnarray*}
+
+常数项恒为1，因为多项式ln的常数项恒为0。
 \subsection{多项式快速幂}
 使用常规快速幂可以得到$O(n\lg n\lg k)$的复杂度。
 但是通过如下变形：
@@ -105,6 +118,11 @@
     e^{F(z)i}=\cos F(z)+\sin F(z) i
 \end{displaymath}
 在复数域上做多项式exp。
+
+上述内容基本上使用牛顿迭代法递归求解，下面的模板（LOJ150 挑战多项式）涵盖了大部分
+操作：
+\lstinputlisting{Source/Source/'FFT NTT'/LOJ150.cpp}
+
 \subsection{进制转换}
 将$A$进制数转换为$B$进制数。
 
