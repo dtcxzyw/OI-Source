@@ -159,7 +159,7 @@ void inv(int n, const Poly& sf, Poly& g) {
                     mod;
             if(i == 0 && sum != 1)
                 throw;
-            if(i == 1 && sum != 0)
+            if(i != 0 && sum != 0)
                 throw;
         }
 #endif

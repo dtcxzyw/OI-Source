@@ -56,8 +56,8 @@ const char* const key[] = {
     "access", "down", "simplex", "pivot", "gen",
     "makeRoot", "isRoot", "test", "E[i].nxt",
     "E[i].to", "E[i].w", "slope", "fail", "match",
-    "divide", "info", "LCT", "BFS"
-                             ""
+    "divide", "info", "LCT", "BFS", "IterT"
+                                    ""
 };
 constexpr int size = std::extent<decltype(key)>::value,
               cnt = 10, fac = 285;

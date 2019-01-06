@@ -1,11 +1,8 @@
 \section{多项式高级算法}
 {\bfseries 警告：慎卡常导致编码/调试困难。}
 
-{\bfseries 优化：分治到小规模时直接暴力。}
 \subsection{牛顿迭代法}
 已知函数$G(z)$，求函数$F(z) \bmod{z^n}$满足$G(F(z))\equiv 0 \pmod{z^n}$。
-
-\sout{令$n=2^t$，若$n$不为2的幂，补0到2的幂，输出时截断。}
 
 当$n=1$时，多项式退化为数，直接求解。
 
@@ -29,8 +26,11 @@
 \subsubsection{注意事项}
 \begin{itemize}
     \item 使用FFT加速卷积后及时取模，即把不需要的位置0。
-    \item 卷积时使用$>2$倍模次数的2的幂作为卷积规模，因为至少需要这么多项
-    才能确定多项式系数。
+    \item 卷积时使用$>2$倍模次数的2的幂作为卷积规模，因为除法操作至少需要这么多项
+    才足够确定多项式系数。
+    \item 若要求$\bmod{z^n}$意义下的结果，求导/积分这类导致多项式次数变化的操作，
+    显然仅把次数设为$n$会导致信息丢失，而且讨论每种操作的最高次数也很麻烦。不妨全部求
+    $\bmod{z^{n+c}}$意义下的结果，$c$为足够大的小常数，最后直接截断输出。
 \end{itemize}
 
 \subsection{多项式开方}
@@ -189,6 +189,23 @@ $A(z)=R(z)$。那么可以两边同时模$B(z)$，达到次数减半的效果。
     \item $n\geq p$：结合上述两种做法，易知第二种做法最多只执行一次。
 \end{itemize}
 
+\subsection{分治FFT}
+已知函数$g$在$[1,n)$上的值，求函数$f(x)=\displaystyle \sum_{y=1}^x{f(x-y)g(y)}$
+在$[1,n)$上的值，其中$f(0)=1$。
+
+对于这种自我依赖的卷积，可以考虑将待求值一分为二，分治求解。{\bfseries 分治到小规模时
+直接$O(n^2)$暴力求解。}
+
+记卷积过程为$conv(l,r)$，$m$为$l,r$中点，首先递归调用$conv(l,m)$求出区间的前一半，
+然后计算使用卷积累加前一半对后一半的贡献，然后递归调用$conv(m+1,r)$补足区间后一半的剩余项。
+时间复杂度$O(n\lg^2 n)$。
+
+事实上这就是CDQ分治的过程，思路参见第\ref{CDQ}节。
+
+\subsubsection{优化}
+将$F$与$G$看做序列$f,g$的OGF，令$g(0)=0$，计算$F(x)\otimes G(x)=F(x)-f(0)x^0$，
+变形为$F(x)\equiv \frac{1}{1-G(x)} \pmod{x^n}$，使用多项式求逆$O(n\lg n)$解决。
+
 以上内容参考了picks
 \footnote{
 Newton's Method of Polynomial $\ll$ Picks's Blog
@@ -201,7 +218,7 @@ Binomial Coefficient Modulo Prime $\ll$ Picks's Blog
 \\\url{http://picks.logdown.com/posts/245545-binomial-coefficient-modulo-prime}
 
 }
-和Miskcoo\footnote{
+、Miskcoo\footnote{
 牛顿迭代法在多项式运算的应用 – Miskcoo's Space
 \\\url{http://blog.miskcoo.com/2015/06/polynomial-with-newton-method}
 
@@ -210,4 +227,7 @@ Binomial Coefficient Modulo Prime $\ll$ Picks's Blog
 
 多项式的多点求值与快速插值 – Miskcoo's Space
 \\\url{http://blog.miskcoo.com/2015/05/polynomial-multipoint-eval-and-interpolation}
+}和VictoryCzt\footnote{
+    分治FFT学习笔记
+    \url{https://blog.csdn.net/VictoryCzt/article/details/82939586}
 }的博客。

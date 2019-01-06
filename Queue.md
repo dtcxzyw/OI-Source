@@ -56,7 +56,7 @@
 - [x] LOJ#2127. 「HAOI2015」按位或（做完后作为minmax容斥的例题）
 # FFT/NTT/FWT/生成函数
 - [x] LOJ#151. 多项式求立方根
-- [ ] LOJ#2527. 「HAOI2018」染色
+- [x] LOJ#2527. 「HAOI2018」染色
 - [x] LOJ#150. 挑战多项式
 - [ ] LOJ#6503. 「雅礼集训 2018 Day4」Magic
 - [ ] LOJ#6388. 「THUPC2018」赛艇 / Citing
@@ -64,9 +64,14 @@
 - [ ] LOJ#2541. 「PKUWC2018」猎人杀
 - [ ] LOJ#2271. 「SDOI2017」遗忘的集合
 - [x] LOJ#2183. 「SDOI2015」序列统计
-- [ ] LOJ#2058. 「TJOI / HEOI2016」求和
-- [ ] LOJ#2020. 「AHOI / HNOI2017」礼物
+- [x] LOJ#2058. 「TJOI / HEOI2016」求和
+- [x] LOJ#2020. 「AHOI / HNOI2017」礼物
 - [ ] LOJ#2554. 「CTSC2018」青蕈领主
+- [ ] P4451
+- [ ] P4389
+- [ ] P3784
+- [ ] P3711
+- [ ] P4389
 # 后缀数组/后缀自动机/序列自动机
 - [x] LOJ#111. 后缀排序
 - [ ] LOJ#544. 「LibreOJ β Round #7」Array Poisonous Suffix Problem

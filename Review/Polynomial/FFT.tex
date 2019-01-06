@@ -252,13 +252,13 @@ MTT主要用来解决模数不满足NTT条件的卷积问题，可以使用拆�
 绕开限制。
 
 设模数为$M$,解决方法是找一个$k\geq\sqrt{M}$，将序列$a(n)$拆为2个新序列
-$a_0(n)=a(n)/p,a_1(n)=a(n)\% p$，两两相乘后按照系数合并。共4次DFT，
+$a_0(n)=a(n)/k,a_1(n)=a(n)\% k$，两两相乘后按照系数合并。共4次DFT，
 4次IDFT。
 
 优化：
 \begin{itemize}
 	\item 注意到这4个多项式均为实序列，所以可按照~\ref{RDFT}节中所述方法
-	仅使用2次DFT与2次IDFT。
+	仅使用2次DFT与3次IDFT。
 	\item 合并时有两个多项式的系数均为$k$，可以加在一起IDFT，
 	使用4次DFT与3次IDFT。
 \end{itemize}

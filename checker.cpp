@@ -11,8 +11,12 @@ int compare(int id, const std::string& exec,
     auto in = "data/" + sid + ".in";
     auto stdo = "data/" + sid + ".out";
     std::ifstream stdof(stdo);
-    if(!stdof)
-        return 2;
+    if(!stdof) {
+        stdo = "data/" + sid + ".ans";
+        stdof.open(stdo);
+        if(!stdof)
+            return 2;
+    }
     auto out = "tmp.out";
     auto cmd = "./" + exec + " <" + in + " >" + out;
     int res = system(cmd.c_str());
