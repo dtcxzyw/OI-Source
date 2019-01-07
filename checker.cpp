@@ -1,10 +1,12 @@
 #include <algorithm>
+#include <chrono>
 #include <cstdio>
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <iterator>
 #include <string>
+using Clock = std::chrono::high_resolution_clock;
 int compare(int id, const std::string& exec,
             const std::string& app) {
     auto sid = app + std::to_string(id);
@@ -38,6 +40,7 @@ int main() {
     if(app == "null")
         app.clear();
     int c1 = 0, c2 = 0;
+    auto beg = Clock::now();
     while(true) {
         ++c1;
         int res = compare(c1, name + ".out", app);
@@ -46,9 +49,11 @@ int main() {
         printf("%d %s\n", c1, res ? "AC" : "WA");
         c2 += res;
     }
-    if(c1 != 1)
+    if(c1 != 1) {
         printf("Score:%d\n", c2 * 100 / (c1 - 1));
-    else
+        double t = (Clock::now() - beg).count() * 1e-6;
+        printf("%.0lf ms\n", t);
+    } else
         puts("No Input!!!");
     return 0;
 }
