@@ -56,11 +56,12 @@ const char* const key[] = {
     "access", "down", "simplex", "pivot", "gen",
     "makeRoot", "isRoot", "test", "E[i].nxt",
     "E[i].to", "E[i].w", "slope", "fail", "match",
-    "divide", "info", "LCT", "BFS", "IterT"
-                                    ""
+    "divide", "info", "LCT", "BFS", "IterT", "DFT",
+    "IDFT"
+    ""
 };
 constexpr int size = std::extent<decltype(key)>::value,
-              cnt = 10, fac = 285;
+              cnt = 10, fac = 273;
 int id[size];
 using Clock = std::chrono::high_resolution_clock;
 int main() {
