@@ -9,8 +9,8 @@
 	$\forall x\in U,y\in V,cut(x,y)\leq cut(u,v)$
 \end{lemma}
 \paragraph{证明}
-若存在$x,y$使得$cut(x,y)>cut(u,v)$，则$cut(u,v)$无法把$x,y$分开，也就意味着无法把
-$u,v$分开，$cut(u,v)$不是割。
+若存在$x,y$使得$cut(x,y)>cut(u,v)$，则$cut(u,v)$无法把$x,y$分开，与
+$U\cap V=\emptyset$矛盾。
 
 然后对每个点集再次选择两个点求最小割，将其切分为两个集合，直到所有集合都只有一个点为止。
 每次求完最小割后给$u-v$连一条权重为$cut(u,v)$的边，这样做最后能得到一棵树。
@@ -18,6 +18,9 @@ $u,v$分开，$cut(u,v)$不是割。
 	$u-v$在树上的链上最小边权等于$cut(u,v)$。
 \end{theorem}
 时间复杂度$O(V^3E)$。
+\subsubsection{实现细节}
+Dinic求出最小割后，根据最后一次BFS找增广路时存储的层次标号是否有效对两个集合重新划分。
+若使用ISAP求最小割，仍然需要使用Dinic的BFS划分集合。
 \subsection{询问}
 建出树后可以使用倍增法或线段树+树链剖分$O(\lg n)$查询点对答案。
 
