@@ -74,6 +74,8 @@ void cook(int n) {
     \item 若遇到多串则将其用未出现字符连接后求后缀数组。
     \item 对于回文串/翻转系列问题则将其与反串用特殊字符相连后求后缀数组。
     \item 连续重复子串问题使用错位匹配解决。
+    \item 「TJOI / HEOI2016」字符串：若LCP的一个端点固定，可以从它开始在height
+    数组上左右暴力遍历，利用min单调性剪枝。
 \end{itemize}
 \subsubsection{可重叠最长重复子串}
 该子串一定是某两个后缀的LCP，而LCP在height数组中取最小值，因此

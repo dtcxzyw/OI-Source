@@ -237,6 +237,7 @@
 - [ ] 一个用SAM维护多个串的根号特技[By Mangoyang](https://www.cnblogs.com/mangoyang/p/10155185.html)
 - [ ] IDDFS SPFA判负环[By 姜碧野](https://wenku.baidu.com/view/f22d0d36ee06eff9aef807e9.html)
 - [ ] 单位根反演 [By czy](https://czyhe.me/algorithm/unit-root-inv/unit-root-inv/)
+- [ ] 线段树合并[By 黄嘉泰](https://wenku.baidu.com/view/88f4e134e518964bcf847c95.html)
 # Research
 - [ ] 三维凸包与Delaunay剖分的关系[By 刘汝佳](https://wenku.baidu.com/view/e2e2d86f58fafab069dc02f8.html)
 - [ ] 利用powerful number求积性函数前缀和[By fjzzq2002](https://www.cnblogs.com/zzqsblog/p/9904271.html)
@@ -273,6 +274,7 @@
 - [ ] 维护双向加字符的字符串[By 傅笙芳](https://zhuanlan.zhihu.com/p/51880239)
 - [ ] 排序网络
 - [ ] 超现实数 方展鹏-《浅谈如何解决不平等博弈问题》
+- [ ] Schreier-Sims 算法
 # Other
 - [ ] 使用Vim
 - [ ] 学习十指打字

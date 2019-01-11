@@ -83,19 +83,42 @@ struct SAM {
     }
 }
 \end{lstlisting}
-\subsection{Parent树}
+\subsection{Parent树的应用}
+\subsubsection{Parent树性质}
+父节点的Right集合是儿子Right集合的并，自底向上Right集合逐渐变大，
+匹配子串长度逐渐变小。
+\subsubsection{子串匹配}
 注意Parent树上的父亲是儿子的后缀，因此匹配子串时可以
 在转移边上跑，不行就跳Parent树的link（等同于fail树）。
-\subsection{Parent树与后缀树的联系}
+\subsubsection{与后缀树的联系}
 Parent树是反串的后缀树。
-\subsection{计数问题}
+\subsubsection{计数问题}
 对于每一个状态维护一个$right$值表示当前状态的Right集合大小。
 新增状态时该状态贡献了1，但注意克隆状态并没有贡献，所以克隆后令$cq.right=0$。
-最后拓扑排序dp就可以得到真实right值。
+最后拓扑排序dp在Parent树上自底向上更新就可以得到真实right值。
 
 状态$s$表示了$s.len-s.link.len$个本质不同的子串，每种子串有$s.right$个。
 
 优化：拓扑排序时可以按照len进行分层基数排序。
+\subsubsection{可持久化线段树合并维护Right集合}
+有时需要判定某个终点是否在某个状态的Right集合内，可以在extend时给新建状态添加
+对应的Right值（不需要太严格，子串右节点也行），然后拓扑排序进行线段树合并计算出
+每个状态真正的Right集合。时间复杂度$O(n\lg n)$。
+\subsubsection{倍增自匹配}
+例题~ 「TJOI / HEOI2016」字符串
+
+通过前缀$\rightarrow$后缀以及二分LCP长度将原问题转换为：给定子串$a$与$b$，
+求长度为$m$的$b$的后缀是否出现在子串$a$中。
+
+由于$a$与$b$在同一个串内（不在同一个串？把两个字符串用特殊字符连在一起），该问题
+即为判定Right集合中含有$b$的Right值且$r_S\geq m$的状态$S$与$a$对应的Right区间
+是否有交。可以在构建SAM时保存每个字符对应的$last$，这些状态一定含有对应字符的Right值。
+由于Parent树上Right集合的包含关系，其祖先也有该Right值且Right集合更大，$r_S$递减，
+可以使用倍增计算出极大的Right集合所对应的状态（要求有$b$的Right值且$r_S\geq m$），
+然后线段树查询该状态的Right集合是否与指定区间有交。
+
+代码：
+\lstinputlisting{Source/Source/SAM/LOJ2059.cpp}
 \subsection{线性构造后缀数组}
 首先构造出SAM，发现last到根的链上的状态分别代表每一个后缀。对这些状态进行
 标记，按照字典序DFS，维护DFS子串的长度$d$，通过遍历顺序得到$sa$数组。

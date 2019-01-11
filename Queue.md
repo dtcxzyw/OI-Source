@@ -69,8 +69,8 @@
 # 后缀数组/后缀自动机/序列自动机
 - [x] LOJ#111. 后缀排序
 - [ ] LOJ#544. 「LibreOJ β Round #7」Array Poisonous Suffix Problem
-- [ ] LOJ#2033. 「SDOI2016」生成魔咒
-- [ ] LOJ#2059. 「TJOI / HEOI2016」字符串
+- [x] LOJ#2033. 「SDOI2016」生成魔咒
+- [x] LOJ#2059. 「TJOI / HEOI2016」字符串
 - [ ] LOJ#2064. 「HAOI2016」找相同字符
 - [ ] LOJ#2133. 「NOI2015」品酒大会
 - [ ] LOJ#2525. 「HAOI2018」字串覆盖
@@ -78,6 +78,7 @@
 - [ ] LOJ#6041. 「雅礼集训 2017 Day7」事情的相似度
 - [ ] LOJ#6198. 谢特
 - [ ] [Ahoi2013]差异
+- [ ] LOJ#2720. 「NOI2018」你的名字
 - [x] LOJ#2172. 「FJOI2016」所有公共子序列问题
 - [ ] Codeforces 596E Wilbur and Strings
 # AC自动机
