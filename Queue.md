@@ -3,11 +3,20 @@
 - [ ] P5074 Eat the Trees
 - [ ] P5091【模板】欧拉定理
 - [ ] Delaunay剖分
-- [ ] NOIP2018
 - [ ] P5105 不强制在线的动态快速排序
 - [ ] LOJ#129. Lyndon 分解
 - [ ] 「HDU6184」Counting Stars-三元环
 - [ ] LOJ#141. 回文子串
+- [x] LOJ#2079. 「JSOI2016」轻重路径
+- [ ] Luogu P2542 [AHOI2005]航线规划
+- [ ] Luogu P4298 [CTSC2008]祭祀
+# 题集
+- [ ] PKUWC2018
+- [ ] Ynoi2019模拟赛[By OldDriverTree](http://olddrivertree.blog.uoj.ac/blog/4656)
+- [ ] LOJ分块题
+- [ ] 雅礼集训2018/2017
+- [ ] NOIP2018TG
+- [ ] 集训队互测题2018
 # Min_25 筛
 - [x] LOJ#6053. 简单的函数
 - [ ] UOJ#188. 【UR #13】Sanrd
@@ -71,7 +80,7 @@
 - [ ] LOJ#544. 「LibreOJ β Round #7」Array Poisonous Suffix Problem
 - [x] LOJ#2033. 「SDOI2016」生成魔咒
 - [x] LOJ#2059. 「TJOI / HEOI2016」字符串
-- [ ] LOJ#2064. 「HAOI2016」找相同字符
+- [x] LOJ#2064. 「HAOI2016」找相同字符
 - [ ] LOJ#2133. 「NOI2015」品酒大会
 - [ ] LOJ#2525. 「HAOI2018」字串覆盖
 - [ ] LOJ#6031. 「雅礼集训 2017 Day1」字符串
@@ -103,11 +112,14 @@
 - [ ] LOJ#2558. 「LNOI2014」LCA
 - [ ] LOJ#6038. 「雅礼集训 2017 Day5」远行
 - [ ] LOJ#558. 「Antileaf's Round」我们的 CPU 遭到攻击
-- [ ] LOJ#2001. 「SDOI2017」树点涂色
-- [ ] LOJ#2011. 「SCOI2015」情报传递
-- [ ] LOJ#2079. 「JSOI2016」轻重路径
-- [ ] LOJ#2245. 「NOI2014」魔法森林
+- [x] LOJ#2001. 「SDOI2017」树点涂色
+- [x] LOJ#2245. 「NOI2014」魔法森林
 - [ ] LOJ#2289. 「THUWC 2017」在美妙的数学王国中畅游
+- [ ] Luogu P3206
+- [ ] Luogu P3348
+- [ ] UOJ#207. 共价大爷游长沙
+- [x] LOJ#2230. 「BJOI2014」大融合
+- [ ] bzoj2959: 长跑
 # 平衡树
 - [ ] LOJ#516. 「LibreOJ β Round #2」DP 一般看规律
 - [ ] LOJ#6047. 「雅礼集训 2017 Day10」决斗

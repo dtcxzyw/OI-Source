@@ -41,7 +41,7 @@ void rotate(int u) {
     int t = T[u].c[ku ^ 1];
     T[u].p = pp;
     if (!isRoot(p))
-        connect(u, pp, kp);
+        T[pp].c[kp] = u;
     connect(t, p, ku);
     connect(p, u, ku ^ 1);
     update(p);
@@ -63,7 +63,7 @@ void splay(int u) {
 \end{lstlisting}
 \subsubsection{access}
 $access(u)$的功能是使节点$u$与其LCT的根在同一棵$splay$内，
-此时节点$u$是根节点重链中深度最大的点（已经和原来到儿子的重链断开）。
+此时节点$u$是根节点重链中深度最大的点（已经和原来到儿子的边断开）。
 
 具体操作如下：
 
@@ -78,7 +78,7 @@ $access(u)$的功能是使节点$u$与其LCT的根在同一棵$splay$内，
 
 代码：
 \begin{lstlisting}[title=access]
-void access(u) {
+void access(int u) {
     int v = 0;
     do {
         splay(u);
@@ -116,7 +116,7 @@ void makeRoot(int u) {
 就保存了$u-v$的路径信息。
 \subsubsection{find}\label{LCTFind}
 首先$access(u),splay(u)$让$u$成为LCT根所在的splay的根。
-然后查询splay的最小节点就是根节点（注意推送翻转标记）。
+根节点就是splay的最小节点（注意推送翻转标记）。
 \subsubsection{link}
 $makeRoot(u)$后使$T[u].p=v$，注意在link前要进行连通性检测。
 \subsubsection{cut}
@@ -142,7 +142,7 @@ $makeRoot(u)$后使$T[u].p=v$，注意在link前要进行连通性检测。
 
 \subsection{技巧/常见方法}
 \subsubsection{DSU优化连通性检测}
-如果可以保证处于同一连通块内的点不会再次分离（允许临时分离），
+如果可以保证处于同一连通块内的点不会再次分离（允许临时分离，比如动态MST在环上换边时），
 可以使用本章~\ref{DSU}节所述的并查集代替~\ref{LCTFind}中昂贵的$find$。
 \subsubsection{使用access进行从某节点到根的路径的染色}
 $access(u)$后节点$u$到根节点的路径上的点在同一棵splay内，可用于
@@ -155,7 +155,49 @@ $access(u)$后节点$u$到根节点的路径上的点在同一棵splay内，可�
 求节点$u,v$的LCA时，首先$access(u)$开辟一条链，类似地$access(v)$再开辟一条链，
 $access(v)$时会与$access(u)$的链相交，交点即为LCA。在实现时可以直接令$access$函数
 返回$v$值作为与上一条链的交点（当$while(u)$为false时，说明在$u=T[u].p$之前的$u$是
-链的交汇点，然而程序返回时$u$赋给了$v$）。
+链的交汇点，然而过程退出前将$u$赋给了$v$）。
 
 板子：SP8791 DYNALCA
 \lstinputlisting{Source/Source/LCT/SP8791.cpp}
+\subsubsection{LCT维护边权信息}
+把边当做节点，与两端点相连，端点点权为0。边的节点编号最好为边编号+端点数，
+以便于得到原边编号并断开端点连接。
+
+{\bfseries 注意这种方法有一定的局限性，有时点-边-点必须在一条直线上，需要特别注意。
+参见：LOJ\#558. 「Antileaf's Round」我们的 CPU 遭到攻击 }
+\subsubsection{LCT维护子树信息}
+普通LCT只维护了一条链的信息，即splay内信息。维护子树信息的关键在于显式地将
+虚子树（虚边儿子的子树）信息累加入自身信息中。每个节点维护2个数据，一个是
+虚子树贡献，另一个是贡献总和。update时顺带累加虚子树贡献。
+
+考虑哪些操作会改变虚实子树：
+\begin{itemize}
+    \item access：在$rs=v$处将虚子树贡献中$v$的贡献改为$rs$的贡献。
+    \item makeRoot、find、split等变换树的形态的操作除access部分外无影响，
+    无需特殊处理。
+    \item link：令$T[u].p=v$会导致$v$及其祖先都需要更新贡献，可以``$split(u,v)$''
+    后将$v$换到链顶后把$u$的贡献累加到$v$的虚子树贡献中，最后执行$T[u].p=v,update(v)$。
+    如此只影响到了$v$的信息。
+    \item cut:$u,v$在同一棵splay内，除access部分外无影响。
+\end{itemize}
+
+该方法主要用于解决{\bfseries 不断换根}的问题。
+\subsubsection{LCT维护图上信息}
+若动态图只加边不删边，仍旧可以使用LCT维护图上信息，关键是``可缩点''。
+
+额外维护2个DSU，一个维护连通性，另一个维护{\bfseries 双连通性}。
+当且仅当两个点双连通时才缩为一点，即第二个DSU指示该点的$id$。
+
+每次访问父亲时都使用父亲的缩点$id$代替，其它操作不变。
+
+关键在于$link$操作的处理，$link$前若两点未连通，执行普通$link$并标记第一个DSU。
+否则$split(u,v)$拆出$u-v$的链，遍历整棵splay将其所有点的贡献累加到点$v$上，然后把
+第二个DSU中的$id$置为$v$。{\bfseries 注意设置位置是原$id$，缩点后$v$的左右儿子要置0。}
+
+上述内容参考了neither\_nor\footnote{
+    LCT维护子树信息（子树信息LCT） LCT维护边权（边权LCT） 知识点讲解
+    \url{https://blog.csdn.net/neither\_nor/article/details/52979425}
+}和GuessYCB\footnote{
+    LCT 模板及套路总结
+    \url{https://www.cnblogs.com/GuessYCB/p/8330024.html}
+}的博客。

@@ -1,4 +1,88 @@
 \section{FFT封装}
-实在受不了分治FFT了。。。
-留坑待补。
-\index{*TODO!FFT封装}
+牛顿迭代法/分治FFT时使用。
+
+使用vector存储多项式。
+\begin{lstlisting}
+typedef std::vector<int> Poly;
+\end{lstlisting}
+
+封装一个工具函数计算做乘法所需最小规模。
+\begin{lstlisting}
+int getSize(int x) {
+    x <<= 1;
+    int p = 1;
+    while(p < x)
+        p <<= 1;
+    return p;
+}
+\end{lstlisting}
+
+封装一个工具函数用于拷贝多项式，参数顺序遵循memcpy。
+\begin{lstlisting}
+void copy(Poly& dst, const Poly& src, int siz) {
+    memcpy(dst.data(), src.data(), sizeof(int) * siz);
+}
+\end{lstlisting}
+
+封装DFT、IDFT，注意再给IDFT一个参数指示模数，只对需要的系数做除法。
+\begin{lstlisting}
+void DFT(int n, Poly& A) {
+    NTT(n, A.data(), root);
+}
+void IDFT(int n, Poly& A, int rn) {
+    NTT(n, A.data(), invR);
+    Int64 div = powm(n, mod - 2);
+    for(int i = 0; i < rn; ++i)
+        A[i] = A[i] * div % mod;
+    memset(A.data() + rn, 0, sizeof(int) * (n - rn));
+}
+\end{lstlisting}
+
+牛顿迭代法系列函数一般使用如下签名：
+\begin{lstlisting}
+void func(int n, const Poly& sf, Poly& g)
+\end{lstlisting}
+其中$sf$为原多项式，使用时拷贝，$g$尽量重复使用，空间由调用端分配。
+
+以多项式求逆为例：
+\begin{lstlisting}
+void inv(int n, const Poly& sf, Poly& g) {
+    if(n == 1)
+        g[0] = powm(sf[0], mod - 2);
+    else {
+        int h = (n + 1) >> 1;
+        inv(h, sf, g);
+        int p = getSize(n);
+        DFT(p, g);
+
+        Poly f(p);
+        copy(f, sf, n);
+        DFT(p, f);
+
+        for(int i = 0; i < p; ++i) {
+            g[i] = (2 - asInt64(g[i]) * f[i]) % mod *
+                g[i] % mod;
+            if(g[i] < 0)
+                g[i] += mod;
+        }
+        IDFT(p, g, n);
+#ifdef CHECK
+        for(int i = 0; i < n; ++i) {
+            int sum = 0;
+            for(int j = 0; j <= i; ++j)
+                sum =
+                    (sum + asInt64(sf[j]) * g[i - j]) %
+                    mod;
+            if(i == 0 && sum != 1)
+                throw;
+            if(i != 0 && sum != 0)
+                throw;
+        }
+#endif
+    }
+}
+\end{lstlisting}
+
+求逆/开方这些操作最好写个$O(n^2)$验证其正确性。
+
+多项式乘法根据规模使用暴力/FFT解决。

@@ -86,3 +86,7 @@ IDA*比A*多了一个迭代加深的操作，即每次DFS/BFS搜索时限制搜�
 	Gradient descent - Wikipedia
 	\url{https://en.wikipedia.org/wiki/Gradient\_descent}
 }。
+\subsection{解集存储}
+在解决最优化问题时，保存新解{\bfseries 当且仅当该解比存储的最优解更优且
+该解即将被比自己更差的解作为当前解}，在迭代退出再执行一遍该逻辑。此法延迟了解集保存时间，
+可以减少冗余拷贝。Lazy Evaluation大法好！！！

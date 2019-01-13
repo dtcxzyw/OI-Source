@@ -221,7 +221,7 @@ $M$上，则与$M$为最大匹配矛盾；否则尝试使用匈牙利算法寻�
 因此只需考虑脚的大小连续的集合。
 
 记脚的大小为$i$的人数有$a_i$个，根据定理有$\displaystyle \sum_{i=l}^r{a_i}
-\leq (r+d-l+1)*k$。让右端为常数，化简得$\sum_{i=l}^r{a_i-k}\leq d*k$，
+\leq (r+d-l+1)*k$。让右端为常数，得$\displaystyle \sum_{i=l}^r{a_i-k}\leq d*k$，
 可用线段树维护最大子段和。
 
 代码：

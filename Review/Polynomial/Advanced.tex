@@ -189,7 +189,7 @@ $A(z)=R(z)$。那么可以两边同时模$B(z)$，达到次数减半的效果。
     \item $n\geq p$：结合上述两种做法，易知第二种做法最多只执行一次。
 \end{itemize}
 
-\subsection{分治FFT}
+\subsection{CDQ分治FFT}
 已知函数$g$在$[1,n)$上的值，求函数$f(x)=\displaystyle \sum_{y=1}^x{f(x-y)g(y)}$
 在$[1,n)$上的值，其中$f(0)=1$。
 
@@ -205,6 +205,16 @@ $A(z)=R(z)$。那么可以两边同时模$B(z)$，达到次数减半的效果。
 \subsubsection{优化}
 将$F$与$G$看做序列$f,g$的OGF，令$g(0)=0$，计算$F(x)\otimes G(x)=F(x)-f(0)x^0$，
 变形为$F(x)\equiv \frac{1}{1-G(x)} \pmod{x^n}$，使用多项式求逆$O(n\lg n)$解决。
+
+\subsection{多项式乘积（普通分治FFT）}
+求多个多项式之积（积的次数上界为$W$）可以使用分治乘法解决，时间复杂度
+$O(W\lg W\lg n)$。
+
+\subsubsection{优化A} 由于求的是多项式乘积，因此在IDFT时不用做除法，而是记录除法因子，
+在最终答案中做1次除法。
+
+\subsubsection{优化B} 使用优先队列维护多项式次数，然后按照类似赫夫曼编码的策略
+贪心合并多项式。参见kczno1的代码\footnote{\url{https://loj.ac/submission/110667}}。
 
 以上内容参考了picks
 \footnote{

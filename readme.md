@@ -53,7 +53,7 @@
 - [x] 实序列DFT
 - [x] MTT
 - [x] 牛顿迭代法与多项式求逆/取模/ln/exp/三角函数/组合数取模
-- [ ] FFT封装
+- [x] FFT封装
 ### 线性代数
 - [x] 高斯消元
 - [x] LUP分解/矩阵求逆
@@ -201,7 +201,7 @@
 - [ ] ETT(Euler Tour Tree)
 - [ ] Top-Tree
 - [x] Stoer-Wagner算法
-- [ ] LCT维护子树信息和边权信息
+- [x] LCT维护子树信息和边权信息
 - [ ] 共价大爷游长沙技巧
 - [ ] FFT字符串通配[By yyb](https://www.cnblogs.com/cjyyb/p/10132855.html)
 - [ ] fractional cascading
@@ -277,9 +277,5 @@
 - [ ] Schreier-Sims 算法
 # Other
 - [ ] 使用Vim
-- [ ] 学习十指打字
-- [ ] 集训队互测题2018
-- [ ] PKUWC2018
-- [ ] Ynoi2019模拟赛[By OldDriverTree](http://olddrivertree.blog.uoj.ac/blog/4656)
-- [ ] LOJ分块题
+- [ ] 学习十指打字(目标：250cpm)
 - [ ] 整理引用的Bib与协议问题

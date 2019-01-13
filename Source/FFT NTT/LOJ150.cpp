@@ -113,7 +113,7 @@ void DFT(int n, Poly& A) {
 void IDFT(int n, Poly& A, int rn) {
     NTT(n, A.data(), invR);
     Int64 div = powm(n, mod - 2);
-    for(int i = 0; i < n; ++i)
+    for(int i = 0; i < rn; ++i)
         A[i] = A[i] * div % mod;
     memset(A.data() + rn, 0, sizeof(int) * (n - rn));
 }

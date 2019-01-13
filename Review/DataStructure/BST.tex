@@ -1,4 +1,5 @@
-\section{平衡二叉树}
+\section{二叉搜索树}
+\index{B!Binary Search Tree}
 \subsection{二叉搜索树性质}
 \begin{property}
     向二叉搜索树中插入新节点$u$（节点关键字不重复），该节点
@@ -9,7 +10,7 @@
 反之亦然。
 \subsection{FHQTreap}\label{FHQTreap}
 \index{F!FHQTreap}
-FHQTreap是一种比较好写的平衡二叉树，虽然效率不太高
+FHQTreap是一种比较好写的二叉搜索树，虽然效率不太高
 （不如子节~\ref{splay}\\的splay），但其易于理解，不需要旋转，
 且对可持久化友好。
 FHQTreap的使用基于两个基本操作：split与merge。
@@ -179,14 +180,14 @@ splay主要由$rotate$和$splay$函数组成：
 $rotate(u)$表示将节点$u$旋转到$u$的父亲上。
 
 主要思想是提取出父亲所在的子树，然后把节点$u$提为子树的根，最后把一个原来的儿子
-挂到原来的父亲下以维护二叉树的形状。
+挂到原来的父亲下以保持二叉平衡树的性质。
 
 具体步骤:
 \begin{enumerate}
 	\item 把自己挂到父亲的位置上;
 	\item 根据相对位置把父亲挂到自己下方；
-	\item 把父亲占用位置所在的节点（原来的儿子）挂到原来自己在父亲儿子的位置上；
-	\item 依次更新原父亲与自己。
+	\item 把父亲占用位置所在的节点（原来的儿子）挂到原来自己的位置上；
+	\item 依次更新原父亲与自己的信息。
 \end{enumerate}
 
 $rotate$前需要提前将标记下传（在$splay$中$push$）。在实践中可使用辅助函数
