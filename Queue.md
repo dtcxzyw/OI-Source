@@ -10,6 +10,7 @@
 - [x] LOJ#2079. 「JSOI2016」轻重路径
 - [ ] Luogu P2542 [AHOI2005]航线规划
 - [ ] Luogu P4298 [CTSC2008]祭祀
+- [x] LOJ#2558. 「LNOI2014」LCA
 # 题集
 - [ ] PKUWC2018
 - [ ] Ynoi2019模拟赛[By OldDriverTree](http://olddrivertree.blog.uoj.ac/blog/4656)
@@ -70,6 +71,8 @@
 - [x] LOJ#2058. 「TJOI / HEOI2016」求和
 - [x] LOJ#2020. 「AHOI / HNOI2017」礼物
 - [x] LOJ#2554. 「CTSC2018」青蕈领主
+- [ ] LOJ#547. 「LibreOJ β Round #7」匹配字符串
+- [ ] LOJ#556. 「Antileaf's Round」咱们去烧菜吧
 - [ ] P4451
 - [ ] P4389
 - [ ] P3784
@@ -109,17 +112,17 @@
 - [ ] LOJ#541. 「LibreOJ NOIP Round #1」七曜圣贤
 - [ ] LOJ#2392. 「JOISC 2017 Day 1」烟花棒
 # LCT
-- [ ] LOJ#2558. 「LNOI2014」LCA
-- [ ] LOJ#6038. 「雅礼集训 2017 Day5」远行
-- [ ] LOJ#558. 「Antileaf's Round」我们的 CPU 遭到攻击
+- [x] LOJ#6038. 「雅礼集训 2017 Day5」远行
+- [x] LOJ#558. 「Antileaf's Round」我们的 CPU 遭到攻击
 - [x] LOJ#2001. 「SDOI2017」树点涂色
 - [x] LOJ#2245. 「NOI2014」魔法森林
 - [ ] LOJ#2289. 「THUWC 2017」在美妙的数学王国中畅游
 - [ ] Luogu P3206
 - [ ] Luogu P3348
-- [ ] UOJ#207. 共价大爷游长沙
+- [x] UOJ#207. 共价大爷游长沙
 - [x] LOJ#2230. 「BJOI2014」大融合
 - [ ] bzoj2959: 长跑
+- [ ] bzoj3153: Sone1
 # 平衡树
 - [ ] LOJ#516. 「LibreOJ β Round #2」DP 一般看规律
 - [ ] LOJ#6047. 「雅礼集训 2017 Day10」决斗
@@ -151,6 +154,7 @@
 - [ ] LOJ#6511. 「雅礼集训 2018 Day8」B
 - [ ] LOJ#2146. 「SHOI2017」寿司餐厅
 # 分块
+- [ ] LOJ#6277-6285
 # 插头dp
 - [ ] LOJ#2017. 「SCOI2016」围棋
 - [ ] LOJ#2099. 「CQOI2015」标识设计
@@ -170,8 +174,10 @@
 - [ ] LOJ#2339. 「WC2018」通道
 - [ ] LOJ#2341. 「WC2018」即时战略
 - [ ] LOJ#2553. 「CTSC2018」暴力写挂
-- [ ] LOJ#2558. 「LNOI2014」LCA
 - [ ] LOJ#2497. 「PA 2017」Banany
 # 虚树
+- [x] LOJ#2206. 「HNOI2014」世界树
+- [x] LOJ#2219. 「HEOI2014」大工程
+- [x] CF 613D
 # kdtree
 - [ ] LOJ#6016. 崂山白花蛇草水

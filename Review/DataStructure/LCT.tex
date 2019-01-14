@@ -117,6 +117,15 @@ void makeRoot(int u) {
 \subsubsection{find}\label{LCTFind}
 首先$access(u),splay(u)$让$u$成为LCT根所在的splay的根。
 根节点就是splay的最小节点（注意推送翻转标记）。
+
+有些毒瘤出题人可能会卡找最小节点的过程，因此在find找到根节点$u$后再执行一次
+$splay(u)$。{\bfseries 注意如果$cut$中使用了$find$，调用$find$后
+$u$在根位置，$cut$后续代码需要稍微修改。}
+
+该坑源自FlashHu的博客\footnote{
+    LCT总结——概念篇+洛谷P3690[模板]Link Cut Tree(动态树)（LCT，Splay）
+    \url{https://www.cnblogs.com/flashhu/p/8324551.html}
+}。
 \subsubsection{link}
 $makeRoot(u)$后使$T[u].p=v$，注意在link前要进行连通性检测。
 \subsubsection{cut}
@@ -162,10 +171,10 @@ $access(v)$时会与$access(u)$的链相交，交点即为LCA。在实现时可�
 \subsubsection{LCT维护边权信息}
 把边当做节点，与两端点相连，端点点权为0。边的节点编号最好为边编号+端点数，
 以便于得到原边编号并断开端点连接。
-
-{\bfseries 注意这种方法有一定的局限性，有时点-边-点必须在一条直线上，需要特别注意。
-参见：LOJ\#558. 「Antileaf's Round」我们的 CPU 遭到攻击 }
 \subsubsection{LCT维护子树信息}
+该方法主要用于解决{\bfseries 不断换根且子树无修改}的问题。若子树有修改则用TopTree
+向轻儿子下放标记。
+
 普通LCT只维护了一条链的信息，即splay内信息。维护子树信息的关键在于显式地将
 虚子树（虚边儿子的子树）信息累加入自身信息中。每个节点维护2个数据，一个是
 虚子树贡献，另一个是贡献总和。update时顺带累加虚子树贡献。
@@ -181,7 +190,28 @@ $access(v)$时会与$access(u)$的链相交，交点即为LCA。在实现时可�
     \item cut:$u,v$在同一棵splay内，除access部分外无影响。
 \end{itemize}
 
-该方法主要用于解决{\bfseries 不断换根}的问题。
+{\bfseries 注意节点与虚儿子一定连接，但不一定与实儿子连接。}对于简单的情况
+不必考虑这个事实，比如「BJOI2014」大融合中的子树节点数。但像LOJ\#558
+「Antileaf's Round」我们的 CPU 遭到攻击这种题，子树黑点数的变化会导致子树
+黑点距离和发生变化，因为实儿子不一定与自己相连。
+
+接下来以此题为例讨论解决方法：
+
+在查询时需要$access(u),splay(u)$，此时$u$必定在端点上。
+虽然自己的实儿子与自己不一定相连，但是自己的左实儿子和虚儿子到链的右端以及右实儿子和虚儿子
+到链的左端一定经过自己。考虑维护自己的子树到splay中{\bfseries 实子树对应的链}的左端/右端
+的距离和。
+\begin{itemize}
+    \item 查询时把$access(u),splay(u)$后$u$自己就是链的右端，并且$u$的子树是全的，
+    $u$到链右端的距离和就是答案。
+    \item 维护子树信息仍然使用上述方法。
+    \item 访问到左右端点的信息时注意提前下传翻转标记，下传翻转标记时同时把{\bfseries
+    左右端信息交换}。
+\end{itemize}
+
+代码如下：
+\lstinputlisting{Source/Source/LCT/LOJ558.cpp}
+
 \subsubsection{LCT维护图上信息}
 若动态图只加边不删边，仍旧可以使用LCT维护图上信息，关键是``可缩点''。
 
@@ -201,3 +231,16 @@ $access(v)$时会与$access(u)$的链相交，交点即为LCA。在实现时可�
     LCT 模板及套路总结
     \url{https://www.cnblogs.com/GuessYCB/p/8330024.html}
 }的博客。
+
+\subsubsection{共价大爷游长沙技巧}
+例题：UOJ\#207.共价大爷游长沙
+
+需要不断给一棵树换边，判断给定路径是否全部经过某条边。
+
+我原先的想法是每次增删路径时，在端点处打标记，查询时统计两边子树端点数。
+这个想法是错的：考虑有两条路径都经过一条边，如果将这两条路径的一个端点交换，
+在LCT上的标记还是一样的。
+
+但是这个想法离正解已经很接近了。注意这里的问题是``判定‘'而不是``统计''，
+考虑给每条路径随机一个权值，增删路径时在端点处异或该权值，查询端点子树异或和，
+判断其是否为路径异或和。

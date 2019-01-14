@@ -82,8 +82,27 @@ void buildST() {
                 A[j + off][i - 1]);
     }
 }
-int ilg2(int x) {
-    return 31 - __builtin_clz(x);
+const unsigned int fac=0x077CB531U;
+int LUT[32];
+void buildLUT() {
+    for(int i=0;i<18;++i) {
+        unsigned int x=1<<i;
+        LUT[(x*fac)>>27]=i;
+    }
+}
+int getHighest(int x) {
+    for(int i=1;i<=16;i<<=1)
+        x|=x>>i;
+    return x^(x>>1);
+}
+int ilg2(int n) {
+    unsigned int x=getHighest(n);
+    return LUT[(x*fac)>>27];
+}
+void pre() {
+    DFS(1);
+    buildST();
+    buildLUT();
 }
 int getLca(int u, int v) {
     int l = L[u], r = L[v];
@@ -94,6 +113,7 @@ int getLca(int u, int v) {
 \end{lstlisting}
 
 预处理$O(n\lg n)$，单次查询$O(1)$。
+若非必要还是使用树剖做LCA，毕竟考场时间比较宝贵，而且树剖表现不错，空间消耗小。
 \subsection{Tarjan}
 当查询离线时，可使用Tarjan算法。
 

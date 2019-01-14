@@ -198,11 +198,11 @@
 - [x] Raney引理
 - [x] 快速凸包
 - [x] 康托展开
-- [ ] ETT(Euler Tour Tree)
-- [ ] Top-Tree
+- [ ] ETT(Euler Tour Tree)[By Memphis](http://memphis.is-programmer.com/2015/8/7/linkcutmemphis.99293.html)
+- [ ] Top-Tree[By Memphis](http://memphis.is-programmer.com/2015/8/7/linkcutmemphis.99293.html)
 - [x] Stoer-Wagner算法
 - [x] LCT维护子树信息和边权信息
-- [ ] 共价大爷游长沙技巧
+- [x] 共价大爷游长沙技巧
 - [ ] FFT字符串通配[By yyb](https://www.cnblogs.com/cjyyb/p/10132855.html)
 - [ ] fractional cascading
 - [x] boruvka算法-CF888G
@@ -238,6 +238,7 @@
 - [ ] IDDFS SPFA判负环[By 姜碧野](https://wenku.baidu.com/view/f22d0d36ee06eff9aef807e9.html)
 - [ ] 单位根反演 [By czy](https://czyhe.me/algorithm/unit-root-inv/unit-root-inv/)
 - [ ] 线段树合并[By 黄嘉泰](https://wenku.baidu.com/view/88f4e134e518964bcf847c95.html)
+- [ ] 线性代数高级算法
 # Research
 - [ ] 三维凸包与Delaunay剖分的关系[By 刘汝佳](https://wenku.baidu.com/view/e2e2d86f58fafab069dc02f8.html)
 - [ ] 利用powerful number求积性函数前缀和[By fjzzq2002](https://www.cnblogs.com/zzqsblog/p/9904271.html)

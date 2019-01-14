@@ -25,9 +25,9 @@ typedef long long Int64;
 #define asInt64 static_cast<Int64>
 const int size = 100005;
 struct Node {
-    int p, c[2], col, sc, isc, w;
-    Int64 sw, isw;
-    bool rev;
+    Int64 sw, swl, swr, isw;
+    int p, c[2], sc, isc, w;
+    bool rev, col;
 } T[size * 5];
 #define ls T[u].c[0]
 #define rs T[u].c[1]
@@ -43,35 +43,41 @@ void connect(int u, int p, int c) {
     T[u].p = p;
     T[p].c[c] = u;
 }
-void update(int u) {
-    T[u].sc = T[ls].sc + T[rs].sc + (T[u].col == 1) +
-        T[u].isc;
-    T[u].sw = asInt64(T[u].w) * T[u].sc + T[ls].sw +
-        T[rs].sw + T[u].isw;
-}
-void rotate(int u) {
-    int ku = getPos(u);
-    int p = T[T[u].p].p;
-    int kp = getPos(p);
-    int pp = T[T[p].p].p;
-    int t = T[u].c[ku ^ 1];
-    T[u].p = T[p].p;
-    if(!isRoot(p))
-        T[T[p].p].c[kp] = u;
-    connect(t, p, ku);
-    connect(p, u, ku ^ 1);
-    update();
-    update();
-    update(p);
-    update(u);
-}
 void pushDown(int u) {
     if(T[u].rev) {
         std::swap(ls, rs);
+        std::swap(T[u].swl, T[u].swr);
         T[ls].rev ^= 1;
         T[rs].rev ^= 1;
         T[u].rev = false;
     }
+}
+void update(int u) {
+    pushDown(ls);
+    pushDown(rs);
+    T[u].sc =
+        T[ls].sc + T[rs].sc + T[u].isc + T[u].col;
+    T[u].sw = T[ls].sw + T[rs].sw + T[u].w;
+    T[u].swl = T[ls].swl + T[rs].swl + T[u].isw +
+        (T[ls].sw + T[u].w) *
+            (T[u].isc + T[u].col + T[rs].sc);
+    T[u].swr = T[ls].swr + T[rs].swr + T[u].isw +
+        (T[rs].sw + T[u].w) *
+            (T[u].isc + T[u].col + T[ls].sc);
+}
+void rotate(int u) {
+    int ku = getPos(u);
+    int p = T[u].p;
+    int kp = getPos(p);
+    int pp = T[p].p;
+    int t = T[u].c[ku ^ 1];
+    T[u].p = pp;
+    if(!isRoot(p))
+        T[pp].c[kp] = u;
+    connect(t, p, ku);
+    connect(p, u, ku ^ 1);
+    update(p);
+    update(u);
 }
 void push(int u) {
     if(!isRoot(u))
@@ -82,9 +88,8 @@ void splay(int u) {
     push(u);
     while(!isRoot(u)) {
         int p = T[u].p;
-        int pp = T[p].p;
-        if(!isRoot(pp))
-            rotate(getPos(pp) == getPos(u) ? pp : u);
+        if(!isRoot(p))
+            rotate(getPos(p) == getPos(u) ? p : u);
         rotate(u);
     }
 }
@@ -92,42 +97,53 @@ void access(int u) {
     int v = 0;
     do {
         splay(u);
+        pushDown(rs);
         T[u].isc += T[rs].sc - T[v].sc;
-        T[u].isw += T[rs].sw - T[v].sw;
+        T[u].isw += T[rs].swl - T[v].swl;
         rs = v;
         update(u);
         v = u;
         u = T[u].p;
     } while(u);
 }
-void cut(int u, int v, int id) {}
+void makeRoot(int u) {
+    access(u);
+    splay(u);
+    T[u].rev ^= 1;
+    pushDown(u);
+}
+void split(int u, int v) {
+    makeRoot(u);
+    access(v);
+    splay(v);
+}
+void cut(int u, int v) {
+    split(u, v);
+    T[v].c[0] = T[u].p = 0;
+    update(v);
+}
+void link(int u, int v) {
+    split(u, v);
+    T[u].p = v;
+    T[v].isc += T[u].sc;
+    T[v].isw += T[u].swl;
+    update(v);
+}
 std::map<Int64, int> eid;
+Int64 encode(Int64 u, Int64 v) {
+    if(u < v)
+        std::swap(u, v);
+    return u << 32 | v;
+}
 void addEdge(int id) {
     int u = read();
     int v = read();
-    T[id].w = read();
-    access(u);
-    splay(u);
-    access(v);
-    splay(v);
-    T[u].p = id;
-    T[id].isc += T[u].sc;
-    T[id].isw += T[u].sw;
-    update(id);
-    T[id].p = v;
-    T[v].isc += T[v].sc;
-    T[v].isw += T[v].sw;
-    if(u > v)
-        std::swap(u, v);
-    eid[asInt64(u) << 32 | v] = id;
-}
-int getEdge(int u, int v) {
-    if(u > v)
-        std::swap(u, v);
-    return eid[asInt64(u) << 32 | v];
+    T[id].sw = T[id].w = read();
+    link(u, id);
+    link(v, id);
+    eid[encode(u, v)] = id;
 }
 int main() {
-    // freopen("data/shootingstar1.in", "r", stdin);
     int n = read();
     int m = read();
     int k = read();
@@ -142,8 +158,10 @@ int main() {
             case 'C': {
                 int u = read();
                 int v = read();
-                int id = getEdge(u, v);
-                cut(u, v, id);
+                int id = eid[encode(u, v)];
+                cut(u, id);
+                cut(v, id);
+                eid.erase(encode(u, v));
             } break;
             case 'F': {
                 int u = read();
@@ -156,7 +174,7 @@ int main() {
                 int u = read();
                 access(u);
                 splay(u);
-                printf("%lld\n", T[u].sw);
+                printf("%lld\n", T[u].swr);
             } break;
         }
     return 0;
