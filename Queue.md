@@ -102,12 +102,11 @@
 - [x] LOJ#114. k 大异或和
 - [ ] LOJ#6243. 关灯问题
 # dp优化
-- [ ] LOJ#535. 「LibreOJ Round #6」花火
-- [ ] LOJ#2074. 「JSOI2016」灯塔
-- [ ] LOJ#2157. 「POI2011 R1」避雷针 Lightning Conductor
+- [x] LOJ#535. 「LibreOJ Round #6」花火
+- [x] LOJ#2074. 「JSOI2016」灯塔
 - [ ] LOJ#2470. 「2018 集训队互测 Day 2」有向图
-- [ ] LOJ#2481. 「CEOI2017」Sure Bet
-- [ ] LOJ#2483. 「CEOI2017」Building Bridges
+- [x] LOJ#2481. 「CEOI2017」Sure Bet
+- [x] LOJ#2483. 「CEOI2017」Building Bridges
 - [ ] LOJ#6039. 「雅礼集训 2017 Day5」珠宝
 - [ ] LOJ#541. 「LibreOJ NOIP Round #1」七曜圣贤
 - [ ] LOJ#2392. 「JOISC 2017 Day 1」烟花棒
@@ -124,8 +123,7 @@
 - [ ] bzoj2959: 长跑
 - [ ] bzoj3153: Sone1
 # 平衡树
-- [ ] LOJ#516. 「LibreOJ β Round #2」DP 一般看规律
-- [ ] LOJ#6047. 「雅礼集训 2017 Day10」决斗
+- [x] LOJ#516. 「LibreOJ β Round #2」DP 一般看规律
 # 容斥/反演/筛法
 - [x] LOJ#153. 集合覆盖计数
 - [ ] LOJ#154. 集合划分计数
