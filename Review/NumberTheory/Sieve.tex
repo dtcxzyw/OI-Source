@@ -54,7 +54,7 @@ $\displaystyle \sum_{i=1}^n{A(n)},n\leq 10^{9}$。
 考虑计算$\displaystyle \sum_{d=1}^n{d\cdot\varphi(d)}$的值：
 
 易知$(id\cdot\varphi)*id=id^2$，因为\begin{displaymath}
-    \sum_{d|n}d\cdot*\varphi(d)\cdot\frac{n}{d}=
+    \sum_{d|n}d\cdot\varphi(d)\cdot\frac{n}{d}=
     n\cdot\sum_{d|n}\varphi(d)=n^2
 \end{displaymath}
 
@@ -93,7 +93,7 @@ $\displaystyle \sum_{p<p_j}F(p)$。{\bfseries 由于积性函数$F$的特殊性�
 综上，有\begin{displaymath}
     g(n,j)=\left\{\begin{array}{lr}
         g(n,j-1)        & p_j^2>n   \\
-        g(n,j-1)-F(p_j)(g(\frac{n}{p_j},j-1)-\sum_{p<p_j}{F(p)}) & p_j^2\leq n \\
+        g(n,j-1)-F(p_j)(g(\frac{n}{p_j},j-1)-\displaystyle \sum_{p<p_j}{F(p)}) & p_j^2\leq n \\
     \end{array}\right.
 \end{displaymath}
 

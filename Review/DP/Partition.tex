@@ -1,1 +1,31 @@
-\section{分治法解带决策单调性的问题}
+\section{分治DP}
+例题：「雅礼集训 2017 Day5」珠宝
+
+这是一个经典的背包问题，但是按照背包做会TLE。发现代价$c$很小，考虑按照$c$分类
+然后转移，花费$kc$的代价时贪心地选取价值前$k$大的物品（我的思路止步于此）。
+
+由于同一条dp依赖链上的位置模$c$同余，可以考虑再按照位置模$c$分类，将每一条链拆开处理。
+注意到选取前$k$大物品的代价的增长率是单调非增的，尝试验证该dp是否有决策单调性。
+
+采用反证法，设两个同类dp点$i,j$，满足$i<j$，记它们的转移决策点分别为$P_i,P_j$，
+满足$P_i>P_j$。记原先的dp数组为$dp$，前$k$大前缀和数组为$w$。根据决策点的定义，有：
+\begin{eqnarray*}
+    dp[P_i]+w[i-P_i]>dp[P_j]+W[i-P_j]\\
+    \Rightarrow dp[P_i]-dp[P_j]>W[i-P_j]-w[i-P_i]\\
+    dp[P_i]+w[j-P_i]\leq dp[P_j]+W[j-P_j]\\
+    \Rightarrow dp[P_i]-dp[P_j]\leq W[j-P_j]-w[j-P_i]\\
+\end{eqnarray*}
+
+由不等式传递性可得$W[i-P_j]-w[i-P_i]<W[j-P_j]-w[j-P_i]$，由于$i<j$且增长率单调非增，
+与该式产生矛盾，因此转移点是单调的。
+
+那么可以写一个分治程序$solve(l,r,L,R)$，表示处理$[l,r]$之间的dp值，转移区间在$L,R$。
+每次在转移区间内扫一遍求出$mid$的dp值，得到转移点，最后左右递归处理，时间复杂度$O(ck\lg k)$。
+
+代码：
+\lstinputlisting{Source/Source/DP/LOJ6039.cpp}
+
+上述内容参考了ShichengXiao的博客\footnote{
+    DP及其优化
+    \url{https://www.cnblogs.com/ShichengXiao/p/9501386.html}
+}。

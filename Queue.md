@@ -107,7 +107,9 @@
 - [ ] LOJ#2470. 「2018 集训队互测 Day 2」有向图
 - [x] LOJ#2481. 「CEOI2017」Sure Bet
 - [x] LOJ#2483. 「CEOI2017」Building Bridges
-- [ ] LOJ#6039. 「雅礼集训 2017 Day5」珠宝
+- [x] LOJ#6039. 「雅礼集训 2017 Day5」珠宝
+- [ ] LOJ#2688. 「POI 2015」洗车 Myjnie
+- [ ] Luogu P1912 [NOI2009]诗人小G
 - [ ] LOJ#541. 「LibreOJ NOIP Round #1」七曜圣贤
 - [ ] LOJ#2392. 「JOISC 2017 Day 1」烟花棒
 # LCT
@@ -127,21 +129,21 @@
 # 容斥/反演/筛法
 - [x] LOJ#153. 集合覆盖计数
 - [ ] LOJ#154. 集合划分计数
-- [ ] LOJ#2027. 「SHOI2016」黑暗前的幻想乡
-- [ ] LOJ#528. 「LibreOJ β Round #4」求和
-- [ ] LOJ#570. 「LibreOJ Round #11」Misaka Network 与任务
+- [x] LOJ#2027. 「SHOI2016」黑暗前的幻想乡
+- [x] LOJ#528. 「LibreOJ β Round #4」求和
+- [x] LOJ#570. 「LibreOJ Round #11」Misaka Network 与任务
 - [ ] LOJ#2025. 「JLOI / SHOI2016」方
 - [ ] LOJ#6160. 「美团 CodeM 初赛 Round A」二分图染色
 - [ ] LOJ#2091. 「ZJOI2016」小星星
 - [ ] LOJ#572. 「LibreOJ Round #11」Misaka Network 与求和
-- [ ] LOJ#2000. 「SDOI2017」数字表格
-- [ ] LOJ#2095. 「CQOI2015」选数
+- [x] LOJ#2000. 「SDOI2017」数字表格
+- [x] LOJ#2095. 「CQOI2015」选数
 - [ ] LOJ#2476. 「2018 集训队互测 Day 3」蒜头的奖杯
 - [ ] LOJ#509. 「LibreOJ NOI Round #1」动态几何问题
 - [ ] LOJ#2085. 「NOI2016」循环之美
 - [x] LOJ#2544. 「JXOI2018」游戏
-- [ ] LOJ#6241. 性能优化
-- [ ] LOJ#6491. zrq 的 gcd
+- [x] LOJ#6241. 性能优化
+- [x] LOJ#6491. zrq 的 gcd
 # 网络流
 - [x] LOJ#115. 无源汇有上下界可行流
 - [x] LOJ#116. 有源汇有上下界最大流

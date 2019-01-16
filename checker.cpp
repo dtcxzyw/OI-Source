@@ -51,7 +51,9 @@ int main() {
     }
     if(c1 != 1) {
         printf("Score:%d\n", c2 * 100 / (c1 - 1));
-        double t = (Clock::now() - beg).count() * 1e-6;
+        double t = (Clock::now() - beg).count() *
+            static_cast<double>(std::milli::den) /
+            static_cast<double>(Clock::period::den);
         printf("%.0lf ms\n", t);
     } else
         puts("No Input!!!");

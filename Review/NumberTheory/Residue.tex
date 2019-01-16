@@ -190,7 +190,7 @@ $b$满足$(b^n-a)^\frac{p-1}{n}\not \equiv 1$，记$\omega=\sqrt[n]{b^n-a}$，
 把数域扩充为$\omega^0,\omega^1,\cdots,\omega^{n-1}$的线性组合，答案为
 $(b-\omega)^\frac{\displaystyle \sum_{i=0}^{n-1}{p^i}}{n}$。
 然后解可乘以单位$n$次根的幂以生成整个解集，单位$n$次根可以使用求原根得到。
-期望时间$n^{n-1}\lg p$。
+期望尝试次数$n^{n-1}\lg p$。
 
 这里介绍另一种方法：若模$p$有原根$g$，令$x=g^t$，有$g^{nt}\equiv a\pmod{p}$，
 变形得$(g^n)^t\equiv a \pmod{p}$，转换为离散对数问题求解，具体方法参见~\ref{BSGS}

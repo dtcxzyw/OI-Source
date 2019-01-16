@@ -26,12 +26,12 @@ FWT主要用来求下列卷积：
 \subsubsection{or}
 \begin{eqnarray*}
     FWT_{or}(A)&=&(FWT_{or}(A_0),FWT_{or}(A_1)+FWT_{or}(A_0))\\
-    FWT_{or}(A)&=&(UFWT_{or}(A_0),UFWT_{or}(A_1)-UFWT_{or}(A_0))
+    UFWT_{or}(A)&=&(UFWT_{or}(A_0),UFWT_{or}(A_1)-UFWT_{or}(A_0))
 \end{eqnarray*}
 \subsubsection{xor!!!}
 \begin{eqnarray*}
     FWT_{xor}(A)&=&(FWT_{xor}(A_0)+FWT_{xor}(A_1),FWT_{xor}(A_0)-FWT_{xor}(A_1))\\
-    FWT_{xor}(A)&=&\left(\frac{UFWT_{xor}(A_0)+UFWT_{xor}(A_1)}{2},
+    UFWT_{xor}(A)&=&\left(\frac{UFWT_{xor}(A_0)+UFWT_{xor}(A_1)}{2},
     \frac{UFWT_{xor}(A_0)-UFWT_{xor}(A_1)}{2}\right)
 \end{eqnarray*}
 \subsection{nand,nor,nxor}

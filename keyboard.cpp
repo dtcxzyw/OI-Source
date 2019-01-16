@@ -29,7 +29,7 @@ const char* const key[] = {
     "id", "find", "getRandom", "splay", "push",
     "update", "topSort", "extend", "gcd", "lucas",
     "inv", "fac", "std", "sort", "unique", "lower",
-    "upper", "_bound", "root", "fa", "LCA", "son",
+    "upper", "_bound", "root", "fa", "getLCA", "son",
     "len", "fabs", "sqrt", "vector", "map", "set",
     "multi", "priority_queue", "unordered_", "prev",
     "next", "nxt", "iterator", "freopen", "getchar",
@@ -56,10 +56,11 @@ const char* const key[] = {
     "access", "down", "simplex", "pivot", "gen",
     "makeRoot", "isRoot", "test", "E[i].nxt",
     "E[i].to", "E[i].w", "slope", "fail", "match",
-    "divide", "info", "LCT", "BFS", "IterT", "DFT",
-    "IDFT", "buildChain", "buildTree", "copy", "rev",
-    "Seq", "timeStamp", "getPos", "cut", "lca",
-    "pushDown"
+    "divide", "info", "BFS", "IterT", "DFT", "IDFT",
+    "buildChain", "buildTree", "copy", "rev", "Seq",
+    "timeStamp", "getPos", "cut", "lca", "pushDown",
+    "#ifdef", "#endif", "rebuild", "strtod", "buf",
+    "ctime"
     ""
 };
 constexpr int size = std::extent<decltype(key)>::value,
