@@ -7,6 +7,7 @@
 #include <iterator>
 #include <string>
 using Clock = std::chrono::high_resolution_clock;
+int64_t totTime = 0;
 int compare(int id, const std::string& exec,
             const std::string& app) {
     auto sid = app + std::to_string(id);
@@ -21,7 +22,9 @@ int compare(int id, const std::string& exec,
     }
     auto out = "tmp.out";
     auto cmd = "./" + exec + " <" + in + " >" + out;
+    auto beg = Clock::now();
     int res = system(cmd.c_str());
+    totTime += (Clock::now() - beg).count();
     if(res != 0)
         return 0;
     std::ifstream outf(out);
@@ -40,7 +43,6 @@ int main() {
     if(app == "null")
         app.clear();
     int c1 = 0, c2 = 0;
-    auto beg = Clock::now();
     while(true) {
         ++c1;
         int res = compare(c1, name + ".out", app);
@@ -51,7 +53,7 @@ int main() {
     }
     if(c1 != 1) {
         printf("Score:%d\n", c2 * 100 / (c1 - 1));
-        double t = (Clock::now() - beg).count() *
+        double t = totTime *
             static_cast<double>(std::milli::den) /
             static_cast<double>(Clock::period::den);
         printf("%.0lf ms\n", t);

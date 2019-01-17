@@ -170,3 +170,25 @@ int getHighest(int x) {
     $timeStamp$，若时间戳与当前时间戳相等则为true，将当前时间戳+1可实现$O(1)$清零。
     对于其它值的存储也可以如此清零（std::pair<时间戳，实际数据>）。
 \end{itemize}
+\subsection{读入优化}
+被别人的时间优势刺激到了才入了fread/fwrite的坑。。。
+
+下面的测试使用同一组整数与字符串转换的算法：
+\lstinputlisting[title=IOTest.h]{Other/IOTest.hpp}
+
+数据生成器如下：
+\lstinputlisting[title=IOGen.cpp]{Other/IOGen.cpp}
+
+常规getchar/putchar:31058 ms
+\lstinputlisting[title=Test A]{Other/IOTestA.cpp}
+
+使用8MB自带缓冲区，显式fread/fwrite，关闭内置缓冲区：9724 ms
+\lstinputlisting[title=Test B]{Other/IOTestB.cpp}
+
+重置内置缓冲区为8MB，使用全缓冲模式：23461 ms
+\lstinputlisting[title=Test C]{Other/IOTestC.cpp}
+
+{\bfseries 注意\_IOFBF，\_IONBF这些东西在NOI系列赛事不能使用，不过它们都是常数，
+可以预先取得它们的值。}
+
+结果很明显，显式fread/fwrite速度最快。
