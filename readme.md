@@ -239,6 +239,9 @@
 - [ ] 单位根反演 [By czy](https://czyhe.me/algorithm/unit-root-inv/unit-root-inv/)
 - [ ] 线段树合并[By 黄嘉泰](https://wenku.baidu.com/view/88f4e134e518964bcf847c95.html)
 - [ ] 线性代数高级算法
+- [ ] Bron–Kerbosch算法
+- [ ] GarsiaWachs算法
+- [ ] 猫树[By immortalCO](http://immortalco.blog.uoj.ac/blog/2102)
 # Research
 - [ ] 三维凸包与Delaunay剖分的关系[By 刘汝佳](https://wenku.baidu.com/view/e2e2d86f58fafab069dc02f8.html)
 - [ ] 利用powerful number求积性函数前缀和[By fjzzq2002](https://www.cnblogs.com/zzqsblog/p/9904271.html)

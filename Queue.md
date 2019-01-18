@@ -71,7 +71,7 @@
 - [x] LOJ#2020. 「AHOI / HNOI2017」礼物
 - [x] LOJ#2554. 「CTSC2018」青蕈领主
 - [ ] LOJ#547. 「LibreOJ β Round #7」匹配字符串
-- [ ] LOJ#556. 「Antileaf's Round」咱们去烧菜吧
+- [x] LOJ#556. 「Antileaf's Round」咱们去烧菜吧
 - [ ] P4451
 - [ ] P4389
 - [ ] P3784
@@ -155,7 +155,7 @@
 - [ ] LOJ#6511. 「雅礼集训 2018 Day8」B
 - [ ] LOJ#2146. 「SHOI2017」寿司餐厅
 # 分块
-- [ ] LOJ#6277-6285
+- [x] LOJ#6277-6285
 # 插头dp
 - [ ] LOJ#2017. 「SCOI2016」围棋
 - [ ] LOJ#2099. 「CQOI2015」标识设计

@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <cstdio>
 #include <cstring>
-#include <queue>
+#include <vector>
 int read() {
     int res = 0, c;
     do
@@ -13,17 +13,10 @@ int read() {
     }
     return res;
 }
-const int size = 1 << 18, mod = 998244353;
 typedef long long Int64;
 #define asInt64 static_cast<Int64>
-int add(int a, int b) {
-    a += b;
-    return a < mod ? a : a - mod;
-}
-int sub(int a, int b) {
-    a -= b;
-    return a >= 0 ? a : a + mod;
-}
+const int size = 1 << 18, maxn = 100050,
+          mod = 998244353;
 Int64 powm(Int64 a, int k) {
     Int64 res = 1;
     while(k) {
@@ -32,6 +25,14 @@ Int64 powm(Int64 a, int k) {
         k >>= 1, a = a * a % mod;
     }
     return res;
+}
+int add(int a, int b) {
+    a += b;
+    return a < mod ? a : a - mod;
+}
+int sub(int a, int b) {
+    a -= b;
+    return a >= 0 ? a : a + mod;
 }
 int tot, root[size], invR[size];
 void init(int n) {
@@ -51,7 +52,7 @@ void NTT(int* A, int n, const int* w) {
         for(int l = n >> 1; (j ^= l) < l; l >>= 1)
             ;
     }
-    for(int i = 2; i <= n; ++i) {
+    for(int i = 2; i <= n; i <<= 1) {
         int m = i >> 1, fac = tot / i;
         for(int j = 0; j < n; j += i)
             for(int k = 0; k < m; ++k) {
@@ -63,112 +64,139 @@ void NTT(int* A, int n, const int* w) {
     }
 }
 int getSize(int n) {
+    n <<= 1;
     int p = 1;
     while(p < n)
         p <<= 1;
     return p;
 }
-struct Poly {
-    int a, b, *A;
-    Poly(int n, int* A) : a(n), A(A) {}
-    Poly(int a, int b) : a(a), b(b), A(0) {}
-    void init(int* B, int siz) const {
-        if(A) {
-            int msiz = a + 1;
-            memcpy(B, A, sizeof(int) * msiz);
-            memset(B + msiz, 0,
-                   sizeof(int) * (siz - msiz));
-        } else {
-            memset(B, 0, sizeof(int) * siz);
-            B[0] = 1, B[a] = b;
+typedef std::vector<int> Poly;
+void DFT(int n, Poly& A) {
+    NTT(A.data(), n, root);
+}
+void IDFT(int n, Poly& A, int rn) {
+    NTT(A.data(), n, invR);
+    Int64 div = powm(n, mod - 2);
+    for(int i = 0; i < rn; ++i)
+        A[i] = A[i] * div % mod;
+    memset(A.data() + rn, 0, sizeof(int) * (n - rn));
+}
+void copy(Poly& dst, const Poly& src, int siz) {
+    memcpy(dst.data(), src.data(), sizeof(int) * siz);
+}
+void inv(int n, const Poly& sf, Poly& g) {
+    if(n == 1)
+        g[0] = powm(sf[0], mod - 2);
+    else {
+        int h = (n + 1) >> 1;
+        inv(h, sf, g);
+        int p = getSize(n);
+        DFT(p, g);
+
+        Poly f(p);
+        copy(f, sf, n);
+        DFT(p, f);
+
+        for(int i = 0; i < p; ++i) {
+            g[i] = (2 - asInt64(g[i]) * f[i] % mod) *
+                g[i] % mod;
+            if(g[i] < 0)
+                g[i] += mod;
         }
-        NTT(B, siz, root);
+
+        IDFT(p, g, n);
     }
-    void uninit() {
-        delete A;
-    }
-    bool operator<(const Poly& rhs) const {
-        return a > rhs.a;
-    }
-};
-int A[size], B[size];
-Int64 mul;
-Poly operator*(const Poly& lhs, const Poly& rhs) {
-    int end = lhs.a + rhs.a + 1;
-    int siz = getSize(end);
-    lhs.init(A, siz);
-    rhs.init(B, siz);
-    for(int i = 0; i < siz; ++i)
-        A[i] = asInt64(A[i]) * B[i] % mod;
-    NTT(A, siz, invR);
-    Poly c(end - 1, new int[end]);
-    memcpy(c.A, A, sizeof(int) * end);
-    mul = mul * siz % mod;
 }
-Poly doMul(std::priority_queue<Poly>& que) {
-    mul = 1;
-    while(que.size() > 1) {
-        Poly a = que.top();
-        que.pop();
-        Poly b = que.top();
-        que.pop();
-        que.push(a * b);
-        a.uninit();
-        b.uninit();
-    }
-    Poly p = que.top();
-    Int64 div = powm(mul, mod - 2);
-    for(int i = 0; i <= p.a; ++i)
-        p.A[i] = p.A[i] * div % mod;
-    return p;
+int lut[maxn];
+void inte(int n, Poly& A) {
+    for(int i = n - 1; i >= 1; --i)
+        A[i] = asInt64(A[i - 1]) * lut[i] % mod;
+    A[0] = 0;
 }
-std::pair<int, int> X[100005];
+void derv(int n, Poly& A) {
+    for(int i = 1; i < n; ++i)
+        A[i - 1] = i * asInt64(A[i]) % mod;
+    A[n - 1] = 0;
+}
+void ln(int n, Poly& A) {
+    int p = getSize(n);
+    Poly IA(p);
+    inv(n, A, IA);
+    DFT(p, IA);
+
+    derv(n, A);
+    DFT(p, A);
+
+    for(int i = 0; i < p; ++i)
+        A[i] = asInt64(A[i]) * IA[i] % mod;
+
+    IDFT(p, A, n);
+    inte(n, A);
+}
+void exp(int n, const Poly& sf, Poly& g) {
+    if(n == 1)
+        g[0] = 1;
+    else {
+        int h = (n + 1) >> 1;
+        exp(h, sf, g);
+        int p = getSize(n);
+
+        Poly lng(p);
+        copy(lng, g, h);
+        ln(n, lng);
+        DFT(p, lng);
+
+        Poly f(p);
+        copy(f, sf, n);
+        DFT(p, f);
+
+        DFT(p, g);
+        for(int i = 0; i < p; ++i) {
+            g[i] = g[i] * asInt64(1 - lng[i] + f[i]) %
+                mod;
+            if(g[i] < 0)
+                g[i] += mod;
+        }
+        IDFT(p, g, n);
+    }
+}
+int cnt[maxn];
 int main() {
     int n = read();
     int m = read();
-    for(int i = 1; i <= n; ++i) {
-        X[i].first = read();
-        X[i].second = read();
-    }
-    std::sort(A + 1, A + n + 1);
-    int siz = 0;
-    for(int i = 1, l = 1; i <= n; ++i) {
-        while(X[i].first != X[i + 1].first) {
-            if(X[l].second == 0)
-                X[++siz] =
-                    std::make_pair(X[l].first, 0);
-            else {
-                ++siz;
-                X[siz].first = X[l].first,
-                X[siz].second = 0;
-                for(int k = l; k <= i; ++k)
-                    X[siz].second = add(X[siz].second,
-                                        X[k].second);
-            }
-            l = i + 1;
+    int end = n + 3;
+    int p = getSize(end);
+    init(p);
+    int maxk = 0;
+    while(m--) {
+        int a = read();
+        int b = read();
+        if(a > n)
+            continue;
+        Int64 k = a * asInt64(b + 1);
+        if(b && k < end) {
+            --cnt[k];
+            maxk = std::max(maxk, static_cast<int>(k));
         }
+        ++cnt[a];
+        maxk = std::max(maxk, a);
     }
-    std::priority_queue<Poly> A, B;
-    int minv = 1 << 30;
-    for(int i = 1; i <= n; ++i) {
-        int a = X[i].first;
-        int b = X[i].second;
-        if(b)
-            A.push(Poly(a, b));
-        else {
-            minv = std::min(minv, a);
-            B.push(Poly(a, 1));
+    lut[1] = 1;
+    for(int i = 2; i <= end; ++i)
+        lut[i] = asInt64(mod - mod / i) *
+            lut[mod % i] % mod;
+    Poly f(p);
+    for(int i = 1; i <= maxk; ++i)
+        if(cnt[i]) {
+            Int64 k = cnt[i];
+            if(k < 0)
+                k += mod;
+            for(int j = i, c = 1; j < end; j += i, ++c)
+                f[j] = (f[j] + k * lut[c]) % mod;
         }
-    }
-    Poly p1 = doMul(A), p2 = doMul(B);
-    int k = n / minv;
-    while(k--) {
-        if(k & 1) {
-            Poly tmp = p1 * p2;
-            p1.uninit();
-            p1 = tmp;
-        }
-        k >>= 1;
-    }
+    Poly g(p);
+    exp(end, f, g);
+    for(int i = 1; i <= n; ++i)
+        printf("%d\n", g[i]);
     return 0;
 }
