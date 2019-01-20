@@ -288,4 +288,5 @@ $join(T1,T2)$表示将树$T1$与$T2$合并为一棵树，其中$T1$的所有元�
 维护splay树的size，合并时将size小的拆开插入size大的，时间复杂度$O(n\lg^2n)$。
 \sout{据说拆树时使用中序遍历，插入复杂度均摊为$O(1)$，时间复杂度$O(n\lg n)$}。
 
-{\bfseries 注意FHQTreap的merge必须保证两树无交，不能简单地将两树merge。}
+{\bfseries 注意FHQTreap的merge必须保证两树无交且参数顺序按照合并后的序列顺序，不能简单地
+将两树的根merge。}

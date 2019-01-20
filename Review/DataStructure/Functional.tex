@@ -9,7 +9,7 @@
 用主席树做的经典模型有：
 \begin{itemize}
     \item 差分
-    \item 对于每一个节点为左节点，维护其右边节点为右节点时的答案
+    \item 对于每一个节点为查询左节点，维护其右边节点为查询右节点时的答案
     \item 将某一维离散化后不断插入新数据进行预处理以回答在线询问
 \end{itemize}
 \subsection{可持久化Trie}
@@ -49,5 +49,5 @@ int cloneNode(int src) {
 
 代码如下：
 \lstinputlisting{Source/Templates/FDSU.cpp}
-此法节约了复制节点时的时间与空间，但是路径压缩增加了修改的时间和空间，考场上最好写
+此法节约了复制节点时的时间与空间，但是路径压缩增加了修改的时间和空间，考场上最好只写
 按秩合并。

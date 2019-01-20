@@ -33,11 +33,12 @@
 \subsection{原根的应用}
 \begin{itemize}
 	\item 在NTT中用于推算主单位根。
-	\item 将乘积恒定转换为幂次和恒定后NTT（见例题[SDOI2015]序列统计）。
+	\item 将乘积恒定转换为幂次和恒定后NTT。
+	\paragraph{例题} [SDOI2015]序列统计\footnote{【P3321】[SDOI2015]序列统计 - 洛谷
+	\url{https://www.luogu.org/problemnew/show/P3321}}
+
+	将$x$映射为$g^i$，使用生成函数推导出多项式幂的形式，最后对答案进行逆映射。
+
+	\lstinputlisting[title=luogu P3321]{Source/Source/'FFT NTT'/3321.cpp}
+
 \end{itemize}
-\paragraph{例题} [SDOI2015]序列统计\footnote{【P3321】[SDOI2015]序列统计 - 洛谷
-\url{https://www.luogu.org/problemnew/show/P3321}}
-
-将$x$映射为$g^i$，使用生成函数推导出多项式幂的形式，最后对答案进行逆映射。
-
-\lstinputlisting[title=luogu P3321]{Source/Source/'FFT NTT'/3321.cpp}

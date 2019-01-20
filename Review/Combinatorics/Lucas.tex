@@ -46,9 +46,9 @@ Nathan Fine的证明：
 \subsection{ExLucas}
 对于模数为合数的情况，将$p$质因数分解，即
 $\displaystyle p=\sum_{i=1}^k{p_i^{c_i}}$。
-然后用求出$\binomial{n}{m} \bmod{p_i^{c_i}}$的值，最后使用CRT合并。
+然后快速求出$\binomial{n}{m} \bmod{p_i^{c_i}}$的值，最后使用CRT合并。
 
-首先将求组合数转换为求阶乘，但要从$n!$提出p的倍数最后处理，
+首先将求组合数转换为求阶乘，但要从$n!$提出p的倍数并做特殊处理，
 即\begin{displaymath}
 	n!=\prod_{i=1}^n{i^{[(n,i)=1]}}\cdot p^{[\frac{n}{p}]}\cdot
 	\prod_{i=1}^{[\frac{n}{p}]}i
@@ -59,12 +59,12 @@ $\displaystyle p=\sum_{i=1}^k{p_i^{c_i}}$。
 	\item 第二部分：由于组合数中分子分母都有因子$p$，单独拆出来算。
 
 	统计次数代码：
-	\begin{lstlisting}
-		int cnt = 0;
-		for(int i=n/p;i;i/=p)
-			cnt+=i;
-	\end{lstlisting}
-	\item 第三部分：成为了一个新阶乘，递归解决。
+\begin{lstlisting}
+int cnt = 0;
+for(int i=n/p;i;i/=p)
+	cnt+=i;
+\end{lstlisting}
+	\item 第三部分：作为一个子问题递归解决。
 \end{itemize}
 对于单个素数幂计算复杂度$O(p_i^{c_i})$。
 

@@ -7,7 +7,7 @@
 \subsection{Miller-Rabin}
 考虑每次随机选取多个$a$，当有$k$个$a$满足时，出错的概率最多为$2^{-k}$。证明详见
 算法导论\cite{ITA3}第31.8节定理31.39。
-Miller-Rabin使用了上述思想，并且使用$witness$测试来代替朴素检查算法以尽可能避免把
+Miller-Rabin沿用了朴素算法的思路，并且使用$witness$测试来代替朴素检查算法以尽可能避免把
 {\bfseries Carmichael}数当做素数。
 
 $witness(x,base)$返回$true$当$base$可以证明$x$是合数。

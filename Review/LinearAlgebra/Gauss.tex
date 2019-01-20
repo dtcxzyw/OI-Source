@@ -58,3 +58,9 @@ for(int i=n;i>=1;--i) {
 \footnote{\url{https://www.luogu.org/problemnew/show/P4783}}
 \lstinputlisting[title=InvMatGauss]{LinearAlgebra/InvMatGauss.cpp}
 时间复杂度$O(n^3)$。
+
+《线性代数及其应用》中提到使用高斯消元法求逆矩阵的另一种方法：将待求逆矩阵$A$与单位矩阵$I$并为
+矩阵$[A~I]$，然后使用高斯消元法将$A$消为上三角矩阵，再进一步消为单位矩阵，右边的单位矩阵做同样
+的初等行变换，最后的结果为$[I~A^{-1}]$。
+
+证明：设变换矩阵为$P$，有$AP=I$，根据IMT可知$A^{-1}=P$，并且此时矩阵的右半部分为$IP=P$。

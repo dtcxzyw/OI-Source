@@ -76,13 +76,13 @@
 	      且$f$为积性函数，将$g$看做$f*1$可知$g$也是积性函数，则$\displaystyle
 		      g(n)=\prod_{i=1}^m{\sum_{j=0}^{c_i}{f(p_i^j)}}$。
 	\item 交换内外求和顺序。
-	\item 枚举倍数，最大公约数等有共性的值并换元。
+	\item 枚举倍数、因子、最大公约数等有共性的值并换元。
 	\item 在化简前缀和函数时可能会遇到如下式子：
 	      \begin{eqnarray*}
 		      ans(n)&=&\sum_{i=1}^n{f(i)}\\
 		      &=&A(n)+B(n)\sum_{i=1}^n{\sum_{d|i}{f(d)}}\\
-		      &=&A(n)+B(n)\sum_{\frac{i}{d}=1}^n{\sum_{d=1}^{[\frac{n}{\frac{i}{d}}]}{f(d)}}\\
-		      &=&A(n)+B(n)\sum_{t=1}^n{\sum_{d=1}^{[\frac{n}{t}]}{f(d)}}\\
+		      &=&A(n)+B(n)\sum_{\frac{i}{d}=1}^n{\sum_{j=1}^{\left[\frac{n}{\frac{i}{d}}\right]}{f(j)}}\\
+		      &=&A(n)+B(n)\sum_{t=1}^n{\sum_{j=1}^{[\frac{n}{t}]}{f(j)}}\\
 		      &=&A(n)+B(n)\sum_{t=1}^n{ans([\frac{n}{t}])}
 	      \end{eqnarray*}
 	      线性筛预处理一部分前缀和（一般预处理规模为$n^{2/3}$，最终时间复杂度
@@ -90,12 +90,14 @@
 
 	      注意这里可以使用存储Trick来Cache计算结果（多次询问使用map或时间戳数组
 	      清零，下面只讨论单次询问的情况）。设预处理了前$k$个前缀和，其中$k\geq \sqrt{n}$。
-	      那么$[\frac{n}{t}]>k$的值不超过$\sqrt{n}$个，并且$t$不同对应的值也不同。所以
-	      可以以$t$为下标把计算结果存入另一个数组中。
+		那么$[\frac{n}{t}]>k$的值不超过$\sqrt{n}$个，并且$t$不同对应的$[\frac{n}{t}]$值也不同。
+		所以可以以$t$为下标把计算结果存入另一个数组中。
 	\item 同时除以最大公约数使其互质，然后套用$\varphi$。
-	\item $\displaystyle [gcd(i,j)=1]=\sum_{k|gcd(i,j)}\mu(k)=
-			\sum_{k|i,k|j}\mu(k)$
+	\item $\displaystyle [gcd(i,j)=1]=\sum_{k|gcd(i,j)}\mu(k)=\sum_{k|i,k|j}\mu(k)$
 	\item $\displaystyle gcd(i,j)=\sum_{d=1}^{min(i,j)}{\varphi(d)[\frac{i}{d}][\frac{j}{d}]}$
+		
+		遇到该式时不要枚举gcd值将其转换为上一个式子，从而陷入更复杂的化简。
+	
 	\item $\displaystyle \sum_{i=1}^n{i}=
 		      \sum_{i=1}^n{\sum_{d|i}\varphi(d)}=
 		      \sum_{d=1}^n{\varphi(d)\cdot[\frac{n}{d}]}$
@@ -105,7 +107,7 @@
 	将$[L,H]$内的$K$的倍数除以$K$得到区间$[l,r]$，
 	记$G_i$为$[l,r]$中$i$的倍数个数，使用前文所述技巧推出答案为
 	$\displaystyle \sum_{d=1}^r{\mu(d)G_d^n}$。但是$r$仍然是$1e9$级别的，
-	可以考虑$\sqrt{N}$分块枚举相同的$G_d$再使用杜教筛求$\mu$的前缀和解决。
+	可以考虑整除分块枚举相同的$G_d$再使用杜教筛求$\mu$的前缀和解决。
 
 	注意这里还有个条件$H-L\leq 1e5$，infinity\_edge的博客\footnote{
 		「BZOJ3930」「CQOI2015」选数\\
@@ -124,7 +126,7 @@
 	为完全平方数时值为$\mu(\sqrt{n})$，其余情况为0。
 
 	证明：考虑$n$的质因数分解，若存在质因数幂次$>2$，则必有一个$\mu$值为0，该式的值为0；
-	若存在质因数幂次为1，不考虑其它质因数是否使$\mu$为0，$\mu(\frac{n}{d}$项必然抵消。
+	若存在质因数幂次为1，不考虑其它质因数是否使$\mu$为0，$\mu(\frac{n}{d})$项必然抵消。
 
 	综上所述，$n$为完全平方数时才有贡献。
 \end{itemize}

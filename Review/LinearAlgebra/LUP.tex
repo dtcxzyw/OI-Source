@@ -1,4 +1,5 @@
 \section{LUP分解}
+LUP分解的数值稳定性较高斯消元法强。
 \subsection{基本原理}
 要求解线性方程组$Ax=b$，对系数矩阵$A$进行LUP分解：
 \begin{displaymath}
@@ -6,7 +7,7 @@
 \end{displaymath}
 其中$P$为置换矩阵，$L$为下三角矩阵，$U$为上三角矩阵。
 
-将$Ax=b$乘上$P$，得$PAx=Pb$，然后用$PA=LU$代换得$LUx=Pb$。
+将$Ax=b$左乘$P$，得$PAx=Pb$，然后用$PA=LU$代换得$LUx=Pb$。
 设$y=Ux$，有$Ly=Pb$，可以使用类似于~\ref{LSE}节$O(n^2)$求解$y$,
 然后再次使用该方法求出$x$。
 

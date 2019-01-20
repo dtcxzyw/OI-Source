@@ -58,7 +58,7 @@
 $\displaystyle X=\prod_{i=1}^m{p_i}$，
 仅考虑$\mu(d)\neq 0$的部分，$\mu(d)$有贡献当且仅当$d|X$，因此$d$可表示为一个长度为$m$
 的01向量。
-由排列组合知识可知选取奇数个1的向量方案数等于选取偶数个1的向量方案数，即正负贡献抵消。
+由二项式定理可知选取奇数个1的向量方案数等于选取偶数个1的向量方案数，即正负贡献抵消。
 \begin{theorem}\label{PhiT}
 	\begin{displaymath}
 		n=\sum_{d|n}{\varphi(d)}
@@ -159,8 +159,8 @@ $p_j$筛去，直接跳出不会影响结果，且保证合数被最小质因子
 同约数和的思想，记数组$sum_i$为$i$中最小质因子的贡献。
 要求能够快速推出$f({p_i}^{c_i})$的值。
 \begin{itemize}
-	\item $f(1)=1,sum_1=？？？$；
-	\item 若$i$为素数，则$f(i)=sum_i=？？？$；
+	\item $f(1)=1$；
+	\item 若$i$为素数，则$f(i)=sum_i=\cdots$；
 	\item 若$i \bmod p_j=0$，则说明$ip_j$存在至少两个因子$p_j$，因此
 	      $f(ip_j)=f(i)\cdot\frac{sum_{ip_j}}{sum_i}$；
 	\item 若$i \bmod p_j\neq 0$，则根据积性函数性质可得

@@ -8,9 +8,10 @@
     \stirlingA{n}{k}&=&(n-1)\stirlingA{n-1}{k}+\stirlingA{n-1}{k-1}\\
     \sum_{i=0}^n{\stirlingA{n}{i}}&=&n!
 \end{eqnarray*}
+
 证明递推式：
 \begin{itemize}
-    \item 若将当前点丟给之前的环，则可以选择$p-1$个点在其右边，因此贡献
+    \item 若将当前点丟给之前的环，则可以选择$n-1$个点在其右边，因此贡献
     $(n-1)\stirlingA{n-1}{k}$。
     \item 当前点自成一环，贡献$\stirlingA{n-1}{k-1}$。
 \end{itemize}
@@ -23,6 +24,7 @@
     \stirlingB{n}{k}&=&\frac{1}{k!}\sum_{i=0}^k{(-1)^{k-i}\binomial{k}{i}i^n}
     \label{SB4}
 \end{eqnarray}
+
 证明等式~\ref{SB3}：
 \begin{itemize}
     \item 若将当前点丟给之前的集合，则可以选择$k$个集合，因此贡献
@@ -46,6 +48,6 @@
         n^k=\sum_{i=0}^n{\stirlingB{k}{i}\binomial{n}{i}i!}
     \end{displaymath}
 \end{theorem}
-意义：
-左边是将$k$个球放入$n$个盒子里的方案数，右边枚举非空盒子数，那么$i$个非空盒子的方案数
-即为划分非空子集的方案数*盒子排列数（盒子选取方案数*盒子标号方案数）。
+
+意义：左边是将$k$个球放入$n$个盒子里的方案数，右边枚举非空盒子数，那么$i$个非空盒子的
+方案数即为划分非空子集的方案数*盒子排列数（盒子选取方案数*盒子标号方案数）。

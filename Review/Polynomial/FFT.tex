@@ -248,17 +248,14 @@ for (int i = 1; i < p; ++i) {
 以上内容参考了Miskcoo的博客\footnote{实序列离散傅里叶变换的快速算法 – Miskcoo's Space
 \url{http://blog.miskcoo.com/2018/01/real-dft}}。
 \subsection{MTT之拆系数FFT}
-MTT主要用来解决模数不满足NTT条件的卷积问题，可以使用拆系数FFT的实数运算来
-绕开限制。
+MTT主要用来解决模数不满足NTT条件（模数无原根或者欧拉函数值中2的幂次比数据范围小）的卷积问题，可以使用
+拆系数FFT的实数运算来绕开限制。
 
 设模数为$M$,解决方法是找一个$k\geq\sqrt{M}$，将序列$a(n)$拆为2个新序列
-$a_0(n)=a(n)/k,a_1(n)=a(n)\% k$，两两相乘后按照系数合并。共4次DFT，
-4次IDFT。
+$a_0(n)=a(n)/k,a_1(n)=a(n)\% k$，两两相乘后按照系数合并。共4次DFT，4次IDFT。
 
 优化：
 \begin{itemize}
-	\item 注意到这4个多项式均为实序列，所以可按照~\ref{RDFT}节中所述方法
-	仅使用2次DFT与3次IDFT。
-	\item 合并时有两个多项式的系数均为$k$，可以加在一起IDFT，
-	使用4次DFT与3次IDFT。
+	\item 注意到这4个多项式均为实序列，所以可按照~\ref{RDFT}节中所述方法仅使用2次DFT。
+	\item 合并时有两个多项式的系数均为$k$，可以加在一起IDFT，仅使用3次IDFT。
 \end{itemize}

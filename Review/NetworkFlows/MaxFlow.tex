@@ -3,7 +3,9 @@ Dinic与ISAP属于Ford-Fulkerson方法中的SAP（Shortest Augment Path）系。
 而HLPP属于Push–Relabel算法。
 \subsection{Dinic算法}
 \index{D!Dinic}
-个人比较喜欢使用Dinic算法\sout{（因为我只会这个）}。
+\sout{个人比较喜欢使用Dinic算法（因为我只会这个）}。
+
+ISAP大法好！！！
 
 Dinic的计算流程如下：
 \begin{enumerate}
@@ -118,7 +120,7 @@ DFS直接修改层次编号的方式来优化算法。ISAP的时间复杂度仍�
 	\item 流量用完后直接退出。
 \end{itemize}
 
-板子（代码似乎比DinicA还短而且跑得比DinicB还快）：
+板子（代码比DinicA还短而且跑得比DinicB还快）：
 \lstinputlisting[title=ISAP]{Source/Templates/ISAP.cpp}
 
 {\bfseries 注意$mf=0$时直接返回不要更新层次标号。}

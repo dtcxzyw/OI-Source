@@ -13,23 +13,29 @@
 	\end{array}
 	\right.\label{DetB}
 \end{eqnarray}
+
 式~\ref{DetA}可理解为选择$n$个不同行且不同列的元素，逆序对数为偶数的加，奇数的减。
+
 式~\ref{DetB}是式~\ref{DetA}的递归形式。
+
 记$A_{ij}=(-1)^{i+j}a_{1j}det(A_{[ij]})$为元素$a_{ij}$的{\bfseries 代数余子式}。
+
 行列式拥有如下性质：
 \begin{property}
 	$det(A)=det(A^T)$
 \end{property}
+
 证明：根据式~\ref{DetA}可知，行和列是无关的，转置后$det(A)$不变。
 \begin{property}
 	若矩阵$A$的某一行/列为0，则$det(A)=0$。
 \end{property}
+
 证明：根据式~\ref{DetA}可知每个排列中矩阵元素必有一个0，所以$det(A)=0$。
 \begin{property}
 	矩阵$A$的任意一行/列乘以$\lambda$，$det(A)$乘以$\lambda$。
 \end{property}
-证明：根据式~\ref{DetA}可知每个排列中有一个矩阵元素乘以$\lambda$，
-则$det(A)$放大$\lambda$。
+
+证明：根据式~\ref{DetA}可知每个排列中有一个矩阵元素乘以$\lambda$，则$det(A)$放大$\lambda$。
 \begin{property}
     若矩阵$C$的第$i$行/列可分解为$c=a+b$的形式，
     则$det(C)$可分解为分别包含这两个向量，其余元素与矩阵$C$相同的矩阵的行列式之和。
@@ -37,10 +43,12 @@
 \begin{inference}
 	将矩阵$A$中某一行/列元素加$\lambda$倍到另一行/列上，$det(A)$不变。
 \end{inference}
+
 将$det(A')$拆分，有$det(A')=det(A)+det(A_{add})=det(A)$（因为$A_{add}$有线性相关向量）。
 \begin{property}
 	交换$A$任意两行/列，$det(A)$变号。
 \end{property}
+
 证明：交换会使逆序对数奇偶性改变（通过计算相邻交换步数可证明），$det(A)$变号。
 \begin{property}
 	det(AB)=det(A)det(B)
@@ -48,8 +56,9 @@
 \begin{theorem}
 	$det(A)=0\Leftrightarrow$矩阵$A$奇异
 \end{theorem}
-证明：$det(A)=0$意味着至少有2个系数向量是线性相关的，矩阵$A$是欠定方程组的系数矩阵，
-没有逆矩阵。
+
+证明：$det(A)=0$意味着至少有2个系数向量是线性相关的，矩阵$A$是欠定方程组的系数矩阵，没有逆矩阵。
+
 代数余子式有如下性质：
 \begin{property}
     \begin{eqnarray*}
@@ -66,6 +75,7 @@
 \begin{theorem}\label{LTAD}
 	若矩阵$A$为上三角矩阵，则$det(A)$为主对角线上元素之积。
 \end{theorem}
+
 证明：唯一矩阵元素积可能非0的排列方案只有在主对角线上。
 
 高斯消元后根据定理~\ref{LTAD}计算行列式，注意在初等变换操作中交换行时要变号
