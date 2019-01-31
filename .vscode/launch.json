@@ -15,6 +15,9 @@
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
+            "windows": {
+                "miDebuggerPath": "C:\\cygwin64\\bin\\gdb.exe"
+            },
             "preLaunchTask": "g++11",
             "setupCommands": [
                 {
@@ -35,6 +38,9 @@
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
+            "windows": {
+                "miDebuggerPath": "C:\\cygwin64\\bin\\gdb.exe"
+            },
             "preLaunchTask": "g++",
             "setupCommands": [
                 {

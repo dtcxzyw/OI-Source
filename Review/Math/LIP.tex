@@ -41,3 +41,55 @@ F_i(x)=\left\{\begin{array}{ll}
 \subsection{求解自然数幂和}\label{psum}
 易知$F_k(n)=\displaystyle \sum_{i=0}^n{i^k}$是一个$k+1$次多项式。
 预处理出$F_k$在$1,\cdots,k+2$上的值，插值出多项式。
+
+在预处理时直接处理出多项式而不是点值表示，插值的复杂度要$O(n)$而不是$O(n^2)$。
+
+代码模板：
+\begin{lstlisting}
+struct Poly {
+    Int64 fac[maxk];
+    int end;
+    void init(int k) {
+        int val[maxk];
+        end = k + 1;
+        for(int i = 0; i <= end; ++i) {
+            val[i] = 1;
+            for(int j = 0; j < k; ++j)
+                val[i] = asInt64(val[i]) * i % mod;
+        }
+        for(int i = 1; i <= end; ++i)
+            val[i] = (val[i - 1] + val[i]) % mod;
+        Int64 kt[maxk];
+        for(int i = 0; i <= end; ++i)
+            fac[i] = 0;
+        for(int i = 0; i <= end; ++i) {
+            kt[0] = val[i];
+            for(int j = 1; j <= end; ++j)
+                kt[j] = 0;
+            for(int j = 0; j <= end; ++j)
+                if(i != j) {
+                    for(int k = end; k >= 1; --k)
+                        kt[k] =
+                            (kt[k - 1] - j * kt[k]) %
+                            mod;
+                    kt[0] = -j * kt[0] % mod;
+                    Int64 div = powm(i - j, mod - 2);
+                    for(int k = 0; k <= end; ++k)
+                        kt[k] = kt[k] * div % mod;
+                }
+            for(int j = 0; j <= end; ++j)
+                fac[j] = (fac[j] + kt[j]) % mod;
+        }
+    }
+    Int64 operator()(Int64 x) const {
+        x%=mod;//!!!
+        Int64 res = 0;
+        for(int i = end; i >= 0; --i)
+            res = (res * x + fac[i]) % mod;
+        return res;
+    }
+}
+\end{lstlisting}
+
+{\bfseries 血泪史：写Project~Euler~639时，由于插值处没有对$x$预先取模，导致在保持系数在$(-mod,mod)$
+与$[0,mod)$的答案不一致，且它们的答案都是错误的，我因此调试了一天。}

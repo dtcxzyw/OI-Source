@@ -4,18 +4,34 @@
         {
             "label": "g++",
             "command": "g++",
-            "args": [
-                "-g",
-                "-O0",
-                "${file}",
-                "-o",
-                "bin/${fileBasenameNoExtension}.out",
-                "-Wall",
-                "-std=c++98",
-                "-D_FORTIFY_SOURCE=2",
-                "-fstack-protector-all",
-                "-fsanitize=address"
-            ],
+            "windows": {
+                "args": [
+                    "-g",
+                    "-O0",
+                    "${file}",
+                    "-o",
+                    "bin/${fileBasenameNoExtension}.out",
+                    "-Wall",
+                    "-std=c++98",
+                    "-D_FORTIFY_SOURCE=2",
+                    "-fstack-protector-all",
+                    "-Wl,-stack=1073741824"
+                ]
+            },
+            "linux": {
+                "args": [
+                    "-g",
+                    "-O0",
+                    "${file}",
+                    "-o",
+                    "bin/${fileBasenameNoExtension}.out",
+                    "-Wall",
+                    "-std=c++98",
+                    "-D_FORTIFY_SOURCE=2",
+                    "-fstack-protector-all",
+                    "-fsanitize=address"
+                ]
+            },
             "problemMatcher": {
                 "owner": "cpp",
                 "fileLocation": [
@@ -36,12 +52,13 @@
             "label": "g++11",
             "command": "g++",
             "args": [
-                "-O2",
+                "-O3",
                 "${file}",
                 "-o",
                 "bin/${fileBasenameNoExtension}.out",
                 "-Wall",
                 "-std=c++11",
+                "-Wl,-stack=1073741824"
             ],
             "problemMatcher": {
                 "owner": "cpp",
