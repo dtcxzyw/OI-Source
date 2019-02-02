@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(gdb) Launch C++11",
+            "name": "Launch DEBUG",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/${fileBasenameNoExtension}.out",
@@ -18,7 +18,7 @@
             "windows": {
                 "miDebuggerPath": "C:\\cygwin64\\bin\\gdb.exe"
             },
-            "preLaunchTask": "g++11",
+            "preLaunchTask": "DEBUG",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",
@@ -28,7 +28,7 @@
             ]
         },
         {
-            "name": "(gdb) Launch",
+            "name": "Launch RELEASE",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/${fileBasenameNoExtension}.out",
@@ -41,7 +41,7 @@
             "windows": {
                 "miDebuggerPath": "C:\\cygwin64\\bin\\gdb.exe"
             },
-            "preLaunchTask": "g++",
+            "preLaunchTask": "RELEASE",
             "setupCommands": [
                 {
                     "description": "Enable pretty-printing for gdb",

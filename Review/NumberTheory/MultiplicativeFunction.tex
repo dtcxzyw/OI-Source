@@ -110,6 +110,9 @@ void pre(int n) {
 接下来证明该优化的正确性：当$i\bmod p_j=0$时，有$i=kp_j$，
 若要用$p_{j+x}$筛去后面的合数$ip_{j+x}=kp_jp_{j+x}$，可知该合数未来将被合数$kp_{j+x}$与素数
 $p_j$筛去，直接跳出不会影响结果，且保证合数被最小质因子筛除，便于质因数分解。
+
+如果仅仅要筛$10^8$以内的素数，$O(n\lg\lg n)$的埃氏筛法更为Cache-Friendly，比线性筛
+更为高效。
 \subsection{积性函数筛}
 \subsubsection{欧拉函数}
 \begin{itemize}

@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "tasks": [
         {
-            "label": "g++",
+            "label": "DEBUG",
             "command": "g++",
             "windows": {
                 "args": [
@@ -12,7 +12,7 @@
                     "-o",
                     "bin/${fileBasenameNoExtension}.out",
                     "-Wall",
-                    "-std=c++98",
+                    "-std=c++11",
                     "-D_FORTIFY_SOURCE=2",
                     "-fstack-protector-all",
                     "-Wl,-stack=1073741824"
@@ -26,7 +26,7 @@
                     "-o",
                     "bin/${fileBasenameNoExtension}.out",
                     "-Wall",
-                    "-std=c++98",
+                    "-std=c++11",
                     "-D_FORTIFY_SOURCE=2",
                     "-fstack-protector-all",
                     "-fsanitize=address"
@@ -49,7 +49,7 @@
             }
         },
         {
-            "label": "g++11",
+            "label": "RELEASE",
             "command": "g++",
             "args": [
                 "-O3",
@@ -57,8 +57,7 @@
                 "-o",
                 "bin/${fileBasenameNoExtension}.out",
                 "-Wall",
-                "-std=c++11",
-                "-Wl,-stack=1073741824"
+                "-std=c++11"
             ],
             "problemMatcher": {
                 "owner": "cpp",

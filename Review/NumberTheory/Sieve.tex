@@ -195,7 +195,7 @@ $\displaystyle Ans=\sum_{a\in S}{h(a)\sum_{b=1}^{\lfloor \frac{n}{a} \rfloor}{g(
 易求$g(x)$的前缀和，问题在于如何快速推得$h(a)$的值。
 
 由于$h(x)$是积性函数且$a$是Powerful~Number，在DFS时仅需计算$h(p^e),e>1$的值。
-使用$f(p^e)$展开式，快速求得$f(p^e)$与$g(p^e)$，再根据历史信息$h(p^e'),e<e'$，
+使用$f(p^e)$展开式，快速求得$f(p^e)$与$g(p^e)$，再根据历史信息$h(p^{e'}),e'<e$，
 可以快速得到$h(p^e)$。如果$g(x)$是完全积性函数，可以对$f(p^e)$展开式平移得到$f(p^(e+1))$的展开式。
 由于$e$很小，$h(p^e)$的求值不是瓶颈。不过预处理可以节省DFS时的重复计算。
 
@@ -206,11 +206,12 @@ DFS递归时会遇到大量的0次项，这些不必要的递归会导致实际�
 \lstinputlisting{Source/Source/'Number Theory'/PE484.cpp}
 
 {\bfseries 记得要计算$a=1$时的贡献！！！}
- 
+
 上述内容参考了fjzzq2002的博客\footnote{
 利用powerful~number求积性函数前缀和
     \url{https://www.cnblogs.com/zzqsblog/p/9904271.html}
 }。
 
-Min_25使用Powerful Number得到新的做法，参见Sum~of~Multiplicative~Function~on~Powerful~Numbers
+Min\_25使用Powerful~Number得到新的做法，参见
+Sum~of~Multiplicative~Function~on~Powerful~Numbers
 （\url{https://min-25.hatenablog.com/entry/2018/11/11/172228}）。

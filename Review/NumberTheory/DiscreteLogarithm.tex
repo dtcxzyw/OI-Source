@@ -1,0 +1,110 @@
+\section{离散对数问题}
+\index{D!Discrete Logarithm}
+离散对数问题解决的是形如$a^x\equiv b\pmod{p}$的问题。
+\subsection{BSGS}\label{BSGS}
+\index{B!Baby Step Giant Step}
+\subsubsection{BSGS}
+普通BSGS仅考虑$P$为素数的情况。
+
+以下为求解最小非负整数解的方法：
+
+首先根据定理~\ref{ET}可知$x$的最小非负整数解小于$\varphi(P)=P-1$。将x表示为
+$\sqrt{P}$进制数，分别用$O(\sqrt{P})$的复杂度枚举值，一半存入HashTable，另一半
+查询是否有匹配值。注意参数的枚举顺序。
+
+\begin{enumerate}
+    \item 若$a$为$P$的倍数，则特判$b$是否为$0$，算法结束；
+    \item 令$m=\lceil\sqrt{P}\rceil,x=im-j$，移项得$a^{im}\equiv ba^j\pmod{P}$；
+    \item 枚举$ba^j$的值，按$j$从小到大{\bfseries 覆盖}存入HashTable；
+    \item 枚举$(a^m)^i$的值，按$i$从小到大在HashTable中查询，存在则返回$im-j$；
+    \item 返回无解。
+\end{enumerate}
+
+\subsubsection{ExBSGS}
+ExBSGS可解决$a,P$不互质的问题。主要思路是将原方程化为普通BSGS可解决的方程。
+
+记化简后方程为$Aa^{x-B}\equiv b\pmod{P}$，化简步骤如下：
+\begin{enumerate}
+    \item 将$A,B$初始化为$1,0$；
+    \item 令$d=(a,P)$,
+    \begin{itemize}
+        \item 若$d\mid b$，则提出一个因子$d$，即$A*=a/d,b/=d,P/=d,++B$；
+        \item 若$d\nmid b$，则特判$b$是否为$A$，$b=A$则$x=B$，$b\neq A$则无解；
+    \end{itemize}
+    \item 重复第2步直至$d=1$。
+\end{enumerate}
+令$x=im-j+B$转化为普通BSGS，{\bfseries 注意在BSGS前要暴力检查$x\in[0,B)$是否可行}。
+
+代码如下：
+\lstinputlisting{Source/Templates/exBSGS.cpp}
+
+以上内容参考了ZigZagK的博客\footnote{BSGS及扩展BSGS\\
+\url{https://blog.csdn.net/zzkksunboy/article/details/73162229}}。
+\subsection{单有原根模数多询问离散对数问题}
+对于这类问题，每次都计算一次HashTable十分浪费。
+考虑求出原根$g$，令$a=g^A,b=g^B$，原式转化为$Ax\equiv B\pmod{\varphi(n)}$，
+使用exgcd快速解决。由于求$a,b$的对数时的底数固定为$g$，可以预处理$g$的幂，也可以
+预处理$g$的BSGS哈希表（哈希表的大小不必开根号，可以根据模数与询问规模决定）。
+
+若模数$p$非常大，参见LOJ6542\url{https://loj.ac/problem/6542}，留坑待补。
+
+\index{*TODO!单模数多询问离散对数}
+\subsection{Pollard rho算法}
+\index{P!Pollard's rho Algorithm for Logarithms}
+
+该算法的主要思路在于找到两组指数$(y_1,y_2),(z_1,z_2)$，使得
+$a^{y_1}b^{y_2}\equiv a^{z_1}b^{z_2}$。然后将其转化为求解模线性方程组
+$(z_2-y_2)x\equiv y_1-z_1\pmod{N}$，这里的$N$是循环群的阶。exgcd轻松解决，
+不过需要注意的是要检查每个周期的解的合法性（最小非负整数解不一定是可行解）。
+
+若模数有原根且不知道循环群的阶，可以求出$n$的原根$g$，那么阶$N=\varphi(n)$。
+
+找指数的过程类似于因子分解的PollardRho算法，即使用随机函数来生成两组指数，
+同时使用Folyd判圈法终止算法。
+
+具体做法是将当前乘积$v$的集合划分到3个集合，不同集合的行为不同，分别为$a$的指数+1，$b$
+的指数+1，$a,b$的指数翻倍。
+
+该算法的期望复杂度是$O(\sqrt{n})$，代码量小，但是慢于BSGS。不过$O(1)$的空间使得它
+在求解$n$较大的情况时较BSGS有绝对优势。
+
+代码如下：
+\lstinputlisting{Source/Templates/PollardRhoDL.cpp}
+
+上述内容参考了Wikipedia-EN\footnote{
+    Pollard's rho algorithm for logarithms
+    \url{https://en.wikipedia.org/wiki/Pollard's\_rho\_algorithm\_for\_logarithms}
+}。
+\subsection{Pohlig–Hellman算法}
+\index{P!Pohlig–Hellman Algorithm}
+该算法的思路基于群论，需要知道循环群的阶。如果模数有原根，仍然可以使用上面的做法。
+记循环群的阶$n=\displaystyle \prod{p_i^{e^i}}$，该算法可以将复杂度降到
+$O(\displaystyle \sum{e_i(\lg n+\sqrt{p_i})})$，空间复杂度$O(\sqrt{p_{max}})$。
+
+\subsubsection{阶为素数幂的情况}
+
+记素数幂为$p^e$，算法步骤如下：
+
+\begin{enumerate}
+    \item 初始化$x_0=0$。
+    \item 计算$G=g^{p^{e-1}}$，根据定理~\ref{LT}，生成元$G$对应的循环群的阶为$p$。
+    \item 对于$k=0,1,\cdots,e-1$，计算$b_k=(g^{-x_k}b)^{p^{e-1-k}}$，BSGS求解
+    $G^{d_k}\equiv b_k\pmod{p}$，最后累加$x_{k+1}=x_k+p^kd_k$。
+    \item 返回$x_e$。
+\end{enumerate}
+
+算法正确性留坑待补。
+\index{*TODO!Pohlig-Hellman算法正确性证明}
+
+\subsubsection{一般情况}
+首先将阶$n$因式分解，求出模数的原根$g$。然后逐个计算$g_i=g^{n/p_i^{e_i}}$，构造出
+阶为$p^e$形式的群，对应地$b_i=b^{n/p_i^{e_i}}$，使用上述方法求出
+$g^{x_i}\equiv b_i\pmod{p_i^{e^i}}$的解，最后使用CRT合并答案。
+
+代码如下（针对单模数多询问重新平衡，以空间换时间）：
+\lstinputlisting{Source/Templates/PohligHellman.cpp}
+
+上述内容参考了Wikipedia-EN\footnote{
+    Pohlig–Hellman algorithm
+    \url{https://en.wikipedia.org/wiki/Pohlig-Hellman\_algorithm}
+}。

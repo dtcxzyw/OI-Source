@@ -242,12 +242,19 @@
 - [ ] Bron–Kerbosch算法
 - [ ] GarsiaWachs算法
 - [ ] 猫树[By immortalCO](http://immortalco.blog.uoj.ac/blog/2102)
+- [ ] 共轭梯度法
+- [x] Baillie–PSW素性测试
+- [x] pollardrho离散对数
+- [ ] Pohlig–Hellman algorithm
+- [ ] TS剩余
+- [x] 利用powerful number求积性函数前缀和[By fjzzq2002](https://www.cnblogs.com/zzqsblog/p/9904271.html)
+- [ ] 模拟费用流
+- [ ] 笛卡尔树 O(n)-O(1) RMQ
+- [ ] 特征多项式求法[By ftiasch](https://loj.ac/article/401)
 # Research
 - [ ] 三维凸包与Delaunay剖分的关系[By 刘汝佳](https://wenku.baidu.com/view/e2e2d86f58fafab069dc02f8.html)
-- [ ] 利用powerful number求积性函数前缀和[By fjzzq2002](https://www.cnblogs.com/zzqsblog/p/9904271.html)
 - [ ] 近似算法
 - [ ] ECC+ECM
-- [ ] 笛卡尔树 O(n)-O(1) RMQ
 - [ ] ID3
 - [ ] 卡SPFA
 - [ ] 超大斐波那契数取模[By ACdreamer](https://blog.csdn.net/ACdreamers/article/details/25616461)
@@ -279,6 +286,7 @@
 - [ ] 排序网络
 - [ ] 超现实数 方展鹏-《浅谈如何解决不平等博弈问题》
 - [ ] Schreier-Sims 算法
+- [ ] 万能欧几里得
 # Other
 - [ ] 使用Vim
 - [ ] 学习十指打字(目标：250cpm)

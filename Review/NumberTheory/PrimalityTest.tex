@@ -1,0 +1,175 @@
+\section{素性测试}
+\subsection{Miller Rabin随机性素性测试}
+\index{M!Miller–Rabin Primality Test}
+\subsubsection{朴素算法}
+根据~\ref{FLTS}中所述的费马定理，若要测试$p$是否为素数，
+选取基数$a\in [2,p)$，检查$a^{p-1}\equiv 1 \pmod{p}$是否对
+所有的$a$均成立。
+\subsubsection{Miller-Rabin}
+考虑每次随机选取多个$a$，当有$k$个$a$满足时，出错的概率最多为$2^{-k}$。证明详见
+算法导论\cite{ITA3}第31.8节定理31.39。
+Miller-Rabin沿用了朴素算法的思路，并且使用$witness$测试来代替朴素检查算法以尽可能避免把
+{\bfseries Carmichael}数当做素数。
+
+$witness(x,base)$返回$true$当$base$可以证明$x$是合数。
+\begin{lstlisting}[title=witness]
+bool witness(int x, int base) {
+    int end = x - 1;
+    int c = countTZ(end);
+    int t = powm(base, end >> c, x);
+    while(c--) {
+        int ct = mulm(t, t, x);
+        if(t != 1 && t != x - 1 && ct == 1)
+            return true;//case 1
+        t = ct;
+    }
+    return t != 1;//case 2
+}
+\end{lstlisting}
+接下来证明正确性：
+\begin{itemize}
+	\item 如果从case~1处返回$true$，则说明找到了模$x$意义
+            下$1$的一个非平凡平方根。
+
+          \begin{theorem}\label{WITNESST}
+              如果p是一个奇素数且$e\geq 1$，则方程
+
+              \begin{equation}\label{sqrm}
+                   x^2 \equiv 1 \pmod{p^e}
+              \end{equation}
+              只有两个解$x=\pm 1$。
+	      \end{theorem}
+
+          证明：方程~\ref{sqrm}等价于$p^e|(x-1)(x+1)$。因为$p>2$,所以
+          $p|(x-1)$与$p|(x+1)$仅有一个成立（否则$p|((x+1)-(x-1))=2$），
+          两个解为$x=\pm 1$。
+
+	      \begin{inference}
+		      如果模$n$意义下存在$1$的非平凡平方根，则$n$为合数。
+	      \end{inference}
+
+	      证明：定理~\ref{WITNESST}的逆否命题也成立，所以$n$不可能为奇素数的幂，且对于
+	      $n=1,2$均不存在非平凡平方根，因此$n$必为合数。
+
+	      根据该推论可得case~1有证据证明$x$为合数。
+	\item 如果从case~2处返回$true$，则说明$x$不满足费马定理。
+\end{itemize}
+以上内容参考了算法导论\cite{ITA3}第31.8节。
+\subsubsection{实现细节}
+\begin{itemize}
+    \item 在MillerRabin之前可先用前几个素数筛掉大部分的合数。
+    \item 如果数据范围在4759123141内，即在$uint32\_t$范围内，
+    只用2,7,61为基数判断。
+    \item 如果数据范围在$10^{16}$内，使用2,3,7,61,24251作为基数，
+    唯一的强伪素数为46856248255981。
+\end{itemize}
+
+以上内容参考了Matrix67的博客\footnote{
+	数论部分第一节：素数与素性测试 | Matrix67: The Aha Moments
+	\url{http://www.matrix67.com/blog/archives/234}}。
+\subsection{Baillie–PSW素性测试}
+\index{L!Baillie–PSW Primality Test}
+这个方法在WC2019朱震霆的讲课课件《\sout{简单}数论算法》中被提及。它在$2^64$次方内的
+结果完全正确，适用于一般情况。\sout{现在仍然没有发现确定的合数能够通过这个测试，不过这样
+的数确实是存在的。}试验表明它比MillerRabin的效率更低，代码更长。
+
+该算法结合了基于2的强Fermat测试（即Miller-Rabin的子过程witness）与强Lucas测试。
+虽然这两个测试的伪素数十分多，但是这两个伪素数集合的交的大小（集合大小仍然是正无穷，
+这里的大小可以理解为分布密度）要小得多。\sout{unsigned long long内靠谱就行。}
+
+\subsubsection{强Lucas测试}
+\index{S!Strong Lucas Probable Prime Test}
+\paragraph{雅可比符号}
+\index{J!Jacobi Symbol}
+雅可比符号是勒让德符号(\ref{Legendre})的推广。它不再要求$p$是奇素数，而仅要求$p$是
+大于1的奇数。为了防止误解$p$，这里的$p$使用$n$代替。
+
+雅可比符号具有以下性质：
+\begin{eqnarray}
+    a\equiv b\pmod{n}&\Rightarrow& \Jacobi{a}{n}=\Jacobi{b}{n}\label{JSR1}\\
+    \Jacobi{a}{n}&=&\left\{
+    \begin{array}{lr}
+        0&(a,n)\neq 1\\
+        \pm 1&(a,n)=1
+    \end{array}
+    \right.\label{JSR2}\\
+    \Jacobi{a}{bc}&=&\Jacobi{a}{b}\Jacobi{a}{c}\label{JSR3}\\
+\end{eqnarray}
+
+此外，二次互反律，完全积性函数，以及$a=2$时的勒让德符号的性质对于雅可比符号仍然成立。
+
+根据性质~\ref{JSR3}可以得出若$\displaystyle n=\prod{p_i^{e_i}}$，
+则$\displaystyle \Jacobi{a}{n}=\prod{\Legendre{a}{p_i}^{e_i}}$。
+
+雅可比符号的计算可在$O(\lg a\lg n)$的时间内解决，记过程为$jacobi(a,b)$：
+
+\begin{enumerate}
+    \item 根据性质~\ref{JSR1}可以等价调用$jacobi(a\%b,b)$。
+    \item 根据完全积性函数与$a=2$时的性质把$a$的因子2消去。
+    \item 若$b=1$，根据完全积性函数的性质，返回1。
+    \item 若$(a,b)\neq 1$，根据性质~\ref{JSR2}，返回0。
+    \item 否则$(a,b)=1$，使用二次互反律调用子过程$jacobi(b,a)$。
+\end{enumerate}
+
+这个过程与欧几里得算法很像。
+
+\paragraph{Lucas序列生成}
+\index{L!Lucas Sequence}
+Lucas序列有参数$P,Q,D$，可由数列$(U,V)$组合而成，在此只单独研究这两个数列。
+
+它们满足以下递推关系：
+
+\begin{eqnarray*}
+    U_0&=&0\\
+    V_0&=&2\\
+    U_{2k}&=&U_kV_k\\
+    V_{2k}&=&V_k^2-2Q^k\\
+    U_{2k+1}&=&(PU_{2k}+V_{2k})/2\\
+    V_{2k+1}&=&(DU_{2k}+PV_{2k})/2
+\end{eqnarray*}
+
+除法操作中如果分子为奇数则再加上模数？？？
+
+由递推关系可以从高位到低位构造出$(U_n,V_n)$。
+
+\paragraph{判定}
+若$U_{n-\Jacobi{D}{n}}\not \equiv 0\pmod{n}$，则$n$必为合数。
+对于$\Jacobi{D}{n}=-1$，该条件改为$U_{n+1}\not \equiv 0\pmod{n}$。
+
+此外可以检查$V_{n+1}\not \equiv 2Q \pmod{n}$，满足任意一个条件即可判定它为合数，
+这个几乎不增加计算代价的操作提高了判定合数的概率。
+\subsubsection{实现}
+
+算法步骤如下：
+\begin{enumerate}
+    \item 预筛：使用小素数试除可以筛去绝大多数合数（然而素数判定板子题生成的合数
+    基本上是大质数之积）。
+    \item 执行基于2的强Fermat测试。也可以使用其它的基，不过2已经经过了大量测试。
+    \item 从数列A157142\footnote{参见\url{http://oeis.org/A157142}}
+    （$1,-3,5,-7,9,-11,13,-15\cdots$）的第三项开始，找到第一个整数$D$满足
+    $\Jacobi{D}{n}=-1$。选择这个数列的原因是易于生成且平均测试次数约为
+    3.147755149。注意如果$n$是一个完全平方数，那么找不到满足条件的$D$，可以使用
+    二分法或牛顿法快速开平方根预先判断。
+    \item 以参数$D,P=1,Q=(1-D)/4$执行强Lucas测试。
+\end{enumerate}
+
+模板代码如下：
+\lstinputlisting{Source/Templates/BailliePSW.cpp}
+
+正确性证明留坑待补。
+\index{*TODO!Baillie-PSW素性测试正确性证明}
+
+上述内容参考了Wikipedia-EN\footnote{
+    Jacobi Symbol
+    \url{https://en.wikipedia.org/wiki/Jacobi\_symbol}
+
+    Baillie–PSW primality test
+    \url{https://en.wikipedia.org/wiki/Baillie-PSW\_primality\_test}
+
+    Lucas pseudoprime
+    \url{https://en.wikipedia.org/wiki/Lucas\_pseudoprime}
+
+    Lucas sequence
+    \url{https://en.wikipedia.org/wiki/Lucas\_sequence}
+}。英文论文参见Lucas Pseudoprimes\cite{BPSW}
+（\url{http://mpqs.free.fr/LucasPseudoprimes.pdf}）
