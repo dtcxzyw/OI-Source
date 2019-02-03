@@ -77,7 +77,8 @@ $(z_2-y_2)x\equiv y_1-z_1\pmod{N}$，这里的$N$是循环群的阶。exgcd轻�
 }。
 \subsection{Pohlig–Hellman算法}
 \index{P!Pohlig–Hellman Algorithm}
-该算法的思路基于群论，需要知道循环群的阶。如果模数有原根，仍然可以使用上面的做法。
+该算法的思路基于群论，需要知道循环群的阶。如果循环群的阶是一个smooth number，即可以
+分解为小素数幂之积，就能够将其分解为小规模的子问题。如果模数有原根，就可以沿用上面的做法。
 记循环群的阶$n=\displaystyle \prod{p_i^{e^i}}$，该算法可以将复杂度降到
 $O(\displaystyle \sum{e_i(\lg n+\sqrt{p_i})})$，空间复杂度$O(\sqrt{p_{max}})$。
 
@@ -89,7 +90,8 @@ $O(\displaystyle \sum{e_i(\lg n+\sqrt{p_i})})$，空间复杂度$O(\sqrt{p_{max}
     \item 初始化$x_0=0$。
     \item 计算$G=g^{p^{e-1}}$，根据定理~\ref{LT}，生成元$G$对应的循环群的阶为$p$。
     \item 对于$k=0,1,\cdots,e-1$，计算$b_k=(g^{-x_k}b)^{p^{e-1-k}}$，BSGS求解
-    $G^{d_k}\equiv b_k\pmod{p}$，最后累加$x_{k+1}=x_k+p^kd_k$。
+    $G^{d_k}\equiv b_k\pmod{n}$（注意模数是$n$，阶为$p$，时空复杂度$O(\sqrt{p}$）
+    ，最后累加$x_{k+1}=x_k+p^kd_k$。
     \item 返回$x_e$。
 \end{enumerate}
 

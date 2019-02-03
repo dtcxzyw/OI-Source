@@ -91,7 +91,7 @@ Int64 lookUp(Int64 x, Int64 g, Int64 p,
 }
 void BSGS(int t, Int64 p) {
     Int64 g = calcG(p), phi = p - 1;
-    Int64 bsiz = sqrt(t * p) + 1;
+    Int64 bsiz = sqrt(p / t) + 1;
     Int64 maxb = p / bsiz + 1;
     HashTable map;
     {

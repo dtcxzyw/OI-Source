@@ -140,3 +140,29 @@ $S$的第$k$大$max_k(S)$满足如下等式：
 	min-max容斥/最值反演及其推广
 	\url{http://www.cnblogs.com/Mr-Spade/p/9636968.html}
 }。
+\subsection{单位根反演}
+单位根反演用来解决已知生成函数$F(x)=\displaystyle \sum_{i=0}^n{f(i)x^i}$，
+求$\displaystyle \sum_{i=0}^n{f(i)[k|(i+b)]}$，$k,b$为定值。
+
+考虑$b$为0的情况，有下列定理：
+\begin{theorem}
+	\begin{displaymath}
+		[k|i]=\frac{1}{k}\sum_{j=0}^{k-1}{\omega_k^{ij}}
+	\end{displaymath}
+\end{theorem}
+
+证明：若$[k\nmid i]$，则根据求和引理~\ref{FFTL4}，该式的值为0。
+否则$\omega_k^{ij}$恒为1，该式的值为1。
+
+该定理在模意义下仍然成立。\sout{一般来说模意义下的给定$k$都是2的幂，因为给定的模数的欧拉
+函数值要求2的指数很大。}
+
+接下来考虑将要求值的式子展开，有$\displaystyle \sum_{i=0}^n{f(i)\cdot \frac{1}{k}
+\sum_{j=0}^{k-1}{\omega_k^{ij}}}$，交换求值顺序化简为$\frac{1}{k}\displaystyle
+\sum_{i=0}^{k-1}{F(\omega_k^i)}$。需要用到单位根反演的场合肯定无法快速计算$F$的每一项
+系数，但是容易快速求出$F(x)$，目前遇到的题目基本上结合二项式展开快速求出$F(x)$的值。对于
+$b\neq 0$的情况，可以将$F(x)$乘以$x^{k-b}$平移。
+
+上述内容参考了czyhe的博客\footnote{
+	单位根反演
+\url{https://czyhe.me/algorithm/unit-root-inv/unit-root-inv/}}。

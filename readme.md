@@ -236,16 +236,15 @@
 - [ ] 杨氏矩阵
 - [ ] 一个用SAM维护多个串的根号特技[By Mangoyang](https://www.cnblogs.com/mangoyang/p/10155185.html)
 - [ ] IDDFS SPFA判负环[By 姜碧野](https://wenku.baidu.com/view/f22d0d36ee06eff9aef807e9.html)
-- [ ] 单位根反演 [By czy](https://czyhe.me/algorithm/unit-root-inv/unit-root-inv/)
+- [x] 单位根反演 [By czy](https://czyhe.me/algorithm/unit-root-inv/unit-root-inv/)
 - [ ] 线段树合并[By 黄嘉泰](https://wenku.baidu.com/view/88f4e134e518964bcf847c95.html)
 - [ ] 线性代数高级算法
 - [ ] Bron–Kerbosch算法
 - [ ] GarsiaWachs算法
-- [ ] 猫树[By immortalCO](http://immortalco.blog.uoj.ac/blog/2102)
-- [ ] 共轭梯度法
+- [x] 猫树[By immortalCO](http://immortalco.blog.uoj.ac/blog/2102)
 - [x] Baillie–PSW素性测试
 - [x] pollardrho离散对数
-- [ ] Pohlig–Hellman algorithm
+- [x] Pohlig–Hellman algorithm
 - [ ] TS剩余
 - [x] 利用powerful number求积性函数前缀和[By fjzzq2002](https://www.cnblogs.com/zzqsblog/p/9904271.html)
 - [ ] 模拟费用流

@@ -110,6 +110,7 @@ void mulOptimizedUnfold() {
     }
 
 int main() {
+    puts("Generating matrix...");
     std::random_device rd;
     std::uniform_int_distribution<int> gen(0, mod - 1);
     for(int i = 0; i < N; ++i)
@@ -120,6 +121,7 @@ int main() {
             B[i][j] = gen(rd);
     mulStandard();
     memcpy(D, C, sizeof(C));
+    puts("Done.");
     test(mulStandard);
     test(mulOptimizedMod);
     test(mulOptimizedCache);

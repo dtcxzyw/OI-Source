@@ -36,11 +36,11 @@ Int64 powm(Int64 a, Int64 k, Int64 mod) {
     return res;
 }
 struct Prime {
-    Int64 p, pc, bsiz, maxb, k, g;
+    Int64 p, pc, bsiz, maxb, k, g, G;
     int c;
     HashTable map;
     Prime(Int64 p, int c, Int64 pc)
-        : p(p), c(c), pc(pc) {}
+        : p(p), pc(pc), c(c) {}
 };
 auto fac(Int64 p) {
     std::vector<Prime> pfac;
@@ -104,26 +104,29 @@ Int64 lookUp(Int64 x, Int64 g, Int64 p,
     }
     return -1;
 }
-Int64 log(const Prime& fac, Int64 b) {
+Int64 log(const Prime& fac, Int64 phi, Int64 mod,
+          Int64 b) {
     Int64 xk = 0, cpc = 1;
     for(int i = 0; i < fac.c; ++i, cpc *= fac.p) {
-        Int64 k = -xk % (fac.p - 1);
+        Int64 k = -xk % phi;
         if(k < 0)
-            k += fac.p - 1;
-        Int64 cb = powm(powm(fac.g, k, fac.p),
-                        fac.c - 1 - i, fac.p);
-        xk += cpc * lookUp(cb, fac.g, fac.p, fac.map,
-                           fac.bsiz);
+            k += phi;
+        Int64 cb =
+            powm(mulm(powm(fac.g, k, mod), b, mod),
+                 powm(fac.p, fac.c - 1 - i, phi), mod);
+        xk += cpc *
+            lookUp(cb, fac.G, mod, fac.map, fac.bsiz);
     }
     return xk;
 }
 Int64 log(const std::vector<Prime>& fac, Int64 phi,
-          Int64 b) {
+          Int64 mod, Int64 b) {
     Int64 res = 0;
     for(auto& p : fac) {
-        res = (res +
-               mulm(log(p, powm(b, phi / p.pc, p.p)),
-                    p.k, phi)) %
+        res =
+            (res + mulm(log(p, phi, mod,
+                            powm(b, phi / p.pc, mod)),
+                        p.k, phi)) %
             phi;
     }
     return res;
@@ -134,25 +137,27 @@ void PohligHellman(int t, Int64 p) {
     Int64 g = calcG(p, pf);
     for(size_t i = 0; i < pf.size(); ++i) {
         Prime& cp = pf[i];
-        cp.bsiz = sqrt(t * cp.p) + 1;
+        cp.bsiz = sqrt(cp.p / t) + 1;
         cp.maxb = cp.p / cp.bsiz + 1;
-        cp.g = powm(powm(g, phi / cp.pc, cp.p),
-                    cp.pc / cp.p, cp.p);
-        Int64 base = powm(cp.g, cp.bsiz, cp.p);
+        cp.g = powm(g, phi / cp.pc, p),
+        cp.G = powm(cp.g, cp.pc / cp.p, p);
+        Int64 base = powm(cp.G, cp.bsiz, p);
         for(Int64 cur = base, i = 1; i <= cp.maxb;
-            ++i, cur = mulm(cur, base, cp.p)) {
+            ++i, cur = mulm(cur, base, p)) {
             if(!cp.map.count(cur))
                 cp.map[cur] = i;
         }
-        cp.k =
-            powm(phi / cp.pc,
-                 cp.pc / cp.p * (cp.p - 1) - 1, cp.pc);
+        cp.k = mulm(phi / cp.pc,
+                    powm(phi / cp.pc,
+                         cp.pc / cp.p * (cp.p - 1) - 1,
+                         cp.pc),
+                    phi);
     }
     for(int i = 0; i < t; ++i) {
         Int64 a, b;
         scanf("%lld%lld", &a, &b);
-        Int64 lga = log(pf, phi, a),
-              lgb = log(pf, phi, b);
+        Int64 lga = log(pf, phi, p, a),
+              lgb = log(pf, phi, p, b);
         printf("%lld\n", solve(lga, lgb, phi));
     }
 }

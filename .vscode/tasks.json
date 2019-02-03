@@ -52,7 +52,7 @@
             "label": "RELEASE",
             "command": "g++",
             "args": [
-                "-O3",
+                "-O2",
                 "${file}",
                 "-o",
                 "bin/${fileBasenameNoExtension}.out",

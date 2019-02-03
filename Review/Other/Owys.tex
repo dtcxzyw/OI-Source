@@ -138,6 +138,13 @@ int getHighest(int x) {
 \subsubsection{大小写转换}
 由于ASCII码中大小写字母的比特位之间的特殊关系，异或一个空格(0b100000)可以切换大小写。
 
+\subsubsection{整数log2}
+一种写法是取最高位1+取末尾0的数量。不过这种写法比较麻烦。
+$O(n)$预处理+查表虽然好写但又太浪费。考虑最大位数为$b$，满足
+$2^b>n$，可以预处理$c=\lceil \frac{b}{2}\rceil$的表，查询时先
+比较判断其位数是否小于$2^c$，若小于则直接查表，否则查$>>c$的值，再加回$c$。
+$O(\sqrt{n})-O(1)$的复杂度绝对不会成为性能瓶颈。
+
 以上算法基本参考了Sean Eron Anderson的文章\footnote{
     Bit Twiddling Hacks
     \url{http://graphics.stanford.edu/\~seander/bithacks.html}
