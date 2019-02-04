@@ -78,6 +78,8 @@ IDA*比A*多了一个迭代加深的操作，即每次DFS/BFS搜索时限制搜�
 	\gamma_n&=&(x_n-x_{n-1})^T\cdot \hat{D}\\
 \end{eqnarray*}
 
+$\hat{D}$表示$D$对应的单位向量。
+
 例如求$f(x)=x^4-3x^3+2$的在$x_0=6$附近的最小值所对应的$x$：
 
 \lstinputlisting{Optmize/GD.cpp}
@@ -90,3 +92,48 @@ IDA*比A*多了一个迭代加深的操作，即每次DFS/BFS搜索时限制搜�
 在解决最优化问题时，保存新解{\bfseries 当且仅当该解比存储的最优解更优且
 该解即将被比自己更差的解作为当前解}，在迭代退出再执行一遍该逻辑。此法延迟了解集保存时间，
 可以减少冗余拷贝。Lazy Evaluation大法好！！！
+\subsection{拉格朗日乘子法}
+\index{L!Lagrange Multiplier}
+拉格朗日乘子法用于求解{\bfseries 多元函数条件极值问题}。
+给定两个一阶连续可导函数$f(X),g(X)$，$X$为变量组，在满足$g(X)=0$的条件下最优化$f(X)$。
+也存在$g(X)=c$的形式，常数一般不隐藏在$g(X)$中。
+
+拉格朗日乘子法引入了一个新的变量$\lambda$，称作拉格朗日乘子。然后构造一个新的
+函数$\mathcal{L}(X,\lambda)=f(X)-\lambda g(X)$，称作拉格朗日函数。
+
+我们在$g(X)=0$的区域上移动，如果在某处$f(X)$局部不改变的话，这个地方很有可能取得极值，
+且极值点只可能在这些点取到。考虑``等势区域''$g(X)=0$与$f(X)=d$，$f(X)$的值不改变意味着
+它也在等势区域上移动。那么有这两个等势区域在该处平行，意味着这个$X$在$f(X)$与$g(X)$上的
+梯度平行，记为$\nabla_X f=\lambda \nabla_X g$。再加上约束$g(X)=0$，结合先前引入的
+拉格朗日函数，有$\nabla_{X,\lambda} \mathcal{L}=0$。
+
+在实际计算中，首先根据$\nabla_X \mathcal{L}=0$用$\lambda$表达出$X$，然后代入$g(X)=0$
+求出可行的$\lambda$。这时解的搜索范围被极大地缩小，直接比较每个$\lambda$对应的$f(X)$，
+得到所需极值。多个$g(X)=0$的处理方法类似。
+
+\paragraph{例题} 「NOI2012」骑行川藏
+
+很容易将其转化为多元函数条件极值问题：
+\begin{itemize}
+	\item 满足约束$\displaystyle g(V)=\sum{k_i(v_i-v_i')^2s_i}=E_U$
+	\item 最小化$\displaystyle f(V)=\sum{\frac{s_i}{v_i}}$
+\end{itemize}
+
+求偏导得$\nabla_{v_i} \mathcal{L}=-s_iv_i^{-2}-2\lambda s_ik_i(v_i-v_i')$，
+令其为0，化简得$2\lambda k_i(v_i-v_i')v_i^2+1=0$。注意到$\lambda$为负数，
+$\lambda$越大，每个$v_i$越大，耗费的能量$g(V)$越大。
+
+那么可以二分$\lambda$，根据式子使用牛顿迭代法求出$v_i$，回代求出$g(V)$，与$E_U$比较。
+
+一个比较trick的方法是以上一次迭代的解为初始解，当$\delta<\varepsilon$时退出迭代，
+得到不错的性能提升。\sout{对着数据调参数}
+
+参考代码：
+\lstinputlisting{Source/Source/Optmize/LOJ2671.cpp}
+
+\subsubsection{KKT条件}
+\index{K!Karush–Kuhn–Tucker\\ Conditions}
+KKT条件是拉格朗日乘子法的扩展，用于求解不等式约束下的最优化问题。
+
+看上去不太好求解，留坑待补。
+\index{*TODO!KKT条件}

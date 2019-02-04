@@ -110,3 +110,11 @@ $g^{x_i}\equiv b_i\pmod{p_i^{e^i}}$的解，最后使用CRT合并答案。
     Pohlig–Hellman algorithm
     \url{https://en.wikipedia.org/wiki/Pohlig-Hellman\_algorithm}
 }。
+\subsection{对1求离散对数}
+沿用判断原根的思路，可行解$x$一定是$\varphi(n)$的某个因子，最坏复杂度
+$O(\sqrt{n}\lg n)$，一般情况下比BSGS更加简洁高效。
+
+该方法源自Dance Of Faith的博客\footnote{
+    【科技】原根的快速判断方法以及对1求离散对数的另一种想法
+    \url{https://www.cnblogs.com/Dance-Of-Faith/p/9905786.html}
+}。

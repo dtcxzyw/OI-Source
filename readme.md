@@ -168,7 +168,7 @@
 -----
 # Advance
 - [x] 带花树
-- [ ] 线段树分治
+- [x] 线段树分治
 - [x] HLPP
 - [x] min_25筛
 - [ ] Berlekamp-Massey[By fjzzq2002](https://www.cnblogs.com/zzqsblog/p/6877339.html)
@@ -178,19 +178,18 @@
 - [ ] 最小树型图
 - [x] 单纯形算法
 - [x] Johnson
-- [ ] 通用筛法
 - [ ] 平面性算法
 - [ ] 点定位
 - [x] 二次剩余、三次剩余、高次剩余
-- [ ] 拉格朗日乘数法
+- [x] 拉格朗日乘数法
 - [ ] 常系数齐次线性递推
-- [ ] 拉格朗日反演
+- [x] 拉格朗日反演
 - [x] 快速莫比乌斯变换
 - [ ] 支配树
+- [ ] zkw线段树
 - [ ] Segment tree beats
 - [x] Lindström–Gessel–Viennot lemma
 - [ ] 边分治
-- [ ] 链分治
 - [x] 最小割树
 - [x] 势能分析线段树
 - [x] 弦图、最大势算法
@@ -220,13 +219,13 @@
 - [ ] b-Matching[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Matching2.html#2)
 - [ ] Stable Matching[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Matching2.html#3)
 - [ ] Chinese Postman Problem[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Circuit.html#4)
-- [ ] 启发式分裂[By zsy](https://blog.csdn.net/DSL_HN_2002/article/details/81193576)
+- [x] 启发式分裂[By zsy](https://blog.csdn.net/DSL_HN_2002/article/details/81193576)
 - [x] minmax容斥
 - [ ] 有标号的DAG计数[By yyb](https://www.cnblogs.com/cjyyb/p/10134575.html)
 - [ ] CZT[By myy 再探快速傅里叶变换](http://www.doc88.com/p-4912876232995.html)
 - [ ] 优化形式幂级数计算的牛顿法的常数[By negiizhao](http://negiizhao.blog.uoj.ac/blog/4671)
 - [ ] 回滚莫队
-- [ ] 原根对1求离散对数[By Dance Of Faith](https://www.cnblogs.com/Dance-Of-Faith/p/9905786.html)
+- [x] 原根对1求离散对数[By Dance Of Faith](https://www.cnblogs.com/Dance-Of-Faith/p/9905786.html)
 - [ ] 集合选数最值一类问题[By tkandi](https://www.cnblogs.com/tkandi/p/9375509.html)
 - [ ] 区间加多项式问题[By riteme](https://riteme.github.io/blog/2018-1-28/interval-polynomial.html)
 - [ ] 扩展Dijkstra IOI2011 crocodile BZOJ 2622 [2012国家集训队测试]深入虎穴
@@ -250,6 +249,7 @@
 - [ ] 模拟费用流
 - [ ] 笛卡尔树 O(n)-O(1) RMQ
 - [ ] 特征多项式求法[By ftiasch](https://loj.ac/article/401)
+- [ ] 生成函数与图的计数
 # Research
 - [ ] 三维凸包与Delaunay剖分的关系[By 刘汝佳](https://wenku.baidu.com/view/e2e2d86f58fafab069dc02f8.html)
 - [ ] 近似算法

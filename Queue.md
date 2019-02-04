@@ -82,6 +82,9 @@
 - [ ] P3784
 - [ ] P3711
 - [ ] P4389
+- [ ] BZOJ3684: 大朋友和多叉树
+- [ ] BZOJ3456
+- [ ] LOJ#6363. 「地底蔷薇」
 # 后缀数组/后缀自动机/序列自动机
 - [x] LOJ#111. 后缀排序
 - [ ] LOJ#544. 「LibreOJ β Round #7」Array Poisonous Suffix Problem
@@ -92,13 +95,13 @@
 - [ ] LOJ#2525. 「HAOI2018」字串覆盖
 - [ ] LOJ#6031. 「雅礼集训 2017 Day1」字符串
 - [ ] LOJ#6041. 「雅礼集训 2017 Day7」事情的相似度
-- [ ] LOJ#6198. 谢特
 - [ ] [Ahoi2013]差异
 - [ ] LOJ#2720. 「NOI2018」你的名字
 - [x] LOJ#2172. 「FJOI2016」所有公共子序列问题
 - [ ] Codeforces 596E Wilbur and Strings
 - [ ] P3649
 - [ ] P3757
+- [ ] LOJ#6198. 谢特（SAMParent数+Trie合并）
 # AC自动机
 - [x] LOJ#2180. 「BJOI2017」魔法咒语
 # KMP
@@ -130,6 +133,9 @@
 - [x] LOJ#2230. 「BJOI2014」大融合
 - [ ] bzoj2959: 长跑
 - [ ] bzoj3153: Sone1
+- [ ] SP2939 QTREE5
+- [ ] SP16549 QTREE6
+- [ ] SP16580 QTREE7
 # 平衡树
 - [x] LOJ#516. 「LibreOJ β Round #2」DP 一般看规律
 # 容斥/反演/筛法
@@ -153,6 +159,7 @@
 - [x] LOJ#6485. LJJ 学二项式定理
 - [x] BZOJ3328: PYXFIB
 - [ ] LOJ#6229. 这是一道简单的数学题
+- [ ] SPOJ DIVCNT3
 # 扩展欧几里得
 - [ ] LOJ#6440
 - [ ] CF868G
@@ -216,6 +223,13 @@
 - [x] LOJ6053
 - [x] PE639
 - [ ] LOJ#6542. 离散对数
-# 猫树
+# 线段树相关
 - [x] LOJ#2013. 「SCOI2016」幸运数字
 - [x] LOJ#6057. 「HNOI2016」序列 数据加强版
+- [x] P4585 [FJOI2015]火星商店问题
+- [x] LOJ#2116. 「HNOI2015」开店
+# 分治
+- [x] UVA1608 Non-boring sequences
+- [x] P4755 Beautiful Pair
+- [x] LOJ#6198. 谢特（height数组+启发式分治+可持久化Trie）
+- [ ] [NWERC2017]Factor-Free Tree

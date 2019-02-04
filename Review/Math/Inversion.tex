@@ -151,7 +151,7 @@ $S$的第$k$大$max_k(S)$满足如下等式：
 	\end{displaymath}
 \end{theorem}
 
-证明：若$[k\nmid i]$，则根据求和引理~\ref{FFTL4}，该式的值为0。
+证明：与IDFT的证明类似，若$[k\nmid i]$，则根据求和引理~\ref{FFTL4}，该式的值为0。
 否则$\omega_k^{ij}$恒为1，该式的值为1。
 
 该定理在模意义下仍然成立。\sout{一般来说模意义下的给定$k$都是2的幂，因为给定的模数的欧拉
@@ -166,3 +166,26 @@ $b\neq 0$的情况，可以将$F(x)$乘以$x^{k-b}$平移。
 上述内容参考了czyhe的博客\footnote{
 	单位根反演
 \url{https://czyhe.me/algorithm/unit-root-inv/unit-root-inv/}}。
+\subsection{拉格朗日反演}
+\index{L!Lagrange inversion Theorem}
+如果要求某个函数的反函数的某一项，可以使用拉格朗日反演：
+\begin{theorem}
+	若多项式$F(x),G(x)$都没有常数项且一次项系数互为逆元，满足$F(G(x))=x$，
+	则\begin{displaymath}
+		[x_n]F(x)=\frac{1}{n}[x^{n-1}](\frac{x}{F(x)})^n
+	\end{displaymath}
+\end{theorem}
+\subsubsection{扩展拉格朗日反演}
+\begin{theorem}
+	\begin{displaymath}
+		[x_n]H(F(x))=\frac{1}{n}[x^{n-1}]H'(x)(\frac{x}{F(x)})^n
+	\end{displaymath}
+\end{theorem}
+证明留坑待补。
+
+这两个定理一般用在生成函数解决图的计数问题中。
+
+上述内容参考了ZJT的博客\footnote{
+	拉格朗日反演
+	\url{http://zjt-blog.cc/articles/63}
+}。
