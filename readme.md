@@ -224,19 +224,17 @@
 - [ ] 有标号的DAG计数[By yyb](https://www.cnblogs.com/cjyyb/p/10134575.html)
 - [ ] CZT[By myy 再探快速傅里叶变换](http://www.doc88.com/p-4912876232995.html)
 - [ ] 优化形式幂级数计算的牛顿法的常数[By negiizhao](http://negiizhao.blog.uoj.ac/blog/4671)
-- [ ] 回滚莫队
+- [x] 回滚莫队
 - [x] 原根对1求离散对数[By Dance Of Faith](https://www.cnblogs.com/Dance-Of-Faith/p/9905786.html)
-- [ ] 集合选数最值一类问题[By tkandi](https://www.cnblogs.com/tkandi/p/9375509.html)
-- [ ] 区间加多项式问题[By riteme](https://riteme.github.io/blog/2018-1-28/interval-polynomial.html)
+- [x] 集合选数最值一类问题[By tkandi](https://www.cnblogs.com/tkandi/p/9375509.html)
 - [ ] 扩展Dijkstra IOI2011 crocodile BZOJ 2622 [2012国家集训队测试]深入虎穴
 - [x] 子序列自动机
 - [ ] 行列式的几何意义
 - [ ] Dilworth定理
 - [ ] 杨氏矩阵
-- [ ] 一个用SAM维护多个串的根号特技[By Mangoyang](https://www.cnblogs.com/mangoyang/p/10155185.html)
-- [ ] IDDFS SPFA判负环[By 姜碧野](https://wenku.baidu.com/view/f22d0d36ee06eff9aef807e9.html)
+- [x] 一个用SAM维护多个串的根号特技[By Mangoyang](https://www.cnblogs.com/mangoyang/p/10155185.html)
+- [x] IDDFS SPFA判负环[By 姜碧野](https://wenku.baidu.com/view/f22d0d36ee06eff9aef807e9.html)
 - [x] 单位根反演 [By czy](https://czyhe.me/algorithm/unit-root-inv/unit-root-inv/)
-- [ ] 线段树合并[By 黄嘉泰](https://wenku.baidu.com/view/88f4e134e518964bcf847c95.html)
 - [ ] 线性代数高级算法
 - [ ] Bron–Kerbosch算法
 - [ ] GarsiaWachs算法
@@ -252,6 +250,7 @@
 - [ ] 生成函数与图的计数
 # Research
 - [ ] 三维凸包与Delaunay剖分的关系[By 刘汝佳](https://wenku.baidu.com/view/e2e2d86f58fafab069dc02f8.html)
+- [ ] 区间加多项式问题[By riteme](https://riteme.github.io/blog/2018-1-28/interval-polynomial.html)
 - [ ] 近似算法
 - [ ] ECC+ECM
 - [ ] ID3

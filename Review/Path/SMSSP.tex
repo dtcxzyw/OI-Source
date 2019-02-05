@@ -23,6 +23,8 @@ SPFA优化的思路基本上是使队列尽可能接近优先队列。
 
 更多优化与Hack参见\url{https://www.zhihu.com/question/292283275}。
 \index{*TODO!卡SPFA}
+\subsection{算法优化}
+若用节点编号表示状态来求最短路，要具体分析题目，阻止无效状态入队。
 \subsection{Dijkstra}
 使用二叉堆的最坏时间复杂度$O((V+E)\lg V)$，在稀疏图中表现良好。
 稠密图可以使用$O(V^2)$暴力。

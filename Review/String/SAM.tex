@@ -99,7 +99,7 @@ Parent树是反串的后缀树。
 
 状态$s$表示了$s.len-s.link.len$个本质不同的子串，每种子串有$s.right$个。
 
-优化：拓扑排序时可以按照len进行分层基数排序。
+优化：拓扑排序时可以按照len进行分层基数排序，但是广义SAM不能使用这种方法。
 \subsubsection{可持久化线段树合并维护Right集合}
 有时需要判定某个终点是否在某个状态的Right集合内，可以在extend时给新建状态添加
 对应的Right值（不需要太严格，子串右节点也行），然后拓扑排序进行线段树合并计算出
@@ -136,12 +136,21 @@ Parent树是反串的后缀树。
     时间复杂度为O(Trie大小*字符集大小)。
 \end{itemize}
 
+\subsubsection{统计状态对应的模板串数}
+为每个节点记录最后匹配的模板串编号，每次extend后从$last$开始沿着parent树暴力上跳，
+将这些节点的$count$值加一，直到遇到被同模板串标记过节点的为止。最坏时间复杂度
+$O(S\sqrt{2S})$，一般情况下不会达到最坏情况，有时跑得比$\lg$做法还快。在想不出
+更优做法时是这一个简单有效的方法。
+
 以上内容参考了WC2012陈立杰的讲课课件《后缀自动机 Suffix Automaton》
 与Candy?\footnote{[后缀自动机]【学习笔记】
     \url{https://www.cnblogs.com/candy99/p/6374177.html}
-}和dwjshift\footnote{
+}、dwjshift\footnote{
     用SAM建广义后缀树 $\ll$ dwjshift's Blog
     \url{http://dwjshift.logdown.com/posts/304570}
+}、Mangoyang\footnote{
+    一个用SAM维护多个串的根号特技
+    \url{https://www.cnblogs.com/mangoyang/p/10155185.html}
 }的博客。Menci的博客写得更详细，一些性质的证明请移步
 \url{https://oi.men.ci/suffix-automaton-notes/}。
 

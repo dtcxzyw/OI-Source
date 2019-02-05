@@ -101,9 +101,12 @@
 - [ ] Codeforces 596E Wilbur and Strings
 - [ ] P3649
 - [ ] P3757
-- [ ] LOJ#6198. 谢特（SAMParent数+Trie合并）
+- [ ] LOJ#6198. 谢特（SAMParent树+Trie合并）
+- [ ] BZOJ3277: 串
+- [x] BZOJ2780: [Spoj]8093 Sevenk Love Oimaster
 # AC自动机
 - [x] LOJ#2180. 「BJOI2017」魔法咒语
+- [ ] BZOJ2780: [Spoj]8093 Sevenk Love Oimaster
 # KMP
 - [ ] LOJ#2272. 「SDOI2017」文本校正
 # 线性基
