@@ -61,3 +61,20 @@
 	Lindström–Gessel–Viennot lemma - Wikipedia
 	\url{https://en.wikipedia.org/wiki/Lindstr\%C3\%B6m\%E2\%80\%93Gessel\%E2\%80\%93Viennot\_lemma}
 }。
+\subsection{三元环计数}
+给定一个$n$个点$m$条边，无重边无自环的无向图，求无序三元组$(i,j,k)$的个数，其中且两两有边。
+
+算法步骤如下：
+\begin{itemize}
+	\item 对无向图的边进行重定向，度数小的点连向度数大的点，若度数相同则编号小的点连向
+	编号大的点。
+	\item 枚举点$u$，将$u$的邻接点标为已访问，再枚举$u$的邻接点$v$，枚举$v$的邻接点$w$，
+	若$w$被$u$访问，则$(u,v,w)$是一个合法三元组。
+\end{itemize}
+
+该算法可以保证不重不漏地计数。若$n,m$同阶，时间复杂度$O(m\sqrt{m})$。
+
+正确性与时间复杂度参见KingSann的博客\footnote{
+	不常用的黑科技——「三元环」
+	\url{https://www.cnblogs.com/KingSann/p/9590525.html}
+}。

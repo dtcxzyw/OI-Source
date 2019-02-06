@@ -182,7 +182,7 @@
 - [ ] 点定位
 - [x] 二次剩余、三次剩余、高次剩余
 - [x] 拉格朗日乘数法
-- [ ] 常系数齐次线性递推
+- [x] 常系数齐次线性递推
 - [x] 拉格朗日反演
 - [x] 快速莫比乌斯变换
 - [ ] 支配树
@@ -202,7 +202,7 @@
 - [x] Stoer-Wagner算法
 - [x] LCT维护子树信息和边权信息
 - [x] 共价大爷游长沙技巧
-- [ ] FFT字符串通配[By yyb](https://www.cnblogs.com/cjyyb/p/10132855.html)
+- [x] FFT字符串通配[By yyb](https://www.cnblogs.com/cjyyb/p/10132855.html)
 - [ ] fractional cascading
 - [x] boruvka算法-CF888G
 - [x] 动态DP
@@ -213,8 +213,7 @@
 - [ ] 最小方差生成树
 - [ ] 牛顿级数差分
 - [ ] 拟牛顿法
-- [ ] 格林公式[By Trinkle](http://trinkle.blog.uoj.ac/blog/1519)
-- [ ] 三元环[By tan90°](https://www.luogu.org/blog/KingSann/fou-chang-yong-di-hei-ke-ji-san-yuan-huan-post)
+- [x] 三元环[By tan90°](https://www.luogu.org/blog/KingSann/fou-chang-yong-di-hei-ke-ji-san-yuan-huan-post)
 - [ ] 闭包[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Closure.html)
 - [ ] b-Matching[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Matching2.html#2)
 - [ ] Stable Matching[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Matching2.html#3)
@@ -227,7 +226,6 @@
 - [x] 回滚莫队
 - [x] 原根对1求离散对数[By Dance Of Faith](https://www.cnblogs.com/Dance-Of-Faith/p/9905786.html)
 - [x] 集合选数最值一类问题[By tkandi](https://www.cnblogs.com/tkandi/p/9375509.html)
-- [ ] 扩展Dijkstra IOI2011 crocodile BZOJ 2622 [2012国家集训队测试]深入虎穴
 - [x] 子序列自动机
 - [ ] 行列式的几何意义
 - [ ] Dilworth定理
@@ -235,7 +233,6 @@
 - [x] 一个用SAM维护多个串的根号特技[By Mangoyang](https://www.cnblogs.com/mangoyang/p/10155185.html)
 - [x] IDDFS SPFA判负环[By 姜碧野](https://wenku.baidu.com/view/f22d0d36ee06eff9aef807e9.html)
 - [x] 单位根反演 [By czy](https://czyhe.me/algorithm/unit-root-inv/unit-root-inv/)
-- [ ] 线性代数高级算法
 - [ ] Bron–Kerbosch算法
 - [ ] GarsiaWachs算法
 - [x] 猫树[By immortalCO](http://immortalco.blog.uoj.ac/blog/2102)
@@ -248,6 +245,13 @@
 - [ ] 笛卡尔树 O(n)-O(1) RMQ
 - [ ] 特征多项式求法[By ftiasch](https://loj.ac/article/401)
 - [ ] 生成函数与图的计数
+- [ ] 生成函数与背包问题
+- [ ] 马尔可夫链
+- [ ] 对角化
+- [ ] QR分解
+- [ ] SVD分解
+- [ ] 正交投影
+- [ ] 秩分解
 # Research
 - [ ] 三维凸包与Delaunay剖分的关系[By 刘汝佳](https://wenku.baidu.com/view/e2e2d86f58fafab069dc02f8.html)
 - [ ] 区间加多项式问题[By riteme](https://riteme.github.io/blog/2018-1-28/interval-polynomial.html)

@@ -85,6 +85,12 @@
 - [ ] BZOJ3684: 大朋友和多叉树
 - [ ] BZOJ3456
 - [ ] LOJ#6363. 「地底蔷薇」
+- [ ] P4705
+- [ ] P4389
+- [ ] BZOJ3456
+- [x] BZOJ3160: 万径人踪灭
+- [x] BZOJ4503
+- [x] BZOJ4259
 # 后缀数组/后缀自动机/序列自动机
 - [x] LOJ#111. 后缀排序
 - [ ] LOJ#544. 「LibreOJ β Round #7」Array Poisonous Suffix Problem
@@ -206,6 +212,7 @@
 - [ ] P3920
 - [ ] P2664
 - [ ] BZOJ4568
+- [ ] BZOJ3730: 震波
 # 虚树
 - [x] LOJ#2206. 「HNOI2014」世界树
 - [x] LOJ#2219. 「HEOI2014」大工程

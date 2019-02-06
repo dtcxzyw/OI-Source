@@ -1,0 +1,48 @@
+\section{常系数齐次线性递推}
+\index{L!Linear Difference Equation}
+给定系数$a_0,a_2,\cdots,a_k$，有一个信号${f_n}$，满足$k$阶齐次线性差分方程
+$\displaystyle \sum_{i=0}^k{a_if_{n-i}}=0$对所有$n$成立。现在给定信号
+${f_n}$中的连续$k$项，求信号的任意一项。
+
+一般$a_0$取1，其余系数取反，那么有$\displaystyle f_n=\sum_{i=1}^k{a_if_{n-i}}$，
+假设给定了$f_0,f_1,\cdots,f_{k-1}$的值，现在要求出$f_n$的值。
+
+如果$k$足够小，那么很容易构造转移矩阵，记向量$F_i$表示$(f_{i+k-1},f_{i+k-2},\cdots,f_i)$，
+很容易构造$k*k$的转移矩阵$A$，其中$i$向$i+1$转移系数为1，$i$向$1$转移系数为$a_i$。即
+$A[i+1][i]=1,A[1][i]=a_i$，那么有$F_n=A^nF_0$。使用矩阵快速幂可得到
+$O(k^3\lg n)$的算法。
+
+注意原等式左右向量取第$k$项仍然成立，即$(F_n)_{[k]}=(A^nF_0)_{[k]}$。左边就是$f_n$，
+右边就是以$A^n$的第$k$行为系数的$f_{0,\cdots,k-1}$的线性组合。记这些系数为
+$c_{0,\cdots,k-1}$，同样将$f_{0,\cdots,k-1}$表示为$A^nF_0$的形式，有
+$A^n=\displaystyle \sum_{i=0}^{k-1}{c_iA^i}$，记右式为矩阵$A$的多项式表达$R(M)$。
+设存在矩阵多项式$F(M),G(M)$，满足$G(M)$的次数为$k$，$F(M)G(M)$的次数为$n$，
+且$M^n=F(M)G(M)+R(M)$。根据Cayley-Hamilton定理，若$G(M)$为矩阵$A$的特征多项式，
+其次数恰好为$k$且$G(A)=0$。由于$G(M)$的次数为$k$，$R(M)\equiv M^n\pmod{G(M)}$，
+多项式取模可求出$R(M)$。并且由于$G(A)=0$，此时有$A^n=R(A)$。拿到$R(M)$后就可以直接$O(k)$
+求值。
+
+接下来讨论如何构造出矩阵$A$的特征多项式$G(M)$。根据定义有
+$G(\lambda)=\textrm{det}(\lambda I_k-A)$，多项式高斯消元求行列式十分麻烦。
+注意到矩阵$\lambda I_k-A$的特殊性，将第一行每一项的代数余子式求和，去除第一行第$i$
+列后都会得到一个下三角矩阵，行列式值为对角线上元素之积，同时代数余子式的$(-1)^{i+1}$项
+与子矩阵的$-1$项恰好抵消。综上所述，$G(\lambda)=\lambda^k-a_1\lambda^{k-1}-\cdots-a_k$。
+
+因此该方法的性能瓶颈在多项式取模上，时间复杂度$O(k\lg k\lg n)$。引入$\lg n$的原因是
+我们无法直接构造一个多项式$x^n$然后以$n$的规模做取模，由于该多项式较为简单，可以使用类似
+模意义快速幂的方法做模$R(M)$意义下的多项式快速幂。
+
+好写的优化技巧：
+\begin{itemize}
+    \item 预处理出$G(x)$与$G_{rev}^{-1}(x)$的点值表达。
+    \item 需要取模时才实例化取模。
+\end{itemize}
+
+参考代码：
+\lstinputlisting{Source/Templates/LR.cpp}
+
+上述内容参考了《线性代数及其应用》\cite{LAIA5}4.8节以及shadowice1984的博客
+\footnote{
+    题解 P4723 【【模板】线性递推】
+    \url{https://www.luogu.org/blog/ShadowassIIXVIIIIV/solution-p4723}
+}。

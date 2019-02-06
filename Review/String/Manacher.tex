@@ -24,28 +24,36 @@ Manacher算法用来求解最长回文串问题。主要思想是利用之前的
     \item 答案即为$RL[i]-1$的最大值。
 \end{enumerate}
 
+\paragraph{小trick}
+\begin{itemize}
+    \item 在字符串开头再加另一个特殊字符，可以不用越界检查。
+    \item 令maxr为当前匹配最右边的位置的右边一位，避免+1-1的麻烦。
+\end{itemize}
+
+这两个trick源自小蒟蒻yyb的博客\footnote{
+    【BZOJ3160】万径人踪灭（FFT，Manacher）
+    \url{https://www.cnblogs.com/cjyyb/p/8435460.html}
+}。
+
 代码如下：
 \begin{lstlisting}
 char buf[size],str[2*size];
 int RL[2*size];
 int manacher() {
     int cnt=0;
-    for(int i=0;buf[i];++i) {
-        str[cnt++]='@';
-        str[cnt++]=buf[i];
-    }
+    str[cnt++]='#';
     str[cnt++]='@';
+    for(int i=0;buf[i];++i) {
+        str[cnt++]=buf[i];
+        str[cnt++]='@';
+    }
     int maxr=0,pos=0,ans=0;
-    for(int i=0;i<cnt;++i) {
-        if(i<maxr)
-            RL[i]=std::min(RL[2*pos-i],maxr-i+1);
-        else
-            RL[i]=1;
-        while(i-RL[i]>=0 && i+RL[i]<cnt &&
-            str[i-RL[i]]==str[i+RL[i]])
+    for(int i=1;i<cnt;++i) {
+        RL[i]=(maxr>i?std::min(RL[2*pos-i],maxr-i):1);
+        while(str[i-RL[i]]==str[i+RL[i]])
             ++RL[i];
-        if(i+RL[i]-1>maxr) {
-            maxr=i+RL[i]-1;
+        if(i+RL[i]>maxr) {
+            maxr=i+RL[i];
             pos=i;
         }
         ans=std::max(ans,RL[i]);
