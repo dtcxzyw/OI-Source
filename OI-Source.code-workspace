@@ -70,34 +70,57 @@
 			"cfloat": "cpp"
 		},
 		"latex-workshop.intellisense.citation.maxfilesizeMB": 128,
-		"latex-workshop.latex.outputDir": "./../latex/",
 		"latex-workshop.latex.recipes": [
 			{
 				"name": "preview",
 				"tools": [
-					"xelatex",
+					"xelatexP",
 					"count"
 				]
 			},
 			{
 				"name": "complete",
 				"tools": [
-					"xelatex",
+					"xelatexQNO",
 					"makeindex",
-					"xelatex",
+					"xelatexQ",
 					"count",
-					"xelatex"
+					"xelatexQ"
 				]
 			}
 		],
 		"latex-workshop.latex.tools": [
 			{
-				"name": "xelatex",
+				"name": "xelatexP",
 				"command": "xelatex",
 				"args": [
 					"-synctex=1",
 					"-interaction=nonstopmode",
+					"-halt-on-error",
 					"-file-line-error",
+					"-output-directory=../latex",
+					"Main.tex"
+				]
+			},
+			{
+				"name": "xelatexQNO",
+				"command": "xelatex",
+				"args": [
+					"-synctex=1",
+					"-interaction=batchmode",
+					"-halt-on-error",
+					"-no-pdf",
+					"-output-directory=../latex",
+					"Main.tex"
+				]
+			},
+			{
+				"name": "xelatexQ",
+				"command": "xelatex",
+				"args": [
+					"-synctex=1",
+					"-interaction=batchmode",
+					"-halt-on-error",
 					"-output-directory=../latex",
 					"Main.tex"
 				]

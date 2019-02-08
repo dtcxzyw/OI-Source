@@ -1,6 +1,6 @@
 \section{生成函数}\label{GF}
 \index{G!Generating Function}
-\sout{生成函数为形式幂级数，假装其收敛。}
+\CJKsout{生成函数为形式幂级数，假装其收敛。}
 \subsection{普通型生成函数}
 若数列$<f_0,f_1,\cdots>$，若形式幂级数
 \begin{displaymath}
@@ -55,7 +55,7 @@ EGF之积对应数列卷积乘以组合数，适合计算排列。
 \subsection{贝尔数}
 贝尔数$B_n$是大小为$n$的集合的划分方案数。
 
-贝尔数的前几项为：$1, 1, 2, 5, 15, 52, 203, 877,\cdots$（参见OEIS-A000110
+贝尔数的前几项为：$1, 1, 2, 5, 15, 52, 203, 877,\cdots$（参见OEIS-A000110\\
 \url{https://oeis.org/A000110}）
 
 $B_n$满足等式：
@@ -123,8 +123,11 @@ $O(k\lg k)$多项式求逆解决。
 \subsubsection{多重背包}
 每个物品的生成函数为$\displaystyle \sum_{k=0}^{c_i}{x^{kw_i}}$，化简为
 $\frac{1-x^{(c_i+1)w_i}}{1-x^{w_i}}$。由于乘积指数项的大小不可控，考虑将
-乘积变为取对数求和。设答案为$A(x)$，那么有
-$\displaystyle \ln A(x)=\sum_{i=1}^n{\ln(1-x^{(c_i+1)w_i})-\ln (1-x^{w_i})}$。
+乘积变为取对数求和。设答案为的生成函数为$A(x)$，那么有
+\begin{displaymath}
+\ln A(x)=\sum_{i=1}^n{\ln(1-x^{(c_i+1)w_i})-\ln (1-x^{w_i})}
+\end{displaymath}
+
 使用泰勒展开$\displaystyle \ln(1-x^k)=-\sum_{i=1}^\infty{\frac{x^{ki}}{i}}$得到
 $ln A(x)$后多项式exp即为答案。注意$\ln (1-x^k)$要合并同类项，否则一堆$1-x$可以轻易将其
 卡掉。合并同类项后根据调和级数可知构造多项式的复杂度为$O(n\lg n)$，$n$为背包容量。

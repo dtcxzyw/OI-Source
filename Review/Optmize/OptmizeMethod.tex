@@ -1,5 +1,5 @@
 \section{最优化方法}
-下列方法主要用于解决提答题中的最优化问题\sout{以及乱搞骗分}。
+下列方法主要用于解决提答题中的最优化问题\CJKsout{以及乱搞骗分}。
 \subsection{爬山法}
 \index{H!Hill Climbing}
 每次迭代时选取与$x$点临近的点$x'$计算，若其值更优，则接受$x'$（也可以选择临近最优点）
@@ -126,7 +126,7 @@ $\lambda$越大，每个$v_i$越大，耗费的能量$g(V)$越大。
 那么可以二分$\lambda$，根据式子使用牛顿迭代法求出$v_i$，回代求出$g(V)$，与$E_U$比较。
 
 一个比较trick的方法是以上一次迭代的解为初始解，当$\delta<\varepsilon$时退出迭代，
-得到不错的性能提升。\sout{对着数据调参数}
+得到不错的性能提升。\CJKsout{对着数据调参数}
 
 参考代码：
 \lstinputlisting{Source/Source/Optmize/LOJ2671.cpp}

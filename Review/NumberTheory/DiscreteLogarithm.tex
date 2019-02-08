@@ -50,7 +50,7 @@ ExBSGS可解决$a,P$不互质的问题。主要思路是将原方程化为普通
 
 \index{*TODO!单模数多询问离散对数}
 \subsection{Pollard rho算法}
-\index{P!Pollard's rho Algorithm for Logarithms}
+\index{P!Pollard's rho Algorithm\\ for Logarithms}
 
 该算法的主要思路在于找到两组指数$(y_1,y_2),(z_1,z_2)$，使得
 $a^{y_1}b^{y_2}\equiv a^{z_1}b^{z_2}$。然后将其转化为求解模线性方程组
@@ -107,7 +107,7 @@ $g^{x_i}\equiv b_i\pmod{p_i^{e^i}}$的解，最后使用CRT合并答案。
 \lstinputlisting{Source/Templates/PohligHellman.cpp}
 
 上述内容参考了Wikipedia-EN\footnote{
-    Pohlig–Hellman algorithm
+    Pohlig–Hellman algorithm\\
     \url{https://en.wikipedia.org/wiki/Pohlig-Hellman\_algorithm}
 }。
 \subsection{对1求离散对数}
@@ -115,6 +115,6 @@ $g^{x_i}\equiv b_i\pmod{p_i^{e^i}}$的解，最后使用CRT合并答案。
 $O(\sqrt{n}\lg n)$，一般情况下比BSGS更加简洁高效。
 
 该方法源自Dance Of Faith的博客\footnote{
-    【科技】原根的快速判断方法以及对1求离散对数的另一种想法
+    【科技】原根的快速判断方法以及对1求离散对数的另一种想法%\\
     \url{https://www.cnblogs.com/Dance-Of-Faith/p/9905786.html}
 }。

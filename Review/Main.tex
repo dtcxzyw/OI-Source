@@ -1,20 +1,37 @@
 \documentclass[10pt,AutoFakeBold,AutoFakeSlant,b5paper]{book}
-%\usepackage{titletoc}
-%\usepackage{titlesec}
-%\usepackage{ctexcap}
-\usepackage{xeCJK}
-\setCJKmainfont{SimSun}
+%Font&Lang
+\usepackage[SlantFont, BoldFont]{xeCJK}
+\usepackage{fontspec}
+\usepackage{xunicode,xltxtra}
+\defaultfontfeatures{Mapping=tex-text}
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
+\setCJKmainfont[BoldFont={Source Han Sans CN},ItalicFont={Source Han Sans CN}]
+{Source Han Serif CN}
+\setCJKmonofont{Source Han Sans CN}
+\setCJKsansfont{Source Han Sans CN}
 \usepackage[english]{babel}
 \usepackage[T1]{fontenc}
-\usepackage{listings}
-\usepackage{xcolor}
-\usepackage{ulem}
+%Page
+\usepackage[includehead,includefoot]{geometry}
+\geometry{left=2.0cm,right=2.0cm,top=1.0cm,bottom=1.0cm,heightrounded}
+\makeatletter
+\let\@afterindentfalse\@afterindenttrue
+\@afterindenttrue
+\makeatother
+\setlength{\parindent}{2em}
+\setcounter{secnumdepth}{3}
 \usepackage{minitoc}
 \setcounter{minitocdepth}{2}
 \setlength{\mtcindent}{24pt}
 \renewcommand{\mtcfont}{\small\rm}
 \renewcommand{\mtcSSfont}{\small\bf}
 \dominitoc[n]
+%Feature
+\usepackage{xcolor}
+\usepackage{CJKfntef}
+\newfontfamily\CodeFont{Droid Sans Mono}
+\usepackage{listings}
 \lstset{
     columns=fixed,
     frame=none,
@@ -34,7 +51,8 @@
     char,enum,new,static_cast,virtual,char16_t,char32_t,explict,noexcept,struct,
     void,export,nullptr,switch,volatile,class,extern,operator,template,wchar_t,
     const,false,private,this,while,constexpr,float,protected,thread_local,
-    const_cast,for,public,throw}
+    const_cast,for,public,throw},
+    basicstyle=\CodeFont
 }
 \usepackage{amssymb}
 \usepackage{amsmath}
@@ -46,6 +64,7 @@
 \usepackage{lastpage}
 \usepackage{array}
 \usepackage{shorttoc}
+
 \makeindex
 \pagestyle{headings}
 \begin{document}
@@ -55,13 +74,13 @@
 \frontmatter
 \maketitle
 \chapter{前言}
-本人写复习笔记的目的有\sout{两个}五个：
+本人写复习笔记的目的有\CJKsout{两个}五个：
 \begin{itemize}
 	\item 系统地复习知识点并挖掘一些有用的性质。
 	\item 学会使用\LaTeX{}。
 	\item 预先踩坑并记录，而不是在考场上首次掉坑，整场都在Debug。
 	\item 以此纪念我短暂的OI生涯，并为将来的ACM做准备。
-	\item \sout{给学弟留下一些有用的东西。}
+	\item \CJKsout{给学弟留下一些有用的东西。}
 \end{itemize}
 
 当前共\pageref{LastPage}页，\input{../latex/charcnt}字。

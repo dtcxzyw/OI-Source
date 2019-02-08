@@ -198,7 +198,7 @@ void FFT(int n, Complex *A, Complex *w) {
 每一块的长度，$fac$是单位复数根缩放系数，$j$是块编号，内层循环与递归FFT合并答案的方法
 相同，注意蝴蝶操作的求值顺序。
 
-以上内容参考了Miskcoo的博客\footnote{从多项式乘法到快速傅里叶变换 – Miskcoo's Space
+以上内容参考了Miskcoo的博客\footnote{从多项式乘法到快速傅里叶变换 – Miskcoo's Space\\
 \url{http://blog.miskcoo.com/2015/04/polynomial-multiplication-and-fast-fourier-transform}}。
 \subsection{实序列DFT}\label{RDFT}
 对于多项式乘法这类问题，常规方法需要对每个序列做1次DFT。但由于我们

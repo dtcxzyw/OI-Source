@@ -36,7 +36,7 @@ for(int i=2;i<=n;++i)
     inv[i]=asInt64(mod-mod/i)*inv[mod%i]%mod;
 \end{lstlisting}
 
-以上内容参考了Miskcoo的博客\footnote{[数论]线性求所有逆元的方法 – Miskcoo's Space
+以上内容参考了Miskcoo的博客\footnote{[数论]线性求所有逆元的方法 – Miskcoo's Space\\
 	\url{http://blog.miskcoo.com/2014/09/linear-find-all-invert}}
 
 \subsection{欧拉定理}
@@ -58,10 +58,11 @@ for(int i=2;i<=n;++i)
 	      根据定理~\ref{LT}，有$k|\varphi(n)$，令$M=\varphi(n)/k$，有
 	      $a^{\varphi(n)}=a^{kM}=(a^k)^M\equiv 1^M\equiv 1 \pmod{n}$。
 	\item 根据定义得对于$[x]_n\in S$和$S$中的所有元素$[a_1]_n,[a_2]_n,\cdots,
-		      [a_{\varphi(n)}]_n$，$[x]_n \cdot_n [a_i]_n$组成的集合仍然是$S$，因此有$x^{\varphi(n)}
-			      [a_1]_n[a_2]_n\cdots[a_{\varphi(n)}]_n= (x[a_1]_n)(x[a_2]_n)\cdots
-		      (x[a_{\varphi(n)}]_n)\equiv[a_1]_n[a_2]_n\cdots[a_{\varphi(n)}]_n\pmod{n}$，
-	      两边消去可得$x^{\varphi(n)}\equiv 1\pmod{n}$。
+		[a_{\varphi(n)}]_n$，$[x]_n \cdot_n [a_i]_n$\\组成的集合仍然是$S$，
+		因此有$x^{\varphi(n)}[a_1]_n[a_2]_n\cdots[a_{\varphi(n)}]_n=
+		(x[a_1]_n)(x[a_2]_n)\cdots\\(x[a_{\varphi(n)}]_n)\equiv[a_1]_n
+		[a_2]_n\cdots[a_{\varphi(n)}]_n\pmod{n}$，两边消去可得
+		$x^{\varphi(n)}\equiv 1\pmod{n}$。
 \end{itemize}
 
 上述证明源自Wikipedia-EN\footnote{Euler's theorem - Wikipedia

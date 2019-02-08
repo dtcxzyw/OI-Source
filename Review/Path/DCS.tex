@@ -29,7 +29,7 @@ $x_i-x_j=c_k$等价于$x_i-x_j\leq c_k,x_j-x_i\leq -c_k$。
 
 \begin{itemize}
     \item DFS-SPFA:松弛时递归下去，当存在环时说明存在负权环。
-    \sout{使用setjmp/\\longjmp较为方便。}
+    \CJKsout{使用setjmp/\\longjmp较为方便。}
     \item BFS-SPFA:当某节点{\bfseries 最短路点数}大于等于节点
     总数时，存在负权环。使用最短路点数而不是入队次数判断可以避免某些SPFA优化
     影响算法正确性。

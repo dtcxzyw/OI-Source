@@ -44,6 +44,7 @@ int cloneNode(int src) {
     return src;
 }
 \end{lstlisting}
+
 对于可持久化并查集，若使用路径压缩优化（实践中不太好用），则不好判断是否需要$clone$。
 可以在每个节点上记录其被创建时的时间戳，与当前版本时间戳比较。
 

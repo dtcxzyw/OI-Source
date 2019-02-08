@@ -75,6 +75,7 @@
 由于$deg(D^R)\leq n-m$，所以可以在模$z^{n-m+1}$的情况下求解$D^R(z)$，
 翻转后带入原方程求出$R(z)$。
 
+{\bfseries 一定要想清楚每个多项式的次数，以及在模$x$的几次方下计算。}
 \subsection{多项式求导与积分}
 根据$(x^n)'=nx^{n-1}$可得
 \begin{eqnarray*}
@@ -185,7 +186,7 @@ $A(z)=R(z)$。那么可以两边同时模$B(z)$，达到次数减半的效果。
         n!&=&\sum_{i=0}^{\sqrt{n}-1}{Q(i\sqrt{n})}
     \end{eqnarray*}
     卷积出$Q(x)$后在$i\sqrt{n}=0,\sqrt{n},\cdots,(\sqrt{n}-1)\sqrt{n}$上
-    多点求值，时间复杂度$O(\sqrt{n}\lg^2 n)$。
+    多点求值，时间复杂度\\$O(\sqrt{n}\lg^2 n)$。
     \item $n\geq p$：结合上述两种做法，易知第二种做法最多只执行一次。
 \end{itemize}
 

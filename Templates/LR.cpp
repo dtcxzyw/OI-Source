@@ -76,7 +76,6 @@ void IDFT(int n, Poly& A, int rn) {
     memset(A.data() + rn, 0, sizeof(int) * (n - rn));
 }
 int getSize(int n) {
-    n <<= 1;
     int p = 1;
     while(p < n)
         p <<= 1;
@@ -91,7 +90,7 @@ void inv(int n, const Poly& sf, Poly& g) {
     else {
         int h = (n + 1) >> 1;
         inv(h, sf, g);
-        int p = getSize(n);
+        int p = getSize(2 * n);
         DFT(p, g);
 
         Poly f(p);
@@ -111,13 +110,14 @@ int k, p;
 Poly invGR, G;
 void polyMod(Poly& A) {
     Poly B(p);
-    std::reverse_copy(A.begin(), A.begin() + 2 * k - 1,
+    std::reverse_copy(A.begin() + k,
+                      A.begin() + 2 * k - 1,
                       B.begin());
     DFT(p, B);
     for(int i = 0; i < p; ++i)
         B[i] = asInt64(B[i]) * invGR[i] % mod;
-    IDFT(p, B, k + 1);
-    std::reverse(B.begin(), B.begin() + k + 1);
+    IDFT(p, B, k - 1);
+    std::reverse(B.begin(), B.begin() + k - 1);
     DFT(p, B);
     for(int i = 0; i < p; ++i)
         B[i] = asInt64(B[i]) * G[i] % mod;
@@ -139,7 +139,7 @@ struct LazyPoly {
 int main() {
     int n = read();
     k = read();
-    p = getSize(k);
+    p = getSize(2 * k);
     init(p);
     G.resize(p);
     G[0] = 1;
@@ -163,11 +163,12 @@ int main() {
                 res.init();
                 mul.init();
                 DFT(p, res.poly);
-                DFT(p, mul.poly);
+                Poly tmp = mul.poly;
+                DFT(p, tmp);
                 for(int i = 0; i < p; ++i)
                     res.poly[i] =
-                        asInt64(res.poly[i]) *
-                        mul.poly[i] % mod;
+                        asInt64(res.poly[i]) * tmp[i] %
+                        mod;
                 IDFT(p, res.poly, 2 * k - 1);
                 polyMod(res.poly);
             }
