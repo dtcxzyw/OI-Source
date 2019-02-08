@@ -1,3 +1,51 @@
 \section{Berlekamp–Massey算法}
 \index{B!Berlekamp–Massey\\ Algorithm}
 BM算法用来求一个序列的最短线性递推式。
+
+BM算法维护当前的线性递推式，按顺序将元素加入序列，若不满足当前线性递推式则
+根据历史信息矫正线性递推式。
+
+具体算法如下（使用生成函数$A(x)$来表示递推式，下标从1开始，常数项表示当前项的系数，
+最后要被缩放到-1）：
+\begin{enumerate}
+    \item 维护当前递推式$A(x)$，上次失配时的递推式$B(x)$，以及上次失配时
+    $B(x)$的值与失配位置值的差值$ld$，当前位置与上次失配位置的偏移$off$。
+    \item 计算$A(x)$在当前位置的值：
+    \begin{itemize}
+        \item 若与序列的值相等，则迭代检查下一项。
+        \item 否则记当前差值为$cd$，矫正多项式为$A'(x)=A(x)-\frac{cd}{ld}x^{off}B(x)$。
+    \end{itemize}
+\end{enumerate}
+
+接下来证明算法正确性：
+
+\begin{itemize}
+    \item 当前位置满足递推式$A'(x)$：注意到$x^{off}$项将$B(x)$的取值移动到了上次
+    失配位置，差值为$ld$，而递推式$A(x)$的差值为$cd$，所以$A'(x)$的差值被消为0。
+    \item 先前位置满足递推式$A'(x)$：首先所有位置满足$A(x)$；因为
+    $[1,\textrm{上次失配位置})$的位置满足递推式$B(x)$，所以
+    $[off+1，off+\textrm{上次失配位置})$的位置满足递推式$x^{off}B(x)$；
+    而$[1,off]$的位置全部作为递推式$x^{off}B(x)$的递推基础，也满足递推式。
+\end{itemize}
+
+注意由于$ld$仅在失配时改变，必定存在乘法逆元（实现时仅存储其乘法逆元，然后从0阶递推式开始，
+初始$ld$任选一个非0值）。
+
+代码如下：
+\lstinputlisting{Source/Templates/BerlekampMassey.cpp}
+
+算法最坏时间复杂度$O(n^2)$，但该算法似乎只能保证给出可行解，是否能给出最短线性递推式
+有待考证。
+\index{*TODO!验证BM算法的最优性质}
+
+BM算法的应用还不太多，一般用来求DP值的线性递推式，然后搭配线性递推快速求出第$n$项的值。
+
+上述内容参考了Rayment\_cc的博客\footnote{
+    Berlekamp–Massey算法简要介绍\\
+    \url{https://blog.csdn.net/As\_A\_Kid/article/details/86286891}
+}。
+
+测试数据来自fjzzq2002的博客\footnote{
+    Berlekamp-Massey算法简单介绍\\
+    \url{https://www.cnblogs.com/zzqsblog/p/6877339.html}
+}。

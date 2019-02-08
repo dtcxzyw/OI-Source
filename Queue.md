@@ -22,6 +22,7 @@
 - [ ] WC2019
 - [ ] IOI2018
 - [ ] Project Euler（高三或大学时刷）
+- [ ] NEERC
 # Min_25 筛
 - [x] LOJ#6053. 简单的函数
 - [ ] UOJ#188. 【UR #13】Sanrd
@@ -91,6 +92,7 @@
 - [x] BZOJ3160: 万径人踪灭
 - [x] BZOJ4503
 - [x] BZOJ4259
+- [ ] UOJ#269.【清华集训2016】如何优雅地求和
 # 后缀数组/后缀自动机/序列自动机
 - [x] LOJ#111. 后缀排序
 - [ ] LOJ#544. 「LibreOJ β Round #7」Array Poisonous Suffix Problem
@@ -243,3 +245,7 @@
 - [x] P4755 Beautiful Pair
 - [x] LOJ#6198. 谢特（height数组+启发式分治+可持久化Trie）
 - [ ] [NWERC2017]Factor-Free Tree
+# BM 算法
+- [ ] LOJ#2981. 「THUSCH 2017」如果奇迹有颜色
+# 概率期望
+- [ ] LOJ#2267. 「SDOI2017」龙与地下城

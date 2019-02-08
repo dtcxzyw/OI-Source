@@ -121,7 +121,6 @@
 - [x] Manacher
 - [x] Huffman
 - [x] 表达式解析
-- [ ] LL(1) Parser
 ## 计算几何
 - [x] 基础设施-pick定理-切比雪夫距离
 - [x] 凸包（[在线凸包](http://dwjshift.logdown.com/posts/285072) /凸包加法/合并/稀疏包分布P614）
@@ -171,7 +170,7 @@
 - [x] 线段树分治
 - [x] HLPP
 - [x] min_25筛
-- [ ] Berlekamp-Massey[By fjzzq2002](https://www.cnblogs.com/zzqsblog/p/6877339.html)
+- [x] Berlekamp-Massey[By fjzzq2002](https://www.cnblogs.com/zzqsblog/p/6877339.html)
 - [x] ISAP
 - [x] IDA*
 - [x] DLX
@@ -212,7 +211,7 @@
 - [x] 类欧几里得算法
 - [ ] 最小方差生成树
 - [ ] 牛顿级数差分
-- [ ] 拟牛顿法
+- [ ] 拟牛顿法BFGS
 - [x] 三元环[By tan90°](https://www.luogu.org/blog/KingSann/fou-chang-yong-di-hei-ke-ji-san-yuan-huan-post)
 - [ ] 闭包[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Closure.html)
 - [ ] b-Matching[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Matching2.html#2)
@@ -228,13 +227,13 @@
 - [x] 集合选数最值一类问题[By tkandi](https://www.cnblogs.com/tkandi/p/9375509.html)
 - [x] 子序列自动机
 - [ ] 行列式的几何意义
-- [ ] Dilworth定理
-- [ ] 杨氏矩阵
+- [x] Dilworth定理
+- [x] 杨氏矩阵
 - [x] 一个用SAM维护多个串的根号特技[By Mangoyang](https://www.cnblogs.com/mangoyang/p/10155185.html)
 - [x] IDDFS SPFA判负环[By 姜碧野](https://wenku.baidu.com/view/f22d0d36ee06eff9aef807e9.html)
 - [x] 单位根反演 [By czy](https://czyhe.me/algorithm/unit-root-inv/unit-root-inv/)
 - [ ] Bron–Kerbosch算法
-- [ ] GarsiaWachs算法
+- [x] GarsiaWachs算法
 - [x] 猫树[By immortalCO](http://immortalco.blog.uoj.ac/blog/2102)
 - [x] Baillie–PSW素性测试
 - [x] pollardrho离散对数
@@ -245,7 +244,7 @@
 - [ ] 笛卡尔树 O(n)-O(1) RMQ
 - [ ] 特征多项式求法[By ftiasch](https://loj.ac/article/401)
 - [ ] 生成函数与图的计数
-- [ ] 生成函数与背包问题
+- [x] 生成函数与背包问题
 - [ ] 马尔可夫链
 - [ ] 对角化
 - [ ] QR分解
@@ -289,6 +288,9 @@
 - [ ] 超现实数 方展鹏-《浅谈如何解决不平等博弈问题》
 - [ ] Schreier-Sims 算法
 - [ ] 万能欧几里得
+- [ ] 量子算法
+- [ ] +-1RMQ
+- [ ] 信息熵
 # Other
 - [ ] 使用Vim
 - [ ] 学习十指打字(目标：250cpm)
