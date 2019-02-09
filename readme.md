@@ -185,7 +185,7 @@
 - [x] 拉格朗日反演
 - [x] 快速莫比乌斯变换
 - [ ] 支配树
-- [ ] zkw线段树
+- [x] zkw线段树
 - [ ] Segment tree beats
 - [x] Lindström–Gessel–Viennot lemma
 - [ ] 边分治

@@ -240,6 +240,14 @@
 - [x] LOJ#6057. 「HNOI2016」序列 数据加强版
 - [x] P4585 [FJOI2015]火星商店问题
 - [x] LOJ#2116. 「HNOI2015」开店
+- [x] BZOJ4695: 最假女选手
+- [ ] BZOJ4355: Play with sequence
+- [x] LOJ#6346. 线段树：关于时间
+- [ ] P4314
+- [ ] [UR #11]元旦老人与数列
+- [ ] UOJ#170. Picks loves segment tree VIII
+- [ ] UOJ#164
+- [ ] UOJ#169
 # 分治
 - [x] UVA1608 Non-boring sequences
 - [x] P4755 Beautiful Pair
