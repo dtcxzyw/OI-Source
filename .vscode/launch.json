@@ -13,10 +13,13 @@
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/bin",
             "environment": [],
-            "externalConsole": false,
             "MIMode": "gdb",
             "windows": {
+                "externalConsole": true,
                 "miDebuggerPath": "C:\\cygwin64\\bin\\gdb.exe"
+            },
+            "linux": {
+                "externalConsole": false
             },
             "preLaunchTask": "DEBUG",
             "setupCommands": [
@@ -36,10 +39,13 @@
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/bin",
             "environment": [],
-            "externalConsole": false,
             "MIMode": "gdb",
             "windows": {
+                "externalConsole": true,
                 "miDebuggerPath": "C:\\cygwin64\\bin\\gdb.exe"
+            },
+            "linux": {
+                "externalConsole": false
             },
             "preLaunchTask": "RELEASE",
             "setupCommands": [

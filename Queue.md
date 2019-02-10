@@ -67,7 +67,7 @@
 - [x] LOJ#151. 多项式求立方根
 - [x] LOJ#2527. 「HAOI2018」染色
 - [x] LOJ#150. 挑战多项式
-- [ ] LOJ#6503. 「雅礼集训 2018 Day4」Magic
+- [x] LOJ#6503. 「雅礼集训 2018 Day4」Magic
 - [ ] LOJ#6388. 「THUPC2018」赛艇 / Citing
 - [ ] LOJ#6271. 「长乐集训 2017 Day10」生成树求和 加强版
 - [x] LOJ#2541. 「PKUWC2018」猎人杀
@@ -93,6 +93,12 @@
 - [x] BZOJ4503
 - [x] BZOJ4259
 - [ ] UOJ#269.【清华集训2016】如何优雅地求和
+- [ ] CF438E
+- [ ] UOJ50
+- [ ] UOJ182
+- [ ] CF528D
+- [ ] CF553E
+- [ ] CF623E
 # 后缀数组/后缀自动机/序列自动机
 - [x] LOJ#111. 后缀排序
 - [ ] LOJ#544. 「LibreOJ β Round #7」Array Poisonous Suffix Problem
@@ -215,6 +221,7 @@
 - [ ] P2664
 - [ ] BZOJ4568
 - [ ] BZOJ3730: 震波
+- [ ] BZOJ4732: 数据交互
 # 虚树
 - [x] LOJ#2206. 「HNOI2014」世界树
 - [x] LOJ#2219. 「HEOI2014」大工程
@@ -246,8 +253,10 @@
 - [ ] P4314
 - [ ] [UR #11]元旦老人与数列
 - [ ] UOJ#170. Picks loves segment tree VIII
-- [ ] UOJ#164
+- [ ] UOJ#164. 【清华集训2015】V
 - [ ] UOJ#169
+- [ ] bzoj3064 Tyvj 1518 CPU监控 
+- [ ] 51Nod 1768
 # 分治
 - [x] UVA1608 Non-boring sequences
 - [x] P4755 Beautiful Pair

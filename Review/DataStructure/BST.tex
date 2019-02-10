@@ -11,8 +11,7 @@
 \subsection{FHQTreap}\label{FHQTreap}
 \index{F!FHQTreap}
 FHQTreap是一种比较好写的二叉搜索树，虽然效率不太高
-（不如子节~\ref{splay}\\的splay），但其易于理解，不需要旋转，
-且对可持久化友好。
+（不如子节~\ref{splay}\\的splay），但其易于理解，不需要旋转，且对可持久化友好。
 FHQTreap的使用基于两个基本操作：split与merge。
 
 对于二叉搜索树的操作，由于FHQTreap本来就是一颗二叉搜索树，因此操作方法相同
@@ -168,6 +167,14 @@ Wikipedia-EN\footnote{
 	\item 在需要蒙特卡洛采样的场合使用低差异序列如Halton，Sobol等。
 \end{enumerate}
 
+\subsubsection{用于可持久化时的注意事项}
+在可持久化操作中涉及复制整棵子树，使其子树的随机优先级与原来相同，形态保持不变，容易导致
+后续操作的树不再平衡。
+
+简单的解决方法是不存储随机优先级，而是维护子树大小，根据两棵子树的大小\sout{建立离散分布}随机
+决定哪个节点在上方。
+
+该方法来自2018年IOI2018国家候选队论文集董炜隽的论文《浅谈Splay和Treap的性质及其应用》。
 \subsection{splay}\label{splay}
 \index{S!Splay}
 
