@@ -186,7 +186,7 @@
 - [x] 快速莫比乌斯变换
 - [ ] 支配树
 - [x] zkw线段树
-- [ ] Segment tree beats
+- [x] Segment tree beats
 - [x] Lindström–Gessel–Viennot lemma
 - [ ] 边分治
 - [x] 最小割树
@@ -252,6 +252,7 @@
 - [ ] 正交投影
 - [ ] 秩分解
 - [ ] addition chain
+- [ ] wqs 二分
 # Research
 - [ ] 三维凸包与Delaunay剖分的关系[By 刘汝佳](https://wenku.baidu.com/view/e2e2d86f58fafab069dc02f8.html)
 - [ ] 区间加多项式问题[By riteme](https://riteme.github.io/blog/2018-1-28/interval-polynomial.html)

@@ -12,6 +12,7 @@
 - [ ] Luogu P4298 [CTSC2008]祭祀
 - [x] LOJ#2558. 「LNOI2014」LCA
 - [ ] LOJ#6564. 最长公共子序列
+- [ ] LOJ#2265. 「CTSC2017」最长上升子序列
 # 题集
 - [ ] PKUWC2018
 - [ ] Ynoi2019模拟赛[By OldDriverTree](http://olddrivertree.blog.uoj.ac/blog/4656)
@@ -23,6 +24,7 @@
 - [ ] IOI2018
 - [ ] Project Euler（高三或大学时刷）
 - [ ] NEERC
+- [ ] THUPC2017/2018
 # Min_25 筛
 - [x] LOJ#6053. 简单的函数
 - [ ] UOJ#188. 【UR #13】Sanrd
@@ -48,8 +50,12 @@
 - [ ] UVa 11439
 - [x] UOJ#79. 一般图最大匹配
 - [ ] UOJ#81. 一般图最大权匹配
-# 仙人掌
+# 仙人掌/圆方树
 - [ ] UVa 10510
+- [ ] LOJ#2062. 「HAOI2016」地图
+- [ ] LOJ#2475. 「2018 集训队互测 Day 3」白云的旅行
+- [ ] LOJ#2737. 「JOISC 2016 Day 3」电报
+- [ ] LOJ#6496. 「雅礼集训 2018 Day1」仙人掌
 # 动态dp
 - [x] P4719 【模板】动态dp
 - [ ] 【LOJ】#2269. 「SDOI2017」切树游戏
@@ -68,7 +74,7 @@
 - [x] LOJ#2527. 「HAOI2018」染色
 - [x] LOJ#150. 挑战多项式
 - [x] LOJ#6503. 「雅礼集训 2018 Day4」Magic
-- [ ] LOJ#6388. 「THUPC2018」赛艇 / Citing
+- [x] LOJ#6388. 「THUPC2018」赛艇 / Citing
 - [ ] LOJ#6271. 「长乐集训 2017 Day10」生成树求和 加强版
 - [x] LOJ#2541. 「PKUWC2018」猎人杀
 - [ ] LOJ#2271. 「SDOI2017」遗忘的集合
@@ -99,6 +105,7 @@
 - [ ] CF528D
 - [ ] CF553E
 - [ ] CF623E
+- [ ] UOJ272
 # 后缀数组/后缀自动机/序列自动机
 - [x] LOJ#111. 后缀排序
 - [ ] LOJ#544. 「LibreOJ β Round #7」Array Poisonous Suffix Problem
@@ -109,14 +116,12 @@
 - [ ] LOJ#2525. 「HAOI2018」字串覆盖
 - [ ] LOJ#6031. 「雅礼集训 2017 Day1」字符串
 - [ ] LOJ#6041. 「雅礼集训 2017 Day7」事情的相似度
-- [ ] [Ahoi2013]差异
+- [x] [Ahoi2013]差异
 - [ ] LOJ#2720. 「NOI2018」你的名字
 - [x] LOJ#2172. 「FJOI2016」所有公共子序列问题
 - [ ] Codeforces 596E Wilbur and Strings
-- [ ] P3649
-- [ ] P3757
-- [ ] LOJ#6198. 谢特（SAMParent树+Trie合并）
-- [ ] BZOJ3277: 串
+- [x] LOJ#6198. 谢特（SAMParent树+Trie合并）
+- [x] BZOJ3277: 串
 - [x] BZOJ2780: [Spoj]8093 Sevenk Love Oimaster
 # AC自动机
 - [x] LOJ#2180. 「BJOI2017」魔法咒语

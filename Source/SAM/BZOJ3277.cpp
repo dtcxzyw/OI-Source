@@ -56,9 +56,6 @@ struct SAM {
         }
         for(int i = siz; i >= 1; --i) {
             int u = q[i];
-            if(u != 1 && T[u].cnt >= k &&
-               T[T[u].link].cnt < k)
-                throw;
             cnt[u] = cnt[T[u].link] +
                 (T[u].cnt >= k ?
                      T[u].len - T[T[u].link].len :
