@@ -87,3 +87,5 @@ void inv(int n, const Poly& sf, Poly& g) {
 求逆/开方等操作在调试时最好$O(n^2)$验证其正确性。
 
 多项式乘法根据规模使用暴力/FFT解决。
+
+{\bfseries 注意std::vector<>::data()是c++11新增的用法，使用时注意程序可移植性。}

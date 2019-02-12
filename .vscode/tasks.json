@@ -51,14 +51,27 @@
         {
             "label": "RELEASE",
             "command": "g++",
-            "args": [
-                "-O2",
-                "${file}",
-                "-o",
-                "bin/${fileBasenameNoExtension}.out",
-                "-Wall",
-                "-std=c++11"
-            ],
+            "windows": {
+                "args": [
+                    "-O2",
+                    "${file}",
+                    "-o",
+                    "bin/${fileBasenameNoExtension}.out",
+                    "-Wall",
+                    "-std=c++11",
+                    "-Wl,-stack=1073741824"
+                ]
+            },
+            "linux": {
+                "args": [
+                    "-O2",
+                    "${file}",
+                    "-o",
+                    "bin/${fileBasenameNoExtension}.out",
+                    "-Wall",
+                    "-std=c++11"
+                ]
+            },
             "problemMatcher": {
                 "owner": "cpp",
                 "fileLocation": [
