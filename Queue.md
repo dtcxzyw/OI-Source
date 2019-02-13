@@ -117,7 +117,7 @@
 - [ ] LOJ#6031. 「雅礼集训 2017 Day1」字符串
 - [x] LOJ#6041. 「雅礼集训 2017 Day7」事情的相似度
 - [x] [Ahoi2013]差异
-- [ ] LOJ#2720. 「NOI2018」你的名字
+- [x] LOJ#2720. 「NOI2018」你的名字
 - [x] LOJ#2172. 「FJOI2016」所有公共子序列问题
 - [ ] Codeforces 596E Wilbur and Strings
 - [x] LOJ#6198. 谢特（SAMParent树+Trie合并）
@@ -272,3 +272,9 @@
 - [ ] LOJ#2981. 「THUSCH 2017」如果奇迹有颜色
 # 概率期望
 - [ ] LOJ#2267. 「SDOI2017」龙与地下城
+# 构造
+- [ ] LOJ Round#11 Misaka Network
+- [ ] LOJ Beta Round #3 绯色IOI
+- [ ] UOJ Goodbye Wuxu 新年的拯救计划
+- [ ] CF1060H Sophisticated Device
+- [ ] CF522 Negative Time Summation
