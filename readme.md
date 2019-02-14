@@ -13,9 +13,8 @@
 - [x] 费用流
 - [x] 带上下界网络流
 - [x] 常见网络流/最小割模型
-- [ ] 最小割性质【AHOI2009】最小割
-- [ ] 差分建图
-- [ ] 消圈定理
+- [x] 最小割性质【AHOI2009】最小割
+- [x] 消圈定理
 ## 数据结构
 - [x] 树状数组
 - [x] 线段树
@@ -242,7 +241,6 @@
 - [x] 利用powerful number求积性函数前缀和[By fjzzq2002](https://www.cnblogs.com/zzqsblog/p/9904271.html)
 - [ ] 模拟费用流
 - [ ] 笛卡尔树 O(n)-O(1) RMQ
-- [ ] 特征多项式求法[By ftiasch](https://loj.ac/article/401)
 - [ ] 生成函数与图的计数
 - [x] 生成函数与背包问题
 - [ ] 马尔可夫链
@@ -251,10 +249,12 @@
 - [ ] SVD分解
 - [ ] 正交投影
 - [ ] 秩分解
-- [ ] addition chain
 - [ ] wqs 二分
+- [x] 多路增广费用流
+- [ ] 最小表示法
 # Research
 - [ ] 三维凸包与Delaunay剖分的关系[By 刘汝佳](https://wenku.baidu.com/view/e2e2d86f58fafab069dc02f8.html)
+- [ ] - [ ] 特征多项式求法[By ftiasch](https://loj.ac/article/401)
 - [ ] 区间加多项式问题[By riteme](https://riteme.github.io/blog/2018-1-28/interval-polynomial.html)
 - [ ] 近似算法
 - [ ] ECC+ECM

@@ -21,3 +21,21 @@ $h'[u]=h[u]+dis[u]$。
 上述内容参考了Mogician的博客\footnote{
     最大流与Dijkstra做费用流 - Mogician's blog - 洛谷博客
     \url{https://www.luogu.org/blog/Mogician/Network-Flow-Guide}}。
+\subsection{多路增广费用流}
+一般使用该方法作为费用流模板。
+
+与普通费用流的差别如下：
+\begin{itemize}
+    \item 使用vector存边对缓存友好
+    \item SPFA使用SLF带容错优化
+    \item SPFA从T开始找增广路
+    \item DFS多路增广从S沿着最短路跑，可以使用当前弧优化，注意不要走环
+\end{itemize}
+
+参考代码：
+\lstinputlisting{Source/Templates/MCMF.cpp}
+
+该方法来自Melacau的博客（翻fjsdfzoj时发现的）\footnote{
+    【模板】板子的集合\\
+    \url{https://www.cnblogs.com/Melacau/p/ban.html}
+}。

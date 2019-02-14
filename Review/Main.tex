@@ -31,17 +31,21 @@
 %Feature
 \usepackage{xcolor}
 \usepackage{CJKfntef}
-\newfontfamily\CodeFont{Droid Sans Mono}
+\newfontfamily\CodeFont{Consolas}
 \usepackage{listings}
 \lstset{
     columns=fixed,
     frame=none,
     numbers=left,
     numbersep=5pt,
+    stepnumber=10,
+    firstnumber=0,
     backgroundcolor=\color[RGB]{255,255,255},
-    keywordstyle=\color[RGB]{40,40,255},
-    commentstyle=\it\color[RGB]{0,96,96},
-    stringstyle=\rmfamily\color[RGB]{128,0,0},
+    keywordstyle=\color[RGB]{0,0,255},
+    commentstyle=\color[RGB]{0,128,0},
+    stringstyle=\color[RGB]{172,21,96},
+    numberstyle=\color[RGB]{9,136,90},
+    basicstyle=\CodeFont,
     showstringspaces=false,
     escapeinside=``,
     language=c++,
@@ -53,7 +57,6 @@
     void,export,nullptr,switch,volatile,class,extern,operator,template,wchar_t,
     const,false,private,this,while,constexpr,float,protected,thread_local,
     const_cast,for,public,throw},
-    basicstyle=\CodeFont
 }
 \usepackage{amssymb}
 \usepackage{amsmath}

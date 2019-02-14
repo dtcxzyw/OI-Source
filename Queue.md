@@ -106,6 +106,7 @@
 - [ ] CF553E
 - [ ] CF623E
 - [ ] UOJ272
+- [ ] LOJ6389 [THUPC2018] 好图计数
 # 后缀数组/后缀自动机/序列自动机
 - [x] LOJ#111. 后缀排序
 - [ ] LOJ#544. 「LibreOJ β Round #7」Array Poisonous Suffix Problem
@@ -197,6 +198,8 @@
 - [ ] LOJ#2146. 「SHOI2017」寿司餐厅
 - [ ] CTSC2010
 - [ ] UOJ#UER8B
+- [ ] POJ 2175 Evacuation Plan
+- [ ] 方伯伯运椰子
 # 分块
 - [x] LOJ#6277-6285
 # 插头dp
@@ -278,3 +281,16 @@
 - [ ] UOJ Goodbye Wuxu 新年的拯救计划
 - [ ] CF1060H Sophisticated Device
 - [ ] CF522 Negative Time Summation
+# dp
+- [ ] POI2012 SZA-Cloakroom
+- [ ] CF938F
+- [ ] AGC010F
+- [ ] CF995F
+- [ ] 简单计数
+- [ ] 清华集训2017 某位歌姬的故事
+- [ ] CF500F
+- [ ] AGC002F
+- [ ] ARC093F
+- [ ] subsequence
+- [ ] CF979E
+- [ ] AGC022F
