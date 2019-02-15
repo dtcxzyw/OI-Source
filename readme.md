@@ -183,7 +183,7 @@
 - [x] 常系数齐次线性递推
 - [x] 拉格朗日反演
 - [x] 快速莫比乌斯变换
-- [ ] 支配树
+- [ ] 支配树[By MoebiusMeow](https://www.cnblogs.com/meowww/archive/2017/02/27/6475952.html)
 - [x] zkw线段树
 - [x] Segment tree beats
 - [x] Lindström–Gessel–Viennot lemma
@@ -254,7 +254,8 @@
 - [ ] 最小表示法
 # Research
 - [ ] 三维凸包与Delaunay剖分的关系[By 刘汝佳](https://wenku.baidu.com/view/e2e2d86f58fafab069dc02f8.html)
-- [ ] - [ ] 特征多项式求法[By ftiasch](https://loj.ac/article/401)
+- [ ] Tutte 矩阵与一般图匹配
+- [ ] 特征多项式求法[By ftiasch](https://loj.ac/article/401)
 - [ ] 区间加多项式问题[By riteme](https://riteme.github.io/blog/2018-1-28/interval-polynomial.html)
 - [ ] 近似算法
 - [ ] ECC+ECM
@@ -346,3 +347,4 @@
 - [ ] 整理引用的Bib与协议问题
 - [ ] 合并并索引重复内容
 - [x] 重构SAM部分
+- [ ] 重构带花树部分[By rqy](https://rqy.moe/Algorithms/flower-tree/)

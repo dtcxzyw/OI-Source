@@ -39,3 +39,16 @@ $h'[u]=h[u]+dis[u]$。
     【模板】板子的集合\\
     \url{https://www.cnblogs.com/Melacau/p/ban.html}
 }。
+\subsection{消圈定理}
+该定理用来求给定流量的最小费用流。
+
+\begin{theorem}[消圈定理]
+	当前流为给定流量的最小费用流当且仅当其残量网络中没有负环。
+\end{theorem}
+
+寻找负环可以使用IDDFS-SPFA解决。
+
+该内容参考了Sengxian的博客\footnote{
+	网络流之 - 消圈定理（POJ 2175）\\
+	\url{https://blog.sengxian.com/algorithms/clearcircle}
+}。
