@@ -1,0 +1,29 @@
+\section{计算形式幂级数的牛顿迭代法的常数优化}
+该内容基于negiizhao的博客\footnote{
+    \sout{noip退役选手的一些扯淡}关于优化形式幂级数计算的牛顿法的常数\\
+    \url{http://negiizhao.blog.uoj.ac/blog/4671}
+}。
+
+记长度为$2n$的DFT/IDFT的计算时间为$T(n)$，$n$次形式幂级数乘法的时间为$(3+o(1))T(n)$，
+下面算法的运行时间均以$T(n)$为基准衡量。运行时间有理论上证明与实际测试结果支持。测试用
+模数为998244353，测试规模为$2^{22}$，每个算法重复运行100次。以下时间复杂度证明假装
+$T(n)=2T(n/2)$，即不考虑lg的增长。
+\subsection{求逆}
+\subsubsection{原算法}
+原算法在每次迭代中执行2次DFT，1次IDFT，长度均为$2n$级别。记规模为$n$的多项式求逆时间复杂度
+为$A(n)$，有$A(n)=A(n/2)+3T(n)$，解得$A(n)=(6+o(1))T(n)$。
+\subsubsection{优化}
+注意我们已经得到了$n/2$的结果。
+\subsection{除法}
+\subsection{平方根}
+\subsection{对数}
+\subsection{指数}
+\subsection{实验结果}
+\begin{tabular}{c|c}
+\hline
+算法 & 测试比值（以$T(n)$为基准）\\
+\hline
+多项式乘法 & 3.00\\
+多项式求逆 & 5.67\\
+\hline
+\end{tabular}

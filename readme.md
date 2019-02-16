@@ -346,5 +346,7 @@
 - [ ] 学习十指打字(目标：250cpm)
 - [ ] 整理引用的Bib与协议问题
 - [ ] 合并并索引重复内容
-- [x] 重构SAM部分
-- [ ] 重构带花树部分[By rqy](https://rqy.moe/Algorithms/flower-tree/)
+# 重构
+- [x] SAM
+- [ ] 带花树[By rqy](https://rqy.moe/Algorithms/flower-tree/)
+- [ ] 三元环

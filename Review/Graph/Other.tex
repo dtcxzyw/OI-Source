@@ -66,8 +66,8 @@
 
 算法步骤如下：
 \begin{itemize}
-	\item 对无向图的边进行重定向，度数小的点连向度数大的点，若度数相同则编号小的点连向
-	编号大的点。
+	\item 对无向图的边进行重定向，度数大的点连向度数小的点，若度数相同则编号小的点连向
+	编号大的点（反向也可以）。
 	\item 枚举点$u$，将$u$的邻接点标为已访问，再枚举$u$的邻接点$v$，枚举$v$的邻接点$w$，
 	若$w$被$u$访问，则$(u,v,w)$是一个合法三元组。
 \end{itemize}
@@ -78,3 +78,24 @@
 	不常用的黑科技——「三元环」
 	\url{https://www.cnblogs.com/KingSann/p/9590525.html}
 }。
+
+\subsubsection{竞赛图与三元环}
+\begin{theorem}
+	竞赛图要么是一个拓扑图，要么存在三元环。
+\end{theorem}
+
+记点数为$n$，点$u$的出度为$out_u$，竞赛图的三元环个数可以由下列公式线性计算：
+\begin{displaymath}
+	\binomial{n}{3}-\sum_{u\in V}{\binomial{out_u}{2}}
+\end{displaymath}
+
+该内容参考了eternal风度的博客\footnote{
+	三元环问题总结\\
+	\url{http://www.cnblogs.com/cjoierljl/p/9853236.html}
+}。
+\subsubsection{四元环计数}
+首先对点按照点度升序排序，然后枚举环上端点$u$，强制$u$为标号最大的点，然后枚举$u$的相邻点$v$，
+枚举$v$的相邻点$z$，记录路径$u\rightarrow v \rightarrow z$的条数$cnt_z$，答案加上$cnt_z$，
+然后$++cnt_z$。时间复杂度仍为$O(m\sqrt{m})$
+
+该方法出自FWC2019D5T2的题解。
