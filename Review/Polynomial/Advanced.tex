@@ -182,11 +182,12 @@ $A(z)=R(z)$。那么可以两边同时模$B(z)$，达到次数减半的效果。
     \item $n<p$：可知$n!$与$p$互质，因此只要求$n!$。
     可构造多项式：
     \begin{eqnarray*}
-        Q(x)&=&\sum_{i=1}^{\sqrt{n}}{(x+i)}\\
-        n!&=&\sum_{i=0}^{\sqrt{n}-1}{Q(i\sqrt{n})}
+        Q(x)&=&\prod_{i=1}^{\sqrt{n}}{(x+i)}\\
+        n!&=&\prod_{i=0}^{\sqrt{n}-1}{Q(i\sqrt{n})}
     \end{eqnarray*}
     卷积出$Q(x)$后在$i\sqrt{n}=0,\sqrt{n},\cdots,(\sqrt{n}-1)\sqrt{n}$上
-    多点求值，时间复杂度\\$O(\sqrt{n}\lg^2 n)$。
+    多点求值，时间复杂度\\$O(\sqrt{n}\lg^2 n)$。（在考场上不太好写，可以用一些预处理时间
+    每隔一段打表，查询时定位到对应位置暴力计算，适用于$n$较大的查询很少的情况。）
     \item $n\geq p$：结合上述两种做法，易知第二种做法最多只执行一次。
 \end{itemize}
 

@@ -1,11 +1,15 @@
 #pragma once
 #include <algorithm>
-#include <chrono>
 #include <cstdio>
 #include <functional>
 #include <random>
 #include <vector>
-constexpr int sampleCount = 100;
+#ifdef WIN32
+#include "WindowsTimer.hpp"
+#else
+#include "LinuxTimer.hpp"
+#endif
+constexpr int sampleCount = 1;
 std::vector<int> genData(int n, int p, int mod) {
     static std::random_device device;
     std::vector<int> res(p);
@@ -14,35 +18,32 @@ std::vector<int> genData(int n, int p, int mod) {
                   [&] { return uid(device); });
     return res;
 }
-using Clock = std::chrono::high_resolution_clock;
-Clock::duration
-time(const std::function<void()>& func) {
-    Clock::time_point beg = Clock::now();
+Duration time(const std::function<void()>& func) {
+    resetTimer();
+    TimePoint beg = now();
     func();
-    return Clock::now() - beg;
+    return now() - beg;
 }
 using FT = double;
-FT calcRatio(Clock::duration t, Clock::duration base) {
-    FT ft = t.count(), fb = base.count();
+FT calcRatio(Duration t, Duration base) {
+    FT ft = count(t), fb = count(base);
     return ft / fb;
 }
-Clock::duration benchmark(
-    const char* name, int n,
-    const std::function<Clock::duration(int)>& func) {
-    constexpr FT fac =
-        static_cast<double>(std::milli::den) /
-        static_cast<double>(Clock::period::den);
+Duration
+benchmark(const char* name, int n,
+          const std::function<Duration(int)>& func) {
     puts("--------------------------------------");
     printf("Benchmark Task:%s\n", name);
-    Clock::duration res{};
+    Duration res{};
     for(int i = 0; i < sampleCount; ++i) {
         printf("Running Benchmark Test#%d\n", i);
-        Clock::duration t = func(n);
+        Duration t = func(n);
         printf("Used time:%.0lf ms\n",
-               t.count() * fac);
+               toMilliSecond(t));
         res += t;
     }
-    printf("Total time:%.0lf ms\n", res.count() * fac);
+    printf("Total time:%.0lf ms\n",
+           toMilliSecond(res));
     puts("--------------------------------------");
     return res;
 }

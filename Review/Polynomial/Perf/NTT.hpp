@@ -26,30 +26,44 @@ Int64 powm(Int64 a, int k) {
     }
     return res;
 }
-int root[size], invR[size];
-void init() {
-    Int64 base = powm(3, (mod - 1) / size);
+using NTTFac = std::vector<int>;
+NTTFac root[24], invR[24], rev[24];
+void initImpl(int k) {
+    int siz = 1 << k;
+    Int64 base = powm(3, (mod - 1) / siz);
     Int64 invBase = powm(base, mod - 2);
-    root[0] = invR[0] = 1;
-    for(int i = 1; i < size; ++i)
-        root[i] = root[i - 1] * base % mod;
-    for(int i = 1; i < size; ++i)
-        invR[i] = invR[i - 1] * invBase % mod;
+    NTTFac &rt = root[k], &irt = invR[k];
+    rt.resize(siz), irt.resize(siz);
+    rt[0] = irt[0] = 1;
+    for(int i = 1; i < siz; ++i)
+        rt[i] = rt[i - 1] * base % mod;
+    for(int i = 1; i < siz; ++i)
+        irt[i] = irt[i - 1] * invBase % mod;
+    NTTFac& A = rev[k];
+    A.resize(siz);
+    int off = k - 1;
+    for(int i = 0; i < siz; ++i)
+        A[i] = A[i >> 1] >> 1 | ((i & 1) << off);
 }
-void NTT(int n, int* A, const int* w) {
-    for(int i = 0, j = 0; i < n; ++i) {
-        if(i < j)
-            std::swap(A[i], A[j]);
-        for(int l = n >> 1; (j ^= l) < l; l >>= 1)
-            ;
-    }
-    for(int i = 2; i <= n; i <<= 1) {
-        int m = i >> 1, fac = size / i;
+void init() {
+    for(int i = 0; i < 24; ++i)
+        initImpl(i);
+}
+void NTT(int n, int* A, const NTTFac* w) {
+    int p = 0;
+    while(1 << p != n)
+        ++p;
+    NTTFac& R = rev[p];
+    for(int i = 0; i < n; ++i)
+        if(i < R[i])
+            std::swap(A[i], A[R[i]]);
+    for(int i = 2, cp = 1; i <= n; i <<= 1, ++cp) {
+        int m = i >> 1;
+        const NTTFac& fac = w[cp];
         for(int j = 0; j < n; j += i)
-            for(int k = 0, kp = 0; k < m;
-                ++k, kp += fac) {
-                int &x = A[j + k], &y = A[j + k + m];
-                int t = asInt64(w[kp]) * y % mod;
+            for(int k = 0; k < m; ++k) {
+                int &x = A[j + k], &y = A[j + m + k];
+                int t = asInt64(fac[k]) * y % mod;
                 y = sub(x, t);
                 x = add(x, t);
             }
@@ -66,6 +80,14 @@ using Poly = std::vector<int>;
 void copy(Poly& dst, const Poly& src, int siz) {
     memcpy(dst.data(), src.data(), sizeof(int) * siz);
 }
+void shift(Poly& A, int h, int n) {
+    Poly B(A.size());
+    memcpy(B.data(), A.data() + h,
+           sizeof(int) * (n - h));
+    memcpy(B.data() + (n - h), A.data(),
+           sizeof(int) * h);
+    A.swap(B);
+}
 void DFT(int n, Poly& A) {
     NTT(n, A.data(), root);
 }
@@ -76,13 +98,12 @@ void IDFT(int n, Poly& A, int rn) {
         A[i] = A[i] * div % mod;
     memset(A.data() + rn, 0, sizeof(int) * (n - rn));
 }
-Clock::duration benchmarkNTT(int n) {
+Duration benchmarkNTT(int n) {
     int p = getSize(n);
     puts("Generating input data for NTT...");
     Poly A = genData(p, p, mod);
     puts("Calculating NTT...");
-    Clock::duration t =
-        time([&] { NTT(p, A.data(), root); });
+    Duration t = time([&] { NTT(p, A.data(), root); });
     puts("Done.");
     return t;
 }

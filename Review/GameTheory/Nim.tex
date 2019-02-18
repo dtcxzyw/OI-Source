@@ -5,8 +5,8 @@
 \index{N!Nim}
 
 普通Nim游戏的定义：
-有两个玩家轮流从许多堆中移除对象。在每个回合中，玩家选择一个非空的堆，可以移除任何数量
-的对象，但要移动至少一个对象。无法操作的玩家为败者。
+有两个玩家轮流从许多堆中移除对象。在每个回合中，玩家选择一个非空的堆，可以移除任意数量
+的对象，但要移除至少一个对象。无法操作的玩家为败者。
 
 此类游戏可看做是Bash游戏的特殊化。
 
@@ -128,8 +128,8 @@ Luogu P3480 [POI2009]KAM-Pebbles\footnote{
 	\url{https://www.luogu.org/problemnew/show/P3480}
 }
 
-对于这题可将原条件通过差分转换为阶梯博弈模型（$A_i \geq A_i-1 \Leftrightarrow
-	A_i-A_i-1 \geq 0$）。
+将原条件做差分变换可将此题转换为阶梯博弈模型
+（$A_i \geq A_{i-1} \Leftrightarrow A_i-A_{i-1} \geq 0$）。
 
 \lstinputlisting[title=Luogu P3480]{Source/Source/'Game Theory'/3480.cpp}
 
@@ -199,6 +199,7 @@ Rayleigh Theorem描述了Beatty序列中任意一个正整数仅在某个数列�
 \begin{lemma}[Zeckendorf's Theorem]
 	任意正整数可分解为多个不连续的斐波那契数之和。
 \end{lemma}
+
 每次用尽可能大的斐波那契数将石子拆分为多个部分。先手可将数量最小的部分取完，
 由于斐波那契数的不连续性，后手不可能取完倒数第二部分的石子。此时后手处于这一部分
 石子的必败态，即先手将取得这部分石子的最后一颗。对于每一堆都如此操作就能赢得胜利。

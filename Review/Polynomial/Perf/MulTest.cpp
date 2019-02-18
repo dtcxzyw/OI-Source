@@ -7,22 +7,22 @@ void benchmarkMulImpl(int n, Poly& a, Poly& b) {
         a[i] = asInt64(a[i]) * b[i] % mod;
     IDFT(p, a, 2 * n - 1);
 }
-Clock::duration benchmarkMul(int n) {
+Duration benchmarkMul(int n) {
     int p = getSize(n);
     puts("Generating input data for PolyMul...");
     Poly a = genData(n, p, mod);
     Poly b = genData(n, p, mod);
     puts("Calculating PolyMul...");
-    Clock::duration t =
+    Duration t =
         time([&] { benchmarkMulImpl(n, a, b); });
     puts("Done.");
     return t;
 }
 int main() {
+    init();
     const int n = 1 << 22;
-    Clock::duration base =
-        benchmark("NTT", n, benchmarkNTT);
-    Clock::duration mul =
+    Duration base = benchmark("NTT", n, benchmarkNTT);
+    Duration mul =
         benchmark("PolyMul", n, benchmarkMul);
     printf("ratio(Mul)=%.2lf\n", calcRatio(mul, base));
     return 0;
