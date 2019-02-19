@@ -5,7 +5,7 @@ void benchmarkMulImpl(int n, Poly& a, Poly& b) {
     DFT(p, b);
     for(int i = 0; i < p; ++i)
         a[i] = asInt64(a[i]) * b[i] % mod;
-    IDFT(p, a, 2 * n - 1);
+    IDFT(p, a, 0, 2 * n - 1);
 }
 Duration benchmarkMul(int n) {
     int p = getSize(n);

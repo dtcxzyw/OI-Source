@@ -80,23 +80,19 @@ using Poly = std::vector<int>;
 void copy(Poly& dst, const Poly& src, int siz) {
     memcpy(dst.data(), src.data(), sizeof(int) * siz);
 }
-void shift(Poly& A, int h, int n) {
-    Poly B(A.size());
-    memcpy(B.data(), A.data() + h,
-           sizeof(int) * (n - h));
-    memcpy(B.data() + (n - h), A.data(),
-           sizeof(int) * h);
-    A.swap(B);
-}
 void DFT(int n, Poly& A) {
     NTT(n, A.data(), root);
 }
-void IDFT(int n, Poly& A, int rn) {
+void IDFT(int n, Poly& A, int b, int e, bool lc = true,
+          bool hc = true) {
     NTT(n, A.data(), invR);
     Int64 div = powm(n, mod - 2);
-    for(int i = 0; i < rn; ++i)
+    for(int i = b; i < e; ++i)
         A[i] = A[i] * div % mod;
-    memset(A.data() + rn, 0, sizeof(int) * (n - rn));
+    if(lc)
+        memset(A.data(), 0, sizeof(int) * b);
+    if(hc)
+        memset(A.data() + e, 0, sizeof(int) * (n - e));
 }
 Duration benchmarkNTT(int n) {
     int p = getSize(n);

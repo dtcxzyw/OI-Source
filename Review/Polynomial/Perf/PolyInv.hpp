@@ -20,8 +20,27 @@ void getInv(int n, const Poly& sf, Poly& g) {
                 g[i] % mod;
             g[i] = clamp(g[i]);
         }
-        IDFT(p, g, n);
+        IDFT(p, g, 0, n);
     }
+}
+void fastInvIter(int n, const Poly& sf,
+                 const Poly& dftg, Poly& g) {
+    int h = n >> 1;
+    Poly f(n);
+    copy(f, sf, n);
+    DFT(n, f);
+
+    for(int i = 0; i < n; ++i)
+        f[i] = asInt64(f[i]) * dftg[i] % mod;
+    IDFT(n, f, h, n);
+
+    DFT(n, f);
+    for(int i = 0; i < n; ++i)
+        f[i] = asInt64(f[i]) * dftg[i] % mod;
+    IDFT(n, f, h, n, false);
+
+    for(int i = h; i < n; ++i)
+        g[i] = (f[i] ? mod - f[i] : 0);
 }
 void getInvFastImpl(int n, const Poly& sf, Poly& g) {
     if(n == 1)
@@ -29,30 +48,10 @@ void getInvFastImpl(int n, const Poly& sf, Poly& g) {
     else {
         int h = n >> 1;
         getInvFastImpl(h, sf, g);
-
         Poly dftg(n);
         copy(dftg, g, h);
         DFT(n, dftg);
-
-        Poly f(n);
-        copy(f, sf, n);
-        DFT(n, f);
-
-        for(int i = 0; i < n; ++i)
-            f[i] = asInt64(f[i]) * dftg[i] % mod;
-        IDFT(n, f, n);
-        f[0] = sub(f[0], 1);
-        shift(f, h, n);
-
-        f[0] = sub(f[0], 1);
-        DFT(n, f);
-        for(int i = 0; i < n; ++i)
-            f[i] = asInt64(f[i]) * dftg[i] % mod;
-        IDFT(n, f, n);
-        shift(f, h, n);
-
-        for(int i = 0; i < n; ++i)
-            g[i] = sub(g[i], f[i]);
+        fastInvIter(n, sf, dftg, g);
     }
 }
 void getInvFast(int n, const Poly& sf, Poly& g) {
@@ -68,6 +67,8 @@ Duration benchmarkInv(int n, const InvFunc& inv) {
     int p = getSize(n);
     puts("Generating input data for PolyInv...");
     Poly f = genData(n, p, mod);
+    if(f[0] == 0)
+        f[0] = 1;
     Poly g(p);
     puts("Calculating PolyInv...");
     Duration t = time([&] { inv(n, f, g); });
@@ -76,7 +77,7 @@ Duration benchmarkInv(int n, const InvFunc& inv) {
     DFT(p, g);
     for(int i = 0; i < p; ++i)
         f[i] = asInt64(f[i]) * g[i] % mod;
-    IDFT(p, f, n);
+    IDFT(p, f, 0, n);
     if(f[0] != 1)
         throw WrongAnswer{};
     for(int i = 1; i < n; ++i)

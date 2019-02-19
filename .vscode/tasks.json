@@ -28,8 +28,7 @@
                     "-Wall",
                     "-std=c++11",
                     "-D_FORTIFY_SOURCE=2",
-                    "-fstack-protector-all",
-                    "-fsanitize=address"
+                    "-fstack-protector-all"
                 ]
             },
             "problemMatcher": {
