@@ -107,15 +107,15 @@
 - [ ] CF623E
 - [ ] UOJ272
 - [ ] LOJ6389 [THUPC2018] 好图计数
+- [ ] BZOJ3456
 # 后缀数组/后缀自动机/序列自动机
 - [x] LOJ#111. 后缀排序
-- [ ] LOJ#544. 「LibreOJ β Round #7」Array Poisonous Suffix Problem
 - [x] LOJ#2033. 「SDOI2016」生成魔咒
 - [x] LOJ#2059. 「TJOI / HEOI2016」字符串
 - [x] LOJ#2064. 「HAOI2016」找相同字符
 - [x] LOJ#2133. 「NOI2015」品酒大会
 - [x] LOJ#2525. 「HAOI2018」字串覆盖
-- [ ] LOJ#6031. 「雅礼集训 2017 Day1」字符串
+- [x] LOJ#6031. 「雅礼集训 2017 Day1」字符串
 - [x] LOJ#6041. 「雅礼集训 2017 Day7」事情的相似度
 - [x] [Ahoi2013]差异
 - [x] LOJ#2720. 「NOI2018」你的名字
@@ -266,7 +266,7 @@
 - [ ] UOJ#170. Picks loves segment tree VIII
 - [ ] UOJ#164. 【清华集训2015】V
 - [ ] UOJ#169
-- [ ] bzoj3064 Tyvj 1518 CPU监控 
+- [ ] bzoj3064 Tyvj 1518 CPU监控
 - [ ] 51Nod 1768
 - [ ] UOJ218 火车管理
 # 分治
@@ -284,6 +284,7 @@
 - [ ] UOJ Goodbye Wuxu 新年的拯救计划
 - [ ] CF1060H Sophisticated Device
 - [ ] CF522 Negative Time Summation
+- [ ] LOJ#544. 「LibreOJ β Round #7」Array Poisonous Suffix Problem
 # dp
 - [ ] POI2012 SZA-Cloakroom
 - [ ] CF938F

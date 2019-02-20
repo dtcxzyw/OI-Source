@@ -4,7 +4,7 @@ void der(int n, Poly& f) {
         f[i - 1] = i * asInt64(f[i]) % mod;
     f[n - 1] = 0;
 }
-int lut[size];
+int lut[size + 10];
 void preInv(int n) {
     static int cur = 1;
     lut[1] = 1;
@@ -15,7 +15,7 @@ void preInv(int n) {
     }
 }
 void inte(int n, Poly& f) {
-    for(int i = n; i >= 1; --i)
+    for(int i = n - 1; i >= 1; --i)
         f[i] = asInt64(lut[i]) * f[i - 1] % mod;
     f[0] = 0;
 }
@@ -73,35 +73,49 @@ void getExpFastImpl(int n, const Poly& sf, Poly& g,
 
         // exp
         {
-            // ln g-f!!!
-            Poly tg(n);
+            // ln g-f
+            Poly A(n);
             for(int i = 1; i < h; ++i)
-                tg[i - 1] = asInt64(g[i]) * i % mod;
-            DFT(n, tg);
+                A[i - 1] = asInt64(g[i]) * i % mod;
+            DFT(n, A);
             for(int i = 0; i < n; ++i)
-                tg[i] =
-                    asInt64(tg[i]) * dftig[i] % mod;
+                A[i] = asInt64(A[i]) * dftig[i] % mod;
+            IDFT(n, A, h - 1, n - 1, false);
 
-            IDFT(n, tg, h - 1, n - 1);
-            for(int i = n - 1; i >= h; --i)
-                tg[i] =
-                    asInt64(lut[i]) * tg[i - 1] % mod;
-            tg[h - 1] = 0;
-            for(int i = h; i < n; ++i)
-                tg[i] = sub(tg[i], sf[i]);
-
-            Poly dftg(n);
+            Poly B(n), dftg(n);
             copy(dftg, g, h);
             DFT(n, dftg);
-
-            //(ln g-f)*g
-            DFT(n, tg);
             for(int i = 0; i < n; ++i)
-                tg[i] = asInt64(tg[i]) * dftg[i] % mod;
-            IDFT(n, tg, h, n, false);
+                B[i] =
+                    asInt64(dftg[i]) * dftig[i] % mod;
+            IDFT(n, B, h, n);
+
+            Poly f(n);
+            for(int i = 1; i < h; ++i)
+                f[i - 1] = asInt64(sf[i]) * i % mod;
+            DFT(n, f);
+            DFT(n, B);
+            for(int i = 0; i < n; ++i)
+                B[i] = asInt64(B[i]) * f[i] % mod;
+            IDFT(n, B, h - 1, n - 1, false);
+
+            for(int i = n - 1; i >= h; --i) {
+                Int64 x = sub(A[i - 1], B[i - 1]);
+                A[i] = lut[i] * x % mod;
+            }
+            memset(A.data(), 0, sizeof(int) * h);
 
             for(int i = h; i < n; ++i)
-                g[i] = (tg[i] ? mod - tg[i] : 0);
+                A[i] = sub(A[i], sf[i]);
+
+            //(ln g-f)*g
+            DFT(n, A);
+            for(int i = 0; i < n; ++i)
+                A[i] = asInt64(A[i]) * dftg[i] % mod;
+            IDFT(n, A, h, n, false);
+
+            for(int i = h; i < n; ++i)
+                g[i] = (A[i] ? mod - A[i] : 0);
         }
         // inv
         if(doInv)

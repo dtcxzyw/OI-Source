@@ -1,5 +1,6 @@
 #pragma once
 #include <algorithm>
+#include <chrono>
 #include <cstdio>
 #include <functional>
 #include <random>
@@ -9,9 +10,12 @@
 #else
 #include "LinuxTimer.hpp"
 #endif
-constexpr int sampleCount = 1;
+constexpr int sampleCount = 100;
 std::vector<int> genData(int n, int p, int mod) {
-    static std::random_device device;
+    static std::mt19937_64 device(
+        std::chrono::high_resolution_clock::now()
+            .time_since_epoch()
+            .count());
     std::vector<int> res(p);
     std::uniform_int_distribution<> uid(0, mod - 1);
     std::generate(res.begin(), res.begin() + n,

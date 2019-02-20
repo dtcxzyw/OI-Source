@@ -2,7 +2,7 @@
 #include <cstdio>
 int main() {
     init();
-    const int n = 1 << 4;
+    const int n = 1 << 22;
     Duration base = benchmark("NTT", n, benchmarkNTT);
     Duration expA = benchmark("PolyExp", n, [](int n) {
         return benchmarkExp(n, getExp);
