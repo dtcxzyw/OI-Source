@@ -5,7 +5,6 @@
 #include <vector>
 typedef double FT;
 typedef std::complex<FT> Complex;
-//#define CHECK
 int read() {
     int res = 0, c;
     do
@@ -51,6 +50,7 @@ void FFT(int n, Complex* A, const Complex* w) {
 Complex C[size], D[size], E[size], F[size], G[size];
 typedef std::vector<int> Poly;
 typedef long long Int64;
+#define asInt64 static_cast<Int64>
 int mod, k;
 void mul(int p, int n, Poly& A, const Poly& B) {
     for(int i = 0; i < n; ++i)
@@ -116,27 +116,26 @@ void inv(int n, const Poly& sf, Poly& g) {
         tg[0] = (2 + tg[0]) % mod;
 
         mul(p, n, g, tg);
-
-#ifdef CHECK
-        for(int i = 0; i < n; ++i) {
-            int sum = 0;
-            for(int j = 0; j <= i; ++j)
-                sum = (sum +
-                       static_cast<Int64>(sf[j]) *
-                           g[i - j]) %
-                    mod;
-            if(i == 0 && sum != 1)
-                throw;
-            if(i != 0 && sum != 0)
-                throw;
-        }
-#endif
     }
 }
-int B[maxn];
+int lut[maxn];
+void getLn(int n, Poly& A, Poly& B) {
+    inv(n, A, B);
+    for(int i = 1; i < n; ++i)
+        A[i - 1] = asInt64(i) * A[i] % mod;
+    A[n - 1] = 0;
+    mul(getSize(n), n, B, A);
+    for(int i = n - 1; i >= 1; --i)
+        B[i] = asInt64(lut[i]) * B[i - 1] % mod;
+    B[0] = 0;
+}
 int add(int a, int b) {
     a += b;
     return a < mod ? a : a - mod;
+}
+int sub(int a, int b) {
+    a -= b;
+    return a >= 0 ? a : a + mod;
 }
 bool flag[maxn];
 int main() {
@@ -149,32 +148,21 @@ int main() {
     for(int i = 1; i < n; ++i)
         A[i] = read();
     init(p);
-    inv(n, A, B);
-    for(int i = 0; i < n; ++i)
-        if(B[i] < 0)
-            B[i] += mod;
+    lut[1] = 1;
+    for(int i = 2; i < n; ++i)
+        lut[i] = asInt64(mod - mod / i) *
+            lut[mod % i] % mod;
+    getLn(n, A, B);
     int cnt = 0;
     for(int i = 1; i < n; ++i)
         if(B[i]) {
-            printf("div %d:", i);
-            for(int j = 0; j < n; ++j)
-                printf("%d ", B[j]);
-            puts("");
-            for(int j = i; j < n; ++j)
-                B[j] = add(B[j], B[j - i]);
             flag[i] = true, ++cnt;
+            for(int j = i, c = 1; j < n; j += i, ++c)
+                B[j] = sub(B[j], lut[c]);
         }
-
     printf("%d\n", cnt);
     for(int i = 1; i < n; ++i)
-        if(flag[i]) {
-            --cnt;
-            if(cnt)
-                printf("%d ", i);
-            else {
-                printf("%d\n", i);
-                break;
-            }
-        }
+        if(flag[i])
+            printf("%d ", i);
     return 0;
 }

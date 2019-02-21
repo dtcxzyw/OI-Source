@@ -75,9 +75,9 @@
 - [x] LOJ#150. 挑战多项式
 - [x] LOJ#6503. 「雅礼集训 2018 Day4」Magic
 - [x] LOJ#6388. 「THUPC2018」赛艇 / Citing
-- [ ] LOJ#6271. 「长乐集训 2017 Day10」生成树求和 加强版
+- [x] LOJ#6271. 「长乐集训 2017 Day10」生成树求和 加强版
 - [x] LOJ#2541. 「PKUWC2018」猎人杀
-- [ ] LOJ#2271. 「SDOI2017」遗忘的集合
+- [x] LOJ#2271. 「SDOI2017」遗忘的集合
 - [x] LOJ#2183. 「SDOI2015」序列统计
 - [x] LOJ#2058. 「TJOI / HEOI2016」求和
 - [x] LOJ#2020. 「AHOI / HNOI2017」礼物
@@ -203,7 +203,7 @@
 - [ ] 方伯伯运椰子
 - [ ] THUPC2017 Airport
 - [ ] UOJ 无限之环
-# 分块
+# 分块及按大小分类
 - [x] LOJ#6277-6285
 # 插头dp
 - [ ] LOJ#2017. 「SCOI2016」围棋
@@ -269,6 +269,7 @@
 - [ ] bzoj3064 Tyvj 1518 CPU监控
 - [ ] 51Nod 1768
 - [ ] UOJ218 火车管理
+- [ ] [LOJ546]「LibreOJ β Round #7」网格图
 # 分治
 - [x] UVA1608 Non-boring sequences
 - [x] P4755 Beautiful Pair
