@@ -26,6 +26,8 @@ OGF之积对应数列的卷积，适用于组合计算。
 	\hline
 	$<0,1,\frac{1}{2},\frac{1}{3},\cdots>$ & $\ln\frac{1}{1-x}$                           \\
 	\hline
+	$<0,1,1,2,3,5,\cdots>$ & $\frac{x}{1-x-x^2}$\\
+	\hline
 \end{tabular}
 \subsection{指数型生成函数}
 若数列$<f_0,f_1,\cdots>$，若形式幂级数
@@ -64,8 +66,6 @@ $B_n$满足等式：
 	B_{n+1}&=&\sum_{i=0}^n{\binomial{n}{i}B_i}\\
 	B_n&=&\sum_{i=1}^n{\stirlingA{n}{i}}
 \end{eqnarray*}
-
-\subsubsection{模素数时的性质}
 
 \subsubsection{因子分解应用}
 若整数$\displaystyle n=\sum_{i=1}^k{p_i}$，
@@ -141,3 +141,25 @@ $\sum{w_i}$不可控，只能转化为多重背包解决。
 	AntiLeaf's Round 题解
 	\url{https://loj.ac/article/304}
 }。
+\subsection{递推式与生成函数之间的转换}
+递推式满足$\displaystyle f_n=\sum_{i=1}^k{c_if_{n-i}}$，记生成函数为$F$。
+\subsubsection{递推式$\rightarrow$生成函数}
+考虑生成函数的$x^n$的系数，它的系数减去其它系数的线性加权和等于0。为了做整个函数的加减，
+使用$c_ix_i$进行平移，最后有$F*(1-\displaystyle \sum_{i=1}^k{c_ix^i})=$余项的
+形式，容易解出$F$。
+\subsubsection{生成函数$\rightarrow$递推式}
+由正推的过程发现分母部分为递推式的系数，而分子部分指示了递推式的初始项。
+\subsection{快速求指定数集的幂和}
+该需求来自LuoguP4705 玩游戏。
+
+给定数集$a_1,a_2,\cdots,a_n$，求$k=1,2,\cdots,k$，
+$f(k)=\displaystyle \sum_{i=1}^n{a_i^k}$的值。
+
+考虑令$F(x)$为数列$f$的生成函数，由于对于单个的$a_i$，它的幂的生成函数为
+$\frac{1}{1-a_ix}$，而$F(x)$就是它的总和，即
+$\displaystyle \sum_{i=1}^n{\frac{1}{1-a_ix}}$，但这个式子仍然不好算。
+注意到$(\ln (1-a_ix))'=\frac{-a_i}{1-a_ix}$，令
+$G(x)=\displaystyle \sum_{i=1}^n{\frac{-a_i}{1-a_ix}}$，有$F(x)=-xG(x)+n$。
+将对数函数带回$G(x)$并化简得
+$\displaystyle G(x)=\left(\ln\left(\prod_{i=1}^n{(1-a_ix)}\right)\right)'$。
+使用分治NTT很容易计算出乘积。

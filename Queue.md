@@ -82,18 +82,15 @@
 - [x] LOJ#2058. 「TJOI / HEOI2016」求和
 - [x] LOJ#2020. 「AHOI / HNOI2017」礼物
 - [x] LOJ#2554. 「CTSC2018」青蕈领主
-- [ ] LOJ#547. 「LibreOJ β Round #7」匹配字符串
+- [x] LOJ#547. 「LibreOJ β Round #7」匹配字符串
 - [x] LOJ#556. 「Antileaf's Round」咱们去烧菜吧
-- [ ] P4451
-- [ ] P4389
-- [ ] P3784
+- [x] P4451
+- [x] P4389
 - [ ] P3711
-- [ ] P4389
 - [ ] BZOJ3684: 大朋友和多叉树
 - [ ] BZOJ3456
 - [ ] LOJ#6363. 「地底蔷薇」
-- [ ] P4705
-- [ ] P4389
+- [x] P4705
 - [ ] BZOJ3456
 - [x] BZOJ3160: 万径人踪灭
 - [x] BZOJ4503

@@ -106,7 +106,7 @@
     &=&F_0(z)(1-\ln F_0(z)+A(z))
 \end{eqnarray*}
 
-常数项恒为1，因为多项式ln的常数项恒为0。
+由麦克劳林级数展开式得常数项恒为1。
 \subsection{多项式快速幂}
 使用常规快速幂可以得到$O(n\lg n\lg k)$的复杂度。
 但是通过如下变形：
@@ -218,6 +218,8 @@ $O(W\lg W\lg n)$。
 
 \subsubsection{优化B} 使用优先队列维护多项式次数，然后按照类似赫夫曼编码的策略
 贪心合并多项式。参见kczno1的代码\footnote{\url{https://loj.ac/submission/110667}}。
+
+\subsubsection{优化C} 若它为多个一次多项式相乘，则会出现大量小规模卷积，使用暴力解决。
 
 以上内容参考了picks
 \footnote{
