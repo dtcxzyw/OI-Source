@@ -19,10 +19,14 @@ int getSize(int x) {
 
 封装一个工具函数用于拷贝多项式，参数顺序遵循memcpy。
 \begin{lstlisting}
-void copy(Poly& dst, const Poly& src, int siz) {
+void copyPoly(Poly& dst, const Poly& src, int siz) {
     memcpy(dst.data(), src.data(), sizeof(int) * siz);
 }
 \end{lstlisting}
+
+原来的函数名称是copy，但是编译器经常将其与std::copy在重载决议中混淆
+（比如siz的实参类型为std::size时）。并且涉及模板和STL的代码并不好
+根据编译器错误信息发现错误位置。
 
 封装DFT、IDFT，注意再给IDFT一个参数指示模数，只对需要的系数做除法。
 \begin{lstlisting}
@@ -57,7 +61,7 @@ void inv(int n, const Poly& sf, Poly& g) {
         DFT(p, g);
 
         Poly f(p);
-        copy(f, sf, n);
+        copyPoly(f, sf, n);
         DFT(p, f);
 
         for(int i = 0; i < p; ++i) {
@@ -86,6 +90,6 @@ void inv(int n, const Poly& sf, Poly& g) {
 
 求逆/开方等操作在调试时最好$O(n^2)$验证其正确性。
 
-多项式乘法根据规模使用暴力/FFT解决。
+简单多项式乘法根据规模使用暴力/FFT解决。
 
 {\bfseries 注意std::vector<>::data()是c++11新增的用法，使用时注意程序可移植性。}

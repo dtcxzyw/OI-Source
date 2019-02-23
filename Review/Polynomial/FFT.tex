@@ -247,6 +247,9 @@ for (int i = 1; i < p; ++i) {
 
 以上内容参考了Miskcoo的博客\footnote{实序列离散傅里叶变换的快速算法 – Miskcoo's Space
 \url{http://blog.miskcoo.com/2018/01/real-dft}}。
+
+{\bfseries 注意此法的精度不如常规方法，在CF553E Kyoya and Train一题中尤其明显。
+一般仅用于MTT。}
 \subsection{MTT之拆系数FFT}
 MTT主要用来解决模数不满足NTT条件（模数无原根或者欧拉函数值中2的幂次比数据范围小）的卷积问题，可以使用
 拆系数FFT的实数运算来绕开限制。

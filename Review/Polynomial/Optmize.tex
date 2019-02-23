@@ -4,6 +4,8 @@
     \url{http://negiizhao.blog.uoj.ac/blog/4671}
 }。
 
+一般在多项式开根及exp等常数较大的计算中使用，简单的计算仍然使用原算法。
+
 记长度为$2n$的DFT/IDFT的计算时间为$T(n)$，$n$次形式幂级数乘法的时间为$(3+o(1))T(n)$，
 下面算法的运行时间均以$T(n)$为基准衡量。运行时间有理论上证明与实际测试结果支持。测试用
 模数为998244353，测试规模为$2^{22}$，每个算法重复运行100次。以下时间复杂度证明假装
@@ -16,6 +18,7 @@ $T(n)=2T(n/2)$，即不考虑lg的增长。
 改动（仅修改init与NTT部分，封装的魅力！！！）。由于本节主要注重牛顿迭代法本身的优化，下面
 的算法无论是否优化，都使用优化后的NTT作为基础设施。不过为了体现性能提升的重要性，未优化的
 算法使用的子过程也是未优化的。
+
 \subsection{求逆}
 \subsubsection{原算法}
 原算法在每次迭代中执行2次DFT，1次IDFT，长度均为$2n$级别。记规模为$n$的多项式求逆时间复杂度
@@ -45,6 +48,8 @@ $g_0$卷积时，高h项全部被放到卷积结果的低h项，而我们需要�
 
 注意到两次卷积都有$g_0$，可以重复使用$DFT(g_0)$。最终这个算法需要3次DFT与2次IDFT，
 且卷积规模都是$n$，时间复杂度$(5+o(1))T(n)$。
+
+{\bfseries 注意输入数组也要对齐到2的幂，否则会导致RE或者漫长的Debug。}
 \subsection{平方根}
 \subsubsection{原算法}
 原算法在每次迭代中执行3次DFT，1次IDFT，1次求逆。从模$x^n$推到模$x^{2n}$的时间
@@ -81,11 +86,33 @@ $g_0h_0$以消去$g_0^{-1}$。因为$g_0h_0$的低h项为1，所以乘上$g_0h_0
 \end{eqnarray*}
 
 时间复杂度为$(12+o(1))T(n)$。
-\subsection{优化方法总结}
+\subsection{优化方法总结与实现细节}
+这两个方法通用且优化效果显著。
 \begin{itemize}
     \item 对于子过程需要用到求逆的迭代，可以考虑同步迭代计算逆。
     \item 牛顿迭代法中分子项模$x^h$恒为0，考虑循环卷积减小卷积规模。
 \end{itemize}
+
+{\bfseries 鉴于自己经常忘记初始化与初始化规模不够的情况，今后全面使用惰性初始化。}
+
+为了适应循环卷积惰性除法与清零的需要，更新IDFT接口：
+\begin{lstlisting}
+void IDFT(int n, Poly& A, int b, int e,
+    bool clear = true) {
+    NTT(n, A, getInvRoot);
+    Int64 div = powm(n, mod - 2);
+    for(int i = b; i < e; ++i)
+        A[i] = A[i] * div % mod;
+    if(clear) {
+        memset(data(A), 0, sizeof(int) * b);
+        memset(data(A) + e, 0, sizeof(int) * (n - e));
+    }
+}
+\end{lstlisting}
+
+clear标志指示是否需要清零低位/高位，若需要继续循环卷积则清零，若仅做
+加减法则不清零。\sout{原先使用lc/hc标志独立控制高低位清零，后来发现
+一般只保留一半，规模较小的空位清零不影响性能。}
 \subsection{实验结果}
 测试代码参见仓库中的/Review/Polynomial/Perf文件夹。
 
