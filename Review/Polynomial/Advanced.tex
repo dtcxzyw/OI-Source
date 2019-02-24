@@ -106,7 +106,7 @@
     &=&F_0(z)(1-\ln F_0(z)+A(z))
 \end{eqnarray*}
 
-由麦克劳林级数展开式得常数项恒为1。
+一般其输入的常数项为0，由麦克劳林级数展开式得常数项恒为1。
 \subsection{多项式快速幂}
 使用常规快速幂可以得到$O(n\lg n\lg k)$的复杂度。
 但是通过如下变形：
@@ -249,3 +249,11 @@ Binomial Coefficient Modulo Prime $\ll$ Picks's Blog
     分治FFT学习笔记
     \url{https://blog.csdn.net/VictoryCzt/article/details/82939586}
 }的博客。
+
+\subsection{二元多项式卷积}
+该需求源自2015年国家集训队论文集中金策的《生成函数的运算与组合计数问题》，
+用于解决二元生成函数的卷积。
+
+将二元函数的系数排为矩阵，对每一行做DFT，再对每一列做DFT，将点值相乘，
+对每一列做IDFT，每一行做IDFT。整个过程与DFT计算卷积的过程类似。记多项式次数
+为$n,m$，时间复杂度为$O(nm\lg nm)$。

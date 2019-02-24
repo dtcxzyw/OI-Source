@@ -1,11 +1,10 @@
-#pragma once
-#include "TestLib.hpp"
 #include <algorithm>
+#include <cstdio>
 #include <cstring>
 #include <vector>
 using Int64 = long long;
 #define asInt64 static_cast<Int64>
-constexpr int mod = 998244353, size = 1 << 23;
+constexpr int mod = 1004535809, size = 1 << 17;
 int add(int a, int b) {
     a += b;
     return a < mod ? a : a - mod;
@@ -17,7 +16,7 @@ int sub(int a, int b) {
 int clamp(int a) {
     return a >= 0 ? a : a + mod;
 }
-Int64 powm(Int64 a, int k) {
+Int64 powm(Int64 a, Int64 k) {
     Int64 res = 1;
     while(k) {
         if(k & 1)
@@ -64,13 +63,6 @@ const Poly& getInvRoot(int k) {
     }
     return irc[k];
 }
-void init() {
-    for(int i = 0; i < 24; ++i) {
-        getRev(i);
-        getRoot(i);
-        getInvRoot(i);
-    }
-}
 typedef const Poly& (*Func)(int);
 void NTT(int n, Poly& A, Func w) {
     int p = 0;
@@ -101,13 +93,6 @@ const int* data(const Poly& A) {
 void copyPoly(Poly& dst, const Poly& src, int siz) {
     memcpy(data(dst), data(src), sizeof(int) * siz);
 }
-int getSize(int n) {
-    n <<= 1;
-    int p = 1;
-    while(p < n)
-        p <<= 1;
-    return p;
-}
 void DFT(int n, Poly& A) {
     NTT(n, A, getRoot);
 }
@@ -122,13 +107,103 @@ void IDFT(int n, Poly& A, int b, int e,
         memset(data(A) + e, 0, sizeof(int) * (n - e));
     }
 }
-Duration benchmarkNTT(int n) {
-    int p = getSize(n);
-    puts("Generating input data for NTT...");
-    Poly A = genData(p, p, mod);
-    puts("Calculating NTT...");
-    Duration t = time([&] { NTT(p, A, getRoot); });
-    puts("Done.");
-    return t;
+int getSize(int n) {
+    n <<= 1;
+    int p = 1;
+    while(p < n)
+        p <<= 1;
+    return p;
 }
-struct WrongAnswer {};
+void fastInvIter(int n, const Poly& sf,
+                 const Poly& dftg, Poly& g) {
+    int h = n >> 1;
+    Poly f(n);
+    copyPoly(f, sf, n);
+    DFT(n, f);
+
+    for(int i = 0; i < n; ++i)
+        f[i] = asInt64(f[i]) * dftg[i] % mod;
+    IDFT(n, f, h, n);
+
+    DFT(n, f);
+    for(int i = 0; i < n; ++i)
+        f[i] = asInt64(f[i]) * dftg[i] % mod;
+    IDFT(n, f, h, n, false);
+
+    for(int i = h; i < n; ++i)
+        g[i] = (f[i] ? mod - f[i] : 0);
+}
+void getInvFastImpl(int n, const Poly& sf, Poly& g) {
+    if(n == 1)
+        g[0] = powm(sf[0], mod - 2);
+    else {
+        int h = n >> 1;
+        getInvFastImpl(h, sf, g);
+        Poly dftg(n);
+        copyPoly(dftg, g, h);
+        DFT(n, dftg);
+        fastInvIter(n, sf, dftg, g);
+    }
+}
+void getInvFast(int n, const Poly& sf, Poly& g) {
+    int p = 1;
+    while(p < n)
+        p <<= 1;
+    getInvFastImpl(p, sf, g);
+    memset(data(g) + n, 0, sizeof(int) * (p - n));
+}
+int lut[size];
+void preInv(int n) {
+    static int cur = 1;
+    lut[1] = 1;
+    while(cur < n) {
+        ++cur;
+        lut[cur] = asInt64(mod - mod / cur) *
+            lut[mod % cur] % mod;
+    }
+}
+void der(int n, Poly& f) {
+    for(int i = 1; i < n; ++i)
+        f[i - 1] = i * asInt64(f[i]) % mod;
+    f[n - 1] = 0;
+}
+void inte(int n, Poly& f) {
+    preInv(n);
+    for(int i = n - 1; i >= 1; --i)
+        f[i] = asInt64(lut[i]) * f[i - 1] % mod;
+    f[0] = 0;
+}
+void getLnFast(int n, Poly& sf, Poly& g) {
+    int p = getSize(n);
+    getInvFast(n, sf, g);
+    DFT(p, g);
+    der(n, sf);
+    DFT(p, sf);
+    for(int i = 0; i < p; ++i)
+        g[i] = asInt64(sf[i]) * g[i] % mod;
+    IDFT(p, g, 0, n);
+    inte(n, g);
+}
+int invFac[size];
+int main() {
+    int n;
+    scanf("%d", &n);
+    ++n;
+    preInv(n);
+    invFac[0] = 1;
+    for(int i = 1; i < n; ++i)
+        invFac[i] =
+            asInt64(invFac[i - 1]) * lut[i] % mod;
+    int p = 1;
+    while(p < n * 2)
+        p <<= 1;
+    Poly F(p), G(p);
+    for(int i = 0; i < n; ++i)
+        F[i] = asInt64(invFac[i]) *
+            powm(2, asInt64(i) * (i - 1) / 2) % mod;
+    getLnFast(n, F, G);
+    --n;
+    printf("%lld\n",
+           G[n] * powm(invFac[n], mod - 2) % mod);
+    return 0;
+}

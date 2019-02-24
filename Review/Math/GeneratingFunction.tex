@@ -8,7 +8,7 @@
 \end{displaymath}
 则称$F(x)$为数列${f_n}$的普通型生成函数（OGF，Ordinary Generating Function）。
 
-OGF之积对应数列的卷积，适用于组合计算。
+OGF之积对应数列的卷积，不考虑元素之间的顺序，适用于组合计算。
 
 常见OGF：
 
@@ -36,7 +36,8 @@ OGF之积对应数列的卷积，适用于组合计算。
 \end{displaymath}
 则称$F(x)$为数列${f_n}$的指数型生成函数（Exponential Generating Function）。
 
-EGF之积对应数列卷积乘以组合数，适合计算排列。
+EGF之积对应数列卷积乘以组合数，适合计算排列。注意EGF在计算时存储的是$\frac{a_i}{i!}$，
+初始化EGF时要将系数除以$i!$。
 
 常见EGF：
 
@@ -135,7 +136,7 @@ $ln A(x)$后多项式exp即为答案。注意$\ln (1-x^k)$要合并同类项，�
 每个物品的生成函数为$1+x^{w_i}$，总方案的生成函数为这些函数之积。不过由于指数上界
 $\sum{w_i}$不可控，只能转化为多重背包解决。
 \subsubsection{完全背包}
-背包的容量肯定已知，因此完全背包可转化为多重背包。
+背包的容量已知，单个物品最多装入的个数是有限的，因此完全背包可转化为多重背包。
 
 该讨论源自AntiLeaf的题目「Antileaf's Round」咱们去烧菜吧\footnote{
 	AntiLeaf's Round 题解
@@ -155,7 +156,7 @@ $\sum{w_i}$不可控，只能转化为多重背包解决。
 \subsection{快速求指定数集的幂和}
 该需求来自LuoguP4705 玩游戏。
 
-给定数集$a_1,a_2,\cdots,a_n$，求$k=1,2,\cdots,k$，
+给定数集$a_1,a_2,\cdots,a_n$，求$k=1,2,\cdots,t$，
 $f(k)=\displaystyle \sum_{i=1}^n{a_i^k}$的值。
 
 考虑令$F(x)$为数列$f$的生成函数，由于对于单个的$a_i$，它的幂的生成函数为

@@ -12,7 +12,7 @@ void getInv(int n, const Poly& sf, Poly& g) {
         DFT(p, g);
 
         Poly f(p);
-        copy(f, sf, n);
+        copyPoly(f, sf, n);
         DFT(p, f);
 
         for(int i = 0; i < p; ++i) {
@@ -27,7 +27,7 @@ void fastInvIter(int n, const Poly& sf,
                  const Poly& dftg, Poly& g) {
     int h = n >> 1;
     Poly f(n);
-    copy(f, sf, n);
+    copyPoly(f, sf, n);
     DFT(n, f);
 
     for(int i = 0; i < n; ++i)
@@ -49,7 +49,7 @@ void getInvFastImpl(int n, const Poly& sf, Poly& g) {
         int h = n >> 1;
         getInvFastImpl(h, sf, g);
         Poly dftg(n);
-        copy(dftg, g, h);
+        copyPoly(dftg, g, h);
         DFT(n, dftg);
         fastInvIter(n, sf, dftg, g);
     }
@@ -59,7 +59,7 @@ void getInvFast(int n, const Poly& sf, Poly& g) {
     while(p < n)
         p <<= 1;
     getInvFastImpl(p, sf, g);
-    memset(g.data() + n, 0, sizeof(int) * (p - n));
+    memset(data(g) + n, 0, sizeof(int) * (p - n));
 }
 using InvFunc =
     std::function<void(int n, const Poly&, Poly&)>;

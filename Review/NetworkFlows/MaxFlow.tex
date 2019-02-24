@@ -221,7 +221,7 @@ HLPP算法参考了Mr\_Spade的博客\footnote{
 算法步骤如下：
 \begin{enumerate}
 	\item 任意指定一个节点作为初始点集；
-	\item 查询到点集内的点边权和的最大的点集外的点；
+	\item 查询[到[点集内的点]边权和最大]的[点集外的点]；
 	\item 合并最后加入的两个节点$s,t$并更新最小割；
 	\item 重复第一步直至整个图被合并。
 \end{enumerate}
@@ -247,9 +247,7 @@ HLPP算法参考了Mr\_Spade的博客\footnote{
 首先求出任意一个$ST$割，然后对残量网络求SCC。
 
 按照下列定理判定：
-\begin{theorem}
-	\begin{itemize}
-		\item 若该边满流且两端不属于同一个SCC，则该边出现在某个最小割中
-		\item 若该边满流且起点与$S$在同一个SCC中，终点与$T$在同一个SCC中，则该边出现在任意最小割中
-	\end{itemize}
-\end{theorem}
+\begin{itemize}
+	\item 若该边满流且两端不属于同一个SCC，则该边出现在某个最小割中
+	\item 若该边满流且起点与$S$在同一个SCC中，终点与$T$在同一个SCC中，则该边出现在任意最小割中
+\end{itemize}

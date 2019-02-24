@@ -86,6 +86,23 @@ $g_0h_0$以消去$g_0^{-1}$。因为$g_0h_0$的低h项为1，所以乘上$g_0h_0
 \end{eqnarray*}
 
 时间复杂度为$(12+o(1))T(n)$。
+\subsubsection{CDQ分治FFT计算多项式exp}
+事实上使用非牛顿迭代法计算exp也是挺不错的，哪怕它的理论复杂度为$O(n\lg^2n)$。
+
+在\_rqy的博客里发现了一个简单的多项式exp算法\footnote{
+    \_rqy's Code Style for OI
+    \url{https://rqy.moe/uncategorized/rqy-s-Code-Style-for-OI/}
+}。
+
+实测该方法未优化时在小规模数据$(2^{16})$下性能稍逊于普通exp，但是它简单好写。
+使用小规模暴力卷积与循环卷积优化后性能仅次于优化后的exp，而两者的代码量却约为1:2
+(45:91)。
+
+原理：记$G(x)=e^{F(x)}$，注意到$(e^{F(x)})'=F'(x)e^F(x)$，那么有
+$e^{F(x)}=\int{\frac{xF'(x)e^{F(x)}}{x}}$，记$H(x)=xF'(x)$，很容易预处理。
+然后CDQ分治计算$H(x)$与$G(x)$的卷积，在递归到底层时做积分。注意要特判常数项为1。
+上下同乘一个$x$是为了求导/积分时不用考虑复杂的移位。卷积时由于只取高次项，低位与溢出位
+贡献可以被忽略，对齐后可使用循环卷积优化。
 \subsection{优化方法总结与实现细节}
 这两个方法通用且优化效果显著。
 \begin{itemize}
@@ -100,7 +117,7 @@ $g_0h_0$以消去$g_0^{-1}$。因为$g_0h_0$的低h项为1，所以乘上$g_0h_0
 void IDFT(int n, Poly& A, int b, int e,
     bool clear = true) {
     NTT(n, A, getInvRoot);
-    Int64 div = powm(n, mod - 2);
+    Int64 div = mod - (mod - 1) / n;
     for(int i = b; i < e; ++i)
         A[i] = A[i] * div % mod;
     if(clear) {
@@ -113,6 +130,10 @@ void IDFT(int n, Poly& A, int b, int e,
 clear标志指示是否需要清零低位/高位，若需要继续循环卷积则清零，若仅做
 加减法则不清零。\sout{原先使用lc/hc标志独立控制高低位清零，后来发现
 一般只保留一半，规模较小的空位清零不影响性能。}
+
+事实上除法操作中div不需要使用快速幂求逆元，注意到卷积规模都是2的幂，而
+$\varphi(mod)=mod-1$肯定有2的幂的因子，那么$(mod-1)/n$可以整除且其意义为$-n^{-1}$，
+取反后可得$div=mod-(mod-1)/n$。
 \subsection{实验结果}
 测试代码参见仓库中的/Review/Polynomial/Perf文件夹。
 

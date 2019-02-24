@@ -1,13 +1,14 @@
-\documentclass[10pt,AutoFakeBold,AutoFakeSlant,b5paper,openany]{book}
+\documentclass[10pt,b5paper,openany]{book}
 %Font&Lang
-\usepackage[SlantFont, BoldFont]{xeCJK}
+\usepackage[AutoFakeBold=true, AutoFakeSlant=true]{xeCJK}
 \usepackage{fontspec}
 \usepackage{xunicode,xltxtra}
 \defaultfontfeatures{Mapping=tex-text}
 \XeTeXlinebreaklocale "zh"
 \XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
-\setCJKmainfont[BoldFont={Source Han Sans CN},ItalicFont={Source Han Sans CN}]
-{Source Han Serif CN}
+\setCJKmainfont[Path=/home/noilinux/.local/share/fonts/,
+BoldFont=SourceHanSansCN-Bold.otf,ItalicFont=SourceHanSansCN-ExtraLight.otf]
+{SourceHanSerifCN-Regular.otf}
 \setCJKmonofont{Source Han Sans CN}
 \setCJKsansfont{Source Han Sans CN}
 \usepackage[english]{babel}

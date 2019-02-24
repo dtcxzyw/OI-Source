@@ -205,7 +205,7 @@
 - [x] boruvka算法-CF888G
 - [x] 动态DP
 - [x] ExKMP(Z Algorithm)
-- [ ] 二维FFT
+- [x] 二维FFT
 - [ ] 欧几里得距离MST[By zball](https://www.cnblogs.com/tmzbot/p/6203547.html)
 - [x] 类欧几里得算法
 - [ ] 最小方差生成树
@@ -220,7 +220,7 @@
 - [x] minmax容斥
 - [ ] 有标号的DAG计数[By yyb](https://www.cnblogs.com/cjyyb/p/10134575.html)
 - [ ] CZT[By myy 再探快速傅里叶变换](http://www.doc88.com/p-4912876232995.html)
-- [ ] 优化形式幂级数计算的牛顿法的常数[By negiizhao](http://negiizhao.blog.uoj.ac/blog/4671)
+- [x] 优化形式幂级数计算的牛顿法的常数[By negiizhao](http://negiizhao.blog.uoj.ac/blog/4671)
 - [x] 回滚莫队
 - [x] 原根对1求离散对数[By Dance Of Faith](https://www.cnblogs.com/Dance-Of-Faith/p/9905786.html)
 - [x] 集合选数最值一类问题[By tkandi](https://www.cnblogs.com/tkandi/p/9375509.html)

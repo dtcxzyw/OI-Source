@@ -87,9 +87,10 @@
 - [x] P4451
 - [x] P4389
 - [ ] P3711
-- [ ] BZOJ3684: 大朋友和多叉树
-- [ ] BZOJ3456
+- [x] BZOJ3684: 大朋友和多叉树
+- [x] BZOJ3456
 - [ ] LOJ#6363. 「地底蔷薇」
+- [ ] BZOJ4752 仙人掌计数
 - [x] P4705
 - [x] BZOJ3160: 万径人踪灭
 - [x] BZOJ4503
@@ -104,6 +105,11 @@
 - [ ] UOJ272
 - [ ] LOJ6389 [THUPC2018] 好图计数
 - [ ] P3689 [ZJOI2017]多项式
+- [x] CF850E
+- [ ] LOJ565
+- [ ] LOJ6391
+- [x] CF923E
+- [ ] [清华集训2017] 生成树计数
 # 后缀数组/后缀自动机/序列自动机
 - [x] LOJ#111. 后缀排序
 - [x] LOJ#2033. 「SDOI2016」生成魔咒
@@ -125,6 +131,7 @@
 - [ ] BZOJ2780: [Spoj]8093 Sevenk Love Oimaster
 # KMP
 - [ ] LOJ#2272. 「SDOI2017」文本校正
+- [ ] CF25E Test
 # 线性基
 - [ ] LOJ#2312. 「HAOI2017」八纵八横
 - [x] LOJ#114. k 大异或和
@@ -141,12 +148,14 @@
 - [ ] LOJ#541. 「LibreOJ NOIP Round #1」七曜圣贤
 - [ ] LOJ#2392. 「JOISC 2017 Day 1」烟花棒
 - [ ] CF 691E
+- [ ] LOJ#2356. 「NOI2007」 生成树计数
+- [ ] CF923E（矩阵对角化）
 # LCT
 - [x] LOJ#6038. 「雅礼集训 2017 Day5」远行
 - [x] LOJ#558. 「Antileaf's Round」我们的 CPU 遭到攻击
 - [x] LOJ#2001. 「SDOI2017」树点涂色
 - [x] LOJ#2245. 「NOI2014」魔法森林
-- [ ] LOJ#2289. 「THUWC 2017」在美妙的数学王国中畅游
+- [x] LOJ#2289. 「THUWC 2017」在美妙的数学王国中畅游
 - [ ] Luogu P3206
 - [ ] Luogu P3348
 - [x] UOJ#207. 共价大爷游长沙
@@ -181,6 +190,7 @@
 - [ ] LOJ#6229. 这是一道简单的数学题
 - [ ] SPOJ DIVCNT3
 - [ ] 「SDOI 2018」旧试题
+- [ ] UOJ#450
 # 扩展欧几里得
 - [ ] LOJ#6440
 - [ ] CF868G
@@ -234,6 +244,7 @@
 - [x] LOJ#2206. 「HNOI2014」世界树
 - [x] LOJ#2219. 「HEOI2014」大工程
 - [x] CF 613D
+- [ ] UOJ#87. mx的仙人掌
 # kdtree
 - [ ] LOJ#6016. 崂山白花蛇草水
 # 计算几何
@@ -284,6 +295,7 @@
 - [ ] CF1060H Sophisticated Device
 - [ ] CF522 Negative Time Summation
 - [ ] LOJ#544. 「LibreOJ β Round #7」Array Poisonous Suffix Problem
+- [ ] #525. 「LibreOJ β Round #4」多项式
 # dp
 - [ ] POI2012 SZA-Cloakroom
 - [ ] CF938F
@@ -304,5 +316,16 @@
 - [ ] 矿场搭建
 - [ ] 贝壳找家的神秘机房
 - [ ] APIO2018 铁人两项
-- [ ] ZJOI 灾难
 - [ ] GRAPHCNT
+# 支配树
+- [ ] ZJOI 灾难
+# DSU On Tree
+- [ ] CF600E
+- [ ] CF570D
+- [ ] CF246E
+- [ ] CF208E
+- [ ] CF291E
+- [ ] CF1009F
+- [ ] CF343D
+- [ ] CF375D
+- [ ] CF716E

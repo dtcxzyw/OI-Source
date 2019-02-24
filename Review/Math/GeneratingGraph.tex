@@ -1,0 +1,88 @@
+\section{生成图计数}
+鉴于生成函数在生成图计数中的应用广泛且逐渐普及，另开一节记录生成图计数
+的要点。
+
+下面的内容参考了WC2019汪乐平的讲义《生成函数，多项式算法与图的计数》、
+WC2017营员交流汪乐平的课件《仙人掌计数》以及2015年国家集训队论文集中金策的
+《生成函数的运算与组合计数问题》。
+\sout{当时我在现场冬眠}
+\subsection{基本要点}
+\subsubsection{各类生成函数的用途}
+\begin{itemize}
+    \item 普通生成函数通常用在无标号的计数中。
+    \item 指数生成函数通常用在有标号的计数中。
+    \item 特殊生成函数(SGF)的表达式如下：
+    \begin{displaymath}
+        G(x)=\sum_{n=0}^\infty{\frac{a_n}{2^{\binomial{n}{2}}n!}x^n}
+    \end{displaymath}
+
+    一般用于有标号有向图的计数。$2^{\binomial{n}{2}}$用于确定任意两点之间是否连边。
+\end{itemize}
+\subsubsection{是否连通？}
+\paragraph{无标号集合计数}
+假设我们知道了元素集合组成的OGF为$A(x)$，那么$n$个元素组合对应的OGF为$A(x)^n$，
+答案即为$\displaystyle \sum_{n=0}^\infty{A(x)^n}=\frac{1}{1-A(x)}$。
+使用多项式求逆解决。
+\subsubsection{有无标号？}
+有标号与无标号的方案数只差$n!$。
+如果仅仅是有根与无根的区别，系数差$n$。
+一般先计算有标号/根的方案数，再推回无标号/根。
+\paragraph{有标号集合计数}
+假设我们知道了元素集合组成的EGF为$A(x)$，那么$n$个元素排列对应的EGF为$A(x)^n$，
+由于集合内无顺序关系，要再除以$n!$。答案即为
+$\displaystyle \sum_{n=0}^\infty{\frac{A(x)^n}{n!}}=e^{A(x)}$。
+使用多项式exp/ln解决。
+\paragraph{实际问题转化}
+通常可以将元素视为单个连通图，而将集合视为多个连通图的组合。
+\subsubsection{复合逆}
+有些题目仅仅要求生成函数的某一项，有时会推出符合逆的式子，使用~\ref{LIT}所述的
+拉格朗日反演解决。
+\subsection{实例}
+\subsubsection{有标号森林}
+因为森林是由多棵树组成的，因此先考虑有标号树的EGF。
+
+这是一个完全图生成树问题，有两种解法：
+\begin{itemize}
+    \item 根据~\ref{MatrixTree}所述的矩阵树定理计算行列式。
+    \item 根据~\ref{PurferSeq}所述的Purfer序列可知，一个Purfer序列
+    唯一对应一棵有标号树，序列长度为$n-2$，因此方案数为$n^{n-2}$。
+\end{itemize}
+
+那么有标号树的EGF为$G(x)=\displaystyle \sum_{n=0}^\infty{\frac{n^{n-2}}{n!}x^n}$。
+
+将森林视为树的集合，有标号森林的EGF为$F(x)=e^{G(x)}$。
+\subsubsection{有标号无向连通图}
+多个有标号无向连通图可组合为有标号无向简单图，考虑有标号无向简单图EGF的计算。
+
+枚举完全图的每条边是否选中，大小为$n$的无向简单图个数为$2^{\binomial{n}{2}}$。
+那么EGF为$G(x)=\displaystyle \sum_{n=0}^\infty{\frac{2^{\binomial{n}{2}}}{n!}x^n}$。
+
+将简单图视为连通图的集合，记有标号无向连通图的EGF为$F(x)$，有$G(x)=e^{F(x)}$，
+解得$F(x)=\ln G(x)$。
+\subsubsection{有标号仙人掌}
+无根仙人掌不太好去重，考虑计算有根仙人掌的个数，根或者仙人掌不同都视为不同的有根仙人掌。
+记有根仙人掌的EGF为$G(x)$，无根仙人掌的EGF为$F(x)=\int \frac{G(x)}{x} \ud x$
+\sout{(说白了就是对应系数除以n)}。
+
+接下来考虑有根仙人掌的计数。删掉从根出发的边，讨论每条边是否在环上，以及对应子连通块的EGF。
+\begin{itemize}
+    \item 边不在环上：删掉这条边后，分离出的连通块也是一棵仙人掌，以边的另一个
+    端点为子仙人掌的根，对应了一棵新的仙人掌，EGF为$G(x)$。
+    \item 边在环上：显然要删去2条边才能分离出子连通块，将其一起考虑。设环上删去根节点后
+    有$i$个点（$i\geq 2$），以每个点为根都有一棵仙人掌（不往环上的点走），这些仙人掌串成
+    了一条链，由于链可以翻转，EGF为$\frac{G(x)^i}{2}$。
+\end{itemize}
+
+考虑删去这条边后子连通块的EGF，即上面分析出的所有情况相加，有
+\begin{displaymath}
+    G(x)+\sum_{i=2}^\infty{\frac{G(x)^i}{2}}=
+    \frac{2G(x)-G^2(x)}{2-2G(x)}
+\end{displaymath}
+
+将子连通块组合并加回根节点，有$G(x)=xe^{\frac{2G(x)-G^2(x)}{2-2G(x)}}$。
+$G(x)$可以使用牛顿迭代法计算。
+\subsubsection{有标号有向无环图}
+\subsubsection{有标号环}
+\subsubsection{无标号环}
+\subsubsection{带边数限制的有标号无向连通图}
+\subsubsection{有标号点双连通分量}

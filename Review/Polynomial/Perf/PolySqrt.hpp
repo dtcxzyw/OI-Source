@@ -46,11 +46,11 @@ void getSqrt(int n, const Poly& sf, Poly& g) {
 
         int p = getSize(n);
         Poly f(p);
-        copy(f, sf, n);
+        copyPoly(f, sf, n);
         DFT(p, f);
 
         Poly tg(p), ig(p);
-        copy(tg, g, h);
+        copyPoly(tg, g, h);
         getInv(n, tg, ig);
         tg.clear();
         DFT(p, ig);
@@ -75,14 +75,14 @@ void getSqrtFastImpl(int n, const Poly& sf, Poly& g,
 
         // shared
         Poly dftig(n);
-        copy(dftig, ig, h);
+        copyPoly(dftig, ig, h);
         DFT(n, dftig);
 
         // sqrt
         {
             // g_0^2-f
             Poly tg(n);
-            copy(tg, g, h);
+            copyPoly(tg, g, h);
             DFT(n, tg);
             for(int i = 0; i < n; ++i)
                 tg[i] = asInt64(tg[i]) * tg[i] % mod;
@@ -110,7 +110,7 @@ void getSqrtFast(int n, const Poly& sf, Poly& g) {
         p <<= 1;
     Poly ig(p);
     getSqrtFastImpl(p, sf, g, ig, false);
-    memset(g.data() + n, 0, sizeof(int) * (p - n));
+    memset(data(g) + n, 0, sizeof(int) * (p - n));
 }
 using SqrtFunc =
     std::function<void(int n, const Poly&, Poly&)>;

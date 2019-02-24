@@ -39,14 +39,14 @@ void getExp(int n, const Poly& sf, Poly& g) {
 
         int p = getSize(n);
         Poly tg(p), lng(p);
-        copy(tg, g, h);
+        copyPoly(tg, g, h);
         getLn(n, tg, lng);
         tg.clear();
         DFT(p, lng);
         DFT(p, g);
 
         Poly f(p);
-        copy(f, sf, n);
+        copyPoly(f, sf, n);
         DFT(p, f);
 
         for(int i = 0; i < p; ++i) {
@@ -68,7 +68,7 @@ void getExpFastImpl(int n, const Poly& sf, Poly& g,
 
         // shared
         Poly dftig(n);
-        copy(dftig, ig, h);
+        copyPoly(dftig, ig, h);
         DFT(n, dftig);
 
         // exp
@@ -83,7 +83,7 @@ void getExpFastImpl(int n, const Poly& sf, Poly& g,
             IDFT(n, A, h - 1, n - 1, false);
 
             Poly B(n), dftg(n);
-            copy(dftg, g, h);
+            copyPoly(dftg, g, h);
             DFT(n, dftg);
             for(int i = 0; i < n; ++i)
                 B[i] =
@@ -103,7 +103,7 @@ void getExpFastImpl(int n, const Poly& sf, Poly& g,
                 Int64 x = sub(A[i - 1], B[i - 1]);
                 A[i] = lut[i] * x % mod;
             }
-            memset(A.data(), 0, sizeof(int) * h);
+            memset(data(A), 0, sizeof(int) * h);
 
             for(int i = h; i < n; ++i)
                 A[i] = sub(A[i], sf[i]);
@@ -128,7 +128,52 @@ void getExpFast(int n, const Poly& sf, Poly& g) {
         p <<= 1;
     Poly ig(p);
     getExpFastImpl(p, sf, g, ig, false);
-    memset(g.data() + n, 0, sizeof(int) * (p - n));
+    memset(data(g) + n, 0, sizeof(int) * (p - n));
+}
+Poly conv(const int* A, const int* B, int siz) {
+    int p = siz << 1;
+    if(siz <= 16) {
+        Poly res(p);
+        for(int i = 0; i < siz; ++i)
+            for(int j = siz - i; i + j < p; ++j)
+                res[i + j] = (res[i + j] +
+                              asInt64(A[i]) * B[j]) %
+                    mod;
+        return res;
+    }
+    Poly X(p), Y(p);
+    memcpy(data(X), A, sizeof(int) * siz);
+    memcpy(data(Y), B, sizeof(int) * p);
+    DFT(p, X);
+    DFT(p, Y);
+    for(int i = 0; i < p; ++i)
+        X[i] = asInt64(X[i]) * Y[i] % mod;
+    IDFT(p, X, siz, p, false);
+    return X;
+}
+void getExpCDQImpl(int b, int e, const Poly& sf,
+                   Poly& g) {
+    if(b + 1 == e) {
+        g[b] = (b == 0 ? 1 :
+                         asInt64(g[b]) * lut[b] % mod);
+    } else {
+        int m = (b + e) >> 1, h = m - b;
+        getExpCDQImpl(b, m, sf, g);
+        Poly X = conv(data(g) + b, data(sf), h);
+        for(int i = m; i < e; ++i)
+            g[i] = add(g[i], X[i - b]);
+        getExpCDQImpl(m, e, sf, g);
+    }
+}
+void getExpCDQ(int n, const Poly& sf, Poly& g) {
+    int p = 1;
+    while(p < n)
+        p <<= 1;
+    Poly cf(p);
+    for(int i = 0; i < n; ++i)
+        cf[i] = asInt64(sf[i]) * i % mod;
+    getExpCDQImpl(0, p, cf, g);
+    memset(data(g) + n, 0, sizeof(int) * (p - n));
 }
 void getLnFast(int n, Poly& sf, Poly& g) {
     int p = getSize(n);
