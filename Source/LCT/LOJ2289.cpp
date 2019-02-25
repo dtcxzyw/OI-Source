@@ -190,8 +190,11 @@ void cut(int u, int v) {
 }
 bool test(int u, int v) {
     split(u, v);
-    while(T[v].c[0])
+    pushDown(v);
+    while(T[v].c[0]) {
         v = T[v].c[0];
+        pushDown(v);
+    }
     splay(v);
     return u == v;
 }

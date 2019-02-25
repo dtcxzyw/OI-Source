@@ -70,7 +70,8 @@
 			"cfloat": "cpp",
 			"memory": "cpp",
 			"optional": "cpp",
-			"string_view": "cpp"
+			"string_view": "cpp",
+			"cstddef": "cpp"
 		},
 		"latex-workshop.intellisense.citation.maxfilesizeMB": 128,
 		"latex-workshop.latex.recipes": [

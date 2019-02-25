@@ -4,20 +4,45 @@
 然后递归每棵子树分治。这种方法一般用来解决{\bfseries 路径统计问题}。
 \subsection{常规点分治}
 \subsubsection{重心性质}
-\begin{property}\label{WPP}
+\begin{property}\label{WPPA}
     重心的儿子子树大小不超过整棵树大小的一半。
 \end{property}
 证明：考虑重心为$R$，设$R$的某个儿子$u$满足其子树大小超过
 $\frac{N}{2}$，那么点$u$比点$R$更优，与重心为$R$的条件矛盾。
-\begin{property}
+\begin{property}\label{WPPB}
     所有点到重心的距离和最小，到两个重心的距离和相等。
 \end{property}
-\begin{property}
+\begin{property}\label{WPPC}
     两棵树合并后的重心在这两棵树的重心的路径上。
 \end{property}
-\begin{property}
+\begin{property}\label{WPPD}
     添加或减少一个叶子节点，重心最多偏移一条边。
 \end{property}
+
+这个性质搭配启发式合并可以用来快速处理新连通块的重心。
+
+\paragraph{例题} LuoguP4299 首都：
+
+根据性质~\ref{WPPB}可知该题要维护的是动态连通块的重心，且重心一定在这两棵树的
+重心的路径上。那么可以在其中一棵树上从连接点开始逐步长叶子，利用性质~\ref{WPPD}，每次
+试探是否要往另一连通块的重心移动。使用启发式合并可以保证合并复杂度，至于快速查询距离和/
+子树大小，可以使用LCT维护。时间复杂度$O(n\lg^2n)$。
+
+当然根据性质~\ref{WPPC}，可以直接link两棵树，然后split出两个重心的链，在链上查询。
+该方法参考了FlashHu的题解\footnote{
+    题解 P4299 【首都】\\
+    \url{https://www.luogu.org/blog/flashblog/solution-p4299}
+}。
+
+查询首都时应该使用常数更小的并查集维护，向某个节点的移动时可以使用树链剖分支持查询
+（按照是否在到根的链上分类，结合~\ref{CSTA}中提到的jump函数询问）。移动目标仅需
+指定为较小子树的连接点，因为再移动就会违反性质~\ref{WPPA}。
+
+参考代码（$O(n\lg^2n)$）：
+\lstinputlisting{Source/Source/LCT/4299A.cpp}
+
+参考代码（$O(n\lg n)$）：
+\lstinputlisting{Source/Source/LCT/4299B.cpp}
 
 \paragraph{树的同构判定}
 对于一棵有根树可以使用一些Hash规则计算子树的Hash值（合并子树Hash值的运算需要满足交换律或
@@ -92,7 +117,7 @@ void divide(int u) {
 \subsubsection{时间复杂度}
 点分治会带来$O(\lg n)$的复杂度，证明：
 
-根据性质~\ref{WPP}，点分治的层数为$O(\lg n)$，而且每层的总规模都是$n$。
+根据性质~\ref{WPPA}，点分治的层数为$O(\lg n)$，而且每层的总规模都是$n$。
 
 \subsection{动态点分治}
 动态点分治就是在分治时连接当前分治点与子连通块的分治点，

@@ -110,6 +110,7 @@
 - [ ] LOJ6391
 - [x] CF923E
 - [ ] [清华集训2017] 生成树计数
+- [ ] CF981H K Paths
 # 后缀数组/后缀自动机/序列自动机
 - [x] LOJ#111. 后缀排序
 - [x] LOJ#2033. 「SDOI2016」生成魔咒
@@ -126,6 +127,7 @@
 - [x] LOJ#6198. 谢特（SAMParent树+Trie合并）
 - [x] BZOJ3277: 串
 - [x] BZOJ2780: [Spoj]8093 Sevenk Love Oimaster
+- [ ] CTSC2010 珠宝商
 # AC自动机
 - [x] LOJ#2180. 「BJOI2017」魔法咒语
 - [ ] BZOJ2780: [Spoj]8093 Sevenk Love Oimaster
@@ -156,15 +158,16 @@
 - [x] LOJ#2001. 「SDOI2017」树点涂色
 - [x] LOJ#2245. 「NOI2014」魔法森林
 - [x] LOJ#2289. 「THUWC 2017」在美妙的数学王国中畅游
-- [ ] Luogu P3206
 - [ ] Luogu P3348
 - [x] UOJ#207. 共价大爷游长沙
 - [x] LOJ#2230. 「BJOI2014」大融合
 - [ ] bzoj2959: 长跑
 - [ ] bzoj3153: Sone1
-- [ ] SP2939 QTREE5
-- [ ] SP16549 QTREE6
-- [ ] SP16580 QTREE7
+- [x] SP2939 QTREE5
+- [x] SP16549 QTREE6
+- [x] SP16580 QTREE7
+- [ ] BZOJ3510
+- [ ] UOJ#274. 【清华集训2016】温暖会指引我们前行
 # 平衡树
 - [x] LOJ#516. 「LibreOJ β Round #2」DP 一般看规律
 # 容斥/反演/筛法
@@ -191,6 +194,10 @@
 - [ ] SPOJ DIVCNT3
 - [ ] 「SDOI 2018」旧试题
 - [ ] UOJ#450
+- [ ] CF1097F Alex and a TV Show
+- [ ] [国家集训队]Crash的数字表格 / JZPTAB
+- [ ] P4859 已经没有什么好害怕的了
+- [ ] P4707 重返现世
 # 扩展欧几里得
 - [ ] LOJ#6440
 - [ ] CF868G
@@ -220,6 +227,7 @@
 # CDQ分治
 - [ ] LOJ#2049. 「HNOI2016」网络
 - [ ] LOJ#2056. 「TJOI / HEOI2016」序列
+- [x] Luogu P3206
 # 2-SAT
 - [ ] LOJ#571. 「LibreOJ Round #11」Misaka Network 与 Accelerator
 - [ ] LOJ#2155. 「POI2011 R1」同谋者 Conspiracy
@@ -240,6 +248,7 @@
 - [ ] BZOJ4568
 - [ ] BZOJ3730: 震波
 - [ ] BZOJ4732: 数据交互
+- [ ] SP2939 QTREE5 - Query on a tree V
 # 虚树
 - [x] LOJ#2206. 「HNOI2014」世界树
 - [x] LOJ#2219. 「HEOI2014」大工程
@@ -329,3 +338,5 @@
 - [ ] CF343D
 - [ ] CF375D
 - [ ] CF716E
+# 分数规划
+- [ ] P3778 [APIO2017]商旅

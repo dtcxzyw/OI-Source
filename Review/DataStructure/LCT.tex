@@ -161,6 +161,7 @@ $access(u)$后节点$u$到根节点的路径上的点在同一棵splay内，可�
     \url{https://www.luogu.org/problemnew/show/P3703}}。
 \subsubsection{动态LCA}
 注意link/cut操作不能换根，换根会使树的形态改变导致LCA不同。
+
 求节点$u,v$的LCA时，首先$access(u)$开辟一条链，类似地$access(v)$再开辟一条链，
 $access(v)$时会与$access(u)$的链相交，交点即为LCA。在实现时可以直接令$access$函数
 返回$v$值作为与上一条链的交点（当$while(u)$为false时，说明在$u=T[u].p$之前的$u$是
@@ -216,6 +217,8 @@ $access(v)$时会与$access(u)$的链相交，交点即为LCA。在实现时可�
     记得下传！！！一般在access替入rs到链左端的信息与update读取实儿子信息中需要使用。不过
     值得欣慰的是我用LCT拿了LOJ的rank1，时间是第二快的50\%，空间是第二小的30\%，代码长度是
     第二短的80\%。}
+    \item 为了编码方便，可以将自身的贡献塞到虚子树贡献中。
+    \item LCT初始化时使用常规DFS处理信息，而不是用link。
 \end{itemize}
 
 代码如下：
@@ -253,3 +256,32 @@ $access(v)$时会与$access(u)$的链相交，交点即为LCA。在实现时可�
 但是这个想法离正解已经很接近了。注意这里的问题是``判定‘'而不是``统计''，
 考虑给每条路径随机一个权值，增删路径时在端点处异或该权值，查询任意一端子树异或和，
 判断其是否为路径异或和。
+\subsubsection{LCT维护黑白连通块}
+该需求来自SP16549 QTREE6 - Query on a tree VI。
+这题当然也可以使用LCT维护子树信息的做法，但是讨论比较多，性能不佳
+（\sout{树上单点修改+换根统计万金油倒是没错，复杂度保证全部交给LCT}）。
+
+考虑维护两个森林，一个森林上只有黑点，另一个森林上只有白点，更改颜色时暴力
+断开原有连边，连到另一棵森林上，查询时只要询问其所在连通块的大小。大小比连通性
+更容易维护。
+
+但是如果这是一个菊花图，断开中间的点后，可能会导致$O(n)$的边修改量。那么考虑DFS
+一遍给整棵树定型，每次只修改与父亲的连边。那么就保证了连通块内所有边的儿子都是该颜色
+的点，只有连通块的根不是该颜色的点，找到深度最浅的点后返回右子树大小（不能返回子树大小-1
+是因为左子树可能有其它连通块）。
+
+因为整棵树被定型，不能使用makeRoot操作，需要对link和cut特殊处理。
+
+\begin{itemize}
+    \item $link(u,f_u)$：$f_u$要接受$u$子树大小的虚子树贡献，所以要
+    $access(f_u),splay(f_u)$；为了将$u$挂在下面，要$splay(u)$；最后
+    连接$fa[u]=f_u$、贡献$isiz[f_u]+=siz[u]$、更新$update(f_u)$。
+    \item $cut(u,f_u)$：$access(u)$后要$splay(f_u)$而不是$splay(u)$，然后
+    按照普通$cut$操作。若使用$splay(u)$，$f_u$并不一定是$u$的左儿子，不能令
+    $fa[f_u]=0$，而是要令$fa[lson[u]]=0$。
+\end{itemize}
+
+该方法参考了cdsszjj的博客\footnote{
+    bzoj3637: Query on a tree VI【LCT】\\
+    \url{https://blog.csdn.net/cdsszjj/article/details/80332588}
+}。
