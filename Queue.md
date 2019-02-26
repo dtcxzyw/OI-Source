@@ -13,6 +13,7 @@
 - [x] LOJ#2558. 「LNOI2014」LCA
 - [ ] LOJ#6564. 最长公共子序列
 - [ ] LOJ#2265. 「CTSC2017」最长上升子序列
+- [ ] LOJ#2392. 「JOISC 2017 Day 1」烟花棒
 # 题集
 - [ ] PKUWC2018
 - [ ] Ynoi2019模拟赛[By OldDriverTree](http://olddrivertree.blog.uoj.ac/blog/4656)
@@ -147,11 +148,11 @@
 - [x] LOJ#6039. 「雅礼集训 2017 Day5」珠宝
 - [ ] LOJ#2688. 「POI 2015」洗车 Myjnie
 - [ ] Luogu P1912 [NOI2009]诗人小G
-- [ ] LOJ#541. 「LibreOJ NOIP Round #1」七曜圣贤
-- [ ] LOJ#2392. 「JOISC 2017 Day 1」烟花棒
-- [ ] CF 691E
-- [ ] LOJ#2356. 「NOI2007」 生成树计数
-- [ ] CF923E（矩阵对角化）
+- [ ] CF739E
+- [x] CF 691E
+- [x] LOJ#2356. 「NOI2007」 生成树计数
+- [x] CF923E（矩阵对角化）
+- [x] bzoj3583
 # LCT
 - [x] LOJ#6038. 「雅礼集训 2017 Day5」远行
 - [x] LOJ#558. 「Antileaf's Round」我们的 CPU 遭到攻击
@@ -166,7 +167,7 @@
 - [x] SP2939 QTREE5
 - [x] SP16549 QTREE6
 - [x] SP16580 QTREE7
-- [ ] BZOJ3510
+- [x] P4299 首都
 - [ ] UOJ#274. 【清华集训2016】温暖会指引我们前行
 # 平衡树
 - [x] LOJ#516. 「LibreOJ β Round #2」DP 一般看规律

@@ -44,7 +44,8 @@
     但是如果按照$i,k,j$的顺序计算，就可以使$C[i][j]$与$B[k][j]$的访问位置连续，
     提高访问速度；
     \item 在第3层循环内进行循环展开。
-    \item 遇到稀疏矩阵时使用$ikj$枚举顺序，提前判断$A[i][j]$是否为0。
+    \item 遇到稀疏矩阵时使用$ikj$枚举顺序，提前判断$A[i][k]$是否为0。用这个方法
+    能够获得跑过规模为$400$的矩阵快速幂的信仰。
 \end{itemize}
 性能测试代码：
 \lstinputlisting{Other/Mat.cpp}
@@ -73,7 +74,8 @@ mulOptimizedUnfold 11096.677 ms AC
     \item Cache优化：大数组的每一维大小都不要是2的幂，尤其是状压dp和FFT。
     因为Cache会存储额外信息。
     \item 寻址优化：高维数组寻址时使用指针代替。
-    \item Cache优化：在性能敏感的地方，使用指针存储儿子。
+    \item Cache优化：在性能敏感的地方，使用指针存储儿子（当然还要考虑if判断
+    nullptr的开销）。
 \end{itemize}
 \subsection{位运算}\label{Bitwise}
 \subsubsection{符号判断}
