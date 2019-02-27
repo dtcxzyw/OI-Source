@@ -26,6 +26,7 @@
 - [ ] Project Euler（高三或大学时刷）
 - [ ] NEERC
 - [ ] THUPC2017/2018
+- [ ] 2017山东一轮集训
 # Min_25 筛
 - [x] LOJ#6053. 简单的函数
 - [ ] UOJ#188. 【UR #13】Sanrd
@@ -57,6 +58,8 @@
 - [ ] LOJ#2475. 「2018 集训队互测 Day 3」白云的旅行
 - [ ] LOJ#2737. 「JOISC 2016 Day 3」电报
 - [ ] LOJ#6496. 「雅礼集训 2018 Day1」仙人掌
+- [ ] BZOJ2125 最短路
+- [ ] P4320 道路相遇
 # 动态dp
 - [x] P4719 【模板】动态dp
 - [ ] 【LOJ】#2269. 「SDOI2017」切树游戏
@@ -129,6 +132,7 @@
 - [x] BZOJ3277: 串
 - [x] BZOJ2780: [Spoj]8093 Sevenk Love Oimaster
 - [ ] CTSC2010 珠宝商
+- [ ] CF264D Colorful Stones
 # AC自动机
 - [x] LOJ#2180. 「BJOI2017」魔法咒语
 - [ ] BZOJ2780: [Spoj]8093 Sevenk Love Oimaster
@@ -146,13 +150,37 @@
 - [x] LOJ#2481. 「CEOI2017」Sure Bet
 - [x] LOJ#2483. 「CEOI2017」Building Bridges
 - [x] LOJ#6039. 「雅礼集训 2017 Day5」珠宝
-- [ ] LOJ#2688. 「POI 2015」洗车 Myjnie
-- [ ] Luogu P1912 [NOI2009]诗人小G
-- [ ] CF739E
+- [x] LOJ#2688. 「POI 2015」洗车 Myjnie
 - [x] CF 691E
 - [x] LOJ#2356. 「NOI2007」 生成树计数
 - [x] CF923E（矩阵对角化）
 - [x] bzoj3583
+# 决策单调性DP
+- [x] Luogu P1912 [NOI2009]诗人小G
+- [ ] [NOI2011]Noi嘉年华
+- [ ] [AH2017/HNOI2017]大佬
+- [ ] [Jsoi2011]柠檬
+- [ ] [POI2011]Lightning Conductor
+- [ ] CF868F Yet Another Minimization Problem
+# 斜率优化
+- [ ] [USACO08MAR]土地征用Land Acquisition
+- [ ] [HNOI2008]玩具装箱TOY
+- [ ] [APIO2010]特别行动队
+- [ ] [CEOI2004]锯木厂选址
+- [ ] [NOI2014]购票
+- [ ] [NOI2016]国王饮水记
+# 凸优化（WQS二分、带权二分）
+- [ ] CF 739E
+- [ ] [国家集训队2]Tree I
+- [ ] [SDOI2016]征途
+- [ ] [八省联考2018]林克卡特树lct
+- [ ] BZOJ5311贞鱼
+# 单调队列
+- [ ] P1776 宝物筛选_NOI导刊2010提高（02）
+- [ ] P2254 [NOI2005]瑰丽华尔兹
+- [ ] P2569 [SCOI2010]股票交易
+- [ ] P3572 [POI2014]PTA-Little Bird
+- [ ] P3594 [POI2015]WIL-Wilcze doły
 # LCT
 - [x] LOJ#6038. 「雅礼集训 2017 Day5」远行
 - [x] LOJ#558. 「Antileaf's Round」我们的 CPU 遭到攻击
@@ -203,7 +231,7 @@
 - [ ] LOJ#6440
 - [ ] CF868G
 - [ ] BZOJ3817
-# 网络流
+# 网络流（做之前先完成技巧总结）
 - [x] LOJ#115. 无源汇有上下界可行流
 - [x] LOJ#116. 有源汇有上下界最大流
 - [x] LOJ#117. 有源汇有上下界最小流
@@ -218,6 +246,7 @@
 - [ ] 方伯伯运椰子
 - [ ] THUPC2017 Airport
 - [ ] UOJ 无限之环
+- [ ] CF739E
 # 分块及按大小分类
 - [x] LOJ#6277-6285
 # 插头dp
@@ -289,6 +318,7 @@
 - [ ] 51Nod 1768
 - [ ] UOJ218 火车管理
 - [ ] [LOJ546]「LibreOJ β Round #7」网格图
+- [ ] BZOJ5312 冒险
 # 分治
 - [x] UVA1608 Non-boring sequences
 - [x] P4755 Beautiful Pair

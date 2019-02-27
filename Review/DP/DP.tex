@@ -8,5 +8,24 @@
 \input{DP/Quad}
 \input{DP/Power}
 \input{DP/Dynamic}
-\input{DP/Partition}
+\input{DP/Mono}
+\input{DP/Convex}
 \input{DP/SDP}
+\section{杂记}
+\begin{itemize}
+    \item 我原先写区间dp时首先枚举长度，然后枚举左端点：
+    \begin{lstlisting}
+    for(int len=1;len<=n;++len)
+        for(int l=1,r=len;r<=n;++r)
+    \end{lstlisting}
+
+    这样子长度较小的区间先于长度较大的区间dp完毕。
+
+    不过还有另一种写法：
+    \begin{lstlisting}
+    for(int l=n;l>=1;--l)
+        for(int r=l;r<=n;++r)
+    \end{lstlisting}
+
+    这种区间枚举方式代码简短，在缓存友好方面倒是没有什么优势。
+\end{itemize}

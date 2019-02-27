@@ -1,6 +1,6 @@
 \section{计算形式幂级数的牛顿迭代法的常数优化}
 该内容基于negiizhao的博客\footnote{
-    \sout{noip退役选手的一些扯淡}关于优化形式幂级数计算的牛顿法的常数\\
+    \CJKsout{noip退役选手的一些扯淡}关于优化形式幂级数计算的牛顿法的常数\\
     \url{http://negiizhao.blog.uoj.ac/blog/4671}
 }。
 
@@ -128,7 +128,7 @@ void IDFT(int n, Poly& A, int b, int e,
 \end{lstlisting}
 
 clear标志指示是否需要清零低位/高位，若需要继续循环卷积则清零，若仅做
-加减法则不清零。\sout{原先使用lc/hc标志独立控制高低位清零，后来发现
+加减法则不清零。\CJKsout{原先使用lc/hc标志独立控制高低位清零，后来发现
 一般只保留一半，规模较小的空位清零不影响性能。}
 
 事实上除法操作中div不需要使用快速幂求逆元，注意到卷积规模都是2的幂，而
