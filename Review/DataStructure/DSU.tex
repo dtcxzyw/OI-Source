@@ -23,13 +23,14 @@ UVA11987 Almost Union-Find \footnote{
     【UVA11987】Almost Union-Find - 洛谷
     \url{https://www.luogu.org/problemnew/show/UVA11987}}
 
-步骤同上所述，注意只有同时使用路径压缩和按秩合并才能达到$O(m\alpha(n))$的复杂度。
+步骤同上所述，{\bfseries 注意只有同时使用路径压缩和按秩合并才能达到
+$O(m\alpha(n))$的复杂度}。
 
 代码如下：
 \lstinputlisting[title=UVA11987]{DataStructure/UVA11987.cpp}
 
 \subsection{并查集重构树}
-类似于Kruskal重构树，当两个联通块相连时建一个新的父亲节点并连边，
+类似于Kruskal重构树，当两个连通块相连时建一个新的父亲节点并连边，
 可以发现两个节点第一次被连接的时间点就是它们的LCA建立的时间点。
 
 \paragraph{例题~BZOJ 3712: [PA2014]Fiolki}

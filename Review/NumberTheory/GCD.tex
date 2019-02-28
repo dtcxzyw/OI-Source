@@ -28,6 +28,9 @@ $(x,y)$施加偏移可以得到无穷多整数解。
 证明参考了霜刃未曾试的博客\footnote{关于裴蜀定理的一些证明\\
 	\url{https://blog.csdn.net/discreeter/article/details/69833579}}与
 算法导论\cite{ITA3}第31.1节定理31.2的证明。
+
+{\bfseries 注意求$ax\equiv b\pmod{n}$最小非负整数解时的周期是$abs(n/gcd(n,a))$。}
+
 \subsection{exgcd}
 由定理~\ref{BT}可知一定存在整数解$(x,y)$满足$ax+by=(a,b)$，如何构造
 出一组解呢？
@@ -54,8 +57,6 @@ $exgcd$（扩展欧几里得算法）可求出一组特殊的整数解。
 	      $by'+(a-[\frac{a}{b}]b)x'=d$，该式可变形为$ax'+b(y'-[\frac{a}{b}]x')=d$，
 	      因此本次递归返回$(x',y'-[\frac{a}{b}]x')$。
 \end{itemize}
-
-{\bfseries 注意求最小非负整数解时的周期是$abs(n/gcd(n,a))$！！！}
 
 \subsection{位运算gcd}
 

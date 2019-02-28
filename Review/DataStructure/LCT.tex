@@ -237,12 +237,15 @@ $access(v)$时会与$access(u)$的链相交，交点即为LCA。在实现时可�
 第二个DSU中的$id$置为$v$。{\bfseries 注意设置位置是原$id$，缩点后$v$的左右儿子要置0。}
 
 上述内容参考了neither\_nor\footnote{
-    LCT维护子树信息（子树信息LCT） LCT维护边权（边权LCT） 知识点讲解
+    LCT维护子树信息（子树信息LCT） LCT维护边权（边权LCT） 知识点讲解\\
     \url{https://blog.csdn.net/neither\_nor/article/details/52979425}
 }和GuessYCB\footnote{
     LCT 模板及套路总结
     \url{https://www.cnblogs.com/GuessYCB/p/8330024.html}
-}的博客。
+}的博客，以及AntiLeaf's~Round的题解\footnote{
+    AntiLeaf's Round 题解
+    \url{https://loj.ac/article/304}
+}。
 
 \subsubsection{共价大爷游长沙技巧}
 例题：UOJ\#207.共价大爷游长沙
@@ -267,8 +270,8 @@ $access(v)$时会与$access(u)$的链相交，交点即为LCA。在实现时可�
 
 但是如果这是一个菊花图，断开中间的点后，可能会导致$O(n)$的边修改量。那么考虑DFS
 一遍给整棵树定型，每次只修改与父亲的连边。那么就保证了连通块内所有边的儿子都是该颜色
-的点，只有连通块的根不是该颜色的点，找到深度最浅的点后返回右子树大小（不能返回子树大小-1
-是因为左子树可能有其它连通块）。
+的点，只有连通块的深度最浅点不是该颜色的点（为了支持根节点的染色，给根节点一个虚父亲），
+找到深度最浅的点后返回右子树大小（不能返回子树大小-1是因为左子树可能有其它连通块）。
 
 因为整棵树被定型，不能使用makeRoot操作，需要对link和cut特殊处理。
 

@@ -84,6 +84,12 @@ int merge(int u, int v) {
 }
 \end{lstlisting}
 
+\subsubsection{修改}
+\begin{itemize}
+    \item 插入节点时，新建一个只有插入元素的堆，然后合并两个堆。
+    \item 删除节点时，合并堆顶左右儿子表示的子堆。
+\end{itemize}
+
 \subsection{斜堆}
 斜堆的操作与左偏树差不多，它们的区别是斜堆不维护到外节点的最近距离，
 而是在每一次$merge$时简单地$swap$左右子树。

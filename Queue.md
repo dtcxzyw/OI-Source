@@ -27,6 +27,7 @@
 - [ ] NEERC
 - [ ] THUPC2017/2018
 - [ ] 2017山东一轮集训
+- [ ] THUSCH
 # Min_25 筛
 - [x] LOJ#6053. 简单的函数
 - [ ] UOJ#188. 【UR #13】Sanrd
@@ -159,14 +160,14 @@
 - [x] Luogu P1912 [NOI2009]诗人小G
 - [ ] [NOI2011]Noi嘉年华
 - [ ] [AH2017/HNOI2017]大佬
-- [ ] [Jsoi2011]柠檬
-- [ ] [POI2011]Lightning Conductor
-- [ ] CF868F Yet Another Minimization Problem
+- [x] [Jsoi2011]柠檬
+- [x] [POI2011]Lightning Conductor
+- [x] CF868F Yet Another Minimization Problem
 # 斜率优化
-- [ ] [USACO08MAR]土地征用Land Acquisition
-- [ ] [HNOI2008]玩具装箱TOY
-- [ ] [APIO2010]特别行动队
-- [ ] [CEOI2004]锯木厂选址
+- [x] [USACO08MAR]土地征用Land Acquisition
+- [x] [HNOI2008]玩具装箱TOY
+- [x] [APIO2010]特别行动队
+- [x] [CEOI2004]锯木厂选址
 - [ ] [NOI2014]购票
 - [ ] [NOI2016]国王饮水记
 # 凸优化（WQS二分、带权二分）
@@ -227,6 +228,8 @@
 - [ ] [国家集训队]Crash的数字表格 / JZPTAB
 - [ ] P4859 已经没有什么好害怕的了
 - [ ] P4707 重返现世
+- [ ] LOJ124
+- [ ] LOJ125
 # 扩展欧几里得
 - [ ] LOJ#6440
 - [ ] CF868G
@@ -319,6 +322,7 @@
 - [ ] UOJ218 火车管理
 - [ ] [LOJ546]「LibreOJ β Round #7」网格图
 - [ ] BZOJ5312 冒险
+- [ ] LOJ6034（李超线段树）
 # 分治
 - [x] UVA1608 Non-boring sequences
 - [x] P4755 Beautiful Pair
@@ -371,3 +375,5 @@
 - [ ] CF716E
 # 分数规划
 - [ ] P3778 [APIO2017]商旅
+# 贪心
+- [ ] LOJ#2734. 「JOISC 2016 Day 2」女装大佬 (FJWC2019上厕所)
