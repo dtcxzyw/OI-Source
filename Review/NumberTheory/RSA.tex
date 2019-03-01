@@ -11,8 +11,8 @@ RSA算法的基本步骤如下：
 \begin{enumerate}
 	\item 随机选取两个大素数$p,q$,使得$p\neq q$，令$n=pq$；
 	\item 选取一个与$\varphi(n)=(p-1)(q-1)$互质的小奇数$e$,
-	      计算模$\varphi(n)$意义下$e$的乘法逆元$d$（由于$e$与$n$互质，根据定理
-	      ~\ref{BT}得存在唯一解$d$）；
+		  计算模$\varphi(n)$意义下$e$的乘法逆元$d$（由于$e$与$\varphi(n)$互质，
+		  根据定理~\ref{ET}得存在唯一解$d$）；
 	\item 将$P(e,n)$公开，作为{\bfseries RSA公钥}；\\
 	      将$S(d,n)$保密，作为{\bfseries RSA私钥}。
 \end{enumerate}
@@ -37,12 +37,14 @@ RSA算法的基本步骤如下：
 		      &\equiv& M\cdot 1^{k(q-1)} \pmod{p}\\
 		      &\equiv& M \pmod{p}
 	      \end{eqnarray*}
-	\item 若$M\equiv 0 \pmod{p}$，上述等式仍成立。
+	\item 若$M\equiv 0 \pmod{p}$，上述等式仍成立。\CJKsout{M=0还有什么加密意义吗。。。}
 \end{itemize}
 
 同样地，对于$q$有$M^{ed}\equiv M \pmod{q}$。根据推论~\ref{EEL1I}，有
 $M^{ed}\equiv M \pmod{n}$，证毕。
 
+实际应用时还需要对密文进行随机填充，常见的有Optimal Asymmetric Encryption Padding
+(OAEP)算法，参见标准文档Public-Key Cryptography Standards（PKCS）。
 \subsection{应用}
 \subsubsection{消息加密}
 发送方使用接收方的公钥$P$把消息$M$加密得到密文$C$，将密文$C$发送给
@@ -63,6 +65,6 @@ $M$得到密文$C$，把$(P(K),C)$发送给接收方。接收方使用$S$解密�
 
 以上内容参考了算法导论\cite{ITA3}第31.7节。
 \subsection{RSA破解}
-RSA的安全性基于对大整数做质因数分解的困难性。破解RSA算法得到密文或者可以签署伪造文件，意味着
-攻击者得到了密钥$S$，由于公钥$P$已知，唯一需要知道的就是$d$，$d$可使用$\varphi(n)$由欧拉定理得到。
-$\varphi(n)$的计算最终依赖于$n$的质因数分解。
+RSA的安全性基于对大整数做质因数分解的困难性。破解RSA的目的是得到密文或签署伪造文件，这意味着
+攻击者要得到密钥$S$。由于公钥$P$已知，唯一需要知道的是$d$，$d$可使用$\varphi(n)$由
+欧拉定理得到。$\varphi(n)$的计算依赖于$n$的质因数分解。

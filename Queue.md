@@ -177,11 +177,10 @@
 - [ ] [八省联考2018]林克卡特树lct
 - [ ] BZOJ5311贞鱼
 # 单调队列
-- [ ] P1776 宝物筛选_NOI导刊2010提高（02）
-- [ ] P2254 [NOI2005]瑰丽华尔兹
-- [ ] P2569 [SCOI2010]股票交易
-- [ ] P3572 [POI2014]PTA-Little Bird
-- [ ] P3594 [POI2015]WIL-Wilcze doły
+- [x] P2254 [NOI2005]瑰丽华尔兹
+- [x] P3572 [POI2014]PTA-Little Bird
+- [x] P3594 [POI2015]WIL-Wilcze doły
+- [x] [POI2010]KLO-Blocks
 # LCT
 - [x] LOJ#6038. 「雅礼集训 2017 Day5」远行
 - [x] LOJ#558. 「Antileaf's Round」我们的 CPU 遭到攻击
@@ -273,13 +272,12 @@
 - [ ] LOJ#2341. 「WC2018」即时战略
 - [ ] LOJ#2553. 「CTSC2018」暴力写挂
 - [x] LOJ#2497. 「PA 2017」Banany
-- [ ] P4220
-- [ ] P4075
+- [ ] LOJ#2065. 「SDOI2016」模式字符串
 - [ ] P3727
 - [ ] P3920
 - [ ] P2664
-- [ ] BZOJ4568
-- [ ] BZOJ3730: 震波
+- [ ] LOJ#2013. 「SCOI2016」幸运数字
+- [x] BZOJ3730: 震波
 - [ ] BZOJ4732: 数据交互
 - [ ] SP2939 QTREE5 - Query on a tree V
 # 虚树

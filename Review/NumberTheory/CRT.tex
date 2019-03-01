@@ -14,6 +14,7 @@
 	其中$n_1,n_2,\cdots,n_k$两两互质，令$\displaystyle N=\prod_{i=1}^k{n_i}$，
 	则该模线性方程组在$[0,N)$内有唯一解。
 \end{theorem}
+
 如何求解该线性方程组呢？和拉格朗日插值法的思路相同，记方程$e_i$给最终解贡献$x_i$，满足
 \begin{displaymath}
 	x_i \bmod n_j =
@@ -22,9 +23,11 @@
 		a_i & \textrm{if $i=j$}
 	\end{array}\right.
 \end{displaymath}
-答案即为$\displaystyle \sum_{i=1}^n{x_i} \bmod N$。
-考虑$i\neq j$时$x_i$应该整除$n_j$，因此$x_i$有系数$M=N/n_i$；当$i=j$时，
-$x_i$应该有系数$a_i$，为了抵消因子$M$的影响，再乘上$M$模$n_i$的乘法逆元
+
+答案即为$\displaystyle \sum_{i=1}^k{x_i} \bmod N$。
+
+考虑$i\neq j$时$n_j|x_i$，因此$x_i$有因子$M=N/n_i$；当$i=j$时，
+$x_i$应该有因子$a_i$，为了抵消因子$M$的影响，再乘上$M$模$n_i$的乘法逆元
 （由于$n$两两互质，$M$与$n_i$也互质，根据定理~\ref{ET}，保证其乘法逆元存在）。
 \subsection{ExCRT}
 当$n$不满足两两互质的条件时，可能会找不到其乘法逆元。
@@ -37,6 +40,7 @@ $x_i$应该有系数$a_i$，为了抵消因子$M$的影响，再乘上$M$模$n_i
 		x \equiv a_2 \pmod{n_2} \\
 	\end{array}\right.
 \end{displaymath}
+
 等价于
 \begin{eqnarray}
 	x0=a_1+k_1n_1\label{CRTE}\\

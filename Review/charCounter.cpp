@@ -1,6 +1,7 @@
 #include <cctype>
 #include <cstdlib>
 #include <fstream>
+#include <iostream>
 #include <locale>
 int main() {
     std::locale::global(std::locale(""));
