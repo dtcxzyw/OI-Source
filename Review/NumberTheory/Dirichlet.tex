@@ -96,7 +96,7 @@
 		所以可以以$t$为下标把计算结果存入另一个数组中。
 	\item 同时除以最大公约数使其互质，然后套用$\varphi$。
 	\item $\displaystyle [gcd(i,j)=1]=\sum_{k|gcd(i,j)}\mu(k)=\sum_{k|i,k|j}\mu(k)$
-	\item $\displaystyle gcd(i,j)=\sum_{d=1}^{min(i,j)}{\varphi(d)[\frac{i}{d}][\frac{j}{d}]}$
+	\item $\displaystyle gcd(i,j)=\sum_{k|gcd(i,j)}{\varphi(k)}=\sum_{d=1}^{min(i,j)}{\varphi(d)[\frac{i}{d}][\frac{j}{d}]}$
 
 		遇到该式时不要枚举gcd值将其转换为上一个式子，从而陷入更复杂的化简。
 

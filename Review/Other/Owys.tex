@@ -120,6 +120,8 @@ int countTZ(int x) {
     return LUT[(bit*0x077CB531U)>>27];
 }
 \end{lstlisting}
+
+64位整数下用的常数是0x07EDD5E59A4E28C2ULL。
 \subsubsection{子集枚举}
 一般使用如下写法：
 \begin{lstlisting}
@@ -183,6 +185,7 @@ $O(\sqrt{n})-O(1)$的复杂度绝对不会成为性能瓶颈。
     \item 对于bool数组无需清零，使用int记录其最后一次被标记为true的时间戳
     $timeStamp$，若时间戳与当前时间戳相等则为true，将当前时间戳+1可实现$O(1)$清零。
     对于其它值的存储也可以如此清零（std::pair<时间戳，实际数据>）。
+    不过对其它值的存储的实际性能不如直接记录修改位置清零快（每次访问都要检查一次时间戳）。
 \end{itemize}
 \subsection{读入优化}
 被别人的时间优势刺激到了才入了fread/fwrite的坑。。。
