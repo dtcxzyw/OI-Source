@@ -14,6 +14,7 @@
 - [ ] LOJ#6564. 最长公共子序列
 - [ ] LOJ#2265. 「CTSC2017」最长上升子序列
 - [ ] LOJ#2392. 「JOISC 2017 Day 1」烟花棒
+- [ ] LOJ#6500. 「雅礼集训 2018 Day2」操作
 # 题集
 - [ ] PKUWC2018
 - [ ] Ynoi2019模拟赛[By OldDriverTree](http://olddrivertree.blog.uoj.ac/blog/4656)
@@ -77,6 +78,7 @@
 - [ ] BZOJ 3112
 - [x] UOJ#179. 线性规划
 - [x] P3980 [NOI2008]志愿者招募
+- [ ] LOJ#6295. 无意识之外的捉迷藏
 # minmax容斥
 - [x] LOJ#2542. 「PKUWC2018」随机游走
 - [x] LOJ#2127. 「HAOI2015」按位或（做完后作为minmax容斥的例题）
@@ -206,6 +208,7 @@
 - [ ] UOJ#274. 【清华集训2016】温暖会指引我们前行
 - [ ] BZOJ 3514
 - [ ] BZOJ 2555
+- [ ] P2056 [ZJOI2007]捉迷藏
 # 平衡树
 - [x] LOJ#516. 「LibreOJ β Round #2」DP 一般看规律
 # 容斥/反演/筛法
@@ -290,10 +293,10 @@
 - [x] BZOJ3730: 震波
 - [ ] BZOJ4732: 数据交互
 - [x] SP2939 QTREE5 - Query on a tree V
-- [ ] 【BZOJ4675】点对游戏
+- [x] 【BZOJ4675】点对游戏
 - [ ] bzoj4182: Shopping
-- [ ] P4292
-- [ ] P2056 [ZJOI2007]捉迷藏
+- [x] P4292
+- [x] P2056 [ZJOI2007]捉迷藏
 # 虚树
 - [x] LOJ#2206. 「HNOI2014」世界树
 - [x] LOJ#2219. 「HEOI2014」大工程
@@ -385,3 +388,13 @@
 - [ ] LOJ#2734. 「JOISC 2016 Day 2」女装大佬 (FJWC2019上厕所)
 # 整体二分
 - [ ] CF603E Pastoral Oddities
+# 博弈论
+- [ ] LOJ#524. 「LibreOJ β Round #4」游戏
+- [ ] LOJ#531. 「LibreOJ β Round #5」游戏
+- [ ] LOJ#536. 「LibreOJ Round #6」花札
+- [ ] LOJ#543. 「LibreOJ β Round #7」奴隶主的游戏
+- [ ] LOJ#551. 「LibreOJ Round #8」Matrix
+- [ ] LOJ#553. 「LibreOJ Round #8」MINIM
+- [ ] LOJ#2327. 「清华集训 2017」福若格斯
+- [ ] LOJ#6033. 「雅礼集训 2017 Day2」棋盘游戏
+- [ ] LOJ#6212. 「美团 CodeM 决赛」melon

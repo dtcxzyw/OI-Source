@@ -457,7 +457,13 @@ cdq分治用来解决偏序问题（支持动态偏序问题，但仍然要求�
 	\item 求某个元素必选的最优方案：分别对前缀与后缀dp，再组合dp。
 	\item 用无限次修改最优化某个量：寻找修改中的不变量。
 	\item 统计区间或链上颜色数：考虑每个颜色的贡献，对每种颜色分别统计。
-	\item 使用setjmp/longjmp/break时注意数据的清空，使用break时可以用RTTI。
+	\item 提前退出计算时注意数据清空：
+	\begin{itemize}
+		\item setjmp/longjmp：不要使用任何RTTI数据结构，全部的longjmp由一个函数
+		earlyExit调用，函数内执行清空操作
+		\item break/return：使用RTTI技术
+		\item throw/try-catch：别用这个
+	\end{itemize}
 \end{itemize}
 \subsection{本节注记}
 2013年许昊然的国家集训队论文答辩《浅谈数据结构题的几个非经典解法——<Claymore>命题报告》

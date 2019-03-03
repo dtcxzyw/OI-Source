@@ -203,3 +203,14 @@ Luogu P4115 Qtree4\footnote{【P4115】Qtree4 - 洛谷
 
 参考代码：
 \lstinputlisting{Source/Source/'Point-Based Partition'/bzoj3730.cpp}
+
+\subsubsection{自底向上统计的点分治Cache}
+例题：「SDOI2016」模式字符串
+
+此题我使用了自底向上的DFS统计方法，从模式串左右边界开始匹配。\CJKsout{事实上也有自顶向下的Hash
+统计方法。}交上去后发现运行时间是时间的1.5倍，瓶颈在于DFS匹配时的std::vector的频繁操作。
+
+注意到自底向上统计有一个自顶向下统计所没有的优势：不变的子树的DFS结果不变。那么可以考虑cache
+计算结果。但是由于点分治过程可能会切断子树的某一部分而导致子树变化。注意到DFS的子树大小是不断
+减小的，可以在solve过程中预先处理以分治点为根的子树中每个点的子树大小，同时记录cache的子树
+大小，根据这两个数据判断是否要刷新cache。

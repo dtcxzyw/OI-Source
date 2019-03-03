@@ -33,7 +33,20 @@ $\displaystyle f(x)=\sum_{i\in S}{a_i}-x\cdot \sum_{i\in S}{b_i}$
 Dinkelbach法的思路是维护答案的下界，使用当前最优解对应的直线横截距来当做下一次
 迭代的起点，这种做法比二分法更快。不过需要保存解这一要求限制了它的应用范围（编码更麻烦）。
 
+事实上解不必逐步递增，也可以使用类似牛顿迭代法的思想，解可以左右移动，但是每次迭代要选取
+最大的移动截距（例如取最大值时尽可能向右移，尽可能少后退）。选取一个好的初始解可以大幅加快
+迭代速度。
+
 此法参考了tianxiang971016的博客\footnote{
 	01分数规划问题相关算法与题目讲解（二分法与Dinkelbach算法） - ztx
 	\url{https://blog.csdn.net/hzoi\_ztx/article/details/54898323}
 }。
+
+上述方法的性能比较（以LuoguP4292 [WC2010]重建计划的评测结果为准）：
+\begin{itemize}
+	\item 二分法：9622ms
+	\item Dinkelbach法：1864ms
+	\item Dinkelbach法优化：1085ms
+\end{itemize}
+
+\CJKsout{2019.3.3：为什么又是rank2。。。}
