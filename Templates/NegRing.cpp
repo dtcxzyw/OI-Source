@@ -27,9 +27,10 @@ void addEdge(int u, int v, int w) {
 int dis[maxn], n;
 bool flag[maxn];
 jmp_buf buf;
-void pre(int u) {
+bool pre(int u) {
     int cd = dis[u];
     flag[u] = true;
+    bool res = false;
     for(int i = last[u]; i; i = E[i].nxt) {
         int v = E[i].to, nd = cd + E[i].w;
         if(dis[v] > nd) {
@@ -37,10 +38,12 @@ void pre(int u) {
                 longjmp(buf, 1);
             dis[v] = nd;
             pre(v);
+            res = true;
+            break;
         }
-        break;
     }
     flag[u] = false;
+    return res;
 }
 void DFS(int u, int d) {
     if(d) {
@@ -88,7 +91,8 @@ bool foo() {
         case 0: {
             for(int i = 1; i <= n; ++i)
                 if(vis[i])
-                    pre(i);
+                    while(pre(i))
+                        ;
             for(int k = 1; k <= n * 2; k <<= 1)
                 for(int i = 1; i <= n; ++i)
                     if(vis[i])

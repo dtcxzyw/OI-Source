@@ -12,7 +12,7 @@ int read() {
     }
     return res;
 }
-const int size = 1000005;
+const int size = 100005;
 struct Edge {
     int to, nxt;
 } E[size * 2];

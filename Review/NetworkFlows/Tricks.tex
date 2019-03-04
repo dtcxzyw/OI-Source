@@ -1,0 +1,28 @@
+\section{技巧总结}
+\subsection{最大流}
+\begin{itemize}
+    \item 若一个点只能被经过有限次，将其拆为入点和出点，入点到出点连流量为
+    经过次数限制的边。
+    \item 树形最大流可以贪心解决。
+\end{itemize}
+\subsection{最小割}
+\begin{itemize}
+    \item 最大化收益可以理解为已经拿到所有收益，最小化损失。然后将其转化为最小割解决。
+    \item 使用$+\infty$边描述依赖关系，可以保证这条边不出现在最小割中。
+    \item 用$S,T$与点的连边来表示点的权。
+\end{itemize}
+\subsection{费用流}
+\begin{itemize}
+    \item 要求费用最小且边数最小：类比进制的思想，实际费用乘以一个大于总边数的因子，再加上
+    1作为该边边权。
+    \item 若已知走一条边之前必定已经走完了另外几条边，则考虑动态加边。
+    \item 对于层数较少，结构简单的图，考虑使用其它数据结构贪心模拟费用流。
+    \item （待验证）判断一条边是否一定被选：在残量网络上跑SPFA，若距离差不等于边权则必选。
+    \item 餐巾计划问题：
+\end{itemize}
+
+上述内容参考了胡伯涛的2007年国家集训队论文《最小割模型在信息学竞赛中的应用》
+\cite{MCIOI}和租酥雨的博客\footnote{
+    网络流总结\\
+    \url{https://www.cnblogs.com/zhoushuyu/p/8137534.html}
+}。
