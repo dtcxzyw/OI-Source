@@ -2,7 +2,7 @@
 #include <cstdio>
 #include <cstring>
 #include <vector>
-const int size = 2010, inf = 0x3f3f3f3f;
+const int size = 125, inf = 0x3f3f3f3f;
 struct Edge {
     int to, rev, f, w;
     Edge(int to, int rev, int f, int w)
@@ -16,8 +16,8 @@ void addEdge(int u, int v, int f, int w) {
 }
 int dis[size], q[size], S, T;
 bool flag[size];
-bool SPFA(int n) {
-    memset(dis + 1, 0xc0, sizeof(int) * n);
+bool SPFA() {
+    memset(dis, 0xc0, sizeof(dis));
     dis[T] = 0, flag[T] = true, q[0] = T;
     int b = 0, e = 1;
     while(b != e) {
@@ -32,8 +32,7 @@ bool SPFA(int n) {
                 dis[v] = dv;
                 if(!flag[v]) {
                     flag[v] = true;
-                    if(b == e ||
-                       dis[q[b]] + 30 >= dis[v]) {
+                    if(b == e || dis[q[b]] >= dis[v]) {
                         q[e++] = v;
                         if(e == size)
                             e = 0;
@@ -70,45 +69,45 @@ int DFS(int u, int f) {
         dis[u] = 0xc0c0c0c0;
     return res;
 }
-int MCMF(int n) {
-    int res = 0;
-    while(SPFA(n)) {
-        memset(now + 1, 0, sizeof(int) * n);
-        int cf = 0, k, cd = dis[S];
-        while((k = DFS(S, inf)))
-            cf += k;
-        res += cf * cd;
+int ceilDiv(int a, int b) {
+    return (a + b - 1) / b;
+}
+int MCMF(int w) {
+    int sf = 0, sc = 0, ans = 0;
+    while(SPFA()) {
+        memset(now, 0, sizeof(now));
+        int k, cd = dis[S];
+        while((k = DFS(S, inf))) {
+            if(k == inf)
+                break;
+            sf += k;
+            sc += k * cd;
+            ans = std::max(ans, ceilDiv(sc - w, sf));
+        }
     }
-    return res;
+    return ans;
 }
-int L[size], R[size], P[size];
-int find(int x, int siz) {
-    return std::lower_bound(P + 1, P + siz + 1, x) - P;
-}
+int t[size];
 int main() {
-    int n, k;
-    scanf("%d%d", &n, &k);
-    int pcnt = 0;
+    int n, m, w;
+    scanf("%d%d%d", &n, &m, &w);
+    for(int i = 1; i <= n; ++i)
+        scanf("%d", &t[i]);
+    S = 2 * n + 1;
+    T = S + 1;
     for(int i = 1; i <= n; ++i) {
-        scanf("%d%d", &L[i], &R[i]);
-        if(L[i] > R[i])
-            std::swap(L[i], R[i]);
-        P[++pcnt] = L[i];
-        P[++pcnt] = R[i];
+        int c;
+        scanf("%d", &c);
+        addEdge(S, i, inf, 0);
+        addEdge(i, i + n, inf, 0);
+        addEdge(i, i + n, c, t[i]);
+        addEdge(i + n, T, inf, 0);
     }
-    std::sort(P + 1, P + pcnt + 1);
-    pcnt = std::unique(P + 1, P + pcnt + 1) - (P + 1);
-    for(int i = 1; i < pcnt; ++i)
-        addEdge(i, i + 1, inf, 0);
-    T = pcnt;
-    S = T + 1;
-    for(int i = 1; i <= n; ++i) {
-        int w = R[i] - L[i];
-        int lp = find(L[i], pcnt);
-        int rp = find(R[i], pcnt);
-        addEdge(lp, rp, 1, w);
+    for(int i = 1; i <= m; ++i) {
+        int u, v;
+        scanf("%d%d", &u, &v);
+        addEdge(u + n, v, inf, 0);
     }
-    addEdge(S, 1, k, 0);
-    printf("%d\n", MCMF(pcnt + 1));
+    printf("%d\n", MCMF(w));
     return 0;
 }

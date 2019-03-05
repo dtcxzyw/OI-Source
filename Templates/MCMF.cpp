@@ -69,6 +69,8 @@ int DFS(int u, int f) {
         }
     }
     flag[u] = false;
+    if(!res)
+        dis[u] = -1;
     return res;
 }
 int main() {
@@ -82,10 +84,10 @@ int main() {
     int maxF = 0, minW = 0;
     while(SPFA()) {
         memset(now + 1, 0, sizeof(int) * n);
-        int f, sf = 0;
+        int f, sf = 0, cd = dis[1];
         while((f = DFS(1, inf)))
             sf += f;
-        maxF += sf, minW += sf * dis[1];
+        maxF += sf, minW += sf * cd;
     }
     printf("%d %d\n", maxF, minW);
     return 0;

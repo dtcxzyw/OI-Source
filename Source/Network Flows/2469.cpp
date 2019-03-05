@@ -2,7 +2,18 @@
 #include <cstdio>
 #include <cstring>
 #include <vector>
-const int size = 2010, inf = 0x3f3f3f3f;
+int read() {
+    int res = 0, c;
+    do
+        c = getchar();
+    while(c < '0' || c > '9');
+    while('0' <= c && c <= '9') {
+        res = res * 10 + c - '0';
+        c = getchar();
+    }
+    return res;
+}
+const int size = 1605, inf = 0x3f3f3f3f;
 struct Edge {
     int to, rev, f, w;
     Edge(int to, int rev, int f, int w)
@@ -10,15 +21,15 @@ struct Edge {
 };
 std::vector<Edge> G[size];
 void addEdge(int u, int v, int f, int w) {
-    int usiz = G[u].size(), vsiz = G[v].size();
-    G[u].push_back(Edge(v, vsiz, f, w));
-    G[v].push_back(Edge(u, usiz, 0, -w));
+    int urev = G[u].size(), vrev = G[v].size();
+    G[u].push_back(Edge(v, vrev, f, w));
+    G[v].push_back(Edge(u, urev, 0, -w));
 }
 int dis[size], q[size], S, T;
 bool flag[size];
 bool SPFA(int n) {
-    memset(dis + 1, 0xc0, sizeof(int) * n);
-    dis[T] = 0, flag[T] = true, q[0] = T;
+    memset(dis + 1, 0x3f, sizeof(int) * n);
+    dis[T] = 0, q[0] = T, flag[T] = true;
     int b = 0, e = 1;
     while(b != e) {
         int u = q[b++];
@@ -28,12 +39,11 @@ bool SPFA(int n) {
         for(auto E : G[u]) {
             int v = E.to;
             int dv = dis[u] - E.w;
-            if(G[v][E.rev].f && dv > dis[v]) {
+            if(G[v][E.rev].f && dv < dis[v]) {
                 dis[v] = dv;
                 if(!flag[v]) {
                     flag[v] = true;
-                    if(b == e ||
-                       dis[q[b]] + 30 >= dis[v]) {
+                    if(b == e || dis[q[b]] <= dis[v]) {
                         q[e++] = v;
                         if(e == size)
                             e = 0;
@@ -46,7 +56,7 @@ bool SPFA(int n) {
             }
         }
     }
-    return dis[S] != 0xc0c0c0c0;
+    return dis[S] != inf;
 }
 int now[size];
 int DFS(int u, int f) {
@@ -57,7 +67,7 @@ int DFS(int u, int f) {
     for(int& i = now[u]; i < G[u].size(); ++i) {
         Edge& E = G[u][i];
         int v = E.to;
-        if(E.f && !flag[v] && dis[u] == dis[v] + E.w &&
+        if(E.f && !flag[v] && dis[v] + E.w == dis[u] &&
            (k = DFS(v, std::min(f, E.f)))) {
             E.f -= k, G[v][E.rev].f += k;
             res += k, f -= k;
@@ -66,49 +76,40 @@ int DFS(int u, int f) {
         }
     }
     flag[u] = false;
-    if(!res)
-        dis[u] = 0xc0c0c0c0;
+    if(res == 0)
+        dis[u] = -1;
     return res;
 }
 int MCMF(int n) {
     int res = 0;
     while(SPFA(n)) {
         memset(now + 1, 0, sizeof(int) * n);
-        int cf = 0, k, cd = dis[S];
-        while((k = DFS(S, inf)))
-            cf += k;
-        res += cf * cd;
+        int sf = 0, cf, cd = dis[S];
+        while((cf = DFS(S, inf)))
+            sf += cf;
+        res += sf * cd;
     }
     return res;
 }
-int L[size], R[size], P[size];
-int find(int x, int siz) {
-    return std::lower_bound(P + 1, P + siz + 1, x) - P;
-}
 int main() {
-    int n, k;
-    scanf("%d%d", &n, &k);
-    int pcnt = 0;
+    int n = read();
+    int m = read();
+    S = 2 * n + 1;
+    T = S + 1;
     for(int i = 1; i <= n; ++i) {
-        scanf("%d%d", &L[i], &R[i]);
-        if(L[i] > R[i])
-            std::swap(L[i], R[i]);
-        P[++pcnt] = L[i];
-        P[++pcnt] = R[i];
+        int A = read();
+        addEdge(S, i, 1, A);
+        addEdge(i, T, 1, 0);
+        addEdge(S, i + n, 1, 0);
     }
-    std::sort(P + 1, P + pcnt + 1);
-    pcnt = std::unique(P + 1, P + pcnt + 1) - (P + 1);
-    for(int i = 1; i < pcnt; ++i)
-        addEdge(i, i + 1, inf, 0);
-    T = pcnt;
-    S = T + 1;
-    for(int i = 1; i <= n; ++i) {
-        int w = R[i] - L[i];
-        int lp = find(L[i], pcnt);
-        int rp = find(R[i], pcnt);
-        addEdge(lp, rp, 1, w);
+    for(int i = 1; i <= m; ++i) {
+        int u = read();
+        int v = read();
+        int w = read();
+        if(u > v)
+            std::swap(u, v);
+        addEdge(u + n, v, 1, w);
     }
-    addEdge(S, 1, k, 0);
-    printf("%d\n", MCMF(pcnt + 1));
+    printf("%d\n", MCMF(T));
     return 0;
 }

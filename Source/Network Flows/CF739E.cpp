@@ -1,23 +1,29 @@
 #include <algorithm>
+#include <cmath>
 #include <cstdio>
 #include <cstring>
 #include <vector>
-const int size = 2010, inf = 0x3f3f3f3f;
+const int size = 2015;
+typedef double FT;
+const FT eps = 1e-8, inf = 1e20;
 struct Edge {
-    int to, rev, f, w;
-    Edge(int to, int rev, int f, int w)
+    int to, rev, f;
+    FT w;
+    Edge(int to, int rev, int f, FT w)
         : to(to), rev(rev), f(f), w(w) {}
 };
 std::vector<Edge> G[size];
-void addEdge(int u, int v, int f, int w) {
+void addEdge(int u, int v, int f, FT w) {
     int usiz = G[u].size(), vsiz = G[v].size();
     G[u].push_back(Edge(v, vsiz, f, w));
     G[v].push_back(Edge(u, usiz, 0, -w));
 }
-int dis[size], q[size], S, T;
+FT dis[size];
+int q[size], S, T;
 bool flag[size];
 bool SPFA(int n) {
-    memset(dis + 1, 0xc0, sizeof(int) * n);
+    for(int i = 1; i <= n; ++i)
+        dis[i] = -inf;
     dis[T] = 0, flag[T] = true, q[0] = T;
     int b = 0, e = 1;
     while(b != e) {
@@ -27,13 +33,12 @@ bool SPFA(int n) {
         flag[u] = false;
         for(auto E : G[u]) {
             int v = E.to;
-            int dv = dis[u] - E.w;
-            if(G[v][E.rev].f && dv > dis[v]) {
+            FT dv = dis[u] - E.w;
+            if(G[v][E.rev].f && dv > dis[v] + eps) {
                 dis[v] = dv;
                 if(!flag[v]) {
                     flag[v] = true;
-                    if(b == e ||
-                       dis[q[b]] + 30 >= dis[v]) {
+                    if(b == e || dis[q[b]] >= dis[v]) {
                         q[e++] = v;
                         if(e == size)
                             e = 0;
@@ -46,7 +51,7 @@ bool SPFA(int n) {
             }
         }
     }
-    return dis[S] != 0xc0c0c0c0;
+    return dis[S] != -inf;
 }
 int now[size];
 int DFS(int u, int f) {
@@ -57,7 +62,8 @@ int DFS(int u, int f) {
     for(int& i = now[u]; i < G[u].size(); ++i) {
         Edge& E = G[u][i];
         int v = E.to;
-        if(E.f && !flag[v] && dis[u] == dis[v] + E.w &&
+        if(E.f && !flag[v] &&
+           fabs(dis[v] + E.w - dis[u]) < eps &&
            (k = DFS(v, std::min(f, E.f)))) {
             E.f -= k, G[v][E.rev].f += k;
             res += k, f -= k;
@@ -67,48 +73,40 @@ int DFS(int u, int f) {
     }
     flag[u] = false;
     if(!res)
-        dis[u] = 0xc0c0c0c0;
+        dis[u] = -inf;
     return res;
 }
-int MCMF(int n) {
-    int res = 0;
+FT MCMF(int n) {
+    FT res = 0;
     while(SPFA(n)) {
         memset(now + 1, 0, sizeof(int) * n);
-        int cf = 0, k, cd = dis[S];
-        while((k = DFS(S, inf)))
+        int cf = 0, k;
+        FT cd = dis[S];
+        while((k = DFS(S, 1 << 30)))
             cf += k;
         res += cf * cd;
     }
     return res;
 }
-int L[size], R[size], P[size];
-int find(int x, int siz) {
-    return std::lower_bound(P + 1, P + siz + 1, x) - P;
-}
+FT P[size];
 int main() {
-    int n, k;
-    scanf("%d%d", &n, &k);
-    int pcnt = 0;
+    int n, a, b;
+    scanf("%d%d%d", &n, &a, &b);
+    int SA = n + 1, SB = SA + 1;
+    S = SB + 1;
+    T = S + 1;
+    addEdge(S, SA, a, 0);
+    addEdge(S, SB, b, 0);
+    for(int i = 1; i <= n; ++i)
+        scanf("%lf", &P[i]);
     for(int i = 1; i <= n; ++i) {
-        scanf("%d%d", &L[i], &R[i]);
-        if(L[i] > R[i])
-            std::swap(L[i], R[i]);
-        P[++pcnt] = L[i];
-        P[++pcnt] = R[i];
+        FT U;
+        scanf("%lf", &U);
+        addEdge(SA, i, 1, P[i]);
+        addEdge(SB, i, 1, U);
+        addEdge(i, T, 1, 0);
+        addEdge(i, T, 1, -P[i] * U);
     }
-    std::sort(P + 1, P + pcnt + 1);
-    pcnt = std::unique(P + 1, P + pcnt + 1) - (P + 1);
-    for(int i = 1; i < pcnt; ++i)
-        addEdge(i, i + 1, inf, 0);
-    T = pcnt;
-    S = T + 1;
-    for(int i = 1; i <= n; ++i) {
-        int w = R[i] - L[i];
-        int lp = find(L[i], pcnt);
-        int rp = find(R[i], pcnt);
-        addEdge(lp, rp, 1, w);
-    }
-    addEdge(S, 1, k, 0);
-    printf("%d\n", MCMF(pcnt + 1));
+    printf("%.8lf\n", MCMF(T));
     return 0;
 }

@@ -63,8 +63,8 @@ int main() {
         int d = read();
         if(u != S) {
             if(c)
-                addEdge(v, u, a - d);
-            addEdge(u, v, b + d);
+                addEdge(u, v, a - d);
+            addEdge(v, u, b + d);
         }
     }
     n += 2;

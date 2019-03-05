@@ -72,7 +72,8 @@
 			"optional": "cpp",
 			"string_view": "cpp",
 			"cstddef": "cpp",
-			"queue": "cpp"
+			"queue": "cpp",
+			"filesystem": "cpp"
 		},
 		"latex-workshop.intellisense.citation.maxfilesizeMB": 128,
 		"latex-workshop.latex.recipes": [
