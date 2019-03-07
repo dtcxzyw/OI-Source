@@ -32,6 +32,7 @@
 - [ ] THUSCH
 - [ ] Hash Killer
 - [ ] Timus Online Judge专题
+- [ ] UOJ NOI Round
 # Min_25 筛
 - [x] LOJ#6053. 简单的函数
 - [ ] UOJ#188. 【UR #13】Sanrd
@@ -176,6 +177,7 @@
 - [x] [Jsoi2011]柠檬
 - [x] [POI2011]Lightning Conductor
 - [x] CF868F Yet Another Minimization Problem
+- [ ] LOJ#6081. ZQC 的女装
 # 斜率优化
 - [x] [USACO08MAR]土地征用Land Acquisition
 - [x] [HNOI2008]玩具装箱TOY
@@ -273,13 +275,16 @@
 - [x] LOJ#6008. 「网络流 24 题」餐巾计划（做完补技巧总结）
 - [ ] P2472 [SCOI2007]蜥蜴
 - [ ] P3191 [HNOI2007]紧急疏散EVACUATE
+- [ ] bzoj3218: a + b Problem
+- [ ] bzoj3681 Arietta
+- [ ] Cf172 k-Maximum Subsequence Sum
 # 分块及按大小分类
 - [x] LOJ#6277-6285
 # 插头dp
 - [x] P5056 【模板】插头dp
 - [x] [JLOI2009]神秘的生物
-- [ ] P3190 [HNOI2007]神奇游乐园
-- [ ] 【bzoj2310】ParkII
+- [x] P3190 [HNOI2007]神奇游乐园
+- [x] 【bzoj2310】ParkII
 - [ ] [SCOI2011][bzoj2331] 地板
 - [ ] bzoj 1948 [Ceoi2006]Connect
 - [ ] LOJ#2017. 「SCOI2016」围棋
@@ -349,12 +354,24 @@
 - [ ] UOJ#170. Picks loves segment tree VIII
 - [ ] UOJ#164. 【清华集训2015】V
 - [ ] UOJ#169
-- [ ] bzoj3064 Tyvj 1518 CPU监控
 - [ ] 51Nod 1768
-- [ ] UOJ218 火车管理
+- [x] UOJ218 火车管理
 - [ ] [LOJ546]「LibreOJ β Round #7」网格图
-- [ ] BZOJ5312 冒险
-- [ ] LOJ6034（李超线段树）
+- [x] BZOJ5312 冒险
+- [x] LOJ6034（李超线段树）
+- [ ] UOJ217
+- [ ] [BZOJ4644]经典傻逼题
+- [ ] BZOJ2212：[POI2011]Tree Rotations
+- [ ] BZOJ3545：[ONTAK2010]Peaks
+- [x] [TJOI2016&HEOI2016]排序（线段树分裂）
+- [ ] BZOJ4771：七彩树
+- [ ] BZOJ 3073【Pa2011】Journeys
+- [ ] P4198 楼房重建
+- [ ] P4556 [Vani有约会]雨天的尾巴
+- [ ] P4254 [JSOI2008]Blue Mary开公司
+- [ ] bzoj4515
+- [ ] BZOJ4700: 适者
+- [ ] 「Heoi2013」Segment
 # 分治
 - [x] UVA1608 Non-boring sequences
 - [x] P4755 Beautiful Pair
@@ -417,3 +434,11 @@
 - [ ] LOJ#6212. 「美团 CodeM 决赛」melon
 # Delaunay三角剖分
 - [ ] [ZJOI2018]保镖
+# 基环树
+- [ ] [ZJOI2008]骑士
+- [ ] [Ioi2008]Island 岛屿
+- [ ] bzoj 2759: 一个动态树好题
+- [ ] [Noi2012]迷失游乐园
+- [ ] P1453 城市环路
+- [ ] P3651 展翅翱翔之时 (はばたきのとき)
+- [ ] P3673 小清新计数题

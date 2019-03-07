@@ -257,6 +257,11 @@
 - [ ] 线段树分裂、李超线段树、线段树维护单调栈[By FlashHu](https://www.cnblogs.com/flashhu/p/9651161.html)
 - [x] 模拟退火调参[By FlashHu](https://www.cnblogs.com/flashhu/p/8884132.html)
 - [ ] 母函数求解、优选法、线性常系数齐次递推关系[By FlashHu](https://www.cnblogs.com/flashhu/p/9568368.html)
+- [ ] 线段树维护单调子序列[By xyz32768](https://blog.csdn.net/xyz32768/article/details/84398038)
+# 标准库使用
+- [ ] valarray:std::valarray
+- [ ] functional:std::plus/minus等Function Object
+- [ ] algorithm:std::partial_sum/std::adjacent_difference
 # Research
 - [ ] 三维凸包与Delaunay剖分的关系[By 刘汝佳](https://wenku.baidu.com/view/e2e2d86f58fafab069dc02f8.html)
 - [ ] Tutte 矩阵与一般图匹配
@@ -302,6 +307,9 @@
 - [ ] 混合基FFT
 - [ ] 树上后缀数组
 - [ ] 启发式模拟退火（参见模拟退火一节）
+- [ ] 收敛圆[By 马同学](https://www.matongxue.com/madocs/206.html)
+- [ ] 实数DFT/IDFT
+- [ ] 误差函数erf的应用
 # 集训队论文/WC营员交流学习（省选后）
 ## 2019
 - [ ] 模拟费用流 laofu
@@ -355,6 +363,7 @@
 - [ ] 更换为Dvorak布局
 - [ ] 整理引用的Bib与协议问题
 - [ ] 合并并索引重复内容
+- [ ] 学习Python3及其标准库用法
 # 重构
 - [x] SAM
 - [ ] 带花树[By rqy](https://rqy.moe/Algorithms/flower-tree/)

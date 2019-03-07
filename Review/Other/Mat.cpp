@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <random>
-const int N = 2000, mod = 1000000007;
+const int N = 500, mod = 1000000007;
 using Clock = std::chrono::high_resolution_clock;
 class Timer {
 private:
@@ -126,7 +126,5 @@ int main() {
     test(mulOptimizedMod);
     test(mulOptimizedCache);
     test(mulOptimizedUnfold);
-    while(true)
-        getchar();
     return 0;
 }

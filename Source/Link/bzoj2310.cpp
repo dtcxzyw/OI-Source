@@ -63,26 +63,16 @@ int next(int x, int i) {
         ++i;
     }
 }
-int A[105][7], res = -inf;
+int A[105][11], res = -inf;
 void CAS(int& a, int b) {
     a = std::max(a, b);
 }
 void update(int m, HashTable& lut, int x, int val) {
-    CAS(lut[x], val);
-    int c = get(x, m + 1), cntA = 0, cntB = 0;
-    for(int i = 0; i <= m; ++i, x >>= 2) {
-        int cb = x & 3;
-        if(cb == 1 || cb == 2)
-            ++cntA;
-        else if(cb == 3)
-            ++cntB;
-    }
-    if(cntA == 2 && cntB == 0 && c == 0)
+    int c = get(x, m + 1);
+    if(c == 2 && set(x, m + 1, 2, 0) == 0)
         CAS(res, val);
-    else if(cntA == 0 && cntB == 1 && c == 1)
-        CAS(res, val);
-    else if(cntA == 0 && cntB == 0 && c == 2)
-        CAS(res, val);
+    else
+        CAS(lut[x], val);
 }
 void tran(int i, int j, int n, int m, HashTable& lut,
           HashTable& clut) {
@@ -90,35 +80,44 @@ void tran(int i, int j, int n, int m, HashTable& lut,
     for(int k = 0; k < lut.st.size(); ++k) {
         int cur = lut.st[k];
         int base = lut[cur], sum = val + base;
+        int vcnt = get(cur, m + 1);
         if(j == 1)
-            cur <<= 2;
+            cur = set(set(cur, m + 1, vcnt, 0) << 2,
+                      m + 1, 0, vcnt);
         int la = get(cur, j - 1), lb = get(cur, j);
         int vaild = (la ? 1 : 0) + (lb ? 1 : 0);
         // 0
         if(vaild == 0)
             update(m, clut, cur, base);
         // 1
-        int vcnt = get(cur, m + 1);
-        if(vcnt < 2 && vaild == 1) {
-            int src = la ? j - 1 : j;
-            int ori = la | lb;
-            int pos = ori == 1 ? next(cur, src) :
-                                 prev(cur, src);
-            int dst =
-                set(set(set(set(cur, j - 1, la, 0), j,
+        if(vcnt < 2) {
+            if(vaild == 1) {
+                int dst =
+                    set(set(set(cur, j - 1, la, 0), j,
                             lb, 0),
-                        m + 1, vcnt, vcnt + 1),
-                    pos, 3 - ori, 3);
-            update(m, clut, dst, sum);
-        }
-        if(vaild == 0) {
-            if(i != n) {
-                int dst = set(cur, j - 1, 0, 3);
+                        m + 1, vcnt, vcnt + 1);
+                int ori = la | lb;
+                if(ori != 3) {
+                    int src = la ? j - 1 : j;
+                    int pos = ori == 1 ?
+                        next(cur, src) :
+                        prev(cur, src);
+                    dst = set(dst, pos, 3 - ori, 3);
+                }
                 update(m, clut, dst, sum);
-            }
-            if(j != m) {
-                int dst = set(cur, j, 0, 3);
-                update(m, clut, dst, sum);
+            } else if(vaild == 0) {
+                if(i != n) {
+                    int dst =
+                        set(set(cur, j - 1, 0, 3),
+                            m + 1, vcnt, vcnt + 1);
+                    update(m, clut, dst, sum);
+                }
+                if(j != m) {
+                    int dst =
+                        set(set(cur, j, 0, 3), m + 1,
+                            vcnt, vcnt + 1);
+                    update(m, clut, dst, sum);
+                }
             }
         }
         // 2
@@ -157,12 +156,9 @@ void tran(int i, int j, int n, int m, HashTable& lut,
                     if(lb == 1) {
                         int pos = next(cur, j);
                         dst = set(cur, pos, 2, 1);
-                    } else if(lb == 2) {
-                        if(set(set(cur, j - 1, la, 0),
-                               j, lb, 0) == 0)
-                            CAS(res, sum);
+                    } else if(lb == 2)
                         continue;
-                    } else {
+                    else {
                         int pos = next(cur, j - 1);
                         dst = set(cur, pos, 2, 3);
                     }
@@ -191,27 +187,18 @@ int main() {
     int n, m;
     scanf("%d%d", &n, &m);
     for(int i = 1; i <= n; ++i)
-        for(int j = 1; j <= m; ++j)
+        for(int j = 1; j <= m; ++j) {
             scanf("%d", &A[i][j]);
+            res = std::max(res, A[i][j]);
+        }
     HashTable lut;
     lut[0] = 0;
-    int maxl = 0;
-    for(int i = 1; i <= n; ++i) {
+    for(int i = 1; i <= n; ++i)
         for(int j = 1; j <= m; ++j) {
             HashTable clut;
             tran(i, j, n, m, lut, clut);
             clut.swap(lut);
-            maxl = std::max(maxl, int(lut.st.size()));
-            printf("%d %d %d:\n", i, j, res);
-            for(int k = 0; k < lut.st.size(); ++k) {
-                int s = lut.st[k];
-                printf("%d[%d] ", s, lut[s]);
-            }
-            puts("");
         }
-        puts("");
-    }
-    fprintf(stderr, "%d\n", maxl);
     printf("%d\n", res);
     return 0;
 }
