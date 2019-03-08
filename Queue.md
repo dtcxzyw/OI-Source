@@ -130,6 +130,7 @@
 - [ ] CF981H K Paths
 - [ ] [CTSC2006]歌唱王国
 - [ ] [CTSC2010]性能优化
+- [ ] LOJ#6261. 一个人的高三楼
 # 后缀数组/后缀自动机/序列自动机
 - [x] LOJ#111. 后缀排序
 - [x] LOJ#2033. 「SDOI2016」生成魔咒
@@ -326,6 +327,7 @@
 - [ ] UOJ#87. mx的仙人掌
 # kdtree
 - [x] LOJ#6016. 崂山白花蛇草水
+- [ ] P4357 [CQOI2016]K远点对
 # 计算几何
 - [ ] P4586
 # 树的直径
@@ -341,6 +343,7 @@
 - [x] PE639
 - [ ] LOJ#6542. 离散对数
 - [ ] P3169 [CQOI2015]多项式
+- [ ] Loj #6019. 「from CommonAnts」寻找 LCM
 # 线段树相关
 - [x] LOJ#2013. 「SCOI2016」幸运数字
 - [x] LOJ#6057. 「HNOI2016」序列 数据加强版
@@ -365,13 +368,12 @@
 - [ ] BZOJ3545：[ONTAK2010]Peaks
 - [x] [TJOI2016&HEOI2016]排序（线段树分裂）
 - [ ] BZOJ4771：七彩树
-- [ ] BZOJ 3073【Pa2011】Journeys
-- [ ] P4198 楼房重建
-- [ ] P4556 [Vani有约会]雨天的尾巴
-- [ ] P4254 [JSOI2008]Blue Mary开公司
-- [ ] bzoj4515
+- [x] BZOJ 3073【Pa2011】Journeys
+- [x] P4198 楼房重建
+- [x] P4254 [JSOI2008]Blue Mary开公司
+- [x] LOJ2032 [SDOI2016]游戏
 - [ ] BZOJ4700: 适者
-- [ ] 「Heoi2013」Segment
+- [x] 「Heoi2013」Segment
 # 分治
 - [x] UVA1608 Non-boring sequences
 - [x] P4755 Beautiful Pair

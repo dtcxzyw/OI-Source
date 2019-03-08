@@ -45,12 +45,10 @@ void color(int l, int r, int id, const Line& B) {
     }
     int m = (l + r) >> 1;
     FT pos = (A.b - B.b) / (B.k - A.k);
-    if(l <= pos && pos <= r) {
-        if(pos <= m)
-            color(ls, la > lb ? A : B);
-        else
-            color(rs, ra > rb ? A : B);
-    }
+    if(pos <= m)
+        color(ls, la > lb ? A : B);
+    else
+        color(rs, ra > rb ? A : B);
     if(pos <= m ? rb > ra : lb > la)
         A = B;
 }

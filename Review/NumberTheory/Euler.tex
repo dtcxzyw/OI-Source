@@ -39,6 +39,16 @@ for(int i=2;i<=n;++i)
 以上内容参考了Miskcoo的博客\footnote{[数论]线性求所有逆元的方法 – Miskcoo's Space\\
 	\url{http://blog.miskcoo.com/2014/09/linear-find-all-invert}}
 
+Update：还有更一般的做法，可以在$O(n+\lg p)$内推出任意$n$个非0数的逆元：
+
+首先计算出前$i$个数的前缀积$M_i$，然后快速幂计算$M_n^{-1}$，最后从后往前倒推计算每个数的
+逆元。比如要计算$A_i$的逆元，倒推维护$X=M_n^{-1}\prod_{j=i+1}^n{A_j}$，那么
+$A_i^{-1}=M_{i-1}X$。
+
+该方法源自WAAutoMaton的博客\CJKsout{（知识都是在乱翻他人博客中学到的）}\footnote{
+	[loj ???] 乘法逆元2 题解
+	\url{https://wa-am.com/2019/03/08/loj-乘法逆元2-题解}
+}。
 \subsection{欧拉定理}
 \index{E!Euler's Theorem}
 \begin{theorem}[Euler's Theorem]\label{ET}

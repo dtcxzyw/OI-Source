@@ -37,6 +37,9 @@ SPFA优化的思路基本上是使队列尽可能接近优先队列。
 \subsection{01最短路}
 无权图最短路使用BFS解决，增加了权为0的边后，仅需稍微修改入队规则：维护双端队列，
 若边权为0则加入队首，否则加入队尾。时间复杂度$O(V+E)$。
+
+参考代码（[PA 2011]Journeys）：
+\lstinputlisting{Source/Source/SegmentTree/bzoj3073.cpp}
 \subsection{Johnson算法}
 Johnson算法用于求所有节点对间最短路径。
 其主要思想是将原图转换为无负权边的图。
