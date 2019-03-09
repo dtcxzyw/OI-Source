@@ -93,3 +93,12 @@ int merge(int u, int v) {
 \subsection{斜堆}
 斜堆的操作与左偏树差不多，它们的区别是斜堆不维护到外节点的最近距离，
 而是在每一次$merge$时简单地$swap$左右子树。
+\subsection{可删堆}\label{MultiSet}
+一个简单的方法是使用$std::multiset$，但是其常数很大；
+更保险的做法是使用两个优先队列（已加入/已删除）来完成操作：
+\begin{itemize}
+	\item 加入时将元素加入``已加入堆''；
+	\item 删除时将元素加入``已删除堆''；
+	\item 取堆顶时，若两堆堆顶相等则弹出，直到两堆堆顶不相等，返回``已加入堆''
+	      的堆顶。
+\end{itemize}

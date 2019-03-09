@@ -16,6 +16,9 @@
 - [ ] LOJ#2392. 「JOISC 2017 Day 1」烟花棒
 - [ ] LOJ#6500. 「雅礼集训 2018 Day2」操作
 - [ ] [JLOI2011]不重复数字
+- [ ] [USACO09FEB]改造路Revamping Trails
+- [ ] [USACO15JAN]草鉴定Grass Cownoisseur
+- [ ] [SHOI2014]神奇化合物
 # 题集
 - [ ] PKUWC2018
 - [ ] Ynoi2019模拟赛[By OldDriverTree](http://olddrivertree.blog.uoj.ac/blog/4656)
@@ -58,25 +61,25 @@
 - [ ] UVa 11439
 - [x] UOJ#79. 一般图最大匹配
 - [ ] UOJ#81. 一般图最大权匹配
-# 仙人掌/圆方树/点双
+# 仙人掌/圆方树/点双/割点
 - [ ] UVa 10510
-- [ ] LOJ#2062. 「HAOI2016」地图
+- [x] LOJ#2062. 「HAOI2016」地图
 - [ ] LOJ#2475. 「2018 集训队互测 Day 3」白云的旅行
 - [ ] LOJ#2737. 「JOISC 2016 Day 3」电报
 - [ ] LOJ#6496. 「雅礼集训 2018 Day1」仙人掌
-- [ ] BZOJ2125 最短路
-- [ ] P4320 道路相遇
-- [ ] P5236
+- [ ] LOJ#2562. 「SDOI2018」战略游戏
+- [x] BZOJ2125/P5236 最短路
+- [x] P4320 道路相遇=【BJOI2013 load】压力
 - [ ] PKUWC2019 圈图
-- [ ] 矿场搭建
-- [ ] 贝壳找家的神秘机房
-- [ ] APIO2018 铁人两项
-- [ ] GRAPHCNT
+- [x] 矿场搭建
+- [x] APIO2018 铁人两项
 # 动态dp
 - [x] P4719 【模板】动态dp
 - [ ] 【LOJ】#2269. 「SDOI2017」切树游戏
 - [x] P4513 小白逛公园
 - [x] 【LOJ】#2955. 「NOIP2018」保卫王国
+- [ ] BZOJ 4712
+- [ ] UOJ 268
 # 线性规划
 - [ ] BZOJ 3550
 - [ ] BZOJ 3112
@@ -219,7 +222,7 @@
 - [ ] P2056 [ZJOI2007]捉迷藏
 # 平衡树
 - [x] LOJ#516. 「LibreOJ β Round #2」DP 一般看规律
-# 容斥/反演/筛法
+# 容斥/反演/筛法/计数（顺便加入readme中常见套路）
 - [x] LOJ#153. 集合覆盖计数
 - [ ] LOJ#154. 集合划分计数
 - [x] LOJ#2027. 「SHOI2016」黑暗前的幻想乡
@@ -250,6 +253,7 @@
 - [ ] LOJ124
 - [ ] LOJ125
 - [ ] 【ZJOI2009】多米诺骨牌
+- [ ] LOJ#6094. 「Codeforces Round #418」归乡迷途
 # 扩展欧几里得
 - [ ] LOJ#6440
 - [ ] CF868G
@@ -296,6 +300,7 @@
 - [ ] LOJ#2049. 「HNOI2016」网络
 - [ ] LOJ#2056. 「TJOI / HEOI2016」序列
 - [x] Luogu P3206
+- [ ] bzoj2989 数列
 # 2-SAT
 - [ ] LOJ#571. 「LibreOJ Round #11」Misaka Network 与 Accelerator
 - [ ] LOJ#2155. 「POI2011 R1」同谋者 Conspiracy
@@ -404,6 +409,7 @@
 - [ ] subsequence
 - [ ] CF979E
 - [ ] AGC022F
+- [ ] 「POI2012」衣帽间 Cloakroom
 # 置换
 - [ ] LOJ#2528. 「ZJOI2018」树
 # 支配树
@@ -444,3 +450,13 @@
 - [ ] P1453 城市环路
 - [ ] P3651 展翅翱翔之时 (はばたきのとき)
 - [ ] P3673 小清新计数题
+# 二进制分组
+- [ ] CF710F String Set Queries
+- [ ] bzoj2989 数列
+# 矩阵快速幂
+- [ ] [JLOI2015]有意义的字符串
+- [ ] [HNOI2011]数学作业
+- [ ] [SCOI2009]迷路
+- [ ] [HNOI2008]GT考试
+- [ ] 能量采集
+- [ ] 块速递推

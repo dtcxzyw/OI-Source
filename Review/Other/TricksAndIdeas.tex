@@ -220,8 +220,8 @@ $O(\sqrt{n}\lg n)$。
 每次选取一个方案后将它的后继加入优先队列。如果这个DAG是一棵树，就不需要去重，最好构造
 出可树型转移的方案表示。
 
-\subsubsection{集合选数最值问题}
-\paragraph{类型一}
+\subsection{集合选数最值问题}
+\subsubsection{类型一}
 给定$n$个可重集合，在每个集合中选取一个数，求这些选择方案中数的和（积）前$k$大（小）值。
 
 当$n=2$时，沿用上面的做法可以解决。但是当方案的维数增加时，这种方法就不再有效了。
@@ -250,7 +250,7 @@ $(p_1,p_2,\cdots,p_n)$表示集合$i$选择第$p_i$个数，但是这样的状�
 例题：第十三届北航程序设计竞赛预赛 M 最优卡组
 \lstinputlisting{Source/Source/Greed/LOJ6254.cpp}
 
-\paragraph{类型二}
+\subsubsection{类型二}
 给定一个可重集合，选择$m$个数作为一种方案，求价值前$k$大的方案。
 
 同样使用按位更改的方法，不过要按顺序记录每个被选数的位置。这样的状态转移是一个DAG，
@@ -268,15 +268,6 @@ $(p_1,p_2,\cdots,p_n)$表示集合$i$选择第$p_i$个数，但是这样的状�
 	集合选数最值一类问题
 	\url{https://www.cnblogs.com/tkandi/p/9375509.html}
 }。
-\subsection{可删堆}\label{MultiSet}
-一个简单的方法是使用$std::multiset$，但是其常数很大；
-更保险的做法是使用两个优先队列（已加入/已删除）来完成操作：
-\begin{itemize}
-	\item 加入时将元素加入``已加入堆''；
-	\item 删除时将元素加入``已删除堆''；
-	\item 取堆顶时，若两堆堆顶相等则弹出，直到两堆堆顶不相等，返回``已加入堆''
-	      的堆顶。
-\end{itemize}
 \subsection{二进制分组}\label{BinIns}
 对于在线向序列右端插入元素的操作（不修改/删除），可以按照最大规模固定规模分块后建块，
 询问时对每块暴力查询。假设重建块的复杂度为$O(n\lg n)$，查询复杂度为$O(\lg n)$，
@@ -470,8 +461,10 @@ cdq分治用来解决偏序问题（支持动态偏序问题，但仍然要求�
 	\item 考虑是否仅依赖相邻位置的关系，序列$\Rightarrow$相邻位，网格图$\Rightarrow$
 	相邻行。
 	\item fmax/fmin是C++11新增的函数，非C++11比赛中不使用。
+	\item APIO2018铁人两项：树上指定点集两两树上路径点权和：考虑每个点权的贡献。
 \end{itemize}
-\subsection{Linux/GCC工具}
+\subsection{比赛注意事项}
+\subsubsection{Linux/GCC工具}
 鉴于THUWC2019Day3工程题的CRC32校验可以直接使用系统内置工具。。。
 \begin{itemize}
 	\item md5sum/shasum/cksum/crc32/sum：计算文件校验和
@@ -483,6 +476,15 @@ cdq分治用来解决偏序问题（支持动态偏序问题，但仍然要求�
 	主要性能指标为IPC，Cache命中率，分支命中率。所以命令为perf~stat~-e~
 	cache-misses,branch-misses,instructions,branches,cache-references,
 	cpu-cycles~./a.out
+\end{itemize}
+\subsubsection{用于Debug的编译命令}
+\begin{itemize}
+	\item -ftrapv 有符号算术运算溢出检测
+	\item -Wall 最高级别警告
+	\item -Wextra 扩展警告
+	\item -fsanitize=undefined 未定义行为检测
+	\item -fsanitize=address 访问越界检测
+	\item -ggdb3 生成适宜GDB的调试信息
 \end{itemize}
 \subsection{本节注记}
 2013年许昊然的国家集训队论文答辩《浅谈数据结构题的几个非经典解法——<Claymore>命题报告》

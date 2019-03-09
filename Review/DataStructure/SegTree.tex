@@ -231,6 +231,9 @@ $A$，将被抛弃的$B$下放到儿子处理。如果该边的点在$A$处取�
 \lstinputlisting{Source/Source/SegmentTree/LOJ6034.cpp}
 
 底层优化：C++11中支持std::fma，可以单次完成乘加运算，速度更快且精度更高。
+不过当\#pragma STDC FP\_CONTRACT开关打开时，编译器会自行优化。
+
+剪枝优化：插入线段而不是插入直线时，将B无贡献的剪枝提前到modify而不是color。
 
 {\bfseries 「SDOI2016」游戏：虽然树链剖分后不能保证区间内的横坐标单调，但可以
 保证插入和查询的区间横坐标单调，color函数的正确性并不会受到影响。因此不必考虑这个问题。}

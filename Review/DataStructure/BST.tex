@@ -35,7 +35,7 @@ split函数的作用是将一棵树按照权值或位置划分成两棵子树。
         if(u) {
             push(u);
             int lsiz=T[T[u].ls].siz;
-            //`lsiz(+1)决定当节点u为第k个时被分到哪棵子树`
+            //lsiz(+1)决定当节点u为第k个时被分到哪棵子树
             if(k<=lsiz) {
                 y=u;
                 split(T[u].ls,k,x,T[u].ls);
@@ -58,7 +58,7 @@ split函数的作用是将一棵树按照权值或位置划分成两棵子树。
     void split(int u,int k,int& x,int& y) {
         if(u) {
             push(u);
-            //`=决定当T[u].val==k时被分到哪棵子树`
+            //=决定当T[u].val==k时被分到哪棵子树
             if(T[u].val<=k) {
                 x=u;
                 split(T[u].rs,k,T[u].rs,y);

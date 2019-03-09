@@ -28,6 +28,8 @@ bool graph2Forest(int n) {
     icnt = 0;
     memset(flag, n);
     DFS(1);
+    if(icnt != n)
+        return false;
     memset(tag, n);
     for(int i = 2; i <= cnt; i += 2) {
         int u = E[i].to, v = E[i ^ 1].to;
@@ -57,7 +59,7 @@ bool graph2Forest(int n) {
 对于简单的仙人掌问题可以使用DFS树做法：
 
 首先可以使用类似Tarjan的算法判断是否出现了环，然后对于环和桥分别dp，
-将环的信息记录在环上节点在DFS树上最浅的节点上（即在回到环上最浅点时
+将环的信息记录在环在DFS树上最浅的节点上（即在回到环上最浅点时
 另外dp），这样向上转移时就和桥一样了。
 
 模板：
@@ -76,12 +78,12 @@ void DFS(int u) {
         }
         low[u] = std::min(low[u], low[v]);
         if(low[v] > dfn[u])
-            //'转移桥边' v->u
+            //转移桥边 v->u
     }
     for(int i = last[u]; i; i = E[i].nxt) {
         int v = E[i].to;
         if(p[v] != u && dfn[u] < dfn[v])
-            solveRing(u, v);//'计算环' v->u
+            solveRing(u, v);//计算环 v->u
     }
 }
 \end{lstlisting}
@@ -99,7 +101,7 @@ void solveRing(int u,int v) {
     int id=++ncnt;
     for(int i=v;i!=u;i=p[i])
         //add id->i
-    //add id->u
+    //add u->id
 }
 void tarjan(int u) {
     static int icnt=0;
@@ -128,10 +130,42 @@ ncnt=n;
 \end{lstlisting}
 
 还有一种简洁的建树方法：
-参见\url{https://blog.csdn.net/qq\_36551189/article/details/81047872}
+\begin{lstlisting}
+int dfn[size],p[size],icnt=0,ncnt;
+bool ring[size];
+void DFS(int u) {
+    dfn[u]=++icnt;
+    for(int i=last[u];i;i=E[i].nxt) {
+        int v=E[i].to;
+        if(v==p[u])
+            continue;
+        if(dfn[v]) {
+            if(dfn[v]<dfn[u]) {
+                int id=++ncnt;
+                for(int j=u;j!=v;j=p[j])
+                    addEdge(id,j),ring[j]=true;
+                addEdge(id,v),ring[v]=true;
+            }
+        }
+        else {
+            p[v]=u;
+            ring[u]=false;
+            DFS(v);
+            if(!ring[u])
+                addEdge(u,v);
+        }
+    }
+}
+ncnt=n;
+\end{lstlisting}
 
-圆方树具有以下性质：
-\paragraph{子仙人掌} 以$r$为根的仙人掌上点$p$的子仙人掌为去掉$p$到$r$的简单路径的边后
+参见Iking123的博客\footnote{
+    圆方树/广义圆方树学习小记（gradually update...）\\
+   \url{https://blog.csdn.net/qq\_36551189/article/details/81047872}
+}。
+
+\subsubsection{性质}
+\paragraph{子仙人掌} 以$r$为根的仙人掌上点$p$的子仙人掌为去掉$p$到$r$的简单路径后
 点$p$所在的连通块。
 \begin{property}
     以$r$为根仙人掌上点$p$的子仙人掌对应圆方树上点$p$的子树。
@@ -156,7 +190,7 @@ ncnt=n;
     int jump(int u,int lca) {
         int res;
         while(top[u]!=top[lca]) {
-            res=u;
+            res=top[u];
             u=p[top[u]];
         }
         return u==lca?res:son[lca];

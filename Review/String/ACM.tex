@@ -68,15 +68,15 @@ void match(const char* str) {
     int p=0;
     while(*str) {
         int c=*str-'a';
-        //`注意如果使用继承fail优化就不需要跳fail了`
+        //注意如果使用继承fail优化就不需要跳fail了
         while(p && !T[p].nxt[c])
             p=T[p].fail;
         p=T[p].nxt[c];
-        //`查找匹配的模式串`
+        //查找匹配的模式串
         int cp=p;
         while(cp) {
             if(T[cp].cnt)
-                //`处理匹配字符串`
+                //处理匹配字符串
             cp=T[cp].fail;
         }
         ++str;

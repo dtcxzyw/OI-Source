@@ -26,15 +26,15 @@ void DFS(int u, int p, bool erase) {
         int v = E[i].to;
         if(v != p && v != son[u]) {
             for(int j = L[v]; j <= R[v]; ++j)
-                add(idc[j]);//`idc数组为已在DFS序上展开的数据`
+                add(idc[j]);//idc数组为已在DFS序上展开的数据
         }
     }
     add(c[u]);
-    //`记录信息`
+    //记录信息
     if(erase) {
         for(int i = L[u]; i <= R[u]; ++i)
-            erase(idc[i]);//`为了保证复杂度按需清空`
-        //`重置其余维护信息`
+            erase(idc[i]);//为了保证复杂度按需清空
+        //重置其余维护信息
     }
 }
 \end{lstlisting}

@@ -94,25 +94,25 @@ void aug(int s) {
     do {
         int v=pair[u],minh=inf,nxt;
         flag[u]=true;
-        // `再次DFS后新访问到了点u和它的匹配点`
-        // `为点v找新匹配点`
+        // 再次DFS后新访问到了点u和它的匹配点
+        // 为点v找新匹配点
         for(int i=1;i<=n;++i)
             if(!flag[i]){
                 int delta=lh[v]+rh[i]-w[v][i];
                 if(delta<slack[i])
                     slack[i]=delta,pre[i]=u;
-                    // `点i的匹配点有可能置换为u的匹配点，`
-                    // `以腾出u的匹配点的空位`
+                    //点i的匹配点有可能置换为u的匹配点，
+                    //以腾出u的匹配点的空位
                 if(minh>slack[i])
-                    minh=slack[i],nxt=i;// `点i下次将被访问`
+                    minh=slack[i],nxt=i;//点i下次将被访问
             }
         //松弛
         for(int i=0;i<=n;++i)
             if(flag[i])lh[pair[i]]-=minh,rh[i]+=minh;
             else slack[i]-=minh;
         u=nxt;
-    } while(pair[u]);// `直到找到未匹配点为止`
-    // `置换匹配`
+    } while(pair[u]);//直到找到未匹配点为止
+    //置换匹配
     while(u) {
         int p=pre[u];
         pair[u]=pair[p];
