@@ -1,0 +1,70 @@
+\section{珂朵莉树/老司机树}
+珂朵莉树主要用来解决序列上区间元素的复杂变换问题（比如区间幂等无法整体修改的操作）。
+
+使用它的前置条件有：
+\begin{itemize}
+    \item 有区间赋值操作
+    \item 数据随机（区间赋值操作的比例稳定且赋值区间均匀）
+\end{itemize}
+
+其主要思路是用std::set维护连续权值相同的块，执行区间操作时暴力切分维护。由于数据随机与区间
+赋值操作，set的大小会快速下降。若有$n$个元素，$m$次操作，时间复杂度趋于$O(m\lg n)$。
+
+\subsubsection{存储}
+单个节点表示区间内的值都等于它的值。存储在set中的节点定义如下：
+\begin{lstlisting}
+struct Node {
+    int l;
+    mutable int val;
+    bool operator<(const Node& rhs) const {
+        return l<rhs.l;
+    }
+};
+std::set<Node> seq;
+\end{lstlisting}
+这里只存储左端点比较方便，其$l$表示区间为$[l,l_{nxt})$。
+初始化时在$n+1$处加一个哨兵。
+
+因为set的键值不允许改变，decltype(*std::set<Node>::iterator())
+是const Node\&，所以要将$val$设为mutable。
+\subsubsection{切分}
+$split(pos)$在$pos$处切分，并返回区间$[pos,)$的迭代器。
+
+查找第一个$l$不小于$pos$的位置，如果其左端点恰好为$pos$,直接返回。否则$pos$在
+前一个区间中，将其切分后返回迭代器。
+
+\begin{lstlisting}
+typedef std::set<Node>::iterator IterT;
+IterT split(int pos) {
+    IterT it=seq.lower_bound(pos);
+    if(it->l==pos)
+        return it;
+    --it;
+    return seq.insert(Node(pos,it->val)).first;
+}
+\end{lstlisting}
+\subsubsection{区间赋值}
+区间赋值是保证时间复杂度的关键操作。只要切分出区间，然后删掉该区间，插入
+新区间就可以了。
+\begin{lstlisting}
+void assign(int l,int r,int val) {
+    IterT beg=split(l),end=split(r+1);
+    seq.erase(beg,end);
+    seq.insert(Node(l,val));
+}
+\end{lstlisting}
+由于split中只有插入操作，迭代器保证有效，不需要注意split(l)和split(r+1)的顺序。
+\subsubsection{应用}
+和区间赋值一样，$split(l),split(r+1)$后对$[beg,end)$的迭代器指向的值执行暴力
+修改或查询。在查询时有时需要得到区间的大小，有三种解决方案：
+\begin{itemize}
+    \item 遍历时维护当前迭代器$it$，同时维护$nxt$。
+    \item 在$Node$中维护$r$，split时删除原区间再加入前半段区间。注意此法要先
+    $split(r+1)$再$split(l)$。
+    \item 在$Node$中维护$mutable int r$。
+\end{itemize}
+
+上述内容参考了zyhang的博客\footnote{
+    珂朵莉树详解
+    \url{https://www.cnblogs.com/yzhang-rp-inf/p/9443659.html}
+}。

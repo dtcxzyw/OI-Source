@@ -73,7 +73,11 @@
 			"string_view": "cpp",
 			"cstddef": "cpp",
 			"queue": "cpp",
-			"filesystem": "cpp"
+			"filesystem": "cpp",
+			"charconv": "cpp",
+			"codecvt": "cpp",
+			"cuchar": "cpp",
+			"shared_mutex": "cpp"
 		},
 		"latex-workshop.intellisense.citation.maxfilesizeMB": 128,
 		"latex-workshop.latex.recipes": [

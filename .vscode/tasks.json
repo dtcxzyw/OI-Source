@@ -4,35 +4,19 @@
         {
             "label": "DEBUG",
             "command": "g++",
-            "windows": {
-                "args": [
-                    "-g",
-                    "-O0",
-                    "${file}",
-                    "-o",
-                    "bin/${fileBasenameNoExtension}.out",
-                    "-Wall",
-                    "-std=c++11",
-                    "-D_FORTIFY_SOURCE=2",
-                    "-fstack-protector-all",
-                    "-Wl,-stack=1073741824"
-                ]
-            },
-            "linux": {
-                "args": [
-                    "-O0",
-                    "${file}",
-                    "-o",
-                    "bin/${fileBasenameNoExtension}.out",
-                    "-Wall",
-                    "-std=c++11",
-                    "-D_FORTIFY_SOURCE=2",
-                    "-fstack-protector-all",
-                    "-ftrapv",
-                    "-ggdb3",
-                    "-Wextra"
-                ]
-            },
+            "args": [
+                "-O0",
+                "${file}",
+                "-o",
+                "bin/${fileBasenameNoExtension}.out",
+                "-Wall",
+                "-std=c++11",
+                "-D_FORTIFY_SOURCE=2",
+                "-fstack-protector-all",
+                //"-ftrapv",
+                "-ggdb3",
+                "-Wextra"
+            ],
             "problemMatcher": {
                 "owner": "cpp",
                 "fileLocation": [
@@ -52,27 +36,14 @@
         {
             "label": "RELEASE",
             "command": "g++",
-            "windows": {
-                "args": [
-                    "-O2",
-                    "${file}",
-                    "-o",
-                    "bin/${fileBasenameNoExtension}.out",
-                    "-Wall",
-                    "-std=c++11",
-                    "-Wl,-stack=1073741824"
-                ]
-            },
-            "linux": {
-                "args": [
-                    "-O2",
-                    "${file}",
-                    "-o",
-                    "bin/${fileBasenameNoExtension}.out",
-                    "-Wall",
-                    "-std=c++11"
-                ]
-            },
+            "args": [
+                "-O2",
+                "${file}",
+                "-o",
+                "bin/${fileBasenameNoExtension}.out",
+                "-Wall",
+                "-std=c++11"
+            ],
             "problemMatcher": {
                 "owner": "cpp",
                 "fileLocation": [

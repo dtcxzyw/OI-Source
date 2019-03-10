@@ -102,3 +102,52 @@ int merge(int u, int v) {
 	\item 取堆顶时，若两堆堆顶相等则弹出，直到两堆堆顶不相等，返回``已加入堆''
 	      的堆顶。
 \end{itemize}
+\subsection{配对堆}
+配对堆的复杂度与常数均比左偏树优秀，其插入和合并复杂度都是$O(1)$，但是不支持可持久化
+（复杂度是均摊的）。其实际性能比复杂度更优秀的斐波那契堆更好。OI中一般不需要decrease
+-key操作，因此配对堆比较好写。
+
+下面的内容假设其为小根堆。
+
+配对堆是一个满足堆性质的多叉树（儿子的权值不小于父亲），在存储时使用左儿子右兄弟表示法。
+\begin{lstlisting}
+struct Node {
+    int val,son,bro;
+} T[size];
+\end{lstlisting}
+\subsubsection{合并}
+合并时直接将堆顶较大的根节点$v$作为堆顶较大的根节点$u$的$son$，原来的$son$
+变成$v$的$bro$。
+\begin{lstlisting}
+int merge(int u,int v) {
+    if(u && v) {
+        if(T[u].val>T[v].val)
+            std::swap(u,v);
+        T[v].bro=T[u].son;
+        T[u].son=v;
+        return u;
+    }
+    return u|v;
+}
+\end{lstlisting}
+\subsubsection{删除}
+删除根节点后配对堆剩下一堆由儿子的子树组成的森林，需要将这些子树合并。配对堆使用``配对''
+的方法使得删除复杂度达到均摊$O(\lg n)$：相邻儿子两两配对合并，再将这些堆合并。
+
+实践时使用$mergeBro$函数将平行的儿子们合并为一个堆。删除堆顶时调用$mergeBro(T[u].son)$。
+
+\begin{lstlisting}
+int mergeBro(int u) {
+    if(u && T[u].bro) {
+        int a=T[u].bro,b=T[a].bro;
+        T[u].bro=T[a].bro=0;
+        return merge(merge(u,a),mergeBro(b));
+    }
+    return u;
+}
+\end{lstlisting}
+
+配对堆参考了WA自动机的博客\footnote{
+    配对堆
+    \url{https://wa-am.com/2018/05/13/配对堆}
+}。
