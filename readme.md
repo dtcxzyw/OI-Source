@@ -265,6 +265,7 @@
 - [ ] 球与盒子的组合计数[By 自为风月马前卒](https://www.cnblogs.com/zwfymqz/p/9724918.html)
 - [ ] Lyndon Word[By 自为风月马前卒](https://www.cnblogs.com/zwfymqz/p/10198690.html)
 - [ ] KMP算法优化
+- [ ] Meissel-Lehmer
 # 标准库使用
 - [ ] valarray:std::valarray
 - [ ] functional:std::plus/minus等Function Object
@@ -321,6 +322,8 @@
 - [ ] 误差函数erf的应用
 - [ ] 分支定界法
 - [ ] 高斯整数
+- [ ] Stern-Brocot tree
+- [ ] 格点计数[By min-25](https://min-25.hatenablog.com/entry/2018/05/03/145505)
 # 集训队论文/WC营员交流学习（省选后）
 ## 2019
 - [ ] 模拟费用流 laofu

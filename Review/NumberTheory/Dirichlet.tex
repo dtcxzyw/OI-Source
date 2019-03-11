@@ -135,5 +135,19 @@
 
 	证明：当$(a,b)\neq 1$时，$ab$有平方因子，值为0。否则根据积性函数的性质，
 	$\mu(ab)=\mu(a)\mu(b)$。
+	\item LOJ\#6027. 「from CommonAnts」质数计数 I
+
+	考虑构造一个积性函数使得$f(p)=[p\equiv 1\pmod{4}],f(ab)=f(a)f(b)$。只令
+	$f(x)=[p\equiv 1\pmod{4}]$是错误的，因为两个在模4余3的剩余系的元素之积在余1
+	剩余系，这样设计积性函数仅会漏统计这种情况。也就是说要同时统计余1和余3，但是必须
+	将他们区分。注意积性函数的值域是复数域，那么可以将积性函数值表示为$a+bi$的形式，
+	当$x\equiv 1\pmod{4}$时值为1，当$x\equiv 1\pmod{4}$时值为$i$，其余情况为0。
+	再讨论$f(ab)=f(a)f(b)$的性质，当取$i^2=1$时$f(x)$恰好完全积性（不管$i$取什么
+	值都可以构成群，同样满足积性函数性质）。最后套min\_25筛解决。事实上还可以将复数
+	扩展为多个基。
+	\item 凑莫比乌斯反演：
+	\begin{displaymath}
+		\sum_{d=1}^n{\sum_{k=1}^{\frac{n}{k}}{F(k)G(\frac{n}{kd})}}\Rightarrow kd=q \Rightarrow \sum_{q=1}^n{G(q)\sum_{k|q}F(k)}
+	\end{displaymath}
 \end{itemize}
 更多技巧待补充。

@@ -41,9 +41,9 @@
 - [ ] UOJ#188. 【UR #13】Sanrd
 - [ ] LOJ#561. 「LibreOJ Round #9」CommonAnts 的调和数
 - [ ] LOJ#572. 「LibreOJ Round #11」Misaka Network 与求和
-- [ ] LOJ#6027. 「from CommonAnts」质数计数 I
-- [ ] LOJ#6028. 「from CommonAnts」质数计数 II
-- [ ] LOJ#6235. 区间素数个数
+- [x] LOJ#6027. 「from CommonAnts」质数计数 I
+- [x] LOJ#6028. 「from CommonAnts」质数计数 II
+- [x] LOJ#6235. 区间素数个数（AC还需要Meissel-Lehmer）
 # 类欧几里得算法
 - [x] LOJ#138. 类欧几里得算法
 - [ ] UOJ#42. 【清华集训2014】Sum
@@ -153,6 +153,7 @@
 - [x] BZOJ2780: [Spoj]8093 Sevenk Love Oimaster
 - [ ] CTSC2010 珠宝商
 - [ ] CF264D Colorful Stones
+- [ ] 【bzoj 2555】SubString（SAM+LCT，做完加总结）
 # AC自动机
 - [x] LOJ#2180. 「BJOI2017」魔法咒语
 - [ ] BZOJ2780: [Spoj]8093 Sevenk Love Oimaster
@@ -232,7 +233,6 @@
 - [ ] LOJ#2025. 「JLOI / SHOI2016」方
 - [ ] LOJ#6160. 「美团 CodeM 初赛 Round A」二分图染色
 - [ ] LOJ#2091. 「ZJOI2016」小星星
-- [ ] LOJ#572. 「LibreOJ Round #11」Misaka Network 与求和
 - [x] LOJ#2000. 「SDOI2017」数字表格
 - [x] LOJ#2095. 「CQOI2015」选数
 - [ ] LOJ#2476. 「2018 集训队互测 Day 3」蒜头的奖杯
@@ -243,7 +243,7 @@
 - [x] LOJ#6491. zrq 的 gcd
 - [x] LOJ#6485. LJJ 学二项式定理
 - [x] BZOJ3328: PYXFIB
-- [ ] LOJ#6229. 这是一道简单的数学题
+- [x] LOJ#6229. 这是一道简单的数学题
 - [ ] SPOJ DIVCNT3
 - [ ] 「SDOI 2018」旧试题
 - [ ] UOJ#450
