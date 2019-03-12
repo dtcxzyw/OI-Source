@@ -145,9 +145,40 @@
 	再讨论$f(ab)=f(a)f(b)$的性质，当取$i^2=1$时$f(x)$恰好完全积性（不管$i$取什么
 	值都可以构成群，同样满足积性函数性质）。最后套min\_25筛解决。事实上还可以将复数
 	扩展为多个基。
-	\item 凑莫比乌斯反演：
+	\item
 	\begin{displaymath}
 		\sum_{d=1}^n{\sum_{k=1}^{\frac{n}{k}}{F(k)G(\frac{n}{kd})}}\Rightarrow kd=q \Rightarrow \sum_{q=1}^n{G(q)\sum_{k|q}F(k)}
 	\end{displaymath}
+	\item SPOJ DIVCNT2：
+
+	记$\omega(d)$为$d$的质因子个数。
+	\begin{displaymath}
+		\tau{n^2}=\sum_{d|n}{2^{\omega(d)}}
+	\end{displaymath}
+
+	证明：考虑$n^2$有而$n$没有的因子，这些因子必定满足其质因子分解中某个质因子指数
+	超过$n$的对应指数。对于$n$的某个因子$d$，其质因子次数加上$n$的对应次数，就可以
+	成为$n^2$的独有因子，方案数为$2^{\omega(d)}$，且这种计数方法不会重复或遗漏。
+
+	\begin{displaymath}
+		2^{\omega(n)}=\sum_{d|n}{|\mu(d)|}=\sum_{d|n}{\mu^2(d)}
+	\end{displaymath}
+
+	证明：$n$的所有无平方因子的因子都可以表示为一个长度为$\omega(n)$的01向量，表示选
+	/不选这个质因子。枚举所有这种因子等价于枚举所有向量，其集合大小为$2^{\omega(n)}$。
+
+	\begin{displaymath}
+		\mu^2(i)=\sum_{j^2|i}{\mu(j)}
+	\end{displaymath}
+
+	证明：左式的意义是$i$是否含有平方因子（1不算）。若$i$不含平方因子，右式的值
+	为$\mu(1)=1$。若$i$含有平方因子，记$i=a^2b$，$b$不含平方因子，那么右式变形为
+	$\sum_{j|a}{\mu(j)}$，因为$a\neq 1$，所以该式的值为0。
+
+	这些方法参考了Candy？的博客\footnote{
+		SPOJ DIVCNT2 [我也不知道是什么分类了反正是数论]\\
+		\url{https://www.cnblogs.com/candy99/p/6715013.html}
+	}。
 \end{itemize}
+
 更多技巧待补充。

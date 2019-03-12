@@ -265,7 +265,8 @@
 - [ ] 球与盒子的组合计数[By 自为风月马前卒](https://www.cnblogs.com/zwfymqz/p/9724918.html)
 - [ ] Lyndon Word[By 自为风月马前卒](https://www.cnblogs.com/zwfymqz/p/10198690.html)
 - [ ] KMP算法优化
-- [ ] Meissel-Lehmer
+- [ ] 素数的k次幂前缀和(Meissel-Lehmer) IOI2018 zzt
+- [ ] 约数函数前缀和 IOI2018 zzt
 # 标准库使用
 - [ ] valarray:std::valarray
 - [ ] functional:std::plus/minus等Function Object

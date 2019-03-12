@@ -36,14 +36,6 @@
 - [ ] Hash Killer
 - [ ] Timus Online Judge专题
 - [ ] UOJ NOI Round
-# Min_25 筛
-- [x] LOJ#6053. 简单的函数
-- [ ] UOJ#188. 【UR #13】Sanrd
-- [ ] LOJ#561. 「LibreOJ Round #9」CommonAnts 的调和数
-- [ ] LOJ#572. 「LibreOJ Round #11」Misaka Network 与求和
-- [x] LOJ#6027. 「from CommonAnts」质数计数 I
-- [x] LOJ#6028. 「from CommonAnts」质数计数 II
-- [x] LOJ#6235. 区间素数个数（AC还需要Meissel-Lehmer）
 # 类欧几里得算法
 - [x] LOJ#138. 类欧几里得算法
 - [ ] UOJ#42. 【清华集训2014】Sum
@@ -244,17 +236,28 @@
 - [x] LOJ#6485. LJJ 学二项式定理
 - [x] BZOJ3328: PYXFIB
 - [x] LOJ#6229. 这是一道简单的数学题
-- [ ] SPOJ DIVCNT3
+- [x] SPOJ DIVCNT3
+- [x] SP20173 DIVCNT2
+- [ ] DIVCNT1
+- [x] DIVCNTK
 - [ ] 「SDOI 2018」旧试题
 - [ ] UOJ#450
 - [ ] CF1097F Alex and a TV Show
-- [ ] [国家集训队]Crash的数字表格 / JZPTAB
+- [x] [国家集训队]Crash的数字表格 / JZPTAB
 - [ ] P4859 已经没有什么好害怕的了
 - [ ] P4707 重返现世
 - [ ] LOJ124
 - [ ] LOJ125
 - [ ] 【ZJOI2009】多米诺骨牌
 - [ ] LOJ#6094. 「Codeforces Round #418」归乡迷途
+- [x] LOJ#6053. 简单的函数
+- [ ] UOJ#188. 【UR #13】Sanrd
+- [ ] LOJ#561. 「LibreOJ Round #9」CommonAnts 的调和数
+- [ ] LOJ#572. 「LibreOJ Round #11」Misaka Network 与求和
+- [x] LOJ#6027. 「from CommonAnts」质数计数 I
+- [x] LOJ#6028. 「from CommonAnts」质数计数 II
+- [x] LOJ#6235. 区间素数个数（AC还需要Meissel-Lehmer）
+- [x] bzoj2440完全平方数
 # 扩展欧几里得
 - [ ] LOJ#6440
 - [ ] CF868G
