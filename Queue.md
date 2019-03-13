@@ -229,7 +229,7 @@
 - [x] LOJ#2095. 「CQOI2015」选数
 - [ ] LOJ#2476. 「2018 集训队互测 Day 3」蒜头的奖杯
 - [ ] LOJ#509. 「LibreOJ NOI Round #1」动态几何问题
-- [ ] LOJ#2085. 「NOI2016」循环之美
+- [x] LOJ#2085. 「NOI2016」循环之美
 - [x] LOJ#2544. 「JXOI2018」游戏
 - [x] LOJ#6241. 性能优化
 - [x] LOJ#6491. zrq 的 gcd
@@ -240,14 +240,14 @@
 - [x] SP20173 DIVCNT2
 - [ ] DIVCNT1
 - [x] DIVCNTK
-- [ ] 「SDOI 2018」旧试题
+- [x] 「SDOI 2018」旧试题
 - [ ] UOJ#450
 - [ ] CF1097F Alex and a TV Show
 - [x] [国家集训队]Crash的数字表格 / JZPTAB
 - [ ] P4859 已经没有什么好害怕的了
 - [ ] P4707 重返现世
-- [ ] LOJ124
-- [ ] LOJ125
+- [x] LOJ124
+- [x] LOJ125
 - [ ] 【ZJOI2009】多米诺骨牌
 - [ ] LOJ#6094. 「Codeforces Round #418」归乡迷途
 - [x] LOJ#6053. 简单的函数

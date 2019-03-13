@@ -1,6 +1,6 @@
 \section{离散对数问题}
 \index{D!Discrete Logarithm}
-离散对数问题解决的是形如$a^x\equiv b\pmod{p}$的问题。
+离散对数问题是求出方程$a^x\equiv b\pmod{p}$的可行解/最小非负整数解。
 \subsection{BSGS}\label{BSGS}
 \index{B!Baby Step Giant Step}
 \subsubsection{BSGS}
@@ -20,6 +20,8 @@ $\sqrt{P}$进制数，分别用$O(\sqrt{P})$的复杂度枚举值，一半存入
     \item 返回无解。
 \end{enumerate}
 
+{\bfseries 今后将采用~\ref{HashTable}节的双重散列+开放寻址法，严禁
+使用std::unordered\_map。}
 \subsubsection{ExBSGS}
 ExBSGS可解决$a,P$不互质的问题。主要思路是将原方程化为普通BSGS可解决的方程。
 

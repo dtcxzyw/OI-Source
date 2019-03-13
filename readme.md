@@ -253,7 +253,7 @@
 - [ ] 最小表示法
 - [ ] 构造问题总结
 - [x] 珂朵莉树详解[By yzhang](https://www.cnblogs.com/yzhang-rp-inf/p/9443659.html)
-- [ ] DP的各种优化[By FlashHu](https://www.cnblogs.com/flashhu/p/9480669.html,https://www.cnblogs.com/flashhu/p/9521094.html)
+- [x] DP的各种优化[By FlashHu](https://www.cnblogs.com/flashhu/p/9480669.html,https://www.cnblogs.com/flashhu/p/9521094.html)
 - [x] 线段树分裂、李超线段树、线段树维护单调栈[By FlashHu](https://www.cnblogs.com/flashhu/p/9651161.html)
 - [x] 模拟退火调参[By FlashHu](https://www.cnblogs.com/flashhu/p/8884132.html)
 - [ ] 母函数求解、优选法、线性常系数齐次递推关系[By FlashHu](https://www.cnblogs.com/flashhu/p/9568368.html)

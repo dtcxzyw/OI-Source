@@ -179,6 +179,21 @@
 		SPOJ DIVCNT2 [我也不知道是什么分类了反正是数论]\\
 		\url{https://www.cnblogs.com/candy99/p/6715013.html}
 	}。
+	\item SDOI2018 旧试题：
+	\begin{eqnarray*}
+		\tau(ij)&=&\sum_{x|i}{\sum_{y|j}{[(x,y)=1]}}\\
+		\tau(ijk)&=&\sum_{x|i}{\sum_{y|j}{\sum_{z|k}{[(x,y)=1][(x,z)=1][(y,z)=1]}}}
+	\end{eqnarray*}
+
+	第一个式子证明：考虑枚举$i$的因子$x$，枚举$j$的因子$y$，这样$xy$可以组成$ij$的因子。
+	但是$xy$可能会有重复，强制$z=xy$只能被最小的$x$枚举，那么对于更大的$x'|z，x|x'$，
+	对应的$y'$与$y$相比少了因子$\frac{x'}{x}$，注意到$\frac{j}{y'}$多了因子
+	$\frac{x'}{x}$，那么$\frac{j}{y'}$与$x'$不互质。而对于最小的$x$，若它与
+	$\frac{j}{y}$不互质，则令$x'=\frac{x}{(x,\frac{j}{y})}$可以得到更小的方案，
+	与$x$最小矛盾。那么答案为
+	$\displaystyle \sum_{x|i}{\sum_{y|j}{[(x,\frac{j}{y})=1]}}$，变形后得到原等式。
+	\item 尽可能早地找到递归结构
+	\item $[(ab,c)=1]=[(a,c)=1][(b,c)=1]$
 \end{itemize}
 
 更多技巧待补充。

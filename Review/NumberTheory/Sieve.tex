@@ -76,7 +76,7 @@ $h(x)$与$g(x)$的前缀和。
     \sum_{d=1}^n{g(d)F(\lfloor\frac{n}{d}\rfloor)}
 \end{displaymath}
 
-提出$F(n)$，即$F(n)=H(n)-\displaystyle \sum_{d=2}^n{g(d)F(\frac{n}{d})}$。
+提出$F(n)$，即$F(n)=H(n)-\displaystyle \sum_{d=2}^n{g(d)F(\lfloor\frac{n}{d}\rfloor)}$。
 
 在递归时可以预处理一部分前缀和，同时使用HashTable缓存计算结果。
 \subsubsection{时间复杂度分析}
