@@ -209,3 +209,28 @@ $O(\sqrt{n})-O(1)$的复杂度绝对不会成为性能瓶颈。
 可以预先取得它们的值。}
 
 结果很明显，显式fread/fwrite速度最快。
+\subsection{快速乘法取模}
+当模数的平方超过long long的表示范围时，可以使用类似快速幂的方式计算快速乘法。
+
+还有一个无法严格证明正确性的trick：将$a*b\%mod$表示为$a*b-\lfloor a/mod*b\rfloor*mod$，
+其中$floor$内部使用long double计算。$floor$操作直接使用强制转型，因为$a/mod*b$就在
+long long的表示范围内。由于最终结果在范围内，两个乘法事实上计算的是模$2^64$意义下的乘法，
+暂时溢出并没有关系。
+
+实现代码：
+\begin{lstlisting}
+typedef long long Int64;
+Int64 mulmB(Int64 a, Int64 b) {
+    Int64 res =
+        (a * b -
+         static_cast<Int64>(
+             static_cast<long double>(a) / mod * b) *
+             mod) %
+        mod;
+    return res < 0 ? res + mod : res;
+}
+\end{lstlisting}
+
+无法证明正确性的原因在于long double的精度是否足够，而且在MSVC中long double只有64位
+精度而不是80位。不过让人放心的是无论是long double还是double，在$\geq 10^8$次随机测试
+中没有出现错误。
