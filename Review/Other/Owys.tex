@@ -76,6 +76,9 @@ mulOptimizedUnfold 11096.677 ms AC
     \item 寻址优化：高维数组寻址时使用指针代替。
     \item Cache优化：在性能敏感的地方，使用指针存储儿子（当然还要考虑if判断
     nullptr的开销）。
+    \item 尽可能使用引用而不是指针：当派生类有多个基类，在继承体系中向上转型时，
+    由于空引用是非法的，程序只要计算指针的偏移；由于允许存在空指针，根据规定，空指针
+    向上转型后仍然是空指针，需要一次特判。
 \end{itemize}
 \subsection{位运算}\label{Bitwise}
 \subsubsection{符号判断}

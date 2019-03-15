@@ -76,6 +76,8 @@ void cook(int n) {
     \item 连续重复子串问题使用错位匹配解决。
     \item 「TJOI / HEOI2016」字符串：若LCP的一个端点固定，可以从它开始在height
     数组上左右暴力遍历，利用min单调性剪枝。
+    \item 枚举串长$l$，每$l$个位置分一段，长度为$l$的串肯定会跨过一个关键点，
+    时间复杂度$O(n\lg n)$。
 \end{itemize}
 \subsubsection{可重叠最长重复子串}
 该子串一定是某两个后缀的LCP，而LCP在height数组中取最小值，因此

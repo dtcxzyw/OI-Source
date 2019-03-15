@@ -10,7 +10,7 @@
 其主要思路是用std::set维护连续权值相同的块，执行区间操作时暴力切分维护。由于数据随机与区间
 赋值操作，set的大小会快速下降。若有$n$个元素，$m$次操作，时间复杂度趋于$O(m\lg n)$。
 
-\subsubsection{存储}
+\subsection{存储}
 单个节点表示区间内的值都等于它的值。存储在set中的节点定义如下：
 \begin{lstlisting}
 struct Node {
@@ -27,7 +27,7 @@ std::set<Node> seq;
 
 因为set的键值不允许改变，decltype(*std::set<Node>::iterator())
 是const Node\&，所以要将$val$设为mutable。
-\subsubsection{切分}
+\subsection{切分}
 $split(pos)$在$pos$处切分，并返回区间$[pos,)$的迭代器。
 
 查找第一个$l$不小于$pos$的位置，如果其左端点恰好为$pos$,直接返回。否则$pos$在
@@ -43,7 +43,7 @@ IterT split(int pos) {
     return seq.insert(Node(pos,it->val)).first;
 }
 \end{lstlisting}
-\subsubsection{区间赋值}
+\subsection{区间赋值}
 区间赋值是保证时间复杂度的关键操作。只要切分出区间，然后删掉该区间，插入
 新区间就可以了。
 \begin{lstlisting}
@@ -54,7 +54,7 @@ void assign(int l,int r,int val) {
 }
 \end{lstlisting}
 由于split中只有插入操作，迭代器保证有效，不需要注意split(l)和split(r+1)的顺序。
-\subsubsection{应用}
+\subsection{应用}
 和区间赋值一样，$split(l),split(r+1)$后对$[beg,end)$的迭代器指向的值执行暴力
 修改或查询。在查询时有时需要得到区间的大小，有三种解决方案：
 \begin{itemize}

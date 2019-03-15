@@ -36,6 +36,7 @@
 - [ ] Hash Killer
 - [ ] Timus Online Judge专题
 - [ ] UOJ NOI Round
+- [ ] 九省联考 2018
 # 类欧几里得算法
 - [x] LOJ#138. 类欧几里得算法
 - [ ] UOJ#42. 【清华集训2014】Sum
@@ -146,6 +147,7 @@
 - [ ] CTSC2010 珠宝商
 - [ ] CF264D Colorful Stones
 - [ ] 【bzoj 2555】SubString（SAM+LCT，做完加总结）
+- [ ] UVA10829
 # AC自动机
 - [x] LOJ#2180. 「BJOI2017」魔法咒语
 - [ ] BZOJ2780: [Spoj]8093 Sevenk Love Oimaster
@@ -414,6 +416,7 @@
 - [ ] CF979E
 - [ ] AGC022F
 - [ ] 「POI2012」衣帽间 Cloakroom
+- [ ] 「HAOI 2015」树上染色（树形DP+01背包+复杂度分析）
 # 置换
 - [ ] LOJ#2528. 「ZJOI2018」树
 # 支配树
