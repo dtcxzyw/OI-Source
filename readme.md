@@ -267,6 +267,8 @@
 - [ ] KMP算法优化
 - [ ] 素数的k次幂前缀和(Meissel-Lehmer) IOI2018 zzt
 - [ ] 约数函数前缀和 IOI2018 zzt
+- [ ] 轨道-稳定集定理
+- [ ] zkw线段树常用模板
 # 标准库使用
 - [ ] valarray:std::valarray
 - [ ] functional:std::plus/minus等Function Object
