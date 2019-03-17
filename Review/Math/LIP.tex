@@ -21,7 +21,8 @@ F_i(x)=\left\{\begin{array}{ll}
 \begin{enumerate}
     \item $O(n^2)$计算出多项式$\displaystyle F(x)=\prod_{i=1}^i{x-x_i}$；
     \item $\Theta(n^2)$计算每个$i$的多项式$\frac{F(x)}{x-x_i}$；
-    \item $\Theta(n^2)$将每个多项式乘以系数$\frac{y_i}{\prod_{i\neq j}{x_i-x_j}}$
+    \item $\Theta(n^2)$将每个多项式乘以系数
+    $\displaystyle \frac{y_i}{\prod_{i\neq j}{x_i-x_j}}$
     （分母部分直接将$x_i$带入$i$对应的分子的多项式求出）；
     \item $\Theta(n^2)$将多项式相加合并。
 \end{enumerate}
@@ -29,8 +30,8 @@ F_i(x)=\left\{\begin{array}{ll}
 \subsection{多点插值}
 \begin{itemize}
     \item 预处理出多项式，然后每次使用霍纳法则$O(n)$求值；
-    \item 预处理出每个$i$的$\displaystyle y_i
-    \prod_{i\neq j}\frac{1}{x_i-x_j}$，每次$O(n^2)$求分子后相加。
+    \item 预处理出每个$i$的$\displaystyle y_i \prod_{i\neq j}\frac{1}{x_i-x_j}$，
+    每次$O(n^2)$求分子后相加。
 \end{itemize}
 \subsection{缺点}
 \begin{itemize}
@@ -93,3 +94,7 @@ struct Poly {
 
 {\bfseries 血泪史：写Project~Euler~639时，由于插值处没有对$x$预先取模，导致在保持系数在$(-mod,mod)$
 与$[0,mod)$的答案不一致，且它们的答案都是错误的，我因此调试了一天。}
+
+{\bfseries Update：注意到由于插值点是连续的，
+$\displaystyle \prod_{i\neq j}{i-j}$实际上可以表示为阶乘之积，可以$O(n)$预处理，
+因此预处理复杂度也可以达到$O(n)$。}

@@ -183,15 +183,19 @@
 - [x] [HNOI2008]玩具装箱TOY
 - [x] [APIO2010]特别行动队
 - [x] [CEOI2004]锯木厂选址
-- [ ] [NOI2014]购票
+- [ ] [NOI2014]购票（点分治）
+- [ ] [NOI2014]购票（可持久化单调队列）
 - [ ] [NOI2016]国王饮水记
 - [ ] BZOJ1096 [ZJOI2007]仓库建设
 - [ ] [SDOI2016]征途
+- [ ] HDU5956The Elder
+- [ ] P3994 Highway
 # 凸优化（WQS二分、带权二分）
 - [x] CF 739E
 - [x] [国家集训队2]Tree I
 - [x] [八省联考2018]林克卡特树lct
 - [x] BZOJ5311贞鱼
+- [ ] [BZOJ5311]-[codeforces321E]Ciel and Gondolas
 # 单调队列
 - [x] P2254 [NOI2005]瑰丽华尔兹
 - [x] P3572 [POI2014]PTA-Little Bird
@@ -447,6 +451,7 @@
 - [ ] LOJ#2327. 「清华集训 2017」福若格斯
 - [ ] LOJ#6033. 「雅礼集训 2017 Day2」棋盘游戏
 - [ ] LOJ#6212. 「美团 CodeM 决赛」melon
+- [ ] [UOJ#266][清华集训2016]Alice和Bob又在玩游戏
 # Delaunay三角剖分
 - [ ] [ZJOI2018]保镖
 # 基环树

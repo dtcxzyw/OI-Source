@@ -313,7 +313,7 @@
 - [ ] 排序网络
 - [ ] 超现实数 方展鹏-《浅谈如何解决不平等博弈问题》
 - [ ] Schreier-Sims 算法
-- [ ] 万能欧几里得
+- [ ] 万能欧几里得[By Mr_Spade](https://www.cnblogs.com/Mr-Spade/p/10370259.html)
 - [ ] 量子算法
 - [ ] +-1RMQ
 - [ ] 信息熵
@@ -327,6 +327,7 @@
 - [ ] 高斯整数
 - [ ] Stern-Brocot tree
 - [ ] 格点计数[By min-25](https://min-25.hatenablog.com/entry/2018/05/03/145505)
+- [ ] 后缀平衡树
 # 集训队论文/WC营员交流学习（省选后）
 ## 2019
 - [ ] 模拟费用流 laofu
