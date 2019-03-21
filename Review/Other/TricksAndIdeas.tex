@@ -454,6 +454,11 @@ cdq分治用来解决偏序问题（支持动态偏序问题，但仍然要求�
 	\item 对于等比数列求和问题，若不存在乘法逆元，则考虑分治计算或使用矩阵记录历史版本和，
 	再做快速幂。
 	\item 树上某点的儿子的子树大小只有$O(\sqrt{n})$种，可以合并以优化复杂度。
+	\item 边在满足指定条件时连通：
+	\begin{itemize}
+		\item 单向限制+强制在线：重构树
+		\item 双向限制+可离线：扫描线+LCT
+	\end{itemize}
 \end{itemize}
 \subsection{比赛注意事项}
 \subsubsection{Linux/GCC工具}

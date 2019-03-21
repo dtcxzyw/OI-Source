@@ -50,7 +50,7 @@ $\displaystyle p=\sum_{i=1}^k{p_i^{c_i}}$。
 
 首先将求组合数转换为求阶乘，但要从$n!$提出p的倍数并做特殊处理，
 即\begin{displaymath}
-	n!=\prod_{i=1}^n{i^{[(n,i)=1]}}\cdot p^{[\frac{n}{p}]}\cdot
+	n!=\prod_{i=1}^n{i^{[p\nmid i]}}\cdot p^{[\frac{n}{p}]}\cdot
 	\prod_{i=1}^{[\frac{n}{p}]}i
 \end{displaymath}
 \begin{itemize}

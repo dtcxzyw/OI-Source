@@ -133,6 +133,11 @@ for(int i=S;i;i=(i-1)&S)
 
 可以理解为每次都做一次忽略S非零位的减法，从全集开始枚举自然能够
 枚举所有子集。
+\paragraph{父集枚举}
+将子集枚举对应操作取反，注意要指定全集end。
+\begin{lstlisting}
+for(int i=S;i<=end;i=(i+1)|S)
+\end{lstlisting}
 \subsubsection{右起连续的0/1取反}
 0->1：x|(x-1)，1->0：x\&(x+1)
 \subsubsection{取右边连续的1}

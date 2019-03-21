@@ -196,7 +196,7 @@
 - [x] 快速凸包
 - [x] 康托展开
 - [ ] ETT(Euler Tour Tree)[By Memphis](http://memphis.is-programmer.com/2015/8/7/linkcutmemphis.99293.html)
-- [ ] Top-Tree[By Memphis](http://memphis.is-programmer.com/2015/8/7/linkcutmemphis.99293.html)
+- [ ] Top-Tree[By Memphis](http://memphis.is-programmer.com/2015/8/7/linkcutmemphis.99293.html)[By negiizhao](http://negiizhao.blog.uoj.ac/blog/4912)
 - [x] Stoer-Wagner算法
 - [x] LCT维护子树信息和边权信息
 - [x] 共价大爷游长沙技巧
@@ -271,7 +271,7 @@
 - [ ] zkw线段树常用模板
 - [ ] 扩展欧拉定理在矩阵幂中的应用
 # 标准库使用
-- [ ] valarray:std::valarray
+- [ ] valarray:std::valarray[by SarvaTathagata](https://www.luogu.org/blog/474D/qian-tan-valarray)
 - [ ] functional:std::plus/minus等Function Object
 - [ ] algorithm:std::partial_sum/std::adjacent_difference
 - [ ] bitset:std::bitset

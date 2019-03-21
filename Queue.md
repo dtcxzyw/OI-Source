@@ -148,6 +148,7 @@
 - [ ] CF264D Colorful Stones
 - [ ] 【bzoj 2555】SubString（SAM+LCT，做完加总结）
 - [ ] UVA10829
+- [ ] P5112 FZOUTSY
 # AC自动机
 - [x] LOJ#2180. 「BJOI2017」魔法咒语
 - [ ] BZOJ2780: [Spoj]8093 Sevenk Love Oimaster
@@ -335,6 +336,7 @@
 - [ ] bzoj4182: Shopping
 - [x] P4292
 - [x] P2056 [ZJOI2007]捉迷藏
+- [ ] Tree Query(http://codeforces.com/gym/100570/problem/F)
 # 虚树
 - [x] LOJ#2206. 「HNOI2014」世界树
 - [x] LOJ#2219. 「HEOI2014」大工程

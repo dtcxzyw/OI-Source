@@ -144,7 +144,7 @@ void DFS(int u) {
                 int id=++ncnt;
                 for(int j=u;j!=v;j=p[j])
                     addEdge(id,j),ring[j]=true;
-                addEdge(id,v),ring[v]=true;
+                addEdge(v,id),ring[v]=true;
             }
         }
         else {
