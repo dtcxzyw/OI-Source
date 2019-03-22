@@ -40,6 +40,8 @@ SPFA优化的思路基本上是使队列尽可能接近优先队列。
 
 参考代码（[PA 2011]Journeys）：
 \lstinputlisting{Source/Source/SegmentTree/bzoj3073.cpp}
+
+{\bfseries 注意队列中可能存在重复元素，循环队列要开到与边集一样大。}
 \subsection{Johnson算法}
 Johnson算法用于求所有节点对间最短路径。
 其主要思想是将原图转换为无负权边的图。

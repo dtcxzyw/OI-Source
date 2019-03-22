@@ -11,6 +11,17 @@ K-D Tree是一棵二叉树，每一层按照某个轴将本节点辖域内的所
 	\item 更新子树信息。
 \end{enumerate}
 $std::nth\_element$的复杂度为$O(n)$，因此构树的复杂度为$O(n\lg n)$。
+
+在不需要重复使用轴的情况下（比如不需要插入删除），可以以随机直线为轴，实际上就是比较
+坐标的线性加权和大小。直线的分布约均匀越好。
+
+生成均匀的直线不太好做，将其转换为生成均匀分布的角度，然后使用三角函数计算权值。为了提高
+计算速度，可以提前打表。
+
+均匀直线的生成可以参考glm的circularRand函数\footnote{
+    glm/random.inl at master · g-truc/glm · GitHub
+    \url{https://github.com/g-truc/glm/blob/master/glm/gtc/random.inl}
+}。
 \subsection{插入}
 \subsubsection{离线标记}
 构树时将所有点加入，记录每个点对应的id，但仅维护初始存在的点的信息。加入点时对该点打标记，

@@ -77,7 +77,8 @@
 			"charconv": "cpp",
 			"codecvt": "cpp",
 			"cuchar": "cpp",
-			"shared_mutex": "cpp"
+			"shared_mutex": "cpp",
+			"strstream": "cpp"
 		},
 		"latex-workshop.intellisense.citation.maxfilesizeMB": 128,
 		"latex-workshop.latex.recipes": [

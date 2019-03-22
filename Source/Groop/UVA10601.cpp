@@ -11,7 +11,7 @@ struct Vec {
           y(id & 2 ? 1.0 : -1.0),
           z(id & 4 ? 1.0 : -1.0) {}
     Vec(FT x, FT y, FT z) : x(x), y(y), z(z) {}
-    void normailze() {
+    void normalize() {
         FT dis = sqrt(x * x + y * y + z * z);
         x /= dis, y /= dis, z /= dis;
     }
@@ -65,7 +65,7 @@ Mat genCoordSystem(Vec axis) {
     res[1] = cross(res[0], axis);
     res[2] = axis;
     for(int i = 0; i < 3; ++i)
-        res[i].normailze();
+        res[i].normalize();
     return res;
 }
 Mat getInv(const Mat& rhs) {
