@@ -105,6 +105,8 @@ $O(n\sqrt{n})$。由于查询量与区间大小同阶，且左端点单次最多
 
 \lstinputlisting{Source/Source/Block/LOJ2874.cpp}
 
+对于删除容易插入难的操作也可以这样做。
+
 上述内容参考了yashem66的博客\footnote{
 	BZOJ4241 历史研究 （分块 回滚莫队-教程向）
 	\url{https://blog.csdn.net/qq\_33330876/article/details/73522230}
@@ -459,6 +461,11 @@ cdq分治用来解决偏序问题（支持动态偏序问题，但仍然要求�
 		\item 单向限制+强制在线：重构树
 		\item 双向限制+可离线：扫描线+LCT
 	\end{itemize}
+	\item 连通块计数
+	\begin{itemize}
+		\item 树上连通块个数=点数-边数
+		\item 网格图四连通块个数=格子数-1*2矩形数-2*1矩形数+2*2矩形数+环数
+	\end{itemize}
 \end{itemize}
 \subsection{比赛注意事项}
 \subsubsection{Linux/GCC工具}
@@ -516,6 +523,8 @@ cdq分治用来解决偏序问题（支持动态偏序问题，但仍然要求�
 	\item 删除std::multiset内的单个元素时要使用迭代器
 	\item std::set的插入最好使用hint与区间。
 	\item （分段）打表时注意源代码不能超过100KB。
+	\item 不要使用std::bitset的set与test，它们会执行越界检查。不过operator[]的性能
+	尚未验证，因为它们的返回值是bool的Proxy Class————std::bitset::reference。
 \end{itemize}
 \subsection{本节注记}
 2013年许昊然的国家集训队论文答辩《浅谈数据结构题的几个非经典解法——<Claymore>命题报告》

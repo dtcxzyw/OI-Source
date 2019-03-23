@@ -10,12 +10,13 @@
                 "-o",
                 "bin/${fileBasenameNoExtension}.out",
                 "-Wall",
-                "-std=c++11",
+                "-std=c++17",
                 "-D_FORTIFY_SOURCE=2",
                 "-fstack-protector-all",
                 "-ftrapv",
                 "-ggdb3",
-                "-Wextra"
+                "-Wextra",
+                "-lstdc++fs"
             ],
             "problemMatcher": {
                 "owner": "cpp",
@@ -42,7 +43,8 @@
                 "-o",
                 "bin/${fileBasenameNoExtension}.out",
                 "-Wall",
-                "-std=c++11"
+                "-std=c++17",
+                "-lstdc++fs"
             ],
             "problemMatcher": {
                 "owner": "cpp",
