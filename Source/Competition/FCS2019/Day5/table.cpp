@@ -110,6 +110,6 @@ int main() {
     if(res != -1)
         std::cout << res << std::endl;
     else
-        std::cout << "IIllIIll1ï¼" << std::endl;
+        std::cout << "IIllIIll1£¡" << std::endl;
     return 0;
 }

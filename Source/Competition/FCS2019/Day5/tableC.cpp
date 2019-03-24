@@ -1,21 +1,11 @@
 #include <algorithm>
 #include <cstdio>
 #include <cstring>
-int read() {
-    int res = 0, c;
-    do
-        c = getchar();
-    while(c < '0' || c > '9');
-    while('0' <= c && c <= '9') {
-        res = res * 10 + c - '0';
-        c = getchar();
-    }
-    return res;
-}
-const int size = 305;
+const int size = 205;
+int S, T;
 struct Edge {
     int to, nxt, f;
-} E[size * size];
+} E[size * size * 2];
 int last[size], cnt = 1;
 void addEdgeImpl(int u, int v, int f) {
     ++cnt;
@@ -26,9 +16,9 @@ void addEdge(int u, int v, int f) {
     addEdgeImpl(u, v, f);
     addEdgeImpl(v, u, 0);
 }
-int d[size], q[size], gap[size], S, T;
+int q[size], d[size], gap[size];
 void BFS() {
-    q[0] = T, ++gap[1], d[T] = 1;
+    q[0] = T, d[T] = 1, gap[1] = 1;
     int b = 0, e = 1;
     while(b != e) {
         int u = q[b++];
@@ -43,64 +33,61 @@ void BFS() {
     }
 }
 int now[size];
-int aug(int u, int mf) {
-    if(u == T || mf == 0)
-        return mf;
+int DFS(int u, int f) {
+    if(u == T || f == 0)
+        return f;
     int res = 0, k;
-    for(int& i = now[u]; i; i = E[i].nxt) {
+    for(int i = last[u]; i; i = E[i].nxt) {
         int v = E[i].to;
         if(d[u] == d[v] + 1 &&
-           (k = aug(v, std::min(mf, E[i].f)))) {
+           (k = DFS(v, std::min(f, E[i].f)))) {
             E[i].f -= k, E[i ^ 1].f += k;
-            res += k, mf -= k;
-            if(!mf)
+            res += k, f -= k;
+            if(f == 0)
                 return res;
         }
     }
     if(--gap[d[u]] == 0)
-        d[S] = T + 1;
+        d[T] = T + 10;
     ++gap[++d[u]], now[u] = last[u];
     return res;
 }
-int ISAP(int n) {
+int ISAP() {
     BFS();
-    memcpy(now + 1, last + 1, sizeof(int) * n);
+    memcpy(now, last, sizeof(last));
     int res = 0;
-    while(d[S] <= n)
-        res += aug(S, 1 << 30);
+    while(d[T] <= T)
+        res += DFS(S, 1 << 30);
     return res;
 }
 int X[size], Y[size];
 bool flag[size][size];
 int main() {
-    int n = read();
-    int m = read();
-    int k = read();
-    S = n + m + 1, T = S + 1;
-    int res = 0;
-    for(int i = 1; i <= n; ++i) {
-        X[i] = read();
-        addEdge(S, i, X[i]);
-        res += X[i];
-    }
-    for(int i = 1; i <= m; ++i) {
-        Y[i] = read();
-        addEdge(n + i, T, Y[i]);
-        res += Y[i];
-    }
+    int n, m, k;
+    scanf("%d%d%d", &n, &m, &k);
+    for(int i = 1; i <= n; ++i)
+        scanf("%d", &X[i]);
+    for(int i = 1; i <= m; ++i)
+        scanf("%d", &Y[i]);
     for(int i = 1; i <= k; ++i) {
-        int x = read();
-        int y = read();
+        int x, y;
+        scanf("%d%d", &x, &y);
         flag[x][y] = true;
+        ++X[x], ++Y[y];
+        if(X[x] > m || Y[y] > n) {
+            puts("IIllIIll1£¡");
+            return 0;
+        }
     }
+    S = n + m + 1, T = S + 1;
+    for(int i = 1; i <= n; ++i)
+        addEdge(S, i, m - X[i]);
+    for(int i = 1; i <= m; ++i)
+        addEdge(n + i, T, n - Y[i]);
     for(int i = 1; i <= n; ++i)
         for(int j = 1; j <= m; ++j)
             if(!flag[i][j])
                 addEdge(i, n + j, 1);
-    res -= ISAP(T);
-    if(res < 0 || res > n * m - k)
-        puts("IIllIIll1£¡");
-    else
-        printf("%d\n", res);
+    printf("%d\n", n * m - k - ISAP());
     return 0;
 }

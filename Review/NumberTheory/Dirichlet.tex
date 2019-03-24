@@ -153,7 +153,7 @@
 
 	记$\omega(d)$为$d$的质因子个数。
 	\begin{displaymath}
-		\tau{n^2}=\sum_{d|n}{2^{\omega(d)}}
+		\tau(n^2)=\sum_{d|n}{2^{\omega(d)}}
 	\end{displaymath}
 
 	证明：考虑$n^2$有而$n$没有的因子，这些因子必定满足其质因子分解中某个质因子指数
@@ -171,9 +171,9 @@
 		\mu^2(i)=\sum_{j^2|i}{\mu(j)}
 	\end{displaymath}
 
-	证明：左式的意义是$i$是否含有平方因子（1不算）。若$i$不含平方因子，右式的值
+	证明：左式的意义是$i$是否含有非平凡平方因子。若$i$不含平方因子，右式的值
 	为$\mu(1)=1$。若$i$含有平方因子，记$i=a^2b$，$b$不含平方因子，那么右式变形为
-	$\sum_{j|a}{\mu(j)}$，因为$a\neq 1$，所以该式的值为0。
+	$\displaystyle\sum_{j|a}{\mu(j)}$，因为$a\neq 1$，所以该式的值为0。
 
 	这些方法参考了Candy？的博客\footnote{
 		SPOJ DIVCNT2 [我也不知道是什么分类了反正是数论]\\

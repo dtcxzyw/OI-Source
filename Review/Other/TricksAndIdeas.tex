@@ -466,6 +466,8 @@ cdq分治用来解决偏序问题（支持动态偏序问题，但仍然要求�
 		\item 树上连通块个数=点数-边数
 		\item 网格图四连通块个数=格子数-1*2矩形数-2*1矩形数+2*2矩形数+环数
 	\end{itemize}
+	\item 注意最小权最少连通块最多只有n-1条边（MST），在合并时可以使用Kruskal保留
+	有用边。
 \end{itemize}
 \subsection{比赛注意事项}
 \subsubsection{Linux/GCC工具}
