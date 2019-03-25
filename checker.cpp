@@ -6,10 +6,12 @@ TODO
 */
 #include <algorithm>
 #include <cerrno>
+#include <cmath>
 #include <cstdint>
 #include <cstring>
 #include <filesystem>
 #include <fstream>
+#include <functional>
 #include <iostream>
 #include <iterator>
 #include <map>
@@ -191,18 +193,30 @@ RunResult run(const std::string& in,
     }
     throw;
 }
-bool compare(const path& out, const path& stdout) {
+template <typename T>
+bool compareImpl(
+    const path& out, const path& stdout,
+    const std::function<bool(const T&, const T&)>&
+        cmp) {
     std::ifstream outf(out), stdof(stdout);
-    using Iter = std::istream_iterator<std::string>;
-    bool flag =
-        std::equal(Iter(outf), Iter(), Iter(stdof));
-    if(flag) {
-        outf.seekg(std::ios::beg);
-        stdof.seekg(std::ios::beg);
-        return std::equal(Iter(stdof), Iter(),
-                          Iter(outf));
+    using Iter = std::istream_iterator<T>;
+    return std::equal(Iter(outf), Iter(), Iter(stdof),
+                      Iter(), cmp);
+}
+int type;
+bool compare(const path& out, const path& stdout) {
+    if(type == 0) {
+        return compareImpl<std::string>(
+            out, stdout, std::equal_to<std::string>());
+    } else {
+        using FT = long double;
+        auto cmp = [](FT a, FT b) {
+            constexpr FT eps = 1e-5;
+            return fabsl(a - b) < eps ||
+                fabsl(a - b) / b < eps;
+        };
+        return compareImpl<FT>(out, stdout, cmp);
     }
-    return false;
 }
 struct Data {
     path input, output;
@@ -261,9 +275,15 @@ std::vector<Data> scan(const path& dir) {
     std::sort(res.begin(), res.end());
     return res;
 }
+#define Input(name)                          \
+    std::cout << #name << ":" << std::flush; \
+    std::cin >> name
 int main() {
     std::string name;
-    std::cin >> name >> maxTime >> maxMem;
+    Input(name);
+    Input(maxTime);
+    Input(maxMem);
+    Input(type);
     exec = name + ".out";
     std::vector<Data> data = scan("data");
     if(data.size() != 0) {

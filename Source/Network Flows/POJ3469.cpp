@@ -1,11 +1,21 @@
 #include <algorithm>
 #include <cstdio>
 #include <cstring>
-const int size = 205;
-int S, T;
+int read() {
+    int res = 0, c;
+    do
+        c = getchar();
+    while(c < '0' || c > '9');
+    while('0' <= c && c <= '9') {
+        res = res * 10 + c - '0';
+        c = getchar();
+    }
+    return res;
+}
+const int size = 20005;
 struct Edge {
     int to, nxt, f;
-} E[size * size * 2];
+} E[size * 11 * 2 * 2];
 int last[size], cnt = 1;
 void addEdgeImpl(int u, int v, int f) {
     ++cnt;
@@ -16,11 +26,11 @@ void addEdge(int u, int v, int f) {
     addEdgeImpl(u, v, f);
     addEdgeImpl(v, u, 0);
 }
-int q[size], d[size], gap[size];
+int S, T, d[size], gap[size], q[size];
 void BFS() {
     q[0] = T, d[T] = 1, gap[1] = 1;
     int b = 0, e = 1;
-    while(b != e) {
+    while(b < e) {
         int u = q[b++];
         for(int i = last[u]; i; i = E[i].nxt) {
             int v = E[i].to;
@@ -48,46 +58,33 @@ int DFS(int u, int f) {
         }
     }
     if(--gap[d[u]] == 0)
-        d[T] = T + 10;
+        d[S] = T + 1;
     ++gap[++d[u]], now[u] = last[u];
     return res;
 }
 int ISAP() {
     BFS();
-    memcpy(now, last, sizeof(last));
+    memcpy(now + 1, last + 1, sizeof(int) * T);
     int res = 0;
-    while(d[T] <= T)
+    while(d[S] <= T)
         res += DFS(S, 1 << 30);
     return res;
 }
-int X[size], Y[size];
-bool flag[size][size];
 int main() {
-    int n, m, k;
-    scanf("%d%d%d", &n, &m, &k);
-    for(int i = 1; i <= n; ++i)
-        scanf("%d", &X[i]);
-    for(int i = 1; i <= m; ++i)
-        scanf("%d", &Y[i]);
-    for(int i = 1; i <= k; ++i) {
-        int x, y;
-        scanf("%d%d", &x, &y);
-        flag[x][y] = true;
-        ++X[x], ++Y[y];
-        if(X[x] > m || Y[y] > n) {
-            puts("IIllIIll1£¡");
-            return 0;
-        }
+    int n = read();
+    int m = read();
+    S = n + 1, T = S + 1;
+    for(int i = 1; i <= n; ++i) {
+        addEdge(S, i, read());
+        addEdge(i, T, read());
     }
-    S = n + m + 1, T = S + 1;
-    for(int i = 1; i <= n; ++i)
-        addEdge(S, i, m - X[i]);
-    for(int i = 1; i <= m; ++i)
-        addEdge(n + i, T, n - Y[i]);
-    for(int i = 1; i <= n; ++i)
-        for(int j = 1; j <= m; ++j)
-            if(!flag[i][j])
-                addEdge(i, n + j, 1);
-    printf("%d\n", n * m - k - ISAP());
+    for(int i = 1; i <= m; ++i) {
+        int u = read();
+        int v = read();
+        int w = read();
+        addEdge(u, v, w);
+        addEdge(v, u, w);
+    }
+    printf("%d\n", ISAP());
     return 0;
 }

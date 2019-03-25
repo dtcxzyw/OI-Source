@@ -269,7 +269,7 @@
 - [ ] 约数函数前缀和 IOI2018 zzt
 - [ ] 轨道-稳定集定理
 - [ ] zkw线段树常用模板
-- [ ] 扩展欧拉定理在矩阵幂中的应用
+- [ ] O(1)gcd
 # 标准库使用
 - [ ] valarray:std::valarray[by SarvaTathagata](https://www.luogu.org/blog/474D/qian-tan-valarray)
 - [ ] functional:std::plus/minus等Function Object
@@ -330,6 +330,7 @@
 - [ ] 格点计数[By min-25](https://min-25.hatenablog.com/entry/2018/05/03/145505)
 - [ ] 后缀平衡树
 - [ ] Rainbow Tables
+- [ ] 扩展欧拉定理在矩阵幂中的应用
 # 集训队论文/WC营员交流学习（省选后）
 ## 2019
 - [ ] 模拟费用流 laofu

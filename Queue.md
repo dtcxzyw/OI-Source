@@ -50,6 +50,7 @@
 - [ ] CF 427D
 - [x] CF 126B
 - [ ] 【GDOI2014】beyond
+- [ ] bzoj3084
 # Blossom Algorithm
 - [ ] UVa 11439
 - [x] UOJ#79. 一般图最大匹配
@@ -128,6 +129,7 @@
 - [ ] [CTSC2006]歌唱王国
 - [ ] [CTSC2010]性能优化
 - [ ] LOJ#6261. 一个人的高三楼
+- [ ] bzoj3605
 # 后缀数组/后缀自动机/序列自动机
 - [x] LOJ#111. 后缀排序
 - [x] LOJ#2033. 「SDOI2016」生成魔咒
@@ -149,16 +151,29 @@
 - [ ] 【bzoj 2555】SubString（SAM+LCT，做完加总结）
 - [ ] UVA10829
 - [ ] P5112 FZOUTSY
+- [ ] bzoj3238
+- [ ] bzoj2946
+- [ ] bzoj4032
+- [ ] bzoj4180
+- [ ] bzoj4327
+- [ ] bzoj4545
+- [ ] bzoj4310
+- [ ] bzoj3926
+- [ ] bzoj4453
 # AC自动机
 - [x] LOJ#2180. 「BJOI2017」魔法咒语
 - [ ] BZOJ2780: [Spoj]8093 Sevenk Love Oimaster
+- [ ] bzoj3530
 # KMP
 - [ ] LOJ#2272. 「SDOI2017」文本校正
 - [ ] CF25E Test
+- [ ] bzoj1398
 # 线性基
 - [ ] LOJ#2312. 「HAOI2017」八纵八横
 - [x] LOJ#114. k 大异或和
 - [ ] LOJ#6243. 关灯问题
+- [ ] bzoj4184
+- [ ] bzoj4269
 # dp优化
 - [x] LOJ#535. 「LibreOJ Round #6」花火
 - [x] LOJ#2074. 「JSOI2016」灯塔
@@ -179,6 +194,7 @@
 - [x] [POI2011]Lightning Conductor
 - [x] CF868F Yet Another Minimization Problem
 - [ ] LOJ#6081. ZQC 的女装
+- [ ] bzoj2739
 # 斜率优化
 - [x] [USACO08MAR]土地征用Land Acquisition
 - [x] [HNOI2008]玩具装箱TOY
@@ -189,8 +205,11 @@
 - [ ] [NOI2016]国王饮水记
 - [ ] BZOJ1096 [ZJOI2007]仓库建设
 - [ ] [SDOI2016]征途
-- [ ] HDU5956The Elder
+- [ ] HDU5956 The Elder
 - [ ] P3994 Highway
+- [ ] bzoj3675
+- [ ] bzoj4367
+- [ ] NOI2007货币兑换
 # 凸优化（WQS二分、带权二分）
 - [x] CF 739E
 - [x] [国家集训队2]Tree I
@@ -202,6 +221,7 @@
 - [x] P3572 [POI2014]PTA-Little Bird
 - [x] P3594 [POI2015]WIL-Wilcze doły
 - [x] [POI2010]KLO-Blocks
+- [ ] bzoj2096
 # LCT
 - [x] LOJ#6038. 「雅礼集训 2017 Day5」远行
 - [x] LOJ#558. 「Antileaf's Round」我们的 CPU 遭到攻击
@@ -221,8 +241,12 @@
 - [ ] BZOJ 3514
 - [ ] BZOJ 2555
 - [ ] P2056 [ZJOI2007]捉迷藏
+- [ ] bzoj2759
 # 平衡树
 - [x] LOJ#516. 「LibreOJ β Round #2」DP 一般看规律
+- [ ] bzoj3545
+- [ ] bzoj2733
+- [ ] bzoj3551
 # 容斥/反演/筛法/计数（顺便加入readme中常见套路）
 - [x] LOJ#153. 集合覆盖计数
 - [ ] LOJ#154. 集合划分计数
@@ -265,6 +289,18 @@
 - [x] LOJ#6028. 「from CommonAnts」质数计数 II
 - [x] LOJ#6235. 区间素数个数（AC还需要Meissel-Lehmer）
 - [x] bzoj2440完全平方数
+- [ ] bzoj3198
+- [ ] bzoj4086
+- [ ] bzoj4305
+- [ ] bzoj2671
+- [ ] bzoj2705
+- [ ] bzoj3309
+- [ ] bzoj3529
+- [ ] bzoj3834
+- [ ] bzoj3994
+- [ ] bzoj4407
+- [ ] bzoj2813
+- [ ] bzoj4428
 # 扩展欧几里得
 - [ ] LOJ#6440
 - [ ] CF868G
@@ -294,8 +330,27 @@
 - [ ] bzoj3218: a + b Problem
 - [ ] bzoj3681 Arietta
 - [ ] Cf172 k-Maximum Subsequence Sum
+- [x] POJ3469 Dual Core CPU
+- [ ] bzoj2163
+- [ ] bzoj3716
+- [ ] bzoj4435
+- [ ] bzoj4439
+- [ ] bzoj4599
+- [ ] bzoj1532
+- [ ] bzoj2864
+- [ ] bzoj3993
+- [ ] bzoj1061
+- [ ] bzoj1070
+- [ ] bzoj1877
+- [ ] bzoj2288
+- [ ] bzoj2661
+- [ ] bzoj4514
+- [ ] bzoj2229
+- [ ] bzoj3532
 # 分块及按大小分类
 - [x] LOJ#6277-6285
+- [ ] bzoj2741
+- [ ] bzoj3463
 # 插头dp
 - [x] P5056 【模板】插头dp
 - [x] [JLOI2009]神秘的生物
@@ -312,11 +367,17 @@
 - [ ] LOJ#2056. 「TJOI / HEOI2016」序列
 - [x] Luogu P3206
 - [ ] bzoj2989 数列
+- [ ] bzoj2141
+- [ ] bzoj2961
+- [ ] bzoj3236
+- [ ] bzoj3295
+- [ ] bzoj3672
 # 2-SAT
 - [ ] LOJ#571. 「LibreOJ Round #11」Misaka Network 与 Accelerator
 - [ ] LOJ#2155. 「POI2011 R1」同谋者 Conspiracy
 - [ ] LOJ#6036. 「雅礼集训 2017 Day4」编码
 - [ ] LOJ#6157. A ^ B Problem
+- [ ] bzoj3495
 # 点分治
 - [x] LOJ#2179. 「BJOI2017」树的难题
 - [x] LOJ#2259. 「FJOI2014」最短路径树问题
@@ -337,16 +398,31 @@
 - [x] P4292
 - [x] P2056 [ZJOI2007]捉迷藏
 - [ ] Tree Query(http://codeforces.com/gym/100570/problem/F)
+- [ ] bzoj2051
+- [ ] bzoj4543
+- [ ] bzoj4598
 # 虚树
 - [x] LOJ#2206. 「HNOI2014」世界树
 - [x] LOJ#2219. 「HEOI2014」大工程
 - [x] CF 613D
 - [ ] UOJ#87. mx的仙人掌
+- [ ] bzoj3589
 # kdtree
 - [x] LOJ#6016. 崂山白花蛇草水
 - [ ] P4357 [CQOI2016]K远点对
+- [ ] bzoj2378
+- [ ] bzoj2626
+- [ ] bzoj2648
+- [ ] bzoj2850
+- [ ] bzoj3616
+- [ ] bzoj3815
+- [ ] bzoj4066
+- [ ]
 # 计算几何
 - [ ] P4586
+- [ ] bzoj2961
+- [ ] bzoj2642
+- [ ] bzoj3199
 # 树的直径
 - [ ] P2195
 - [ ] P3629
@@ -354,6 +430,8 @@
 - [ ] P4383
 # 左偏树
 - [ ] P2483
+- [ ] bzoj2809
+- [ ] bzoj2089
 # 数论
 - [x] PE484
 - [x] LOJ6053
@@ -361,6 +439,10 @@
 - [ ] LOJ#6542. 离散对数
 - [ ] P3169 [CQOI2015]多项式
 - [ ] Loj #6019. 「from CommonAnts」寻找 LCM
+- [ ] bzoj3501
+- [ ] bzoj1902
+- [ ] bzoj2111
+- [ ] bzoj4454
 # 线段树相关
 - [x] LOJ#2013. 「SCOI2016」幸运数字
 - [x] LOJ#6057. 「HNOI2016」序列 数据加强版
@@ -391,15 +473,26 @@
 - [x] LOJ2032 [SDOI2016]游戏
 - [ ] BZOJ4700: 适者
 - [x] 「Heoi2013」Segment
+- [ ] bzoj1568
+- [ ] bzoj4515
+- [ ] bzoj3585
 # 分治
 - [x] UVA1608 Non-boring sequences
 - [x] P4755 Beautiful Pair
 - [x] LOJ#6198. 谢特（height数组+启发式分治+可持久化Trie）
 - [ ] [NWERC2017]Factor-Free Tree
+- [ ] bzoj2458
+- [ ] bzoj3745
+- [ ] bzoj3984
+- [ ] bzoj4184
+- [ ] bzoj4311
+- [ ] bzoj4456
 # BM 算法
 - [ ] LOJ#2981. 「THUSCH 2017」如果奇迹有颜色
 # 概率期望
 - [ ] LOJ#2267. 「SDOI2017」龙与地下城
+- [ ] bzoj3534
+- [ ] bzoj3811
 # 构造
 - [ ] LOJ Round#11 Misaka Network
 - [ ] LOJ Beta Round #3 绯色IOI
@@ -407,7 +500,9 @@
 - [ ] CF1060H Sophisticated Device
 - [ ] CF522 Negative Time Summation
 - [ ] LOJ#544. 「LibreOJ β Round #7」Array Poisonous Suffix Problem
-- [ ] #525. 「LibreOJ β Round #4」多项式
+- [ ] LOJ#525. 「LibreOJ β Round #4」多项式
+- [ ] bzoj4148
+- [ ] bzoj4319
 # dp
 - [ ] POI2012 SZA-Cloakroom
 - [ ] CF938F
@@ -427,6 +522,7 @@
 - [ ] LOJ#2528. 「ZJOI2018」树
 # 支配树
 - [x] Luogu 2597 ZJOI 灾难
+- [ ] bzoj2851
 # DSU On Tree
 - [ ] CF600E
 - [ ] CF570D
@@ -443,6 +539,8 @@
 - [ ] LOJ#2734. 「JOISC 2016 Day 2」女装大佬 (FJWC2019上厕所)
 # 整体二分
 - [ ] CF603E Pastoral Oddities
+- [ ] bzoj2527
+- [ ] bzoj2738
 # 博弈论
 - [ ] LOJ#524. 「LibreOJ β Round #4」游戏
 - [ ] LOJ#531. 「LibreOJ β Round #5」游戏
@@ -467,6 +565,7 @@
 # 二进制分组
 - [ ] CF710F String Set Queries
 - [ ] bzoj2989 数列
+- [ ] bzoj4140
 # 矩阵快速幂
 - [ ] [JLOI2015]有意义的字符串
 - [ ] [HNOI2011]数学作业
@@ -478,8 +577,14 @@
 - [ ] 「BZOJ 3680」吊打 XXX
 - [ ] 「JSOI 2016」炸弹攻击
 - [ ] 「HAOI 2006」均分数据
+- [ ] bzoj2336
 # 交互题
 - [ ] 「APIO2017」考拉的游戏
 - [ ] 「WC2019」I 君的商店
 - [ ] 「APIO2016」最大差分
 - [ ] 「WC2018」即时战略
+# 线性代数
+- [ ] bzoj3603
+- [ ] bzoj4128
+# 并查集
+- [ ] bzoj2054

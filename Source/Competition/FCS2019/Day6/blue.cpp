@@ -79,7 +79,8 @@ int main() {
     a %= n;
     long long end = n / gcd(a, n);
     int c = calcCycle(trans);
-    end = std::max(end * c, 1LL);
+    end = std::max(end / gcd(end, c) * c, 1LL);
+    fprintf(stderr, "%lld\n", end);
     for(int i = 1; i <= end; ++i) {
         if(perform(F, G, n, a, trans)) {
             printf("%d\n", i);
