@@ -1,6 +1,8 @@
 #include <algorithm>
+#include <cinttypes>
 #include <cstdio>
 #include <cstring>
+#include <vector>
 int read() {
     int res = 0, c;
     do
@@ -16,49 +18,41 @@ int getOp() {
     int c;
     do
         c = getchar();
-    while(c < 'A' || c > 'Z');
+    while(c != 'C' && c != 'Q');
     return c;
 }
-typedef short Int16;
-#define asInt static_cast<Int16>
-const int size = 30005, maxb = 128, inv2 = 5004;
-const Int16 mod = 10007;
-Int16 add(Int16 a, Int16 b) {
+const int size = 30005, maxb = 128, inv2 = 5004,
+          mod = 10007;
+int add(int a, int b) {
     a += b;
     return a < mod ? a : a - mod;
 }
-Int16 sub(Int16 a, Int16 b) {
+int sub(int a, int b) {
     a -= b;
     return a >= 0 ? a : a + mod;
 }
-int N, rev[maxb];
+int N;
 struct Seq {
-    Int16 A[maxb];
+    int A[maxb];
     void FWT() {
-        for(int i = 0; i < N; ++i)
-            if(i < rev[i])
-                std::swap(A[i], A[rev[i]]);
         for(int i = 2; i <= N; i <<= 1) {
             int m = i >> 1;
             for(int j = 0; j < N; j += i)
                 for(int k = 0; k < m; ++k) {
-                    Int16 &x = A[j + k],
-                          &y = A[j + k + m], t = y;
+                    int &x = A[j + k],
+                        &y = A[j + k + m], t = y;
                     y = sub(x, t);
                     x = add(x, t);
                 }
         }
     }
     void IFWT() {
-        for(int i = 0; i < N; ++i)
-            if(i < rev[i])
-                std::swap(A[i], A[rev[i]]);
         for(int i = 2; i <= N; i <<= 1) {
             int m = i >> 1;
             for(int j = 0; j < N; j += i)
                 for(int k = 0; k < m; ++k) {
-                    Int16 &x = A[j + k],
-                          &y = A[j + k + m], t = y;
+                    int &x = A[j + k],
+                        &y = A[j + k + m], t = y;
                     y = sub(x, t) * inv2 % mod;
                     x = add(x, t) * inv2 % mod;
                 }
@@ -67,7 +61,7 @@ struct Seq {
     Seq operator*(const Seq& rhs) const {
         Seq res;
         for(int i = 0; i < N; ++i)
-            res.A[i] = asInt(A[i]) * rhs.A[i] % mod;
+            res.A[i] = A[i] * rhs.A[i] % mod;
         return res;
     }
     Seq operator+(const Seq& rhs) const {
@@ -83,49 +77,38 @@ struct Seq {
         return res;
     }
 };
+Seq I;
 struct Mat {
-    Seq A[2][2];
-    Seq* operator[](int id) {
-        return A[id];
-    }
-    const Seq* operator[](int id) const {
-        return A[id];
-    }
+    Seq A10, A11, A20, A21;
+    Mat() {}
+    Mat(const Seq& A10, const Seq& A11, const Seq& A20,
+        const Seq& A21)
+        : A10(A10), A11(A11), A20(A20), A21(A21) {}
     Mat operator*(const Mat& rhs) const {
-        Mat res;
-        res[0][0] = rhs[0][0] + A[0][0] * rhs[1][0];
-        res[0][1] =
-            rhs[0][1] + A[0][0] * rhs[1][1] + A[0][1];
-        res[1][0] = A[1][0] * rhs[1][0];
-        res[1][1] = A[1][0] * rhs[1][1] + A[1][1];
-        return res;
+        return Mat(A10 + A11 * rhs.A10, A11 * rhs.A11,
+                   A20 + A21 * rhs.A10 + rhs.A20,
+                   A21 * rhs.A11 + rhs.A21);
     }
-    Seq getRes() const {
-        Seq res = A[0][1];
-        res.IFWT();
-        return res;
+    Seq getS() const {
+        return A10 + A20;
     }
 };
 struct Node {
-    int ls, rs;
     Mat mat, mul;
+    int l, r, p;
 } T[size];
-int fa[size];
 bool isRoot(int u) {
-    int p = fa[u];
-    return T[p].ls != u && T[p].rs != u;
+    int p = T[u].p;
+    return T[p].l != u && T[p].r != u;
 }
-#define ls T[u].ls
-#define rs T[u].rs
+#define ls T[u].l
+#define rs T[u].r
 void update(int u) {
-    if(ls && rs)
-        T[u].mul = T[ls].mul * T[u].mat * T[rs].mul;
-    else if(ls)
-        T[u].mul = T[ls].mul * T[u].mat;
-    else if(rs)
-        T[u].mul = T[u].mat * T[rs].mul;
-    else
-        T[u].mul = T[u].mat;
+    T[u].mul = T[u].mat;
+    if(ls)
+        T[u].mul = T[ls].mul * T[u].mul;
+    if(rs)
+        T[u].mul = T[u].mul * T[rs].mul;
 }
 struct Edge {
     int to, nxt;
@@ -162,7 +145,7 @@ int buildChainImpl(int l, int r) {
         if(2 * csum >= tot) {
             ls = buildChainImpl(l, i - 1);
             rs = buildChainImpl(i + 1, r);
-            fa[ls] = fa[rs] = u;
+            T[ls].p = T[rs].p = u;
             update(u);
             return u;
         }
@@ -170,23 +153,35 @@ int buildChainImpl(int l, int r) {
     return -1;
 }
 bool flag[size];
+int id[size], L[size], R[size], icnt = 0;
+Seq IS[size * 2];
 int buildChain(int u) {
     for(int i = u; i; i = son[i])
         flag[i] = true;
-    for(int i = u; i; i = son[i])
+    for(int i = u; i; i = son[i]) {
+        std::vector<int> chs;
         for(int j = last[i]; j; j = E[j].nxt) {
             int v = E[j].to;
             if(!flag[v]) {
-                int p = buildChain(v);
-                Seq w =
-                    T[u].mat[1][1] * T[p].mul[1][1];
-                T[u].mat[0][0] = T[u].mat[1][0] =
-                    T[u].mat[1][1] =
-                        T[u].mat[1][1] + w;
-                T[u].mat[0][1] = T[u].mat[0][1] +
-                    T[p].mul[0][1] + w;
+                int vid = buildChain(v);
+                T[vid].p = i;
+                chs.push_back(vid);
             }
         }
+        L[i] = ++icnt;
+        IS[icnt] = T[i].mat.A10;
+        for(int j = 0; j < chs.size(); ++j) {
+            int v = chs[j];
+            id[v] = ++icnt;
+            IS[icnt] = T[v].mul.A10 + I;
+            T[i].mat.A10 = T[i].mat.A10 +
+                T[i].mat.A10 * T[v].mul.A10;
+            T[i].mat.A20 =
+                T[i].mat.A20 + T[v].mul.getS();
+        }
+        T[i].mat.A11 = T[i].mat.A10;
+        R[i] = icnt;
+    }
     int csiz = 0;
     for(int i = u; i; i = son[i]) {
         ch[++csiz] = i;
@@ -194,35 +189,61 @@ int buildChain(int u) {
     }
     return buildChainImpl(1, csiz);
 }
-void setF(int u, const Seq& f) {
-    T[u].mat[0][1] = f;
+Seq X[size << 3];
+void updateSeg(int id) {
+    X[id] = X[id << 1] * X[id << 1 | 1];
 }
-void setG(int u, const Seq& g) {
-    T[u].mat[0][0] = T[u].mat[1][0] = T[u].mat[1][1] =
-        g;
+void build(int l, int r, int id) {
+    if(l == r)
+        X[id] = IS[l];
+    else {
+        int m = (l + r) >> 1;
+        build(l, m, id << 1);
+        build(m + 1, r, id << 1 | 1);
+        updateSeg(id);
+    }
 }
-Seq inv(const Seq& s) {}
+void modify(int l, int r, int id, int p,
+            const Seq& s) {
+    if(l == r)
+        X[id] = s;
+    else {
+        int m = (l + r) >> 1;
+        if(p <= m)
+            modify(l, m, id << 1, p, s);
+        else
+            modify(m + 1, r, id << 1 | 1, p, s);
+        updateSeg(id);
+    }
+}
+Seq query(int l, int r, int id, int nl, int nr) {
+    if(nl <= l && r <= nr)
+        return X[id];
+    else {
+        int m = (l + r) >> 1;
+        if(nl <= m && m < nr) {
+            Seq lres = query(l, m, id << 1, nl, nr),
+                rres = query(m + 1, r, id << 1 | 1, nl,
+                             nr);
+            return lres * rres;
+        }
+        if(nl <= m)
+            return query(l, m, id << 1, nl, nr);
+        return query(m + 1, r, id << 1 | 1, nl, nr);
+    }
+}
 void updateMat(int u) {
     while(u) {
-        int p = fa[u];
+        int p = T[u].p;
         if(p && isRoot(u)) {
-            {
-                Seq x = T[u].mul[1][1];
-                x.A[0] = add(x.A[0], 1);
-                setG(p, T[p].mat[1][1] * inv(x));
-                setF(p, T[p].mat[0][1] -
-                         T[u].mul[0][1] -
-                         T[p].mat[1][1] *
-                             T[u].mul[1][1]);
-            }
+            Seq old = T[u].mul.getS();
             update(u);
-            {
-                Seq w =
-                    T[u].mul[1][1] * T[p].mat[1][1];
-                setG(p, T[p].mat[1][1] + w);
-                setF(p, T[p].mat[0][1] +
-                         T[u].mul[0][1] + w);
-            }
+            modify(1, icnt, 1, id[u],
+                   T[u].mul.A10 + I);
+            T[p].mat.A10 = T[p].mat.A11 =
+                query(1, icnt, 1, L[p], R[p]);
+            Seq cur = T[u].mul.getS();
+            T[p].mat.A20 = T[p].mat.A20 + cur - old;
         } else
             update(u);
         u = p;
@@ -232,20 +253,17 @@ int val[size];
 int main() {
     int n = read();
     N = read();
-    for(int i = 0, j = 0; i < N; ++i) {
-        rev[i] = j;
-        for(int l = N >> 1; (j ^= l) < l; l >>= 1)
-            ;
-    }
+    memset(&I, 0, sizeof(I));
+    I.A[0] = 1;
+    I.FWT();
     for(int i = 1; i <= n; ++i) {
         val[i] = read();
         Seq x;
-        memset(&x, 0, sizeof(x));
+        memset(&x, 0, sizeof(int) * N);
         x.A[val[i]] = 1;
         x.FWT();
-        for(int i = 0; i < 2; ++i)
-            for(int j = 0; j < 2; ++j)
-                T[i].mat[i][j] = x;
+        T[i].mat.A10 = T[i].mat.A11 = x;
+        T[i].mat.A21 = I;
     }
     for(int i = 1; i < n; ++i) {
         int u = read();
@@ -255,26 +273,29 @@ int main() {
     }
     buildTree(1, 0);
     int root = buildChain(1);
+    build(1, icnt, 1);
     int q = read();
-    Seq cres = T[root].mul.getRes();
-    while(q--) {
-        if(getOp() == 'Q')
-            printf("%d\n", asInt(cres.A[read()]));
-        else {
+    Seq cres = T[root].mul.getS();
+    bool lazy = true;
+    for(int t = 1; t <= q; ++t) {
+        if(getOp() == 'Q') {
+            if(lazy)
+                lazy = false, cres.IFWT();
+            printf("%" PRId32 "\n", cres.A[read()]);
+        } else {
             int u = read();
             int v = read();
-            int old = val[u];
             val[u] = v;
-            int swp = v ^ old;
-            Seq x = T[u].mat[1][1], y;
-            x.IFWT();
-            for(int i = 0; i < N; ++i)
-                y.A[i ^ swp] = x.A[i];
-            y.FWT();
-            setG(u, y);
-            setF(u, T[u].mat[0][1] - x + y);
+            Seq z;
+            memset(&z, 0, sizeof(int) * N);
+            z.A[v] = 1;
+            z.FWT();
+            modify(1, icnt, 1, L[u], z);
+            T[u].mat.A10 = T[u].mat.A11 =
+                query(1, icnt, 1, L[u], R[u]);
             updateMat(u);
-            cres = T[root].mul.getRes();
+            cres = T[root].mul.getS();
+            lazy = true;
         }
     }
     return 0;

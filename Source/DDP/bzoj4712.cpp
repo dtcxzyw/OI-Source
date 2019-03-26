@@ -18,31 +18,25 @@ int getOp() {
     while(c != 'C' && c != 'Q');
     return c;
 }
-const int size = 200005, inf = 1 << 30;
-int min3(int a, int b, int c) {
+const int size = 200005;
+typedef long long Int64;
+Int64 min3(Int64 a, Int64 b, Int64 c) {
     return std::min(a, std::min(b, c));
 }
+const Int64 inf = 1LL << 40;
 struct Mat {
-    int A00, A01, A02, A10, A11, A12;
-    Mat(int A00, int A01, int A02, int A10, int A11,
-        int A12)
-        : A00(A00), A01(A01), A02(A02), A10(A10),
-          A11(A11), A12(A12) {}
-    Mat(int A)
-        : A00(A), A01(inf), A02(inf), A10(inf), A11(0),
-          A12(0) {}
+    Int64 A10, A20, A21;
+    Mat(Int64 A10, Int64 A20, Int64 A21)
+        : A10(A10), A20(A20), A21(A21) {}
+    Mat(Int64 A) : A10(A), A20(inf), A21(0) {}
     Mat() {}
     Mat operator*(const Mat& rhs) const {
-        return Mat(
-            min3(A00, A01 + rhs.A00, A02 + rhs.A10),
-            min3(A00, A01 + rhs.A01, A02 + rhs.A11),
-            min3(A00, A01 + rhs.A02, A02 + rhs.A12),
-            min3(A10, A11 + rhs.A00, A12 + rhs.A10),
-            min3(A10, A11 + rhs.A01, A12 + rhs.A11),
-            min3(A10, A11 + rhs.A02, A12 + rhs.A12));
+        return Mat(A10, min3(A20, A21 + rhs.A10,
+                             A21 + rhs.A20),
+                   A21 + rhs.A21);
     }
-    int minv() {
-        return min3(A00, A11, A12);
+    Int64 minv() {
+        return std::min(A10, A20);
     }
 };
 struct Edge {
@@ -54,13 +48,14 @@ void addEdge(int u, int v) {
     E[cnt].to = v, E[cnt].nxt = last[u];
     last[u] = cnt;
 }
-int son[size], lsiz[size], p[size];
+int son[size], lsiz[size], p[size], id[size], icnt = 0;
 int buildTree(int u) {
     int siz = 1, msiz = 0;
     for(int i = last[u]; i; i = E[i].nxt) {
         int v = E[i].to;
         if(v == p[u])
             continue;
+        p[v] = u;
         int vsiz = buildTree(v);
         siz += vsiz;
         if(msiz < vsiz)
@@ -71,7 +66,7 @@ int buildTree(int u) {
 }
 struct Node {
     Mat mat, mul;
-    int l, r;
+    int l, r, p;
 } T[size];
 #define ls T[u].l
 #define rs T[u].r
@@ -82,9 +77,8 @@ void update(int u) {
     if(rs)
         T[u].mul = T[u].mul * T[rs].mul;
 }
-int fa[size];
 bool isRoot(int u) {
-    int p = fa[u];
+    int p = T[u].p;
     return T[p].l != u && T[p].r != u;
 }
 int ssiz[size], ch[size];
@@ -98,7 +92,7 @@ int buildChainImpl(int l, int r) {
         if(sum * 2 >= tot) {
             ls = buildChainImpl(l, i - 1);
             rs = buildChainImpl(i + 1, r);
-            fa[ls] = fa[rs] = u;
+            T[ls].p = T[rs].p = u;
             update(u);
             return u;
         }
@@ -115,9 +109,8 @@ int buildChain(int u) {
             if(flag[v])
                 continue;
             int vid = buildChain(v);
-            fa[vid] = i;
-            T[i].mat.A11 =
-                (T[i].mat.A10 += T[vid].mat.minv());
+            T[vid].p = i;
+            T[i].mat.A21 += T[vid].mul.minv();
         }
     }
     int ccnt = 0;
@@ -138,17 +131,43 @@ int main() {
         addEdge(v, u);
     }
     buildTree(1);
-    int rt = buildChain(1);
+    buildChain(1);
     int m = read();
     for(int t = 1; t <= m; ++t) {
         int op = getOp();
         int x = read();
         if(op == 'C') {
             int to = read();
+            T[x].mat.A10 += to;
+            for(int i = x; i; i = T[i].p)
+                if(T[i].p && isRoot(i)) {
+                    int p = T[i].p;
+                    Int64 old = T[i].mul.minv();
+                    update(i);
+                    Int64 now = T[i].mul.minv();
+                    T[p].mat.A21 += now - old;
+                } else
+                    update(i);
         } else {
-            Mat base(0);
+            Mat res;
+            bool init = false;
+            int last = T[x].l;
             while(true) {
+                if(T[x].l == last) {
+                    if(init)
+                        res = res * T[x].mat;
+                    else
+                        res = T[x].mat, init = true;
+                    if(T[x].r)
+                        res = res * T[T[x].r].mul;
+                }
+                last = x;
+                if(isRoot(x))
+                    break;
+                else
+                    x = T[x].p;
             }
+            printf("%lld\n", res.minv());
         }
     }
     return 0;

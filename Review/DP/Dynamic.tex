@@ -1,12 +1,8 @@
 \section{动态dp}
 动态dp与常规dp的区别就是加上了多次修改与询问。
-\subsection{序列DDP}
-\subsubsection{区间最值问题}
-一般使用线段树维护区间信息。
-\paragraph{例题~小白逛公园}
-使用线段树维护区间最大子段和。
-\lstinputlisting{Source/Source/DDP/4513.cpp}
-\subsection{树上DDP}
+
+序列DDP一般使用线段树维护区间信息，这里不详述。下文的重点是树上DDP。
+\subsection{常规树上DDP方法}
 树上DDP一般使用线段树+树链剖分+矩阵乘法。
 
 考虑动态最大带权独立集问题：
@@ -110,7 +106,50 @@ $O(m\lg n)$。
     \url{https://www.luogu.org/blog/ShadowassIIXVIIIIV/solution-p4643}
 }。
 
+\subsection{子树DP值查询}
 如果需要向bzoj4712 洪水那样查询某个子树内的dp值，不能直接使用子树根节点的信息。
 因为整条链是一棵二叉树，这个根节点的矩阵积还包括其左儿子的贡献，但这一部分并不是
-它的子树。实际答案应该为左偏链（儿子都是其父亲的左儿子）上节点的自身矩阵与其右儿子
-矩阵的乘积。
+它的子树。实际答案应该为自身及其后继的积，实现时只有往右移才算入这个祖先的贡献。
+
+参考代码：
+\begin{lstlisting}
+Mat res;
+bool init = false;
+int last = T[x].l;
+while(true) {
+    if(T[x].l == last) {
+        if(init)
+            res = res * T[x].mat;
+        else
+            res = T[x].mat, init = true;
+        if(T[x].r)
+            res = res * T[T[x].r].mul;
+    }
+    last = x;
+    if(isRoot(x))
+        break;
+    else
+        x = T[x].p;
+}
+\end{lstlisting}
+\subsection{固定思路}
+\begin{enumerate}
+    \item 转移方式：推导dp转移方程，确定最少需要的信息，组成向量
+    \item 矩阵表达：将父亲$u$转移儿子$v$的信息写成矩阵左乘向量的形式，矩阵与$u$相关，向量
+    与$v$相关。若转移无法被表达，则尝试给向量增加新的维度（而不是让矩阵变为非方阵），
+    新维度的信息用常量填充（$0,1,\pm \infty$）。
+    \item 确定有效项：模拟多次矩阵乘法，直至不变量的个数稳定（即这个由变量组成的多元组满足
+    乘法封闭）。省去不变量，硬编码矩阵乘法。对于相等项可以只保留一份
+    （{\bfseries 必须保证正确性}）。
+    \item 结果读取：构造链尾哨兵，右乘转移矩阵（使用已确定有效项的矩阵而不是最初的转移矩阵），
+    根据向量元素的实际意义得到结果。
+    \item 轻儿子DP值转移到重链上的方式：最好满足可减性（最好不要是乘法）。注意+ with
+    max/min意义下乘法时不要为了使用int而给+操作做clamp，因为在替换时需要做信息减法，
+    结果是错误的。对于不满足信息可减性的，与LCT维护子树信息的做法一样，给每个点开一个
+    数据结构维护轻儿子的信息和。
+
+    Update：由于每个点最多只给一个父亲贡献自己作为轻儿子的信息，可以将每个节点的所有轻儿子
+    平铺到序列上，记录其区间，然后使用线段树维护。
+    \item 单位阵构造（Optional，用于子树DP值查询）：按照方程模拟确定$I$的每一项，如果
+    不存在单位阵，乘法时记录是否已初始化的flag。
+\end{enumerate}

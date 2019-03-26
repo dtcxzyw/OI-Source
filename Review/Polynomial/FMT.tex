@@ -21,6 +21,16 @@ for(int i = 1; i < end; i <<= 1)
             A[j] += A[j ^ i];
 \end{lstlisting}
 
+注意到所有的$j$都是$i$的父集，且$A$值改变不传递，因此可以枚举$i$的父集去掉
+判断。不过实际优化效果并达不到2倍，可能性能瓶颈在于存取。
+
+\begin{lstlisting}
+int end = 1 << n;
+for(int i = 1; i < end; i <<= 1)
+    for(int j = i; j < end; j = (j + 1) | i)
+        A[j] += A[j ^ i];
+\end{lstlisting}
+
 逆变换只要将其倒着做就可以了（从高到低枚举与从低到高枚举等价，$A$值改变
 的影响不会传递，所以不必控制枚举顺序）。
 \begin{lstlisting}
@@ -66,3 +76,12 @@ Luogu P3175 [HAOI2015]按位或\footnote{
     不会FWT的选手计算集合并卷积的方法
     \url{http://liu-runda.blog.uoj.ac/blog/2360}
 }。
+
+有时按照1的个数将原数组分解也是一个比较好的思路。
+
+例题：LOJ161 子集卷积
+
+分析后可得到要求的是$h[k]=\displaystyle \sum_{i\&j=0 \land i|j=k}{f[i]g[j]}$。
+考虑除去约束$i\&j=0$，由于我们能够做约束$i|j=k$的卷积，在满足这个约束的情况下，约束
+$i\&j=0$可以等价为$bitcount(i)+bitcount(j)=bitcount(k)$。那么将原数组按照1的个数
+分解，然后对每类$bitcount$卷积，最后只要输出$bitcount(k)$的$k$的值。

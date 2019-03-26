@@ -287,16 +287,19 @@ int main() {
     exec = name + ".out";
     std::vector<Data> data = scan("data");
     if(data.size() != 0) {
-        int64_t time = 0, mem = 0;
+        int64_t time = 0, mem = 0, mt = 0;
         std::map<Status, int> cnt;
         std::map<Status, path> first;
         for(const auto& d : data) {
             RunResult res = test(d);
             ++cnt[res.st];
-            if(res.st == Status::AC) {
+            if(res.st == Status::AC ||
+               res.st == Status::WA) {
                 time += res.time;
                 mem = std::max(mem, res.mem);
-            } else {
+                mt = std::max(mt, res.time);
+            }
+            if(res.st != Status::AC) {
                 if(!first.count(res.st) ||
                    file_size(first[res.st]) >
                        file_size(d.input))
@@ -318,7 +321,9 @@ int main() {
                   << cnt[Status::AC] * 100 /
                 data.size()
                   << std::endl;
-        std::cout << "Time " << time << " ms"
+        std::cout << "TotTime " << time << " ms"
+                  << std::endl;
+        std::cout << "MaxTime " << mt << " ms"
                   << std::endl;
         std::cout << "Memory " << mem << " MB"
                   << std::endl;

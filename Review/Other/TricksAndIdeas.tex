@@ -527,6 +527,9 @@ cdq分治用来解决偏序问题（支持动态偏序问题，但仍然要求�
 	\item （分段）打表时注意源代码不能超过100KB。
 	\item 不要使用std::bitset的set与test，它们会执行越界检查。不过operator[]的性能
 	尚未验证，因为它们的返回值是bool的Proxy Class————std::bitset::reference。
+	\item 跨平台scanf/printf：最保险的方式是手写输入输出。另一种方式是使用<cinttypes>
+	提供的PRI/SCN*宏。例如不管long long输入输出是\%lld还是\%I64d，都可以使用SCNd64/
+	PRId64表示。
 \end{itemize}
 \subsection{本节注记}
 2013年许昊然的国家集训队论文答辩《浅谈数据结构题的几个非经典解法——<Claymore>命题报告》
