@@ -4,12 +4,12 @@
 ，$P=(p_1,p_2,\cdots,p_n)$为$1\ldots n$的排列。
 那么$n*n$矩阵$A$的行列式定义为：
 \begin{eqnarray}
-	det(A)&=&\sum_{P={p_1,p_2,\cdots,p_n}}
+	det(A)&=&\sum_{P=(p_1,p_2,\cdots,p_n)}
 	{(-1)^{\tau(P)}\prod_{i=1}^n{a_{ip_i}}}\label{DetA}\\
 	&=&\left\{
 	\begin{array}{ll}
 		a_{11}                                                    & \textrm{~if~$n=1$} \\
-		\displaystyle \sum_{j=1}^n{(-1)^{i+j}a_{1j}det(A_{[1j]})} & \textrm{~if~$n>1$}
+		\displaystyle \sum_{j=1}^n{(-1)^{1+j}a_{1j}det(A_{[1j]})} & \textrm{~if~$n>1$}
 	\end{array}
 	\right.\label{DetB}
 \end{eqnarray}
@@ -18,7 +18,7 @@
 
 式~\ref{DetB}是式~\ref{DetA}的递归形式。
 
-记$A_{ij}=(-1)^{i+j}a_{1j}det(A_{[ij]})$为元素$a_{ij}$的{\bfseries 代数余子式}。
+记$A_{ij}=(-1)^{i+j}det(A_{[ij]})$为元素$a_{ij}$的{\bfseries 代数余子式}。
 
 行列式拥有如下性质：
 \begin{property}
@@ -79,6 +79,8 @@
 证明：唯一矩阵元素积可能非0的排列方案只有在主对角线上。
 
 高斯消元后根据定理~\ref{LTAD}计算行列式，注意在初等变换操作中交换行时要变号
-{\bfseries （尤其是在计算有向生成树计数取模时）}。
+{\bfseries （尤其是在计算模意义下有向生成树计数时）}。
 
 以上内容参考了算法导论~\cite{ITA3} 附录D 矩阵。
+
+若矩阵比较特殊，有较多的非零项，可以选取0的个数最多的一行/列展开。

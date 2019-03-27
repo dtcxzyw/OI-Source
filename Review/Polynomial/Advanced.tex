@@ -19,7 +19,7 @@ Update：多项式算法模块化封装已完成，参见~\ref{Module}节与~\re
 \begin{displaymath}
     G(F(z))\equiv G(F_0(z))+G'(F_0(z))(F(z)-F_0(z)) \pmod{z^n}
 \end{displaymath}
-结合$G(F(z))\equiv 0 \pmod{z^n}$可得到新的$F_0(z)$:
+结合$G(F(z))\equiv 0 \pmod{z^n}$可得到新的$F(z)$:
 \begin{displaymath}
     F(z)\equiv F_0(z)-\frac{G(F_0(z))}{G'(F_0(z))} \pmod{z^n}
 \end{displaymath}
@@ -27,8 +27,8 @@ Update：多项式算法模块化封装已完成，参见~\ref{Module}节与~\re
 
 \subsubsection{注意事项}
 \begin{itemize}
-    \item 使用FFT加速卷积后及时取模，即把不需要的位置0。当然也可以直接将规模对齐到
-    2的幂次，最后一次再取模。
+    \item 使用FFT加速卷积后及时取模，即把不需要的位置0。否则循环卷积性质会干扰低次项。
+    当然也可以直接将规模对齐到2的幂次，甚至可以利用循环卷积优化，最后一次再取模。
     \item 卷积时使用$>2$倍模次数的2的幂作为卷积规模，因为乘法操作至少需要这么多项
     才足够确定多项式系数。
     \item 若要求$\bmod{z^n}$意义下的结果，求导/积分这类导致多项式次数变化的操作，
@@ -83,7 +83,7 @@ Update：多项式算法模块化封装已完成，参见~\ref{Module}节与~\re
 根据$(x^n)'=nx^{n-1}$可得
 \begin{eqnarray*}
     F'(z)&=&\sum_{i=1}^{n-1}{ic_iz^{i-1}}\\
-    \int F(z)&=&\sum_{i=1}^{n-1}{\frac{c_{i-1}}{i}\cdot z^i}
+    \int F(z)\ud z&=&\sum_{i=1}^{n-1}{\frac{c_{i-1}}{i}\cdot z^i}
 \end{eqnarray*}
 时间复杂度$O(n)$。
 \subsection{多项式ln}
@@ -93,7 +93,7 @@ Update：多项式算法模块化封装已完成，参见~\ref{Module}节与~\re
 \end{displaymath}
 所以有
 \begin{displaymath}
-    \ln A(z)=\int \frac{A'(z)}{A(z)}
+    \ln A(z)=\int \frac{A'(z)}{A(z)}\ud z
 \end{displaymath}
 由于要求逆元，时间复杂度$O(n \lg n)$。
 \subsection{多项式exp}
@@ -191,7 +191,7 @@ $A(z)=R(z)$。那么可以两边同时模$B(z)$，达到次数减半的效果。
     \end{eqnarray*}
     卷积出$Q(x)$后在$i\sqrt{n}=0,\sqrt{n},\cdots,(\sqrt{n}-1)\sqrt{n}$上
     多点求值，时间复杂度\\$O(\sqrt{n}\lg^2 n)$。（在考场上不太好写，可以用一些预处理时间
-    每隔一段打表，查询时定位到对应位置暴力计算，适用于$n$较大的查询很少的情况。）
+    每隔一段打表，查询时定位到对应位置暴力计算，适用于$n$较大而查询很少的情况。）
     \item $n\geq p$：结合上述两种做法，易知第二种做法最多只执行一次。
 \end{itemize}
 
@@ -259,3 +259,30 @@ Binomial Coefficient Modulo Prime $\ll$ Picks's Blog
 将二元函数的系数排为矩阵，对每一行做DFT，再对每一列做DFT，将点值相乘，
 对每一列做IDFT，每一行做IDFT。整个过程与DFT计算卷积的过程类似。记多项式次数
 为$n,m$，时间复杂度为$O(nm\lg nm)$。
+\subsection{循环卷积}
+该需求来自CTSC2010 性能优化，题意为求$ab^C$在模$x^n$意义下的循环卷积模$n+1$的值。
+
+使用常用的基2NTT，必须把卷积规模开到$2n$，然后每次把溢出部分加回去。即使使用快速幂也
+带来$O(\lg n)$的复杂度。
+
+不过NTT可以使用混合积，例题有一个性质，即$n$是smooth number，可以分解为
+$2^a3^b5^c7^d$的形式。那么可以按照当时FFT的推导写出基2，基3，基5，基7的蝴蝶操作，
+然后使用递归形式求解。
+
+\index{*TODO!混合基FFT的非递归形式}
+
+由于是循环卷积，求出点值后可以不考虑溢出，即无需限制点值乘法的次数，允许直接在点值上
+做快速幂。
+
+参考代码：
+\lstinputlisting{Source/Source/'FFT NTT'/P4191.cpp}
+
+该内容参考了skywalkert的博客\footnote{
+    BZOJ 1919 [Ctsc2010]性能优化\\
+    \url{https://blog.csdn.net/skywalkert/article/details/51737272}
+}。
+
+对于没有特殊性质的$n$，若要求模$x^n$意义下的循环卷积，可以使用Bluestein’s Algorithm。
+参见国家集训队2016论文集毛啸的《再探快速傅里叶变换》。
+
+\index{*TODO!通用循环卷积}

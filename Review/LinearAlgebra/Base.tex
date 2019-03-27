@@ -36,8 +36,8 @@ int maxv() {
     return res;
 }
 \end{lstlisting}
-由于线性基可以构造出所有可能的值，因此从高位到低位贪心就能得到最大值。
-\subsection{最小值}
+由于线性基可以张成出整个空间，因此从高位到低位贪心就能得到最大值。
+\subsection{最小非0值}
 \begin{lstlisting}
 int minv() {
     for(int i=0;i<=bitSize;++i)

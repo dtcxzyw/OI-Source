@@ -31,6 +31,8 @@ for(int i = 1; i < end; i <<= 1)
         A[j] += A[j ^ i];
 \end{lstlisting}
 
+Update：似乎FWT比FMT更快些，可能它更Cache-Friendly吧。
+
 逆变换只要将其倒着做就可以了（从高到低枚举与从低到高枚举等价，$A$值改变
 的影响不会传递，所以不必控制枚举顺序）。
 \begin{lstlisting}

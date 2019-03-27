@@ -46,15 +46,25 @@ int sub(int a, int b) {
 Int64 fma(Int64 a, Int64 b, Int64 c) {
     return (a + b * c) % mod;
 }
-void FMT(int* A, int end) {
-    for(int i = 1; i < end; i <<= 1)
-        for(int j = i; j < end; j = (j + 1) | i)
-            A[j] = add(A[j], A[j - i]);
+void FWT(int* A, int end) {
+    for(int i = 1; i <= end; i <<= 1) {
+        int m = i >> 1;
+        for(int j = 0; j < end; j += i)
+            for(int k = 0; k < m; ++k) {
+                int &x = A[j + k + m], &y = A[j + k];
+                x = add(x, y);
+            }
+    }
 }
-void IFMT(int* A, int end) {
-    for(int i = 1; i < end; i <<= 1)
-        for(int j = i; j < end; j = (j + 1) | i)
-            A[j] = sub(A[j], A[j - i]);
+void IFWT(int* A, int end) {
+    for(int i = 1; i <= end; i <<= 1) {
+        int m = i >> 1;
+        for(int j = 0; j < end; j += i)
+            for(int k = 0; k < m; ++k) {
+                int &x = A[j + k + m], &y = A[j + k];
+                x = sub(x, y);
+            }
+    }
 }
 int A[21][size], B[21][size], C[21][size], bcnt[size];
 int main() {
@@ -65,18 +75,18 @@ int main() {
     for(int i = 0; i < end; ++i)
         A[bcnt[i]][i] = read();
     for(int i = 0; i <= n; ++i)
-        FMT(A[i], end);
+        FWT(A[i], end);
     for(int i = 0; i < end; ++i)
         B[bcnt[i]][i] = read();
     for(int i = 0; i <= n; ++i)
-        FMT(B[i], end);
+        FWT(B[i], end);
     for(int i = 0; i <= n; ++i) {
         for(int j = 0; j <= i; ++j) {
             int *X = A[j], *Y = B[i - j], *Z = C[i];
             for(int k = 0; k < end; ++k)
                 Z[k] = fma(Z[k], X[k], Y[k]);
         }
-        IFMT(C[i], end);
+        IFWT(C[i], end);
     }
     for(int i = 0; i < end; ++i) {
         write(C[bcnt[i]][i]);

@@ -5,11 +5,12 @@
 }。
 
 一般在多项式开根及exp等常数较大的计算中使用，简单的计算仍然使用原算法。
+\CJKsout{事实上下面的算法更简单。}
 
 记长度为$2n$的DFT/IDFT的计算时间为$T(n)$，$n$次形式幂级数乘法的时间为$(3+o(1))T(n)$，
 下面算法的运行时间均以$T(n)$为基准衡量。运行时间有理论上证明与实际测试结果支持。测试用
-模数为998244353，测试规模为$2^{22}$，每个算法重复运行100次。以下时间复杂度证明假装
-$T(n)=2T(n/2)$，即不考虑lg的增长。
+模数为998244353，测试规模为$2^{22}$，每个算法重复运行100次。以下常数大小证明假装
+$T(n)=2T(n/2)$，即不考虑lg的增长。\CJKsout{所以可以发现实验常数比理论常数更低。}
 
 \subsection{卷积}
 牛顿迭代法需要遇到不同规模的卷积，原先的卷积实现使用动态计算位逆序和利用消去引理定位对应的
@@ -25,7 +26,7 @@ $T(n)=2T(n/2)$，即不考虑lg的增长。
 为$A(n)$，有$A(n)=A(n/2)+(3+o(1))T(n)$，解得$A(n)=(6+o(1))T(n)$。事实上，从模$x^n$
 推到$x^{2n}$的过程的复杂度等于求模$x^n$意义的复杂度。
 \subsubsection{优化}
-注意到我们已经有了$g$的前$h$项，没有必要再计算一遍。记子过程求出的结果为$g_0$，有
+注意到我们已经有了$g$的末$h$项，没有必要再计算一遍。记子过程求出的结果为$g_0$，有
 $fg_0\equiv 1\pmod{x^h}$。考虑最初牛顿迭代法的计算过程，迭代式为
 $g'=g_0-(fg_0-1)g_0$，尝试按照表达式计算而不是化简计算。那么一共需要2次卷积，一次为
 $fg_0$，另一次为$(fg_0-1)g_0$。
@@ -72,7 +73,7 @@ $(26+o(1))T(n)$。
 
 但是ln部分的求逆精度要达到模$x^n$，而子过程给的精度是模$x^h$。因此需要对原迭代式进行
 变形，降低精度要求。记$h_0=g_0^{-1}\bmod{x^h},f_0=f\bmod{x^h}$。首先将$f$丢入
-积分中，然后注意到$g_0'/g_0-f'$的低h-1项为0，我们需要的是它的高$h~n-1$项，考虑引入
+积分中，然后注意到$g_0'/g_0-f'$的低h-1项为0，我们需要的是它的高$h\sim n-1$项，考虑引入
 $g_0h_0$以消去$g_0^{-1}$。因为$g_0h_0$的低h项为1，所以乘上$g_0h_0$后需要的部分
 仍被保留，且$g_0h_0$的高h项无影响。再利用$g_0h_0-1\equiv 0 \pmod{x^h}$减小卷积规模。
 
@@ -103,6 +104,55 @@ $e^{F(x)}=\int{\frac{xF'(x)e^{F(x)}}{x}}$，记$H(x)=xF'(x)$，很容易预处�
 然后CDQ分治计算$H(x)$与$G(x)$的卷积，在递归到底层时做积分。注意要特判常数项为1。
 上下同乘一个$x$是为了求导/积分时不用考虑复杂的移位。卷积时由于只取高次项，低位与溢出位
 贡献可以被忽略，对齐后可使用循环卷积优化。
+
+参考代码：
+\begin{lstlisting}
+Poly conv(const int* A, const int* B, int siz) {
+    int p = siz << 1;
+    if(siz <= 16) {
+        Poly res(p);
+        for(int i = 0; i < siz; ++i)
+            for(int j = siz - i; i + j < p; ++j)
+                res[i + j] = (res[i + j] +
+                                asInt64(A[i]) * B[j]) %
+                    mod;
+        return res;
+    }
+    Poly X(p), Y(p);
+    memcpy(data(X), A, sizeof(int) * siz);
+    memcpy(data(Y), B, sizeof(int) * p);
+    DFT(p, X);
+    DFT(p, Y);
+    for(int i = 0; i < p; ++i)
+        X[i] = asInt64(X[i]) * Y[i] % mod;
+    IDFT(p, X, siz, p, false);
+    return X;
+}
+void getExpCDQImpl(int b, int e, const Poly& sf,
+                    Poly& g) {
+    if(b + 1 == e) {
+        g[b] = (b == 0 ? 1 :
+                            asInt64(g[b]) * lut[b] % mod);
+    } else {
+        int m = (b + e) >> 1, h = m - b;
+        getExpCDQImpl(b, m, sf, g);
+        Poly X = conv(data(g) + b, data(sf), h);
+        for(int i = m; i < e; ++i)
+            g[i] = add(g[i], X[i - b]);
+        getExpCDQImpl(m, e, sf, g);
+    }
+}
+void getExpCDQ(int n, const Poly& sf, Poly& g) {
+    int p = 1;
+    while(p < n)
+        p <<= 1;
+    Poly cf(p);
+    for(int i = 0; i < n; ++i)
+        cf[i] = asInt64(sf[i]) * i % mod;
+    getExpCDQImpl(0, p, cf, g);
+    memset(data(g) + n, 0, sizeof(int) * (p - n));
+}
+\end{lstlisting}
 \subsection{优化方法总结与实现细节}
 这两个方法通用且优化效果显著。
 \begin{itemize}
