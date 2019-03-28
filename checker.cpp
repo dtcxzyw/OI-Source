@@ -63,16 +63,21 @@ APIO的测试点命名把我搞得很惨，为什么有01开头？为什么有�
 懒得输入待测试程序名了，直接使用bin文件夹下除checker,charCounter外的最新
 的可执行程序作为测试程序。
 
+3.28
+修正内存测量，以/proc下的VmPeak值为标准
+
 为什么这些事我不一次性搞定呢？当然是需求推进科技进步啦！\sout{还是我懒}
 
 TODO
 使用正则表达式匹配输入输出文件名
 跨Windows平台
-修正内存大小测量
 perf信息读入，全部AC后自动做perf给出性能指标
+支持LOJ的SPJ
+支持LOJ的data.yml
 */
 #include <algorithm>
 #include <cerrno>
+#include <charconv>
 #include <cmath>
 #include <cstdint>
 #include <cstring>
@@ -82,8 +87,10 @@ perf信息读入，全部AC后自动做perf给出性能指标
 #include <iostream>
 #include <iterator>
 #include <map>
+#include <regex>
 #include <set>
 #include <string>
+#include <sys/ptrace.h>
 #include <sys/resource.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -132,20 +139,20 @@ std::string toString(Status st) {
 std::string toString(RuntimeError st) {
     switch(st) {
         case RuntimeError::FloatingPointError:
-            return "SIGFPE:Floating Point Error";
+            return "Floating Point Error";
             break;
         case RuntimeError::FloatingPointErrorO2:
-            return "SIGILL(SIGFPE):Floating Point "
+            return "(SIGFPE):Floating Point "
                    "Error(-O2?)";
             break;
         case RuntimeError::NonzeroExitCode:
             return "Nonzero Exit Code";
             break;
         case RuntimeError::SegmentationFault:
-            return "SIGSEGV:Segmentation Fault";
+            return "Segmentation Fault";
             break;
         case RuntimeError::Exception:
-            return "SIGABRT:Uncaught C++ Exception";
+            return "Uncaught C++ Exception";
             break;
         case RuntimeError::Unknown:
             return "Unknown";
@@ -160,73 +167,97 @@ struct RunResult {
     int64_t time, mem;
     Status st;
     RuntimeError ret;
+    int sig;
     RunResult()
         : time(0), mem(0), st(Status::UKE),
-          ret(RuntimeError::Unknown) {}
+          ret(RuntimeError::Unknown), sig(-1) {}
 };
 std::string exec;
 int64_t maxTime, maxMem, type;
 const int magic = 0xe7;
-RunResult run(const std::string& in,
-              const std::string& out) {
-    pid_t id = vfork();
-    if(id < 0) {
-        RunResult res;
-        res.st = Status::SE;
-        return res;
-    } else if(id == 0) {
-        if(type & 2) {
-            auto cmd = "perf stat -e "
-                       "cache-misses,branch-misses,"
-                       "instructions,branches,cache-"
-                       "references,cpu-cycles ./" +
-                exec + " <" + in + " >" + out;
-            std::cout << "Command:" << cmd
-                      << std::endl;
-            quick_exit(system(cmd.c_str()));
-        } else {
-            bool flag = true;
-            flag &= freopen(in.c_str(), "r", stdin) !=
-                NULL;
-            flag &= freopen(out.c_str(), "w",
-                            stdout) != NULL;
-            /*
-            // Stack
-            {
-                struct rlimit limit;
-                limit.rlim_cur = maxMem << 20;
-                limit.rlim_max = RLIM_INFINITY;
-                flag &=setrlimit(RLIMIT_STACK, &limit)
-            ==0;
-            }
-            */
-            // Time
-            {
-                struct rlimit limit;
-                flag &=
-                    getrlimit(RLIMIT_CPU, &limit) == 0;
-                limit.rlim_cur = maxTime / 1000 + 1;
-                flag &=
-                    setrlimit(RLIMIT_CPU, &limit) == 0;
-            }
-            if(!flag)
-                quick_exit(magic);
-            char* ptr = nullptr;
-            if(execv(exec.c_str(), &ptr) == -1)
-                quick_exit(magic);
-        }
+void runA(const std::string& in,
+          const std::string& out) {
+    ptrace(PT_TRACE_ME, 0, NULL, NULL);
+    if(type & 2) {
+        auto cmd = "perf stat -e "
+                   "cache-misses,branch-misses,"
+                   "instructions,branches,cache-"
+                   "references,cpu-cycles ./" +
+            exec + " <" + in + " >" + out;
+        std::cout << "Command:" << cmd << std::endl;
+        quick_exit(system(cmd.c_str()));
     } else {
+        bool flag = true;
+        flag &=
+            freopen(in.c_str(), "r", stdin) != NULL;
+        flag &=
+            freopen(out.c_str(), "w", stdout) != NULL;
+        /*
+        // Stack
+        {
+            struct rlimit limit;
+            limit.rlim_cur = maxMem << 20;
+            limit.rlim_max = RLIM_INFINITY;
+            flag &=setrlimit(RLIMIT_STACK, &limit)
+        ==0;
+        }
+        */
+        // Time
+        {
+            struct rlimit limit;
+            flag &= getrlimit(RLIMIT_CPU, &limit) == 0;
+            limit.rlim_cur = maxTime / 1000 + 1;
+            flag &= setrlimit(RLIMIT_CPU, &limit) == 0;
+        }
+        if(!flag)
+            quick_exit(magic);
+        char* ptr = nullptr;
+        if(execv(exec.c_str(), &ptr) == -1)
+            quick_exit(magic);
+    }
+}
+int64_t getStatusVal(const std::string& str,
+                     const std::string& val) {
+    std::regex pattern(val + ":([0-9]*)kB");
+    std::smatch match;
+    std::regex_search(str, match, pattern);
+    if(match.size() == 2) {
+        std::string mstr = match[1].str();
+        int64_t res = 0;
+        std::from_chars(mstr.c_str(),
+                        mstr.c_str() + mstr.size(),
+                        res);
+        return res;
+    }
+    return 0;
+}
+int64_t getVmPeak(pid_t id) {
+    std::ifstream status(
+        "/proc/" + std::to_string(id) + "/status");
+    if(!status)
+        return 0;
+    using Iter = std::istream_iterator<char>;
+    std::string str{ Iter(status), Iter() };
+    int64_t res = getStatusVal(str, "VmPeak") -
+        getStatusVal(str, "VmExe") -
+        getStatusVal(str, "VmStk") -
+        getStatusVal(str, "VmLib");
+    return std::max(res, 0LL) >> 10;
+}
+RunResult runB(pid_t id) {
+    RunResult res;
+    while(true) {
         int status = 0;
         struct rusage use;
         wait4(id, &status, 0, &use);
-        RunResult res;
-        res.time = (use.ru_utime.tv_sec +
-                    use.ru_stime.tv_sec) *
-                1000LL +
-            (use.ru_utime.tv_usec +
-             use.ru_stime.tv_usec) /
-                1000LL;
-        res.mem = use.ru_maxrss >> 10;
+        res.time = use.ru_utime.tv_sec * 1000LL +
+            use.ru_utime.tv_usec / 1000LL;
+        res.mem = std::max(res.mem, getVmPeak(id));
+        if(res.mem >= maxMem) {
+            res.st = Status::MLE;
+            ptrace(PTRACE_KILL, id, NULL, NULL);
+            break;
+        }
         if(WIFEXITED(status)) {
             if(WEXITSTATUS(status) == magic)
                 res.st = Status::SE;
@@ -241,10 +272,12 @@ RunResult run(const std::string& in,
                 if(res.time >= maxTime)
                     res.st = Status::TLE;
             }
+            break;
         } else if(WIFSIGNALED(status)) {
             res.st = Status::RE;
             res.ret = RuntimeError::Unknown;
-            switch(WTERMSIG(status)) {
+            res.sig = WTERMSIG(status);
+            switch(res.sig) {
                 case SIGABRT:
                     res.ret = RuntimeError::Exception;
                     break;
@@ -267,10 +300,24 @@ RunResult run(const std::string& in,
                     res.ret = RuntimeError::Unknown;
                     break;
             }
+            ptrace(PTRACE_KILL, id, NULL, NULL);
+            break;
         } else
-            res.st = Status::UKE;
-        return res;
+            ptrace(PTRACE_SYSCALL, id, NULL, NULL);
     }
+    return res;
+}
+RunResult run(const std::string& in,
+              const std::string& out) {
+    pid_t id = vfork();
+    if(id < 0) {
+        RunResult res;
+        res.st = Status::SE;
+        return res;
+    } else if(id == 0)
+        runA(in, out);
+    else
+        return runB(id);
     throw;
 }
 template <typename T>
@@ -320,8 +367,12 @@ RunResult test(const Data& data) {
        !compare(tmp, data.output))
         res.st = Status::WA;
     std::cout << "Result " << toString(res.st) << " ";
-    if(res.st == Status::RE)
+    if(res.st == Status::RE) {
+        if(res.sig != -1)
+            std::cout << "[" << strsignal(res.sig)
+                      << "]";
         std::cout << "(" << toString(res.ret) << ") ";
+    }
     if(res.st == Status::SE || res.st == Status::UKE)
         std::cout << "(" << std::strerror(errno)
                   << ") ";

@@ -1,7 +1,7 @@
-#include <climits>
 #include <cmath>
 #include <cstdio>
 #include <cstring>
+#include <limits>
 typedef unsigned long long Int64;
 int n, p, end, maxm;
 struct Mat {
@@ -98,7 +98,8 @@ int main() {
     end = n * n;
     for(int i = 0; i < modu; ++i)
         key[i] = magic;
-    maxm = INT_MAX - (p - 1) * (p - 1);
+    maxm = std::numeric_limits<int>::max() -
+        (p - 1) * (p - 1);
     Mat A, B;
     A.read();
     B.read();

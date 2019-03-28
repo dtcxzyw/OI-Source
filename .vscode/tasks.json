@@ -16,7 +16,12 @@
                 "-ftrapv",
                 "-ggdb3",
                 "-Wextra",
-                "-lstdc++fs"
+                "-lstdc++fs",
+                "-fsanitize=address",
+                "-ldl",
+                "-lpthread",
+                "-lrt",
+                "-fsanitize=undefined"
             ],
             "problemMatcher": {
                 "owner": "cpp",

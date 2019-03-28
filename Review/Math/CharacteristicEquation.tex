@@ -1,0 +1,23 @@
+\section{特征方程}
+特征方程用于推导线性递推数列的通项。
+
+给定数列递推式$a_n=\displaystyle \sum_{i=1}^k{c_ia_{n-i}}$，以及
+数列初始项$a_0,a_1,\cdots,a_{k-1}$，求$a_n$。
+
+虽然求$a_n$可以使用矩阵快速幂或者常系数项齐次线性递推解决，但是像「JLOI2015」
+有意义的字符串这类涉及取整的题目，它们毫无办法。因此研究$a_n$的通项并且利用其中
+的性质十分重要。
+
+首先将递推式改写为特征方程$x^k=\displaystyle \sum_{i=1}^k{c_ix^{k-i}}$，然后
+求出它的根$x_1,x_2,\cdots,x_k$，那么$a_n$就是这些根$n$次幂的线性加权和。
+带入前$k$项求出系数就可以得到通项。
+
+注意以下特殊情况：
+\begin{itemize}
+    \item 重根：若根$x$重复$b$次，则其系数为$\displaystyle \sum_{i=0}^{b-1}{f_in^i}$
+    的形式。
+    \item 复根：若$r$为复根，将$r$表示为$se^{\omega i}$的形式，将其拆为
+    $s^k\cos k\omega+is^k\sin k\omega$，实部和虚部都是合法的实根。
+\end{itemize}
+
+\index{*TODO!特征方程相关证明}

@@ -333,6 +333,7 @@
 - [ ] 扩展欧拉定理在矩阵幂中的应用
 - [ ] Bloom Filter
 - [ ] 广义（有限域）DFT+数论算法
+- [ ] 采样相关
 # 集训队论文/WC营员交流学习（省选后）
 ## 2019
 - [ ] 模拟费用流 laofu
@@ -396,3 +397,4 @@
 - [ ] 带花树[By rqy](https://rqy.moe/Algorithms/flower-tree/)
 - [ ] 三元环
 - [ ] FWT
+- [ ] CDF与PDF
