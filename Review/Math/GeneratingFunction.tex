@@ -2,7 +2,7 @@
 \index{G!Generating Function}
 \CJKsout{生成函数为形式幂级数，假装其收敛。}
 \subsection{普通型生成函数}
-若数列$<f_0,f_1,\cdots>$，若形式幂级数
+对于数列$<f_0,f_1,\cdots>$，若形式幂级数
 \begin{displaymath}
 	F(x)=\sum_{i=0}^\infty{f_ix^i}
 \end{displaymath}
@@ -20,7 +20,7 @@ OGF之积对应数列的卷积，不考虑元素之间的顺序，适用于组�
 	\hline
 	$<0,1,2,3,\cdots>$                       & $\frac{x}{(1-x)^2}$（将$\frac{1}{1-x}$微分后平移） \\
 	\hline
-	$<1.-1.1,-1,\cdots>$                   & $\frac{1}{1+x}$（$(1+x)\frac{1}{1+x}=1$）    \\
+	$<1.-1.1,-1,\cdots>$                   & $\frac{1}{1+x}$    \\
 	\hline
 	$<1,c,c^2,\cdots>$                     & $\frac{1}{1-cx}$                             \\
 	\hline
@@ -30,14 +30,15 @@ OGF之积对应数列的卷积，不考虑元素之间的顺序，适用于组�
 	\hline
 \end{tabular}
 \subsection{指数型生成函数}
-若数列$<f_0,f_1,\cdots>$，若形式幂级数
+对于数列$<f_0,f_1,\cdots>$，若形式幂级数
 \begin{displaymath}
 	F(x)=\sum_{i=0}^\infty{f_i\cdot\frac{x^i}{i!}}
 \end{displaymath}
 则称$F(x)$为数列${f_n}$的指数型生成函数（Exponential Generating Function）。
 
 EGF之积对应数列卷积乘以组合数，适合计算排列。注意EGF在计算时存储的是$\frac{a_i}{i!}$，
-初始化EGF时要将系数除以$i!$。
+初始化EGF时要将系数除以$i!$。{\bfseries 启示：卷积只是优化生成函数乘法的工具，
+表达与计算独立。}
 
 常见EGF：
 
@@ -69,8 +70,8 @@ $B_n$满足等式：
 \end{eqnarray*}
 
 \subsubsection{因子分解应用}
-若整数$\displaystyle n=\sum_{i=1}^k{p_i}$，
-则整数$n$可以分解为$B_k$种因子的乘积。
+若无平方因子的整数$\displaystyle n=\sum_{i=1}^k{p_i}$，
+则整数$n$可以分解为$B_k$种因子的乘积表达式。
 \subsubsection{贝尔数计算}
 \paragraph{DFS}若要得到不同方案的状态表示，限制下阶段DFS的集合大小以避免重复计算。
 \paragraph{贝尔三角形}
@@ -82,6 +83,8 @@ $B_n$满足等式：
 	B_n&=&A[n][0]
 \end{eqnarray*}
 使用滚动数组优化空间。
+
+\index{*TODO!贝尔三角形的意义}
 \paragraph{生成函数法}
 利用Bell数的生成函数$e^{e^x-1}$，计算多项式exp。
 \subsection{自然数幂求和}
@@ -152,7 +155,7 @@ $\sum{w_i}$不可控，只能转化为多重背包解决。
 由正推的过程发现分母部分为递推式的系数，而分子部分指示了递推式的初始项。
 
 注意如果推出了式子后为一元二次方程的形式，不一定使用求根公式，牛顿迭代法直接求解
-可以避免系数$a$无逆的情况。
+可以避免系数$a$无逆的情况。当然也可以通过观察把$a$的最低项消为常数。
 \subsection{快速求指定数集的幂和}
 该需求来自LuoguP4705 玩游戏。
 
@@ -195,4 +198,4 @@ $G(x)\cdot (\frac{1}{n})^m$。这种方法可能导致在已结束的母串后�
 该内容参考了水滴的题解\footnote{
 	P4548 [CTSC2006]歌唱王国 题解\\
 	\url{https://www.luogu.org/problemnew/solution/P4548}
-}
+}。

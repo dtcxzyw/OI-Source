@@ -36,3 +36,11 @@
 
 	De Morgan's laws - Wikipedia\\
     \url{https://en.wikipedia.org/wiki/De\_Morgan\%27s\_laws}}。
+
+\subsection{模意义统计方案}
+若要求恰好满足$k$个条件的方案数，且这些条件是等价的。考虑使用至少满足$k$个条件的方案数
+容斥求出，后者由于限制条件较松，很容易使用NTT等方法得到。
+
+记$g(x)$为至少满足$x$个条件的方案数，那么$g(i),i\geq k$构成的每种方案都对应
+$\binomial{i}{k}$种满足$k$个条件的方案。由容斥可得
+$ans=\displaystyle \sum_{i=k}^n{(-1)^{i-k}\binomial{i}{k}g(i)}$。

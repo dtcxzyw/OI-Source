@@ -12,6 +12,38 @@
                 "-Wall",
                 "-std=c++17",
                 "-D_FORTIFY_SOURCE=2",
+                "-ggdb3",
+                "-Wextra",
+                "-lstdc++fs",
+                "-ftrapv"
+            ],
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceRoot}"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },
+        {
+            "label": "ASAN",
+            "command": "g++",
+            "args": [
+                "-O0",
+                "${file}",
+                "-o",
+                "bin/${fileBasenameNoExtension}.out",
+                "-Wall",
+                "-std=c++17",
+                "-D_FORTIFY_SOURCE=2",
                 "-fstack-protector-all",
                 "-ftrapv",
                 "-ggdb3",

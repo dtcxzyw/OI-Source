@@ -171,9 +171,10 @@
 - [ ] CF25E Test
 - [ ] bzoj1398
 # 线性基
-- [ ] LOJ#2312. 「HAOI2017」八纵八横
+- [x] LOJ#2312. 「HAOI2017」八纵八横
 - [x] LOJ#114. k 大异或和
 - [ ] LOJ#6243. 关灯问题
+- [ ] [WC2011]最大XOR和路径
 - [x] bzoj4184
 - [x] bzoj4269
 # dp优化
@@ -291,16 +292,16 @@
 - [x] LOJ#6028. 「from CommonAnts」质数计数 II
 - [x] LOJ#6235. 区间素数个数（AC还需要Meissel-Lehmer）
 - [x] bzoj2440完全平方数
-- [ ] bzoj3198
+- [x] bzoj3198
 - [ ] bzoj4086
 - [ ] bzoj4305
 - [ ] bzoj2671
-- [ ] bzoj2705
+- [x] bzoj2705
 - [ ] bzoj3309
-- [ ] bzoj3529
+- [x] bzoj3529
 - [ ] bzoj3834
-- [ ] bzoj3994
-- [ ] bzoj4407
+- [x] bzoj3994
+- [x] bzoj4407
 - [ ] bzoj2813
 - [ ] bzoj4428
 # 扩展欧几里得

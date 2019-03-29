@@ -22,7 +22,7 @@ F_i(x)=\left\{\begin{array}{ll}
     \item $O(n^2)$计算出多项式$\displaystyle F(x)=\prod_{i=1}^i{x-x_i}$；
     \item $\Theta(n^2)$计算每个$i$的多项式$\frac{F(x)}{x-x_i}$；
     \item $\Theta(n^2)$将每个多项式乘以系数
-    $\displaystyle \frac{y_i}{\prod_{i\neq j}{x_i-x_j}}$
+    $\frac{y_i}{\displaystyle \prod_{i\neq j}{x_i-x_j}}$
     （分母部分直接将$x_i$带入$i$对应的分子的多项式求出）；
     \item $\Theta(n^2)$将多项式相加合并。
 \end{enumerate}
@@ -36,7 +36,8 @@ F_i(x)=\left\{\begin{array}{ll}
 \subsection{缺点}
 \begin{itemize}
     \item 拉格朗日插值法的给出的曲线的确经过了样本点，但是这个曲线有可能十分曲折，而且
-    受单个点的影响大。可以考虑使用最小二乘逼近来消除噪声，或者使用样条。
+    受单个点的影响大。可以考虑使用最小二乘逼近来消除噪声，或者使用样条。不过拉格朗日插值
+    一般用于已确定多项式次数的插值，比如自然数幂和。
     \item $\Theta(n^2)$拉格朗日插值法的时间复杂度并没有比FFT插值方法优。
 \end{itemize}
 \subsection{求解自然数幂和}\label{psum}

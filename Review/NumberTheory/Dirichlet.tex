@@ -7,6 +7,8 @@
 \end{displaymath}
 由积性函数集合与狄利克雷卷积组成的群的乘法单位元为元函数$\epsilon$。
 
+由定义求$n$以内的狄利克雷卷积的复杂度为$O(n\lg n)$，使用调和级数可证明。
+
 狄利克雷卷积有如下性质：
 \begin{eqnarray*}
 	\textrm{结合律} & (f*g)*h=f*(g*h)\\
@@ -77,7 +79,7 @@
 	      若$\displaystyle n=\prod_{i=1}^m{{p_i}^{c_i}},g(n)=\sum_{d|n}{f(d)}$
 	      且$f$为积性函数，将$g$看做$f*1$可知$g$也是积性函数，则$\displaystyle
 		      g(n)=\prod_{i=1}^m{\sum_{j=0}^{c_i}{f(p_i^j)}}$。
-	\item 交换内外求和顺序。
+	\item 交换内外求和顺序，尤其是当内部求和项套有不好处理的函数时。
 	\item 枚举倍数、因子、最大公约数等有共性的值并换元。
 	\item 在化简前缀和函数时可能会遇到如下式子：
 	      \begin{eqnarray*}

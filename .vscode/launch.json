@@ -31,6 +31,32 @@
             ]
         },
         {
+            "name": "Launch ASAN",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/${fileBasenameNoExtension}.out",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/bin",
+            "environment": [],
+            "MIMode": "gdb",
+            "windows": {
+                "externalConsole": true,
+                "miDebuggerPath": "C:\\cygwin64\\bin\\gdb.exe"
+            },
+            "linux": {
+                "externalConsole": false
+            },
+            "preLaunchTask": "ASAN",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
             "name": "Launch RELEASE",
             "type": "cppdbg",
             "request": "launch",

@@ -23,7 +23,7 @@ $\varepsilon_n\approx\frac{1}{2n}$，
 \index{*Constant!$\gamma\approx 0.5772156649\ldots$}
 \subsubsection{$O(n\ln n)$dp}
 \begin{itemize}
-	\item 两层循环分别枚举区间长度和左端点。
+	\item 两层循环分别枚举长度和关键点（相邻关键点之间的距离等于枚举长度）。
 	\item Eratosthenes筛法：枚举因子和因子的倍数。
 \end{itemize}
 \subsubsection{书籍堆叠问题}
@@ -35,11 +35,12 @@ $\varepsilon_n\approx\frac{1}{2n}$，
 若要使书不倒下，需满足上面的书的重心在当前书上，
 即
 \begin{displaymath}
-	\frac{\sum_{i=1}^k{\sum_{j=i}^k{x_i}}}{k}=\frac{\sum_{i=1}^k{ix_i}}{k}\leq \frac{l}{2}，k=1,2,\cdots,n
+	\frac{\displaystyle \sum_{i=1}^k{\sum_{j=i}^k{x_i}}}{k}=
+	\frac{\displaystyle \sum_{i=1}^k{ix_i}}{k}\leq \frac{l}{2}，k=1,2,\cdots,n
 \end{displaymath}
 
 当$x_i=\frac{\frac{l}{2}}{i}$时等号恒成立，此时
-伸长量$\displaystyle L=\sum_{i=1}^n{x_i}=\frac{l}{2}H_n\cdot l$。
+伸长量$\displaystyle L=\sum_{i=1}^n{x_i}=\frac{l}{2}H_n$。
 
 注意在计算调和级数时，小规模用暴力，大规模用$O(1)$近似。
 

@@ -37,6 +37,18 @@ int maxv() {
 }
 \end{lstlisting}
 由于线性基可以张成出整个空间，因此从高位到低位贪心就能得到最大值。
+
+此外还有一种等价写法，不使用比较操作，可以使用于bitset上。
+\begin{lstlisting}
+typedef std::bitset<bitSize> Bit;
+Bit maxv() {
+    Bit res;
+    for(int i=bitSize-1;i>=0;++i)
+        if(!res[i])
+            res^=b[i];
+    return res;
+}
+\end{lstlisting}
 \subsection{最小非0值}
 \begin{lstlisting}
 int minv() {
