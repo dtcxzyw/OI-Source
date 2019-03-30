@@ -110,6 +110,9 @@ $[(-1)^i\binomial{i}{0},(-1)^{i+1}\binomial{i}{1},\cdots (-1)^{i+n}\binomial{i}{
 
 如果询问不强制在线，还可以将询问按照步长排序，然后相邻项之间递推。
 
+{\bfseries Warning：对于比较简单的递推式（比如$f_n=af_{n-1}+bf_{n-2}$），考虑
+使用特征方程求解，进一步减小常数。}
+
 该方法参考了小粉兔的博客\footnote{
     题解 P5107 【能量采集】 - PinkRabbit - 洛谷博客\\
     \url{https://www.luogu.org/blog/PinkRabbit/solution-p5107}

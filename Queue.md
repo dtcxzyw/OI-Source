@@ -196,15 +196,15 @@
 - [x] [Jsoi2011]柠檬
 - [x] [POI2011]Lightning Conductor
 - [x] CF868F Yet Another Minimization Problem
-- [ ] LOJ#6081. ZQC 的女装
-- [ ] bzoj2739
+- [x] LOJ#6081. ZQC 的女装
+- [x] bzoj2739
 # 斜率优化
 - [x] [USACO08MAR]土地征用Land Acquisition
 - [x] [HNOI2008]玩具装箱TOY
 - [x] [APIO2010]特别行动队
 - [x] [CEOI2004]锯木厂选址
 - [ ] [NOI2014]购票（点分治）
-- [ ] [NOI2014]购票（可持久化单调队列）
+- [x] [NOI2014]购票（可持久化单调队列）
 - [ ] [NOI2016]国王饮水记
 - [ ] BZOJ1096 [ZJOI2007]仓库建设
 - [ ] [SDOI2016]征途
@@ -212,19 +212,19 @@
 - [ ] P3994 Highway
 - [ ] bzoj3675
 - [ ] bzoj4367
-- [ ] NOI2007货币兑换
+- [x] NOI2007货币兑换
 # 凸优化（WQS二分、带权二分）
 - [x] CF 739E
 - [x] [国家集训队2]Tree I
 - [x] [八省联考2018]林克卡特树lct
 - [x] BZOJ5311贞鱼
-- [ ] [BZOJ5311]-[codeforces321E]Ciel and Gondolas
+- [ ] [codeforces321E]Ciel and Gondolas
 # 单调队列
 - [x] P2254 [NOI2005]瑰丽华尔兹
 - [x] P3572 [POI2014]PTA-Little Bird
 - [x] P3594 [POI2015]WIL-Wilcze doły
 - [x] [POI2010]KLO-Blocks
-- [ ] bzoj2096
+- [x] bzoj2096
 # LCT
 - [x] LOJ#6038. 「雅礼集训 2017 Day5」远行
 - [x] LOJ#558. 「Antileaf's Round」我们的 CPU 遭到攻击

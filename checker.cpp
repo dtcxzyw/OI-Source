@@ -4,43 +4,43 @@ Checker:懒到一定境界的产物
 2018修订历史：
 
 fc.cpp
-7.11(init) 用眼比对太麻烦了，索性写个类似fc的东西
+1.0.0 7.11(init) 用眼比对太麻烦了，索性写个类似fc的东西
 
-11.7
+1.1.0 11.7
 LOJ上可以下载数据，懒得手动逐个比对，干脆按照编号自动扫描，同时还能算成绩
 
 checker.cpp
-11.16 fc.cpp->checker.cpp
+1.1.0 11.16 fc.cpp->checker.cpp
 
-11.21 RE也能AC？得特判system返回值
+1.1.1 11.21 RE也能AC？得特判system返回值
 
-11.30 读入long long会爆int，干脆用long long吧
+1.1.2 11.30 读入long long会爆int，干脆用long long吧
 
-12.4
+1.1.3 12.4
 YES/NO怎么判？干脆像diff那样匹配文本，改读std::string
 
-12.10
+1.1.4 12.10
 有些LOJ题目的测试点编号前居然有前缀！！！懒得逐个改前缀，直接在控制台输入前缀。
 顺便防止输错前缀导致SIGFPE
 
-12.30
+1.1.5 12.30
 少输出也能AC？不行得把读入头移回去反过来再匹配一遍（后来证明我的algorithm姿势
 还是不够）
 
 2019修订历史：
 
-1.6
+1.1.6 1.6
 还有".ans"后缀的答案文件，不想多次改刷change，索性暴力判断两个后缀是否可行
 
-1.7 \sout{我要当rank2！！！}我需要测量运行总时间
+1.2.0 1.7 \sout{我要当rank2！！！}我需要测量运行总时间
 
-1.16
+1.2.1 1.16
 假设std::chrono:high_resolution_clock的单位是纳秒是不对的！！我要跨平台！！！
 \sout{我就这一台电脑。}
 
-1.17 似乎自己把判题的时间一起算进去了。。。
+1.2.2 1.17 似乎自己把判题的时间一起算进去了。。。
 
-3.23（重大更新）
+2.0.0 3.23（重大更新）
 APIO的测试点命名把我搞得很惨，为什么有01开头？为什么有那么多的子任务？
 为什么还用字母区分数据种类？为什么还用无后缀和.a表示输入输出？不行我要
 自动扫描并匹配输入输出文件！！！为此引入了std::filesystem。
@@ -50,25 +50,28 @@ APIO的测试点命名把我搞得很惨，为什么有01开头？为什么有�
 下决心使用fork+execv，发现wait4可以得到程序的资源使用信息，可以判断TLE
 和MLE了！！！居然还有异常退出的情况？那就顺便判断RE（细分各种信号量）。
 
-3.25
+2.1.0 3.25
 通过控制测试程序的浮点输出精度来与标准答案在文本上一模一样做不下去了，
 干脆再加个flag指示是否使用浮点比较。同时改了一下智障的双向判断。
 \sout{没有好好研究<algorithm>的下场}
 
-3.26
+2.2.0 3.26
 把WA的时间和内存记录进去，同时记录极限测试点的运行时间。（最正经的记录）
 
-3.27
+2.3.0 3.27
 集成perf用于研究CacheMiss等性能指标。给不断成长的Checker写点历史。
 懒得输入待测试程序名了，直接使用bin文件夹下除checker,charCounter外的最新
 的可执行程序作为测试程序。
 
-3.28
+2.3.1 3.28
 修正内存测量，以/proc下的VmPeak值为标准
 
-3.29
+2.4.0 3.29
 修复SIGTRAP信号导致Checker死循环，支持处理被STOP的程序，记录syscall
 perf信息读入，全部AC后自动做perf给出性能指标
+
+2.5.0 3.30
+浮点数比较模式记录最大精度误差，检查最大输入输出大小，开栈
 
 为什么这些事我不一次性搞定呢？当然是需求推进科技进步啦！\sout{还是我懒}
 
@@ -186,16 +189,6 @@ void runTask(const std::string& in,
     bool flag = true;
     flag &= freopen(in.c_str(), "r", stdin) != NULL;
     flag &= freopen(out.c_str(), "w", stdout) != NULL;
-    /*
-    // Stack
-    {
-        struct rlimit limit;
-        limit.rlim_cur = maxMem << 20;
-        limit.rlim_max = RLIM_INFINITY;
-        flag &=setrlimit(RLIMIT_STACK, &limit)
-    ==0;
-    }
-    */
     // Time
     {
         struct rlimit limit;
@@ -346,13 +339,16 @@ bool compareImpl(
     return std::equal(Iter(outf), Iter(), Iter(stdof),
                       Iter(), cmp);
 }
+using FT = long double;
+FT maxErr = 0.0;
 bool compare(const path& out, const path& stdout) {
     if(mode & 1) {
-        using FT = long double;
         auto cmp = [](FT a, FT b) {
             constexpr FT eps = 1e-5;
-            return fabsl(a - b) < eps ||
-                fabsl(a - b) / b < eps;
+            FT err = std::min(fabsl(a - b),
+                              fabsl(a - b) / b);
+            maxErr = std::max(maxErr, err);
+            return err < eps;
         };
         return compareImpl<FT>(out, stdout, cmp);
     } else {
@@ -368,14 +364,14 @@ struct Data {
         return input < rhs.input;
     }
 };
-void line(const std::string& str) {
+void line(const std::string& str, char full = '-') {
     std::cout << "\033[36m";
     int mid = (36 - str.size()) / 2;
     for(int i = 0; i < mid; ++i)
-        std::cout.put('-');
+        std::cout.put(full);
     std::cout << str;
     for(int i = 0; i < mid; ++i)
-        std::cout.put('-');
+        std::cout.put(full);
     std::cout << "\033[0m" << std::endl;
 }
 const path tmpOutput = "tmpY89Y43RB";
@@ -567,21 +563,48 @@ std::string getCallName(const std::string& LUT,
         return match[1].str();
     return "Unknown";
 }
+void initStack() {
+    struct rlimit limit;
+    getrlimit(RLIMIT_STACK, &limit);
+    limit.rlim_cur = limit.rlim_max;
+    setrlimit(RLIMIT_STACK, &limit);
+}
 #define Input(name)                          \
     std::cout << #name << ":" << std::flush; \
     std::cin >> name
 int main() {
     std::cout.precision(2);
     std::cout << std::fixed;
+    initStack();
+    line("Checker 2.5.0", '*');
+    std::cout << "Built at " << __TIME__ << " on "
+              << __DATE__ << std::endl;
+    line("Auto Scan Result");
     exec = scanExec();
     std::cout << "program:" << exec << std::endl;
     std::vector<Data> data = scanData("data");
-    std::cout << "task count:" << data.size()
-              << std::endl;
     if(data.empty()) {
         std::cout << "No Input!!!" << std::endl;
         return 0;
     }
+    std::cout << "task count:" << data.size()
+              << std::endl;
+    {
+        uintmax_t maxInput = 0, maxOutput = 0;
+        for(auto d : data) {
+            maxInput =
+                std::max(maxInput, file_size(d.input));
+            maxOutput = std::max(maxOutput,
+                                 file_size(d.output));
+        }
+        std::cout << "maxInput:"
+                  << maxInput / 1048576.0 << " MB"
+                  << std::endl;
+        std::cout << "maxOutput:"
+                  << maxOutput / 1048576.0 << " MB"
+                  << std::endl;
+    }
+    line("Arguments");
     Input(maxTime);
     maxTime *= 1000;
     Input(maxMem);
@@ -606,9 +629,10 @@ int main() {
                 first[res.st] = d.input;
         }
     }
+    bool flag = cnt[Status::AC] ==
+        static_cast<int>(data.size());
     PerformanceInfo pinfo;
-    if(cnt[Status::AC] ==
-       static_cast<int>(data.size()))
+    if(flag)
         for(const auto& d : data)
             pinfo += perf(d);
     line("Summary");
@@ -621,19 +645,31 @@ int main() {
               << std::endl;
     std::cout << "MaxMemory " << mem / 1024.0 << " MB"
               << std::endl;
-    line("Detailed Result");
-    for(auto x : cnt) {
-        std::cout << toString(x.first) << " "
-                  << x.second;
-        if(x.first != Status::AC)
-            std::cout << "(e.g. "
-                      << first[x.first].filename()
-                      << ")";
-        std::cout << std::endl;
+    if(flag && (mode & 1)) {
+        if(maxErr >= 1e-20l)
+            std::cout << "MaxError 10^"
+                      << std::log10(maxErr)
+                      << std::endl;
+        else
+            std::cout << "\033[32mNo Error\033[0m"
+                      << std::endl;
     }
-    line("Performance");
-    pinfo.report();
-    line("Syscall");
+    line("Detailed Result");
+    for(auto x : cnt)
+        if(x.second) {
+            std::cout << toString(x.first) << " "
+                      << x.second;
+            if(x.first != Status::AC)
+                std::cout << "(e.g. "
+                          << first[x.first].filename()
+                          << ")";
+            std::cout << std::endl;
+        }
+    if(flag) {
+        line("Performance");
+        pinfo.report();
+    }
+    line("System Call");
     std::string LUT = getCallTable();
     for(auto call : callCnt)
         std::cout << "call \033[36m"
