@@ -1,0 +1,72 @@
+#include "Judger.hpp"
+#include <algorithm>
+#include <cmath>
+#include <cstring>
+#include <fstream>
+#include <functional>
+#include <iostream>
+#include <iterator>
+template <typename T>
+static bool compareImpl(
+    const fs::path& out, const fs::path& stdout,
+    const std::function<bool(const T&, const T&)>&
+        cmp) {
+    std::ifstream outf(out), stdof(stdout);
+    using Iter = std::istream_iterator<T>;
+    return std::equal(Iter(outf), Iter(), Iter(stdof),
+                      Iter(), cmp);
+}
+static bool compare(int mode, const fs::path& out,
+                    const fs::path& stdout,
+                    FT& maxErr) {
+    switch(mode) {
+        case 0: {
+            return compareImpl<std::string>(
+                out, stdout,
+                std::equal_to<std::string>());
+        } break;
+        case 1: {
+            auto cmp = [&](FT a, FT b) {
+                FT err = std::min(fabsl(a - b),
+                                  fabsl(a - b) / b);
+                maxErr = std::max(maxErr, err);
+                return err < eps;
+            };
+            return compareImpl<FT>(out, stdout, cmp);
+        }
+        default:
+            std::cout << "Unknown Comparer"
+                      << std::endl;
+            break;
+    }
+    return false;
+}
+RunResult test(const Option& opt, const Data& data) {
+    line("Running Task " + data.input.stem().string());
+    TempFile tmpOutput;
+    RunResult res =
+        run(opt, data.input, tmpOutput.path());
+    if(res.st == Status::AC &&
+       !compare(opt.compareMode, tmpOutput.path(),
+                data.output, res.maxErr))
+        res.st = Status::WA;
+    std::cout << "Result " << toString(res.st) << " ";
+    if(res.st == Status::RE) {
+        if(res.ret == RuntimeError::NonzeroExitCode)
+            std::cout << "[Exited with code "
+                      << res.sig << "]";
+        else if(res.sig != -1)
+            std::cout << "[SIG=" << res.sig << ":"
+                      << strsignal(res.sig) << "]";
+        std::cout << "(" << toString(res.ret) << ") ";
+    }
+    if(res.st == Status::SE || res.st == Status::UKE)
+        std::cout << "(" << std::strerror(errno)
+                  << ") ";
+    std::cout << res.time / 1000.0 << " ms "
+              << res.mem / 1024.0 << " MB"
+              << std::endl;
+    std::cout << "SyscallCount=" << res.syscallcnt
+              << std::endl;
+    return res;
+}

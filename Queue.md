@@ -400,10 +400,8 @@
 - [ ] bzoj4182: Shopping
 - [x] P4292
 - [x] P2056 [ZJOI2007]捉迷藏
-- [ ] Tree Query(http://codeforces.com/gym/100570/problem/F)
+- [x] Tree Query(http://codeforces.com/gym/100570/problem/F)
 - [ ] bzoj2051
-- [ ] bzoj4543
-- [ ] bzoj4598
 # 虚树
 - [x] LOJ#2206. 「HNOI2014」世界树
 - [x] LOJ#2219. 「HEOI2014」大工程
@@ -526,9 +524,8 @@
 # 支配树
 - [x] Luogu 2597 ZJOI 灾难
 - [ ] bzoj2851
-# DSU On Tree
-- [ ] CF600E
-- [ ] CF570D
+# DSU On Tree[(Problem Set)](http://codeforces.com/blog/entry/44351)
+- [x] CF570D
 - [ ] CF246E
 - [ ] CF208E
 - [ ] CF291E
@@ -590,3 +587,5 @@
 - [x] bzoj4128
 # 并查集
 - [ ] bzoj2054
+# 长链剖分
+- [x] bzoj4543
