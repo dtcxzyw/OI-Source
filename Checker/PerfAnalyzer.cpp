@@ -6,7 +6,8 @@ const int64_t invalid =
     std::numeric_limits<int64_t>::max();
 static int64_t getPerfVal(const std::string& str,
                           const std::string& val) {
-    std::regex pattern("([0-9,]+)" + val);
+    std::regex pattern("([0-9,]+)" + val,
+                       regexFlag4Search);
     std::smatch match;
     std::regex_search(str, match, pattern);
     if(match.size() == 2) {
@@ -65,24 +66,27 @@ void PerformanceInfo::report() const {
 }
 PerformanceInfo perf(const Option& opt,
                      const Data& data) {
-    line("Analysing Task " +
-         data.input.stem().string());
     TempFile perfFile, tmpOutput;
     auto cmd = "perf stat -e "
                "cache-misses,branch-misses,"
                "instructions,branches,cache-"
                "references,cpu-cycles -o " +
         perfFile.path().string() + " ./" +
-        opt.exec.string() + " <" +
+        opt.get<fs::path>("Exec", "").string() + " <" +
         data.input.string() + " >" +
-        tmpOutput.path().string();
-    std::cout << "Command:" << cmd << std::endl;
+        tmpOutput.path().string() + " 2>/dev/null";
+    std::cout.put('\r');
+    for(int i = 0; i < 30; ++i)
+        std::cout.put(' ');
+    std::cout << "\r\033[34mAnalysing Task "
+              << data.input.stem().string()
+              << "\033[0m" << std::flush;
     int res = system(cmd.c_str());
     if(!res) {
         return PerformanceInfo(
             file2Str(perfFile.path()));
     } else
-        std::cout << "\033[35mPerf Error(exit code="
+        std::cout << "\r\033[35mPerf Error(exit code="
                   << res << ")\033[0m" << std::endl;
     return {};
 }

@@ -16,16 +16,17 @@ static bool compareImpl(
     return std::equal(Iter(outf), Iter(), Iter(stdof),
                       Iter(), cmp);
 }
-static bool compare(int mode, const fs::path& out,
+static bool compare(CompareMode mode,
+                    const fs::path& out,
                     const fs::path& stdout,
                     FT& maxErr) {
     switch(mode) {
-        case 0: {
+        case CompareMode::Text: {
             return compareImpl<std::string>(
                 out, stdout,
                 std::equal_to<std::string>());
         } break;
-        case 1: {
+        case CompareMode::FloatingPoint: {
             auto cmp = [&](FT a, FT b) {
                 FT err = std::min(fabsl(a - b),
                                   fabsl(a - b) / b);
@@ -41,14 +42,17 @@ static bool compare(int mode, const fs::path& out,
     }
     return false;
 }
-RunResult test(const Option& opt, const Data& data) {
+RunResult test(const Option& opt, const Data& data,
+               const Timer& timer) {
     line("Running Task " + data.input.stem().string());
     TempFile tmpOutput;
     RunResult res =
-        run(opt, data.input, tmpOutput.path());
+        run(opt, timer, data.input, tmpOutput.path());
     if(res.st == Status::AC &&
-       !compare(opt.compareMode, tmpOutput.path(),
-                data.output, res.maxErr))
+       !compare(opt.get<CompareMode>(
+                    "CompareMode", CompareMode::Text),
+                tmpOutput.path(), data.output,
+                res.maxErr))
         res.st = Status::WA;
     std::cout << "Result " << toString(res.st) << " ";
     if(res.st == Status::RE) {
@@ -63,8 +67,10 @@ RunResult test(const Option& opt, const Data& data) {
     if(res.st == Status::SE || res.st == Status::UKE)
         std::cout << "(" << std::strerror(errno)
                   << ") ";
-    std::cout << res.time / 1000.0 << " ms "
-              << res.mem / 1024.0 << " MB"
+    std::cout << timer.choose(res.usrTime,
+                              res.totTime) /
+            1000.0
+              << " ms " << res.mem / 1024.0 << " MB"
               << std::endl;
     std::cout << "SyscallCount=" << res.syscallcnt
               << std::endl;

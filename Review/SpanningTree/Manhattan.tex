@@ -12,12 +12,12 @@
 	\item 首先考虑y正半轴向右$45^\circ$的点，发现若以点$P$为原点，
 	      落在该区域的点$Q$满足：
 	      \begin{eqnarray*}
-		      x_P&\leq& x_Q\\
-		      x_Q-y_Q&\leq& x_P-y_P\\
+		      x_Q\geq x_P&\Rightarrow&x_P\leq x_Q\\
+		      x_Q-x_P\leq y_Q-y_P&\Rightarrow&x_Q-y_Q\leq x_P-y_P\\
 	      \end{eqnarray*}
 	      仅一个不等式满足等号就足够了，因为其它区域可以覆盖到这个边界。
 
-	      因为$|PQ|=(x_Q+y_Q)-(x_P+y_P)$，所以要查询满足要求且$x+y$的取最小时
+	      因为$|PQ|=(x_Q+y_Q)-(x_P+y_P)$，所以要查询满足要求且$x+y$最小时
 	      对应的点。
 
 	      按照$x$从大到小排序，对$x-y$离散，使用树状数组维护$x+y$前缀最小值与对应的点。

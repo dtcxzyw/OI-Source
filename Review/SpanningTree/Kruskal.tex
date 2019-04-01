@@ -20,7 +20,8 @@
 	bzoj3732 Network（Kruskal重构树）\\
 	\url{https://blog.csdn.net/wu_tongtong/article/details/77601523}
 }。
-\subsection{例题}
+\subsection{应用}
+\subsubsection{例题}
 Luogu P4768 [NOI2018]归程\footnote{
 【P4768】[NOI2018]归程 - 洛谷
 \url{https://www.luogu.org/problemnew/show/P4768}
@@ -31,26 +32,22 @@ Luogu P4768 [NOI2018]归程\footnote{
 首先使用Dijkstra预处理最短路（{\bfseries 不要用SPFA！！！不要用SPFA！！！
 不要用SPFA！！！}）。
 
-\subsubsection{可持久化并查集法}
+\paragraph{可持久化并查集法}
 一个很简单的思路是按照海拔高度从大到小连边，使用可持久化并查集记录连通性，同时
 维护连通块内最短路最小值，预处理后查询集合最值。
 
-\subsubsection{Kruskal重构树法}
+\paragraph{Kruskal重构树法}
 由性质~\ref{KRTP2}不难想到对该图按海拔高度做最大生成树，这样就保证了
 Kruskal重构树的父节点点权小于等于子节点点权。使用倍增法可以跳到满足要求的
 的最浅的祖先。这个祖先就代表了满足海拔要求的最大连通集合。对每个点存储子树叶
 子节点（即生成树中的点）的最短路最小值以支持$O(\lg n)$查询。
-
-代码如下：
-\lstinputlisting{Source/Unclassified/Done/4768.cpp}
-
-\subsection{最小瓶颈路}\label{MBP}
+\subsubsection{最小瓶颈路}\label{MBP}
 最小瓶颈路求的是无向图中指定两点的路径的边权最大值的最小值。
 
 无向图中任意两点的最小瓶颈路肯定在最小生成树上，建出
 Kruskal重构树，根据性质~\ref{KRTP2}，两点的LCA即为边权最大值。
 
-\subsection{次小生成树}
+\subsubsection{次小生成树}
 求解次小生成树的思路是使用非树边替换链上最大边，按照~\ref{MBP}节所述
 可以简洁地求出链上边权最大值。对于严格次小生成树，对每个点维护子树严格
 次小值也是很简单的事情（比线段树不知道高到哪里去了）。

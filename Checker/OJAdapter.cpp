@@ -45,7 +45,7 @@ void autoRun(const fs::path& exec) {
         if(poa->match(exec)) {
             if(!poa->call(exec)) {
                 std::cout
-                    << "\033[35Judge failed , using "
+                    << "\033[35mJudge failed , using "
                        "DefaultJudger\033[0m"
                     << std::endl;
                 runDefault(exec);

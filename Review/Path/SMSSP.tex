@@ -52,7 +52,7 @@ Johnson算法用于求所有节点对间最短路径。
     \item 跑SPFA计算以$s$为源点的最短路，同时检查负权环。
     记点$u$的距离标号为$h[u]$，满足三角不等式$h[u]+w[u][v]\geq h[v]$，
     变形得$h[u]+w[u][v]-h[v]\geq 0$。令新边权为$h[u]+w[u][v]-h[v]$，
-    满足Dijkstra的条件。
+    满足Dijkstra需要无负权边的条件。
     \item 以每个节点为源点跑Dijkstra填充最短距离矩阵。记以点$u$为源点时，
     点$u$到点$v$的实际距离为$md[v]$，Dijkstra结果为$dis[v]$，将边权加和后得
     $dis[v]=md[v]+h[u]-h[v]$，变形得$md[v]=dis[v]-h[u]+h[v]$。

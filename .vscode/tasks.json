@@ -14,7 +14,6 @@
                 "-D_FORTIFY_SOURCE=2",
                 "-ggdb3",
                 "-Wextra",
-                "-lstdc++fs",
                 "-ftrapv"
             ],
             "problemMatcher": {
@@ -48,7 +47,6 @@
                 "-ftrapv",
                 "-ggdb3",
                 "-Wextra",
-                "-lstdc++fs",
                 "-fsanitize=address",
                 "-ldl",
                 "-lpthread",
@@ -80,8 +78,7 @@
                 "-o",
                 "bin/${fileBasenameNoExtension}.out",
                 "-Wall",
-                "-std=c++17",
-                "-lstdc++fs"
+                "-std=c++17"
             ],
             "problemMatcher": {
                 "owner": "cpp",

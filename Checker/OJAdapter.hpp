@@ -2,7 +2,7 @@
 #include "Common.hpp"
 #include <functional>
 #include <regex>
-class OJAdapterInfo {
+class OJAdapterInfo final {
 private:
     std::string mName;
     std::regex mPattern;

@@ -4,21 +4,21 @@
 
 计算步骤如下：
 使用状态压缩来描述指定点集的连通状态，
-令$dp[i][s]$为以$i$为根，连通状态为$s$的最小代价。
+令$dp[s][i]$为以$i$为根，连通状态为$s$的最小代价。
 
 转移方法有两种：
 \begin{itemize}
     \item 两个不相交集合与同一个点连接，即
     \begin{displaymath}
-        dp[i][s]=min\left\{dp[i][t]+dp[i][s-t]\right\},t\in s
+        dp[s][i]=min\left\{dp[t][i]+dp[s-t][i]\right\},t\in s
     \end{displaymath}
     \item 给集合连入一条新边：
     \begin{displaymath}
-        dp[i][s]=min\left\{dp[j][s]+w(i,j)\right\},(i,j)\in E
+        dp[s][i]=min\left\{dp[s][j]+w(i,j)\right\},(i,j)\in E
     \end{displaymath}
 \end{itemize}
 
-首先令$dp[i][1<<j]=0$，初始化单个点的情况。
+首先令$dp[1<<j][P[i]]=0$，初始化单个点的情况。
 
 可以从小到大枚举连通集合：
 \begin{enumerate}
@@ -37,7 +37,7 @@ int solve(int n,int k) {
     memset(dp,0x3f,sizeof(dp[0])<<k);
     for(int j=0;j<k;++j)
         for(int i=1;i<=n;++i)
-            dp[1<<j][i]=0;
+            dp[1<<j][P[i]]=0;
     int end=1<<k;
     for(int s=0;s<end;++s) {
         for(int t=s&(s-1);t;t=s&(t-1))
@@ -45,7 +45,7 @@ int solve(int n,int k) {
                 dp[s][i]=std::min(dp[s][i],
                     dp[t][i]+dp[s^t][i]);
         for(int i=1;i<=n;++i)
-            if(dp[i][j]!=inf)
+            if(dp[s][i]!=inf)
                 //push
         SSSP(s);
     }
@@ -55,3 +55,11 @@ int solve(int n,int k) {
     return ans;
 }
 \end{lstlisting}
+
+\subsubsection{多组斯坦纳树}
+给定多个这样的点集，求最小代价。
+
+重新回想$dp[s][i]$的实际意义而不必考虑s中连通节点的组别，$dp[s][i]$表示的
+是我们关注的节点连通状态为$s$，连通块以$i$为根的最小代价。
+
+那么最终结果由一些连通块组成，把有整组连通的方案当做连通块按照组别状压，再做一次DP。

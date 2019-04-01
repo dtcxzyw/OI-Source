@@ -1,15 +1,36 @@
 #pragma once
+#include <any>
 #include <charconv>
 #include <cstdint>
 #include <filesystem>
+#include <iostream>
+#include <map>
+#include <regex>
 #include <string>
 using std::int64_t;
 namespace fs = std::filesystem;
 std::string file2Str(const fs::path& path);
-// Time:us Memory:KB
-struct Option final {
-    fs::path exec;
-    int64_t maxTime, maxMem, compareMode;
+class Option final {
+private:
+    std::map<std::string, std::any> options;
+
+public:
+    template <typename T>
+    void insert(const std::string& key, const T& val) {
+        options.emplace(key, std::any(val));
+    }
+    template <typename T>
+    T get(const std::string& key, const T& def) const {
+        auto it = options.find(key);
+        if(it != options.end())
+            return std::any_cast<T>(it->second);
+        else {
+            std::cout
+                << "Warning:Failed to get option "
+                << key << std::endl;
+            return def;
+        }
+    }
 };
 void line(const std::string& str, char full = '-');
 using FT = long double;
@@ -32,8 +53,9 @@ public:
     fs::path path() const;
     ~TempFile();
 };
-bool downloadFile(const std::string& url,
-                  const fs::path& loc);
+fs::path downloadFile(const std::string& url,
+                      const std::string& pid,
+                      bool verifyZip);
 bool unzip(const fs::path& path);
 template <typename T>
 inline T scan(const std::string& str) {
@@ -42,3 +64,10 @@ inline T scan(const std::string& str) {
                     str.c_str() + str.size(), res);
     return res;
 }
+constexpr auto regexFlag4Search =
+    std::regex_constants::ECMAScript |
+    std::regex_constants::optimize |
+    std::regex_constants::__polynomial;
+constexpr auto regexFlag4Match =
+    regexFlag4Search | std::regex_constants::nosubs;
+std::string readConfig(const std::string& optName);

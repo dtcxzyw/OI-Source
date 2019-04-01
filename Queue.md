@@ -350,6 +350,8 @@
 - [ ] bzoj4514
 - [ ] bzoj2229
 - [ ] bzoj3532
+- [ ] uoj77
+- [ ] Codeforces 786E ALT
 # 分块及按大小分类
 - [x] LOJ#6277-6285
 - [ ] bzoj2741
@@ -380,7 +382,8 @@
 - [ ] LOJ#2155. 「POI2011 R1」同谋者 Conspiracy
 - [ ] LOJ#6036. 「雅礼集训 2017 Day4」编码
 - [ ] LOJ#6157. A ^ B Problem
-- [ ] bzoj3495
+- [x] bzoj3495
+- [ ] Codeforces587D Duff in Mafia
 # 点分治
 - [x] LOJ#2179. 「BJOI2017」树的难题
 - [x] LOJ#2259. 「FJOI2014」最短路径树问题
@@ -397,7 +400,7 @@
 - [ ] BZOJ4732: 数据交互
 - [x] SP2939 QTREE5 - Query on a tree V
 - [x] 【BZOJ4675】点对游戏
-- [ ] bzoj4182: Shopping
+- [x] bzoj4182: Shopping
 - [x] P4292
 - [x] P2056 [ZJOI2007]捉迷藏
 - [x] Tree Query(http://codeforces.com/gym/100570/problem/F)
@@ -407,7 +410,7 @@
 - [x] LOJ#2219. 「HEOI2014」大工程
 - [x] CF 613D
 - [ ] UOJ#87. mx的仙人掌
-- [ ] bzoj3589
+- [x] bzoj3589
 # kdtree
 - [x] LOJ#6016. 崂山白花蛇草水
 - [ ] P4357 [CQOI2016]K远点对
@@ -423,6 +426,8 @@
 - [ ] bzoj2961
 - [ ] bzoj2642
 - [ ] bzoj3199
+- [ ] LOJ#6504. 「雅礼集训 2018 Day5」Convex
+- [ ] LOJ#6360. 复燃「恋之埋火」
 # 树的直径
 - [ ] P2195
 - [ ] P3629
@@ -535,6 +540,7 @@
 - [ ] CF716E
 # 分数规划
 - [x] P3778 [APIO2017]商旅
+- [ ] LOJ#2071. 「JSOI2016」最佳团体
 # 贪心
 - [ ] LOJ#2734. 「JOISC 2016 Day 2」女装大佬 (FJWC2019上厕所)
 # 整体二分
@@ -589,3 +595,6 @@
 - [ ] bzoj2054
 # 长链剖分
 - [x] bzoj4543
+# 斯坦纳树
+- [x] LOJ#2110. 「JLOI2015」管道连接
+- [ ] LOJ#2977. 「THUSCH 2017」巧克力

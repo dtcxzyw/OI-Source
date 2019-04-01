@@ -1,6 +1,7 @@
 #include "Runner.hpp"
 #include "Common.hpp"
 #include <algorithm>
+#include <asm/unistd.h>
 #include <charconv>
 #include <cstdint>
 #include <iterator>
@@ -13,9 +14,9 @@
 #include <sys/wait.h>
 #include <unistd.h>
 RunResult::RunResult()
-    : time(0), mem(0), syscallcnt(0), st(Status::UKE),
-      ret(RuntimeError::Unknown), sig(-1),
-      maxErr(0.0) {}
+    : usrTime(0), totTime(0), mem(0), syscallcnt(0),
+      st(Status::UKE), ret(RuntimeError::Unknown),
+      sig(-1), maxErr(0.0) {}
 std::string toString(Status st) {
     switch(st) {
         case Status::AC:
@@ -74,6 +75,7 @@ std::string toString(RuntimeError st) {
 }
 const int magic = 0xe7;
 static void runTask(const Option& opt,
+                    const Timer& timer,
                     const std::string& in,
                     const std::string& out) {
     ptrace(PT_TRACE_ME, 0, NULL, NULL);
@@ -84,18 +86,20 @@ static void runTask(const Option& opt,
     {
         struct rlimit limit;
         flag &= getrlimit(RLIMIT_CPU, &limit) == 0;
-        limit.rlim_cur = opt.maxTime / 1000000 + 1;
+        limit.rlim_cur = timer.remainSeconds();
         flag &= setrlimit(RLIMIT_CPU, &limit) == 0;
     }
     if(!flag)
         _exit(magic);
     char* ptr = nullptr;
-    if(execv(opt.exec.c_str(), &ptr) == -1)
+    if(execv(opt.get<fs::path>("Exec", "").c_str(),
+             &ptr) == -1)
         _exit(magic);
 }
 static int64_t getStatusVal(const std::string& str,
                             const std::string& val) {
-    std::regex pattern(val + ":([0-9]*)kB");
+    std::regex pattern(val + ":([0-9]*)kB",
+                       regexFlag4Search);
     std::smatch match;
     std::regex_search(str, match, pattern);
     if(match.size() == 2) {
@@ -113,21 +117,27 @@ static int64_t getVmPeak(pid_t id) {
     return std::max(res, static_cast<int64_t>(0));
 }
 static RunResult watchTask(const Option& opt,
+                           const Timer& timer,
                            pid_t id) {
     RunResult res;
+    int64_t maxMem =
+        opt.get<int64_t>("MemoryLimit", 0);
     while(true) {
         int status = 0;
         struct rusage use;
         wait4(id, &status, 0, &use);
-        res.time = use.ru_utime.tv_sec * 1000000LL +
+        res.usrTime = use.ru_utime.tv_sec * 1000000LL +
             use.ru_utime.tv_usec;
+        res.totTime = res.usrTime +
+            use.ru_stime.tv_sec * 1000000LL +
+            use.ru_stime.tv_usec;
         res.mem = std::max(res.mem, getVmPeak(id));
-        if(res.mem >= opt.maxMem) {
+        if(res.mem >= maxMem) {
             res.st = Status::MLE;
             ptrace(PTRACE_KILL, id, NULL, NULL);
             break;
         }
-        if(res.time >= opt.maxTime) {
+        if(timer.isTLE(res.usrTime, res.totTime)) {
             res.st = Status::TLE;
             ptrace(PTRACE_KILL, id, NULL, NULL);
             break;
@@ -140,13 +150,8 @@ static RunResult watchTask(const Option& opt,
                 res.ret =
                     RuntimeError::NonzeroExitCode;
                 res.sig = WEXITSTATUS(status);
-            } else {
+            } else
                 res.st = Status::AC;
-                if(res.mem >= opt.maxMem)
-                    res.st = Status::MLE;
-                if(res.time >= opt.maxTime)
-                    res.st = Status::TLE;
-            }
             break;
         } else if(WIFSIGNALED(status) ||
                   (WIFSTOPPED(status) &&
@@ -193,12 +198,17 @@ static RunResult watchTask(const Option& opt,
                 ++res.syscallcnt;
                 ++res.callCnt[callid];
             }
+            if(callid == __NR_execve) {
+                res.syscallcnt = 0;
+                res.callCnt.clear();
+            }
             ptrace(PTRACE_SYSCALL, id, NULL, NULL);
         }
     }
     return res;
 }
-RunResult run(const Option& opt, const std::string& in,
+RunResult run(const Option& opt, const Timer& timer,
+              const std::string& in,
               const std::string& out) {
     pid_t id = vfork();
     if(id < 0) {
@@ -206,9 +216,9 @@ RunResult run(const Option& opt, const std::string& in,
         res.st = Status::SE;
         return res;
     } else if(id == 0)
-        runTask(opt, in, out);
+        runTask(opt, timer, in, out);
     else
-        return watchTask(opt, id);
+        return watchTask(opt, timer, id);
     throw;
 }
 void initRunner() {
@@ -232,7 +242,9 @@ std::string getCallName(long callid) {
     static std::string LUT =
         file2Str(getCallTableName());
     std::regex pattern("#define__NR_([a-z0-9_]*)" +
-                       std::to_string(callid) + "#");
+                           std::to_string(callid) +
+                           "#",
+                       regexFlag4Search);
     std::smatch match;
     std::regex_search(LUT, match, pattern);
     if(match.size() == 2)

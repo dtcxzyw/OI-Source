@@ -79,7 +79,10 @@
 			"cuchar": "cpp",
 			"shared_mutex": "cpp",
 			"strstream": "cpp",
-			"iterator": "cpp"
+			"iterator": "cpp",
+			"regex": "cpp",
+			"memory_resource": "cpp",
+			"string": "cpp"
 		},
 		"latex-workshop.intellisense.citation.maxfilesizeMB": 128,
 		"latex-workshop.latex.recipes": [

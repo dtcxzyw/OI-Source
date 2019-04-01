@@ -12,7 +12,7 @@
 
 接下来从起点开始DFS：
 \begin{enumerate}
-    \item 选取与点$u$相连的边$(u,v)$，删除$(u,v),(v,u)$，然后$DFS(u)$。
+    \item 选取与点$u$相连的边$(u,v)$，删除$(u,v),(v,u)$，然后$DFS(v)$。
     \item 向队列中加入点$u$。
 \end{enumerate}
 遍历边时可以使用类似于Dinic的当前弧优化，若要求字典序最小，使用$std::multiset$
@@ -31,7 +31,7 @@
 若入度与出度奇偶性不同则无解（每次调整方向都会导致它们的差变动2，无法调整至相等）。
 
 接下来利用网络流的自动调整功能，从超级源向每个入度<出度的点连流量为
-$\frac{\textrm{出度}-\textrm{入度}}{2}$的边，从超级汇向每个入度>出度的点连流量为
+$\frac{\textrm{出度}-\textrm{入度}}{2}$的边，从每个入度>出度的点向超级汇连流量为
 $\frac{\textrm{入度}-\textrm{出度}}{2}$的边，对于原图中定向为$u\rightarrow v$
 的边从$u$到$v$连一条流量为1的边。最后跑最大流，若满流则说明有解。无向边对应网络流的双边
 中残余流量非0的边就是该无向边定向后的边。此时满足每个点的入度=出度，跑有向边欧拉回路求得
@@ -52,16 +52,11 @@ $\frac{\textrm{入度}-\textrm{出度}}{2}$的边，对于原图中定向为$u\r
 哈密尔顿路径要求经过每个点有且只有一次，哈密尔顿回路还要求起点和终点相同。
 
 \subsubsection{判定}
-\begin{itemize}
-    \item \begin{theorem}[Dirac's Theorem]
-        若大小为$n$的无向图的每个节点的度数都大于等于$\frac{n}{2}$，则
-        存在哈密尔顿回路。
-    \end{theorem}
-    \item \begin{theorem}
-        任意竞赛图存在哈密尔顿路径，若此图强连通则存在哈密尔顿回路。
-    \end{theorem}
-\end{itemize}
-构造只能靠暴力DFS了。。。
+\begin{theorem}
+    任意竞赛图存在哈密尔顿路径，若此图强连通则存在哈密尔顿回路。
+\end{theorem}
+
+构造只能使用状压DP$O(2^n\cdot n^3)$解决。
 \subsubsection{旅行商问题TSP}
 \index{T!Travelling Salesman Problem}
 旅行商问题求的是无向完全图的最短哈密尔顿回路，是NP问题。
