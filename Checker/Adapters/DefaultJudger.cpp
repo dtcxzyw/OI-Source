@@ -42,9 +42,8 @@ bool runAll(const Option& opt,
         line("PerfAnalyzer");
         for(const auto& d : data)
             pinfo += perf(opt, d);
-        std::cout << "\r\033[34mAll analysis has been "
-                     "performed.\033[0m"
-                  << std::endl;
+        showLine("\033[34m",
+                 "All analysis has been performed.");
     }
     line("Summary");
     std::cout << "Score "
@@ -78,7 +77,7 @@ bool runAll(const Option& opt,
         }
     if(flag)
         pinfo.report();
-    line("System Call");
+    line("Hot System Call");
     {
         std::vector<std::pair<int, long> > info;
         for(auto call : sysCall) {

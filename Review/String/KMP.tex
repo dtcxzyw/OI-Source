@@ -1,9 +1,8 @@
 \section{KMP算法}
 \index{K!Knuth–Morris–Pratt Algorithm}
 
-KMP算法通过预处理nxt数组来避免重复匹配。考虑在长度为$i$的模式串前缀$S_i$
-的非自身前缀$P_j$中，满足$P_j$是$S_i$后缀的$P_j$。定义$nxt[i]$为最长的满足条件的
-$P_j$长度。
+KMP算法通过预处理nxt数组来避免重复匹配，定义$nxt[i]$为长度为$i$的模式串前缀的
+最长非平凡后缀（同时也是模式串的前缀）长度。
 
 以下字符串下标从0开始，nxt数组下标从1开始。
 \subsubsection{预处理}

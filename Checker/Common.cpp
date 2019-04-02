@@ -5,15 +5,29 @@
 #include <fstream>
 #include <iostream>
 #include <iterator>
+#include <sys/ioctl.h>
+#include <sys/types.h>
+#include <termios.h>
+#include <unistd.h>
 #include <vector>
 std::string file2Str(const fs::path& path) {
     std::ifstream in(path);
     using Iter = std::istream_iterator<char>;
     return { Iter(in), Iter() };
 }
+void showLine(const std::string& col,
+              const std::string& str) {
+    struct winsize size;
+    ioctl(STDIN_FILENO, TIOCGWINSZ, &size);
+    std::cout << '\r' << col << str << "\033[0m"
+              << std::string(size.ws_col - str.size(),
+                             ' ')
+              << std::flush;
+}
 void line(const std::string& str, char full) {
     std::cout << "\033[36m";
-    int mid = (36 - str.size()) / 2;
+    int mid = std::max(
+        3, (46 - static_cast<int>(str.size())) / 2);
     for(int i = 0; i < mid; ++i)
         std::cout.put(full);
     std::cout << str;

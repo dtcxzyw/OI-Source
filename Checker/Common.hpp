@@ -33,6 +33,8 @@ public:
     }
 };
 void line(const std::string& str, char full = '-');
+void showLine(const std::string& col,
+              const std::string& str);
 using FT = long double;
 constexpr FT eps = 1e-5;
 struct Data final {

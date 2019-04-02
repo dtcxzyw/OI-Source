@@ -270,6 +270,7 @@
 - [ ] 轨道-稳定集定理
 - [ ] zkw线段树常用模板
 - [ ] O(1)gcd
+- [ ] Ukkonen线性构造后缀树[By permui](https://www.cnblogs.com/owenyu/p/6875887.html?utm_source=itdadao&utm_medium=referral)
 # 标准库使用
 - [ ] valarray:std::valarray[by SarvaTathagata](https://www.luogu.org/blog/474D/qian-tan-valarray)
 - [ ] functional:std::plus/minus等Function Object

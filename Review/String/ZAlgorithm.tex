@@ -9,7 +9,7 @@
 算法步骤如下：
 \begin{enumerate}
     \item 首先有$Z(0)=|P|$。
-    \item 维护当前已匹配的最右端，即$max\{i+Z(i)-1\}$，其中$i>0$，记为$R$；
+    \item 维护当前已匹配的最右端，即$max\{i+Z(i)-1\}$，记为$R$；
     同时维护$R$对应的$i$，记为$L$。
     \item 考虑已经维护了当前$L,R$和$Z[0\cdots i-1]$，求$Z(i)$并更新$L,R$。
     \begin{itemize}

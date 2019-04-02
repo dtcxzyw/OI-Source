@@ -1,6 +1,8 @@
 \section{回文自动机}
 \index{P!Palindromic Tree}
 \subsection{构造}
+回文自动机的每一个节点对应一个{\bfseries 本质不同的回文串}。
+
 回文自动机需要维护每个节点所对应的回文串的长度$len$，两端加入字符$c$
 后的后继节点$nxt[c]$，自身的最长后缀回文串所对应的节点$fail$，以及
 自身代表的回文串数（需要最后在fail树上上传才是完整的）。
@@ -36,6 +38,8 @@ cnt就是它的出现次数。
 \subsubsection{统计以下标$i$结尾的回文串个数}
 对每个节点记录其在fail树上的深度，fail链上的节点所代表的回文串都是
 自己的后缀回文串，所以答案即为加入第$i$字符后last节点的深度。
+
+\index{*TODO!PAM统计以下标i结尾的回文串数}
 
 以上内容参考了poursoul的博客\footnote{
     Palindromic Tree——回文树【处理一类回文串问题的强力工具】

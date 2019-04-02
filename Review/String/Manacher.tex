@@ -18,7 +18,7 @@ Manacher算法用来求解最长回文串问题。主要思想是利用之前的
             此时$i$到$maxr$的部分和$i$以$pos$为轴的对称部分对称，而那个
             部分已经被处理过了）。
         \end{itemize}
-        \item 不断向两端扩展增大$i$；
+        \item 不断向两端扩展增大$RL[i]$；
         \item 更新$maxr$与$pos$。
     \end{enumerate}
     \item 答案即为$RL[i]-1$的最大值。

@@ -75,18 +75,16 @@ PerformanceInfo perf(const Option& opt,
         opt.get<fs::path>("Exec", "").string() + " <" +
         data.input.string() + " >" +
         tmpOutput.path().string() + " 2>/dev/null";
-    std::cout.put('\r');
-    for(int i = 0; i < 30; ++i)
-        std::cout.put(' ');
-    std::cout << "\r\033[34mAnalysing Task "
-              << data.input.stem().string()
-              << "\033[0m" << std::flush;
+    showLine("\033[34m", "Analysing Task " +
+                 data.input.stem().string());
     int res = system(cmd.c_str());
     if(!res) {
         return PerformanceInfo(
             file2Str(perfFile.path()));
-    } else
-        std::cout << "\r\033[35mPerf Error(exit code="
-                  << res << ")\033[0m" << std::endl;
+    } else {
+        showLine("\033[35m", "Perf Error(exit code=" +
+                     std::to_string(res) + ")");
+        std::cout << std::endl;
+    }
     return {};
 }

@@ -49,7 +49,7 @@
 - [ ] CF 432D
 - [ ] CF 427D
 - [x] CF 126B
-- [ ] 【GDOI2014】beyond
+- [x] 【GDOI2014】beyond
 - [ ] bzoj3084
 # Blossom Algorithm
 - [ ] UVa 11439
@@ -81,6 +81,7 @@
 - [x] UOJ#179. 线性规划
 - [x] P3980 [NOI2008]志愿者招募
 - [ ] LOJ#6295. 无意识之外的捉迷藏
+- [ ] CF671D
 # minmax容斥
 - [x] LOJ#2542. 「PKUWC2018」随机游走
 - [x] LOJ#2127. 「HAOI2015」按位或（做完后作为minmax容斥的例题）
@@ -162,14 +163,14 @@
 - [ ] bzoj4310
 - [ ] bzoj3926
 - [ ] bzoj4453
+- [ ] Codeforces 235C
 # AC自动机
 - [x] LOJ#2180. 「BJOI2017」魔法咒语
-- [ ] BZOJ2780: [Spoj]8093 Sevenk Love Oimaster
-- [ ] bzoj3530
 # KMP
 - [ ] LOJ#2272. 「SDOI2017」文本校正
 - [ ] CF25E Test
-- [ ] bzoj1398
+# 最小表示法
+- [x] bzoj1398
 # 线性基
 - [x] LOJ#2312. 「HAOI2017」八纵八横
 - [x] LOJ#114. k 大异或和
@@ -526,6 +527,7 @@
 - [ ] 「HAOI 2015」树上染色（树形DP+01背包+复杂度分析）
 # 置换
 - [ ] LOJ#2528. 「ZJOI2018」树
+- [ ] 【Luogu4916】魔力环
 # 支配树
 - [x] Luogu 2597 ZJOI 灾难
 - [ ] bzoj2851
@@ -598,3 +600,6 @@
 # 斯坦纳树
 - [x] LOJ#2110. 「JLOI2015」管道连接
 - [ ] LOJ#2977. 「THUSCH 2017」巧克力
+# 回文自动机
+- [x] SPOJ-NUMOFPAL
+- [x] P4555 [国家集训队]最长双回文串
