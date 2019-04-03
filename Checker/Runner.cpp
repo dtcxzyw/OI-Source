@@ -42,6 +42,9 @@ std::string toString(Status st) {
         case Status::SE:
             return "\033[35mJudge System Error\033[0m";
             break;
+        case Status::SKIPPED:
+            return "\033[33mSkipped\033[0m";
+            break;
         default:
             throw;
             break;

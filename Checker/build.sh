@@ -1,6 +1,4 @@
 #!/bin/bash
-g++ --version
-g++ -dumpmachine
 g++ Common.cpp  Judger.cpp OJAdapter.cpp OJAPI.cpp Timer.cpp \
 PerfAnalyzer.cpp Runner.cpp Scanner.cpp Checker.cpp \
 Adapters/BZOJJudger.cpp Adapters/LOJJudger.cpp Adapters/DefaultJudger.cpp \

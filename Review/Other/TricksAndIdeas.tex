@@ -536,6 +536,7 @@ cdq分治用来解决偏序问题（支持动态偏序问题，但仍然要求�
 	PRId64表示。
 	\item 需要稳定划分时不能使用维护左区间end位置与swap操作实现，必须使用额外缓冲区，
 	调用std::stable\_partition。
+	\item set与map的插入与删除操作不影响之前取得的迭代器的有效性。
 \end{itemize}
 \subsection{本节注记}
 2013年许昊然的国家集训队论文答辩《浅谈数据结构题的几个非经典解法——<Claymore>命题报告》

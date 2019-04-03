@@ -29,15 +29,11 @@ int foo() {
     base[0] = 1;
     for(int i = 1; i <= n; ++i)
         base[i] = base[i - 1] * fac;
-    int ans = n - 1;
-    for(int i = 1; i <= n; ++i) {
-        for(int j = 1; j < ans; ++j)
-            if(check(j, n - 1, i)) {
-                ans = j;
-                break;
-            }
-    }
-    return ans;
+    for(int i = 1; i < n; ++i)
+        for(int j = 1; j <= n; ++j)
+            if(check(i, n - 1, j))
+                return i;
+    return -1;
 }
 int main() {
     int t;

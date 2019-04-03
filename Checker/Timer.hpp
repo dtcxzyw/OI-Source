@@ -12,9 +12,11 @@ public:
     int64_t choose(int64_t usrTime,
                    int64_t totTime) const;
     int64_t remainSeconds() const;
+    void addSample();
 
 private:
     int64_t mTotTime, mMaxTime, mTimeLimit;
     TimeMode mMode;
     TimeVal mVal;
+    fs::path mSamples;
 };

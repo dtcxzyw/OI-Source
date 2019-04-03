@@ -15,7 +15,7 @@ $\displaystyle \sum_{i\in S}{b_i}$表示为$|S|$时，这是一个隐式的分�
 $\displaystyle \sum_{i\in S}{a_i}-x\cdot \sum_{i\in S}{b_i}\geq 0$。
 因此可二分答案$x$，对原数据进行一些修改，便可将原问题转化为解决一个判定问题
 （或是新的最优化问题，即检查
-$\displaystyle f(x)=\sum_{i\in S}{a_i}-x\cdot \sum_{i\in S}{b_i}$
+$\displaystyle f_x(S)=\sum_{i\in S}{a_i}-x\cdot \sum_{i\in S}{b_i}$
 的最大值是否不小于0）。
 
 一般使用网络流/SPFA判负环/MST辅助判定。
@@ -25,11 +25,11 @@ $\displaystyle f(x)=\sum_{i\in S}{a_i}-x\cdot \sum_{i\in S}{b_i}$
 
 \subsection{Dinkelbach法}
 \index{D!Dinkelbach Method}
-记选择方案$S$对应直线$f_S(x)=\sum_{i\in S}{a_i}-x\cdot \sum_{i\in S}{b_i}$，
+记选择方案$S$对应直线$f_S(x)=\displaystyle \sum_{i\in S}{a_i}-x\cdot \sum_{i\in S}{b_i}$，
 该直线的横截距为该方案的目标函数值。若$f_S(x)\geq 0$则说明该直线所对应的横截距$\geq x$。
 
-在二分过程中检查二分点$x$的合法性时，有时通过求$max\{f(x)\}$来判定。
-满足检查条件时仅仅令$L=x$就显得浪费了，因为检查下一二分点时得到的最优解$x$可能不变。
+在二分过程中检查二分点$m$的合法性时，有时通过求$max\{f_m(S)\}$来判定。
+满足检查条件时仅仅令$L=m$就显得浪费了，因为检查下一二分点时得到的最优解$S$可能不变。
 Dinkelbach法的思路是维护答案的下界，使用当前最优解对应的直线横截距来当做下一次
 迭代的起点，这种做法比二分法更快。不过需要保存解这一要求限制了它的应用范围（编码更麻烦）。
 

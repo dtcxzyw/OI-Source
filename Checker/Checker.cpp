@@ -7,11 +7,12 @@ int main() {
     std::cout << std::fixed;
     initRunner();
 
-    line("Checker 2.6.2", '*');
+    line("Checker 2.6.3", '*');
     std::cout << "Built at " << __TIME__ << " on "
               << __DATE__ << std::endl;
     fs::path exec = scanExec();
     std::cout << "found program:" << exec << std::endl;
     autoRun(exec);
+    line("", '*');
     return 0;
 }

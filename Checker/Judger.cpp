@@ -45,6 +45,13 @@ static bool compare(CompareMode mode,
 RunResult test(const Option& opt, const Data& data,
                const Timer& timer) {
     line("Running Task " + data.input.stem().string());
+    if(timer.isTLE()) {
+        RunResult res;
+        res.st = Status::SKIPPED;
+        std::cout << "Result " << toString(res.st)
+                  << std::endl;
+        return res;
+    }
     TempFile tmpOutput;
     RunResult res =
         run(opt, timer, data.input, tmpOutput.path());

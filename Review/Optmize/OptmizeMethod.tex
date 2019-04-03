@@ -9,8 +9,7 @@
 $f(x)$最好在整个定义域内二阶可导，由于$f(x)$有多个根，需要用多个初始解$x_0$得到不同的根。
 
 马同学高等数学\footnote{
-	如何通俗易懂地讲解牛顿迭代法？\\
-	\url{https://www.matongxue.com/madocs/205/}
+	如何通俗易懂地讲解牛顿迭代法？\url{https://www.matongxue.com/madocs/205/}
 }中提到，有些特殊函数的根并不能使用牛顿迭代法求解。
 \subsection{爬山法}
 \index{H!Hill Climbing}
@@ -111,8 +110,8 @@ $\hat{D}$表示$D$对应的单位向量。
 	\url{https://en.wikipedia.org/wiki/Gradient\_descent}
 }。
 \subsection{解集存储}
-在解决最优化问题时，保存新解{\bfseries 当且仅当该解比存储的最优解更优且
-该解即将被比自己更差的解作为当前解}，在迭代退出再执行一遍该逻辑。此法延迟了解集保存时间，
+在解决最优化问题时，保存新解{\bfseries 当且仅当该解比存储的最优解更优且该解即将被
+比自己更差的解替代作为当前解}，在迭代退出再执行一遍该逻辑。此法延迟了解集保存时间，
 可以减少冗余拷贝。Lazy Evaluation大法好！！！
 \subsection{拉格朗日乘子法}
 \index{L!Lagrange Multiplier}
@@ -132,6 +131,12 @@ $\hat{D}$表示$D$对应的单位向量。
 在实际计算中，首先根据$\nabla_X \mathcal{L}=0$用$\lambda$表达出$X$，然后代入$g(X)=0$
 求出可行的$\lambda$。这时解的搜索范围被极大地缩小，直接比较每个$\lambda$对应的$f(X)$，
 得到所需极值。多个$g(X)=0$的处理方法类似。
+
+
+上述内容参考了Wikipedia-EN\footnote{
+	Lagrange multiplier\\
+	\url{https://en.wikipedia.org/wiki/Lagrange\_multiplier}
+}。
 
 \paragraph{例题} 「NOI2012」骑行川藏
 
@@ -159,3 +164,10 @@ KKT条件是拉格朗日乘子法的扩展，用于求解不等式约束下的�
 
 看上去不太好求解，留坑待补。
 \index{*TODO!KKT条件}
+
+更好的理解方式参见马同学高等数学\footnote{
+    如何理解拉格朗日乘子法？
+	\url{https://www.matongxue.com/madocs/939/}\\
+	如何理解拉格朗日乘子法和KKT条件？
+	\url{https://www.matongxue.com/madocs/987/}\\
+}。

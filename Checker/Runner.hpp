@@ -3,7 +3,16 @@
 #include "Timer.hpp"
 #include <cstdint>
 #include <map>
-enum class Status { AC, WA, MLE, TLE, RE, SE, UKE };
+enum class Status {
+    AC,
+    WA,
+    MLE,
+    TLE,
+    RE,
+    SE,
+    UKE,
+    SKIPPED
+};
 enum class RuntimeError {
     NonzeroExitCode,
     SegmentationFault,

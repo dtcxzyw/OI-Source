@@ -210,6 +210,7 @@
 - [x] 类欧几里得算法
 - [ ] 最小方差生成树
 - [ ] 牛顿级数差分
+- [ ] 牛顿插值法[By 马同学](https://www.matongxue.com/madocs/126/)
 - [ ] 拟牛顿法BFGS
 - [x] 三元环[By tan90°](https://www.luogu.org/blog/KingSann/fou-chang-yong-di-hei-ke-ji-san-yuan-huan-post)
 - [ ] 闭包[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Closure.html)

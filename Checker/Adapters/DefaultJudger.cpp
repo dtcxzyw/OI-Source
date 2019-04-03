@@ -26,7 +26,8 @@ bool runAll(const Option& opt,
                 int& val = sysCall[call.first];
                 val = std::max(val, call.second);
             }
-        }
+        } else if(res.st == Status::TLE)
+            timer.addTask(res.usrTime, res.totTime);
         if(res.st != Status::AC) {
             if(!first.count(res.st) ||
                file_size(first[res.st]) >
@@ -75,10 +76,9 @@ bool runAll(const Option& opt,
                           << ")";
             std::cout << std::endl;
         }
-    if(flag)
+    if(flag) {
         pinfo.report();
-    line("Hot System Call");
-    {
+        line("Hot System Call");
         std::vector<std::pair<int, long> > info;
         for(auto call : sysCall) {
             if(call.second >= 50)
@@ -92,6 +92,7 @@ bool runAll(const Option& opt,
                       << "\033[0m(id=" << call.second
                       << "):" << call.first
                       << std::endl;
+        timer.addSample();
     }
     return flag;
 }

@@ -22,10 +22,10 @@ Timer::Timer(const Option& opt)
       mTimeLimit(
           opt.get<int64_t>("TimeLimit", 1000000)),
       mMode(opt.get("TimeMode", TimeMode::perTask)),
-      mVal(opt.get("TimeVal", TimeVal::totTime)) {
+      mVal(opt.get("TimeVal", TimeVal::totTime)),
+      mSamples(opt.get<fs::path>("TimeSamples", "")) {
     int64_t local = 0, remote = 0;
-    std::ifstream sam(
-        opt.get<fs::path>("TimeSamples", ""));
+    std::ifstream sam(mSamples);
     while(sam) {
         int64_t a, b;
         sam >> a >> b;
@@ -48,9 +48,19 @@ void Timer::report() const {
                   << std::endl;
     else {
         std::cout << "TotTime " << mTotTime / 1000.0
-                  << " ms" << std::endl;
+                  << " ms";
+        if(mTimeLimit && mMode == TimeMode::allTask)
+            std::cout << "("
+                      << mTotTime * 100 / mTimeLimit
+                      << "%)";
+        std::cout << std::endl;
         std::cout << "MaxTime " << mMaxTime / 1000.0
-                  << " ms" << std::endl;
+                  << " ms";
+        if(mTimeLimit && mMode == TimeMode::perTask)
+            std::cout << "("
+                      << mMaxTime * 100 / mTimeLimit
+                      << "%)";
+        std::cout << std::endl;
     }
 }
 int64_t Timer::remainSeconds() const {
@@ -58,4 +68,16 @@ int64_t Timer::remainSeconds() const {
         mTimeLimit :
         mTimeLimit - mTotTime;
     return rm / 1000000LL + 1;
+}
+void Timer::addSample() {
+    std::ofstream sam(mSamples, std::ios::app);
+    if(!sam)
+        return;
+    line("Add Time Sample");
+    int64_t remote = 0;
+    std::cout << "OJ's time:" << std::flush;
+    std::cin >> remote;
+    if(remote)
+        sam << (mTotTime - 1) / 1000 + 1 << ' '
+            << remote << std::endl;
 }

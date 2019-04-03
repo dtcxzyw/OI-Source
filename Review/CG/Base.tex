@@ -54,7 +54,7 @@ $T:a\rightarrow cross(a,b)$或$T:b\rightarrow cross(b,a)$可证）。
 又给其模长增加了高的因子。套椎体体积公式可得上式。
 \subsubsection{极角计算}
 点乘可以得到$x=|a||b|cos<a,b>$，叉乘可以得到$y=|a||b|sin<a,b>$，将$(x,y)$
-看做在半径为$|a||b|$的圆上的点，极角为$atan2(x,y)$。
+看做在半径为$|a||b|$的圆上的点，极角为$atan2(y,x)$。
 \subsection{点到直线的距离}
 设偏移向量$delta=p-ori$：
 \begin{itemize}
@@ -103,7 +103,7 @@ $(x\cos \theta-y\sin \theta,x\sin \theta+y\cos \theta)$。
 这些向量上的投影长度。
 
 事实上，将点$P$在新坐标系上的坐标$P'$变换回旧坐标系意味着$P'$左乘矩阵
-$T={b_1,b_2,\cdots,b_d}$，即$TP'=P$。由于矩阵$T$的特殊性，
+$T={b_1,b_2,\cdots,b_d}$，即$TP'=P$。由于矩阵$T$为正交矩阵，
 有$T^{-1}=T^T$。因此$P'=T^TP$，即投影长度。
 \subsection{点、向量、法向量的坐标变换}
 可以使用一个矩阵$R^{d*d}$来表示$d$维空间中的旋转，缩放，坐标系切换，
@@ -211,15 +211,15 @@ Vec refract(Vec I,Vec N,FT eta) {
 发现将$P$绕原点旋转$45^\circ$再缩放$\sqrt{2}$倍后等于$Q$。
 
 因此$P(x,y)\rightarrow Q(x+y,x-y)$，$Q(x,y)
-\rightarrow P(\frac{x+y}{2},\frac{x-y}{2})$。
+\rightarrow P(\frac{x+y}{2},\frac{x-y}{2})$。\CJKsout{忽然联想到FWTxor。}
 \subsection{精度处理}
 一般引入$eps=1e-8$来避免精度问题。
 
 常见问题：
 \begin{itemize}
     \item 判断两个值相等：$fabs(a-b)<eps$。
-    \item 要输出$1.00$却输出$0.99$或者要输出$0.0$却输出$-0.0$：
-        对正值$+eps$，负值$-eps$。
+    \item 要输出$1.00$却输出$0.99$或者要输出0.0却输出-0.0：
+        对正值$+eps$，负值$-eps$，$\pm eps$内强制为0。
     \item 已知$\sin \theta$求$\cos \theta$：$sqrt(1.0-cosTheta*cosTheta)$
     可能会因为传入$sqrt$的参数小于0而返回$nan$，在调用数学函数前要clamp到定义域内
     或特判。
