@@ -206,12 +206,16 @@ Vec refract(Vec I,Vec N,FT eta) {
     该多边形的面积为$a-\frac{b}{2}+1$。
 \end{theorem}
 \subsection{切比雪夫距离}
-切比雪夫距离是两点坐标之差的最小值。
+切比雪夫距离是两点坐标之差绝对值的最大值。
+
 分别考虑到原点曼哈顿距离和切比雪夫距离为1的点$P,Q$，
 发现将$P$绕原点旋转$45^\circ$再缩放$\sqrt{2}$倍后等于$Q$。
 
 因此$P(x,y)\rightarrow Q(x+y,x-y)$，$Q(x,y)
 \rightarrow P(\frac{x+y}{2},\frac{x-y}{2})$。\CJKsout{忽然联想到FWTxor。}
+
+对于到某点的曼哈顿距离$\leq k$的限制，可以变换坐标系将其转化为到该点的切比雪夫距离
+$\leq k$，由此将斜的正方形转化为与坐标轴对齐的正方形，更好统计。
 \subsection{精度处理}
 一般引入$eps=1e-8$来避免精度问题。
 

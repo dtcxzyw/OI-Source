@@ -356,7 +356,7 @@
 - [ ] Codeforces 786E ALT
 # 分块及按大小分类
 - [x] LOJ#6277-6285
-- [ ] bzoj2741
+- [x] bzoj2741
 - [ ] bzoj3463
 # 插头dp
 - [x] P5056 【模板】插头dp
@@ -373,12 +373,9 @@
 - [ ] LOJ#2049. 「HNOI2016」网络
 - [ ] LOJ#2056. 「TJOI / HEOI2016」序列
 - [x] Luogu P3206
-- [ ] bzoj2989 数列
-- [ ] bzoj2141
+- [x] bzoj2989 数列
 - [ ] bzoj2961
 - [ ] bzoj3236
-- [ ] bzoj3295
-- [ ] bzoj3672
 # 2-SAT
 - [ ] LOJ#571. 「LibreOJ Round #11」Misaka Network 与 Accelerator
 - [ ] LOJ#2155. 「POI2011 R1」同谋者 Conspiracy
@@ -492,8 +489,7 @@
 - [ ] bzoj2458
 - [ ] bzoj3745
 - [ ] bzoj3984
-- [ ] bzoj4184
-- [ ] bzoj4311
+- [x] bzoj4311
 - [ ] bzoj4456
 # BM 算法
 - [ ] LOJ#2981. 「THUSCH 2017」如果奇迹有颜色
@@ -550,6 +546,7 @@
 - [ ] CF603E Pastoral Oddities
 - [ ] bzoj2527
 - [ ] bzoj2738
+- [x] BZOJ3110
 # 博弈论
 - [ ] LOJ#524. 「LibreOJ β Round #4」游戏
 - [ ] LOJ#531. 「LibreOJ β Round #5」游戏
@@ -573,7 +570,6 @@
 - [ ] P3673 小清新计数题
 # 二进制分组
 - [ ] CF710F String Set Queries
-- [ ] bzoj2989 数列
 - [ ] bzoj4140
 # 矩阵快速幂
 - [x] [JLOI2015]有意义的字符串

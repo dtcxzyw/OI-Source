@@ -75,10 +75,12 @@ mulOptimizedUnfold 11096.677 ms AC
     因为Cache会存储额外信息。
     \item 寻址优化：高维数组寻址时使用指针代替。
     \item Cache优化：在性能敏感的地方，使用指针存储儿子（当然还要考虑if判断
-    nullptr的开销）。
+    nullptr的开销，当然也可以使用）。
     \item 尽可能使用引用而不是指针：当派生类有多个基类，在继承体系中向上转型时，
     由于空引用是非法的，程序只要计算指针的偏移；由于允许存在空指针，根据规定，空指针
     向上转型后仍然是空指针，需要一次特判。
+    \item 手写位运算代替乘除法：有时编译器为了符合标准需要做一些额外工作。
+    \item 使用最高效的整型：比如用int代替bool，或者使用C++11新增的int\_fastXX\_t
 \end{itemize}
 \subsection{位运算}\label{Bitwise}
 \subsubsection{符号判断}
@@ -177,7 +179,7 @@ $O(\sqrt{n})-O(1)$的复杂度绝对不会成为性能瓶颈。
 \end{itemize}
 \subsection{数组清零}
 \begin{itemize}
-    \item 整个数组的清零可以使用memset，因为它的实现可能有循环展开/SIMD优化。
+    \item 整个数组的清零可以使用memset，因为它的实现一般有循环展开/SIMD优化。
     \item 若仅修改整个数组的部分数据，可以重新扫一遍修改时的数据，撤销修改操作/
     直接将对应位置置0（这会影响到算法时间复杂度，尤其是对于Dsu On Tree/cdq分治）；
     \item 对于树状数组，在模拟树状数组修改算法置零时，若当前值为0，则直接退出，因为
@@ -220,6 +222,7 @@ $O(\sqrt{n})-O(1)$的复杂度绝对不会成为性能瓶颈。
 
 若需要输入浮点数，直接调用strtod，然后用其参数str\_end重定位。若需要输入输出浮点数，
 可以使用支持自定义buffer的std::strstream，不过要注意这个类在C++98中已被弃用。
+也可以考虑使用sprintf。
 
 Update：经过单步调试追踪到strtod在glibc中实现。其具体实现在
 \_\_\_\_STRTOF\\\_INTERNAL(/stdlib/strtod\_l.c)中，其实现依赖GMP，性能。。。。
@@ -234,13 +237,13 @@ glibc源代码参见\url{https://sourceware.org/git/?p=glibc.git;a=tree}。
 
 还有一个无法严格证明正确性的trick：将$a*b\%mod$表示为$a*b-\lfloor a/mod*b\rfloor*mod$，
 其中$floor$内部使用long double计算。$floor$操作直接使用强制转型，因为$a/mod*b$就在
-long long的表示范围内。由于最终结果在范围内，两个乘法事实上计算的是模$2^64$意义下的乘法，
+long long的表示范围内。由于最终结果在范围内，两个乘法事实上计算的是模$2^{64}$意义下的乘法，
 暂时溢出并没有关系。
 
 实现代码：
 \begin{lstlisting}
 typedef long long Int64;
-Int64 mulmB(Int64 a, Int64 b) {
+Int64 mulm(Int64 a, Int64 b) {
     Int64 res =
         (a * b -
          static_cast<Int64>(
