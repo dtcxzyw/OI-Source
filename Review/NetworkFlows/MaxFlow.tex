@@ -41,6 +41,11 @@ Dinic的计算流程如下：
 	\url{https://en.wikipedia.org/wiki/Dinic\%27s\_algorithm}}以及
 	permui的博客\footnote{ 最大流算法-ISAP - permui
 		\url{https://www.cnblogs.com/owenyu/p/6852664.html}}
+
+{\bfseries Warning：在特殊图中如果常规算法不能过，考虑使用Dinic而不是目前常用的
+ISAP，可以获得一些玄学的加速（这是我第一次遇到ISAP一直返回0流），或者使用贪心算法
+模拟网络流。}
+
 \subsubsection{优化}
 \begin{itemize}
 	\item 当前弧优化：每次从未遍历的边开始遍历，减少重复计算（就算前面的边没满，
@@ -58,7 +63,12 @@ Dinic的计算流程如下：
 
 	      该方法源自沐阳的博客。
 	      \footnote{ZOJ-2364 Data Transmission 分层图阻塞流 Dinic+贪心预流 - 沐阳
-		      \url{https://www.cnblogs.com/Lyush/p/3204099.html}}
+			  \url{https://www.cnblogs.com/Lyush/p/3204099.html}}
+	\item 从终点开始建分层图，避免花费过多时间经过非最短路。该建议来自大本营的博客
+	\footnote{
+	 【2018.2.8-】网络流学习笔记（含ISAP！）
+		\url{https://www.cnblogs.com/scx2015noip-as-php/p/MFP.html}
+	}。该方法可沿用至MCMF。
 \end{itemize}
 
 \subsubsection{板子}

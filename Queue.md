@@ -335,24 +335,19 @@
 - [ ] bzoj3681 Arietta
 - [ ] Cf172 k-Maximum Subsequence Sum
 - [x] POJ3469 Dual Core CPU
-- [ ] bzoj2163
+- [x] bzoj2163
 - [ ] bzoj3716
 - [ ] bzoj4435
-- [ ] bzoj4439
+- [x] bzoj4439
 - [ ] bzoj4599
-- [ ] bzoj1532
+- [x] bzoj1532
 - [ ] bzoj2864
-- [ ] bzoj3993
-- [ ] bzoj1061
 - [ ] bzoj1070
-- [ ] bzoj1877
 - [ ] bzoj2288
 - [ ] bzoj2661
 - [ ] bzoj4514
-- [ ] bzoj2229
 - [ ] bzoj3532
 - [ ] uoj77
-- [ ] BZOJ 3112
 - [ ] Codeforces 786E ALT
 # 分块及按大小分类
 - [x] LOJ#6277-6285
@@ -578,7 +573,7 @@
 - [x] 能量采集
 - [x] 块速递推
 # 模拟退火
-- [ ] 「BZOJ 3680」吊打 XXX
+- [x] 「BZOJ 3680」吊打 XXX
 - [ ] 「JSOI 2016」炸弹攻击
 - [ ] 「HAOI 2006」均分数据
 - [ ] bzoj2336

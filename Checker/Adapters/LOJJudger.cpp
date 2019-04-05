@@ -3,6 +3,8 @@
 #include "../OJAdapter.hpp"
 #include "../Scanner.hpp"
 #include "../Timer.hpp"
+#include <cstdlib>
+#include <fstream>
 #include <iostream>
 static bool readOpt(Option& opt,
                     const std::string& str) {
@@ -66,6 +68,57 @@ static bool readOpt(Option& opt,
     opt.insert("TimeSamples", fs::path("LOJ-Samples"));
     return true;
 }
+#ifdef SYZOJTOOLS
+static bool testSYZOJTools(const Option& opt) {
+    std::string testCmd = "which syzoj";
+    if(system(testCmd.c_str()))
+        return false;
+    if(fs::exists("data/data.yml"))
+        fs::copy_file("data/data.yml", "problem.yml");
+    else {
+        std::cout << "Using default data.yml"
+                  << std::endl;
+        std::ofstream out("problem.yml");
+        out << "type: traditional" << std::endl;
+        out << "cases: auto" << std::endl;
+        out << "cases-global:" << std::endl;
+        out << "  time-limit: "
+            << opt.get<int64_t>("TimeLimit", 0) / 1000
+            << "ms" << std::endl;
+        out << "  memory-limit: "
+            << (opt.get<int64_t>("MemoryLimit", 0) >>
+                10)
+            << "MB" << std::endl;
+    }
+    return true;
+}
+static std::string findSource(const fs::path& exec) {
+    using DirIterT = fs::recursive_directory_iterator;
+    fs::path src, root = readConfig("SrcDir");
+    for(auto p : DirIterT(root)) {
+        p.refresh();
+        if(p.is_regular_file() &&
+           p.path().stem() == exec.stem() &&
+           p.path().extension() == ".cpp") {
+            if(src.empty() ||
+               fs::last_write_time(p.path()) >
+                   fs::last_write_time(src))
+                src = p.path();
+        }
+    }
+    std::cout << "Found source file "
+              << fs::relative(src, root) << std::endl;
+    return fs::relative(src);
+}
+static bool callSYZOJTools(const fs::path& exec) {
+    std::string cmd = "syzoj judge " +
+        findSource(exec) + " --show-testcases";
+    int res = system(cmd.c_str());
+    std::cout << "syzoj-tools exited with code=" << res
+              << std::endl;
+    return res == 0;
+}
+#endif
 static bool runLOJ(const fs::path& exec) {
     line("Loading Problem Info");
     std::string execName =
@@ -79,6 +132,12 @@ static bool runLOJ(const fs::path& exec) {
         return false;
     if(!readOpt(opt, problem))
         return false;
+#ifdef SYZOJTOOLS
+    if(testSYZOJTools(opt)) {
+        std::cout << "Using syzoj-tools" << std::endl;
+        return callSYZOJTools(exec);
+    }
+#endif
     runAll(opt, scanData("data"));
     return true;
 }

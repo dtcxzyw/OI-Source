@@ -1,61 +1,55 @@
+#include <algorithm>
 #include <cmath>
 #include <cstdio>
 const int size = 10005;
-typedef double FT;
-const FT eps = 1e-8;
+typedef long double FT;
 struct Point {
     FT x, y, w;
 } A[size];
-FT dx, dy;
-FT eval(FT x, FT y, int n) {
-    FT fx = 0.0, fy = 0.0;
+int n;
+FT eval(FT x, FT y) {
+    FT res = 0.0;
     for(int i = 0; i < n; ++i) {
         FT dx = A[i].x - x, dy = A[i].y - y,
            w = A[i].w;
-        FT len = sqrt(dx * dx + dy * dy);
-        if(len > eps) {
-            dx /= len, dy /= len;
-            fx += dx * w, fy += dy * w;
-        }
+        FT len = sqrtl(dx * dx + dy * dy);
+        res += len * w;
     }
-    dx = copysign(1.0, fx), dy = copysign(1.0, fy);
-    return std::max(fabs(fx), fabs(fy));
+    return res;
 }
 FT getRandom(FT range) {
-    static int seed = 53214123;
+    static int seed = 35432;
     seed = seed * 48271LL % 2147483647;
-    return range * seed / 2147483647.0;
+    return range * seed / 2147483648.0L;
 }
 int main() {
-    int n;
     scanf("%d", &n);
-    FT cx = 0.0, cy = 0.0, sw = 0.0;
+    FT sx = 0.0, sy = 0.0, sw = 0.0;
     for(int i = 0; i < n; ++i) {
-        scanf("%lf%lf%lf", &A[i].x, &A[i].y, &A[i].w);
-        cx += A[i].x * A[i].w, cy += A[i].y * A[i].w,
+        scanf("%Lf%Lf%Lf", &A[i].x, &A[i].y, &A[i].w);
+        sx += A[i].x * A[i].w, sy += A[i].y * A[i].w,
             sw += A[i].w;
     }
-    cx /= sw, cy /= sw;
-    FT mx = cx, my = cy, merr = eval(cx, cy, n);
-    FT T = 100000.0, cerr = merr;
-    FT step = 1.0;
-    while(T > 1e-5) {
-        FT nx = cx + dx * getRandom(T),
-           ny = cy + dy * getRandom(T);
-        FT nerr = eval(nx, ny, n);
+    sx /= sw, sy /= sw;
+    FT mx = sx, my = sy, merr = eval(sx, sy);
+    FT cx = sx, cy = sy, cerr = merr;
+    const FT pi = acosl(-1.0);
+    FT T = 100000.0;
+    while(T > 1e-8) {
+        FT angle = getRandom(2.0 * pi),
+           len = getRandom(std::max(1e-3L, T));
+        FT nx = cx + cosl(angle) * len,
+           ny = cy + sinl(angle) * len;
+        FT nerr = eval(nx, ny);
         if(nerr < cerr) {
             cx = nx, cy = ny, cerr = nerr;
             if(nerr < merr)
                 merr = nerr, mx = nx, my = ny;
-        } else if(exp((cerr - nerr) / T) >
+        } else if(expl((cerr - nerr) / T) >
                   getRandom(1.0))
             cx = nx, cy = ny, cerr = nerr;
-        FT k =
-            exp(-1.0 / std::min(1000.0, step += 0.5));
-        T *= k;
-        printf("%lf %.10lf %lf %lf %lf\n", T, k, mx,
-               my, merr);
+        T *= 0.99;
     }
-    printf("%.3lf %.3lf\n", mx, my);
+    printf("%.3Lf %.3Lf\n", mx, my);
     return 0;
 }

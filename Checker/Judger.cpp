@@ -28,6 +28,9 @@ static bool compare(CompareMode mode,
         } break;
         case CompareMode::FloatingPoint: {
             auto cmp = [&](FT a, FT b) {
+                if(!std::isfinite(a) ||
+                   !std::isfinite(b))
+                    return false;
                 FT err = std::min(fabsl(a - b),
                                   fabsl(a - b) / b);
                 maxErr = std::max(maxErr, err);
