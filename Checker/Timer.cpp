@@ -21,20 +21,22 @@ Timer::Timer(const Option& opt)
     : mTotTime(0), mMaxTime(0),
       mTimeLimit(
           opt.get<int64_t>("TimeLimit", 1000000)),
+      mLocalSamples(0), mRemoteSamples(0),
       mMode(opt.get("TimeMode", TimeMode::perTask)),
       mVal(opt.get("TimeVal", TimeVal::totTime)),
       mSamples(opt.get<fs::path>("TimeSamples", "")) {
-    int64_t local = 0, remote = 0;
     std::ifstream sam(mSamples);
     while(sam) {
         int64_t a, b;
         sam >> a >> b;
-        local += a, remote += b;
+        mLocalSamples += a, mRemoteSamples += b;
     }
-    if(remote) {
-        mTimeLimit = mTimeLimit * local / remote;
+    if(mRemoteSamples) {
+        mTimeLimit = mTimeLimit * mLocalSamples /
+            mRemoteSamples;
         std::cout << "time scaling factor="
-                  << static_cast<FT>(local) / remote
+                  << static_cast<FT>(mLocalSamples) /
+                mRemoteSamples
                   << std::endl;
     }
 }
@@ -74,10 +76,12 @@ void Timer::addSample() {
     if(!sam)
         return;
     line("Add Time Sample");
-    int64_t remote = 0;
-    std::cout << "OJ's time:" << std::flush;
+    int64_t remote = 0,
+            local = (mTotTime - 1) / 1000 + 1;
+    std::cout << "OJ's time(prediction = "
+              << local * mRemoteSamples / mLocalSamples
+              << " ms): " << std::flush;
     std::cin >> remote;
     if(remote)
-        sam << (mTotTime - 1) / 1000 + 1 << ' '
-            << remote << std::endl;
+        sam << local << ' ' << remote << std::endl;
 }

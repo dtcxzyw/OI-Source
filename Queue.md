@@ -81,7 +81,7 @@
 - [x] UOJ#179. 线性规划
 - [x] P3980 [NOI2008]志愿者招募
 - [ ] LOJ#6295. 无意识之外的捉迷藏
-- [ ] CF671D
+- [x] CF671D
 # minmax容斥
 - [x] LOJ#2542. 「PKUWC2018」随机游走
 - [x] LOJ#2127. 「HAOI2015」按位或（做完后作为minmax容斥的例题）
@@ -151,17 +151,12 @@
 - [x] BZOJ2780: [Spoj]8093 Sevenk Love Oimaster
 - [ ] CTSC2010 珠宝商
 - [ ] CF264D Colorful Stones
-- [ ] 【bzoj 2555】SubString（SAM+LCT，做完加总结）
+- [x] 【bzoj 2555】SubString（SAM+LCT，做完加总结）
 - [ ] UVA10829
-- [ ] P5112 FZOUTSY
-- [ ] bzoj3238
-- [ ] bzoj2946
 - [ ] bzoj4032
 - [ ] bzoj4180
-- [ ] bzoj4327
-- [ ] bzoj4545
+- [x] bzoj4545
 - [ ] bzoj4310
-- [ ] bzoj3926
 - [ ] bzoj4453
 - [ ] Codeforces 235C
 # AC自动机
@@ -343,7 +338,7 @@
 - [x] bzoj1532
 - [ ] bzoj2864
 - [ ] bzoj1070
-- [ ] bzoj2288
+- [ ] bzoj2288（模拟费用流）
 - [ ] bzoj2661
 - [ ] bzoj4514
 - [ ] bzoj3532
@@ -422,6 +417,7 @@
 - [ ] bzoj2642
 - [ ] LOJ#6504. 「雅礼集训 2018 Day5」Convex
 - [x] LOJ#6360. 复燃「恋之埋火」
+- [ ] BZOJ3707: 圈地
 # 树的直径
 - [ ] P2195
 - [ ] P3629
@@ -537,6 +533,8 @@
 - [x] LOJ#2071. 「JSOI2016」最佳团体
 # 贪心
 - [ ] LOJ#2734. 「JOISC 2016 Day 2」女装大佬 (FJWC2019上厕所)
+- [ ] BZOJ1150
+- [x] bzoj2288
 # 整体二分
 - [ ] CF603E Pastoral Oddities
 - [ ] bzoj2527

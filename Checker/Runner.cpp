@@ -228,6 +228,13 @@ void initRunner() {
     struct rlimit limit;
     getrlimit(RLIMIT_STACK, &limit);
     limit.rlim_cur = limit.rlim_max;
+    std::cout << "Max stack size="
+              << (limit.rlim_max == RLIM_INFINITY ?
+                      std::string("unlimit") :
+                      std::to_string(limit.rlim_max >>
+                                     10) +
+                          " MB")
+              << std::endl;
     setrlimit(RLIMIT_STACK, &limit);
 }
 static std::string getCallTableName() {

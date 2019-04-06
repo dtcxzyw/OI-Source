@@ -16,8 +16,20 @@ int read() {
 }
 const int size = 100005;
 int A[size];
-bool cmp(int a, int b) {
-    return a > b;
+struct Block {
+    int sum, pos;
+    bool operator<(const Block& rhs) const {
+        return sum > rhs.sum;
+    }
+} B[size];
+int pre[size], nxt[size];
+bool flag[size];
+void del(int x) {
+    if(x) {
+        nxt[pre[x]] = nxt[x];
+        pre[nxt[x]] = pre[x];
+        flag[x] = true;
+    }
 }
 int main() {
     int n = read();
@@ -40,16 +52,37 @@ int main() {
         --e;
     if(b <= e) {
         int res = 0, cnt = 0;
-        for(int i = b; i <= e; ++i)
+        for(int i = b; i <= e; ++i) {
             if(A[i] > 0)
                 res += A[i], ++cnt;
             else
                 A[i] = -A[i];
-        std::make_heap(A + b, A + e + 1, cmp);
-        for(; cnt > m; --cnt) {
-            res -= A[b];
-            std::pop_heap(A + b, A + e + 1, cmp);
+            B[i].sum = A[i];
+            B[i].pos = i;
+            pre[i] = i - 1, nxt[i] = i + 1;
+        }
+        pre[b] = nxt[e] = 0;
+        std::make_heap(B + b, B + e + 1);
+        while(cnt > m && b <= e) {
+            Block x = B[b];
+            std::pop_heap(B + b, B + e + 1);
             --e;
+            if(flag[x.pos])
+                continue;
+            --cnt;
+            res -= x.sum;
+            if(pre[x.pos] && nxt[x.pos]) {
+                x.sum = A[x.pos] = A[pre[x.pos]] +
+                    A[nxt[x.pos]] - A[x.pos];
+                B[++e] = x;
+                std::push_heap(B + b, B + e + 1);
+                del(pre[x.pos]);
+                del(nxt[x.pos]);
+            } else {
+                del(pre[x.pos]);
+                del(nxt[x.pos]);
+                del(x.pos);
+            }
         }
         printf("%d\n", res);
     } else

@@ -15,7 +15,8 @@ public:
     void addSample();
 
 private:
-    int64_t mTotTime, mMaxTime, mTimeLimit;
+    int64_t mTotTime, mMaxTime, mTimeLimit,
+        mLocalSamples, mRemoteSamples;
     TimeMode mMode;
     TimeVal mVal;
     fs::path mSamples;

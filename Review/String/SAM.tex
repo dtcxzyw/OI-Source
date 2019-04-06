@@ -165,6 +165,23 @@ Right值且$r_S\geq m$），然后线段树查询该状态的Right集合是否�
     使用后缀自动机求后缀数组\\
     \url{https://www.cnblogs.com/zhujiangning/p/7999381.html}
 }。
+
+\subsection{SAM with LCT}
+为了支持在线修改查询，需要使用LCT维护Parent树信息（一般与Right集合有关）。
+
+注意LCT维护的是有根树，link和cut时要特别注意。事实上由于Right集合的维护
+只需要从自身加到根，因此可以在link时提取出从父亲到根的链，然后做区间加法，
+这样就不要update，取而代之的是pushDown更新标记。
+
+在取用节点子树信息时需要更新标记，因此要调用$pushDown$，不过为了保证复杂度最好还是使用
+$splay$。
+
+{\bfseries 注意节点cq的父亲是T[cq].link而不是p。}
+
+该内容参考了Candy?的博客\footnote{
+    BZOJ 2555: SubString [后缀自动机 LCT]
+    \url{https://www.cnblogs.com/candy99/p/6377537.html}
+}。
 \subsection{广义SAM}
 有两种构造方法：
 \begin{itemize}
@@ -190,7 +207,6 @@ $count$值+1并标记，直到遇到被同模板串标记过节点的为止。�
     \url{https://www.cnblogs.com/mangoyang/p/10155185.html}
 }的博客。Menci的博客写得更详细，一些性质的证明请移步
 \url{https://oi.men.ci/suffix-automaton-notes/}。
-
 \subsection{序列自动机}
 类比后缀自动机，序列自动机上的每条路径对应一个子序列。
 
