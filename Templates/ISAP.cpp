@@ -41,6 +41,8 @@ void BFS() {
             }
         }
     }
+    if(d[S] == 0)
+        d[S] = 1 << 30;
 }
 int now[size];
 int aug(int u, int mf) {

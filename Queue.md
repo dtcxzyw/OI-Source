@@ -300,6 +300,7 @@
 - [x] bzoj4407
 - [ ] bzoj2813
 - [ ] bzoj4428
+- [ ] UOJ450
 # 扩展欧几里得
 - [ ] LOJ#6440
 - [ ] CF868G
@@ -343,7 +344,7 @@
 - [ ] bzoj4514
 - [ ] bzoj3532
 - [ ] uoj77
-- [ ] Codeforces 786E ALT
+- [x] Codeforces 786E ALT
 # 分块及按大小分类
 - [x] LOJ#6277-6285
 - [x] bzoj2741
@@ -366,6 +367,7 @@
 - [x] bzoj2989 数列
 - [ ] bzoj2961
 - [ ] bzoj3236
+- [ ] LOJ#3030. 「JOISC 2019 Day1」考试
 # 2-SAT
 - [ ] LOJ#571. 「LibreOJ Round #11」Misaka Network 与 Accelerator
 - [ ] LOJ#2155. 「POI2011 R1」同谋者 Conspiracy
