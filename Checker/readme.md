@@ -124,3 +124,4 @@ AC后询问OJ上的时间并加入samples中，在BZOJ计时方式下skip掉剩�
 - [x] 评测机与本机时间缩放
 - [ ] 支持文件输入输出
 - [ ] 支持提交答案题
+- [ ] 支持Event Tracing for Windows[ETW](https://docs.microsoft.com/zh-cn/windows/desktop/ETW/event-tracing-portal)

@@ -32,7 +32,7 @@ AllowShortLoopsOnASingleLine:	false
 AlwaysBreakAfterDefinitionReturnType:	None
 # 总是在返回类型后换行: None, All, TopLevel(顶级函数，不包括在类中的函数),
 #   AllDefinitions(所有的定义，不包括声明), TopLevelDefinitions(所有的顶级函数的定义)
-AlwaysBreakAfterReturnType:	None
+# AlwaysBreakAfterReturnType:	None
 # 总是在多行string字面量前换行
 AlwaysBreakBeforeMultilineStrings:	false
 # 总是在template声明后换行
@@ -142,7 +142,7 @@ PenaltyReturnTypeOnItsOwnLine:	60
 # 指针和引用的对齐: Left, Right, Middle
 PointerAlignment:	Left
 # 允许重新排版注释
-ReflowComments:	true
+# ReflowComments:	true
 # 允许排序#include
 SortIncludes:	true
 # 在C风格类型转换后添加空格

@@ -9,7 +9,7 @@ const int size = 1005;
 struct Edge {
     int to, nxt;
     FT f;
-} E[size * 10];
+} E[size * 20];
 int last[size], cnt = 1;
 void addEdgeImpl(int u, int v, FT f) {
     ++cnt;
@@ -119,7 +119,6 @@ std::vector<FT> TS[size];
 Line L[size];
 int V[size], R[size];
 int main() {
-    freopen("data/8.in", "r", stdin);
     int n, m;
     scanf("%d%d", &n, &m);
     for(int i = 1; i <= n; ++i)

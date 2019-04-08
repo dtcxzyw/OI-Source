@@ -30,8 +30,8 @@
                     "-ggdb3",
                     "-Wextra",
                     "-Wl,-stack=16777216",
-                    "-D__USE_MINGW_ANSI_STDIO"
-                    //"-ftrapv"
+                    "-D__USE_MINGW_ANSI_STDIO",
+                    "-ftrapv"
                 ]
             },
             "problemMatcher": {

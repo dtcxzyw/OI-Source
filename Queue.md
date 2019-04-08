@@ -206,7 +206,7 @@
 - [ ] [SDOI2016]征途
 - [ ] HDU5956 The Elder
 - [ ] P3994 Highway
-- [ ] bzoj3675
+- [x] bzoj3675
 - [ ] bzoj4367
 - [x] NOI2007货币兑换
 # 凸优化（WQS二分、带权二分）
@@ -337,7 +337,7 @@
 - [x] bzoj4439
 - [ ] bzoj4599
 - [x] bzoj1532
-- [ ] bzoj2864
+- [x] bzoj2864
 - [ ] bzoj1070
 - [ ] bzoj2288（模拟费用流）
 - [ ] bzoj2661
