@@ -4,18 +4,36 @@
         {
             "label": "DEBUG",
             "command": "g++",
-            "args": [
-                "-O0",
-                "${file}",
-                "-o",
-                "bin/${fileBasenameNoExtension}.out",
-                "-Wall",
-                "-std=c++17",
-                "-D_FORTIFY_SOURCE=2",
-                "-ggdb3",
-                "-Wextra",
-                //"-ftrapv"
-            ],
+            "linux": {
+                "args": [
+                    "-O0",
+                    "${file}",
+                    "-o",
+                    "bin/${fileBasenameNoExtension}.out",
+                    "-Wall",
+                    "-std=c++17",
+                    "-D_FORTIFY_SOURCE=2",
+                    "-ggdb3",
+                    "-Wextra",
+                    //"-ftrapv"
+                ]
+            },
+            "windows": {
+                "args": [
+                    "-O0",
+                    "${file}",
+                    "-o",
+                    "bin/${fileBasenameNoExtension}.out",
+                    "-Wall",
+                    "-std=c++17",
+                    "-D_FORTIFY_SOURCE=2",
+                    "-ggdb3",
+                    "-Wextra",
+                    "-Wl,-stack=16777216",
+                    "-D__USE_MINGW_ANSI_STDIO"
+                    //"-ftrapv"
+                ]
+            },
             "problemMatcher": {
                 "owner": "cpp",
                 "fileLocation": [
@@ -72,14 +90,28 @@
         {
             "label": "RELEASE",
             "command": "g++",
-            "args": [
-                "-O2",
-                "${file}",
-                "-o",
-                "bin/${fileBasenameNoExtension}.out",
-                "-Wall",
-                "-std=c++17"
-            ],
+            "linux": {
+                "args": [
+                    "-O2",
+                    "${file}",
+                    "-o",
+                    "bin/${fileBasenameNoExtension}.out",
+                    "-Wall",
+                    "-std=c++17"
+                ]
+            },
+            "windows": {
+                "args": [
+                    "-O2",
+                    "${file}",
+                    "-o",
+                    "bin/${fileBasenameNoExtension}.out",
+                    "-Wall",
+                    "-std=c++17",
+                    "-Wl,-stack=16777216",
+                    "-D__USE_MINGW_ANSI_STDIO"
+                ]
+            },
             "problemMatcher": {
                 "owner": "cpp",
                 "fileLocation": [

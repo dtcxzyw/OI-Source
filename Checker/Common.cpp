@@ -5,22 +5,37 @@
 #include <fstream>
 #include <iostream>
 #include <iterator>
+#ifdef __WIN32
+#include <windows.h>
+#else
 #include <sys/ioctl.h>
 #include <sys/types.h>
 #include <termios.h>
 #include <unistd.h>
+#endif
 #include <vector>
 std::string file2Str(const fs::path& path) {
     std::ifstream in(path);
     using Iter = std::istream_iterator<char>;
     return { Iter(in), Iter() };
 }
+static int getConsoleWidth() {
+#ifdef __WIN32
+    CONSOLE_SCREEN_BUFFER_INFO info;
+    GetConsoleScreenBufferInfo(
+        GetStdHandle(STD_OUTPUT_HANDLE), &info);
+    return info.dwSize.X;
+#else
+    struct winsize size;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
+    return size.ws_col;
+#endif
+}
 void showLine(const std::string& col,
               const std::string& str) {
-    struct winsize size;
-    ioctl(STDIN_FILENO, TIOCGWINSZ, &size);
     std::cout << '\r' << col << str << "\033[0m"
-              << std::string(size.ws_col - str.size(),
+              << std::string(getConsoleWidth() -
+                                 str.size(),
                              ' ')
               << std::flush;
 }

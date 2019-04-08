@@ -113,7 +113,7 @@ AC后询问OJ上的时间并加入samples中，在BZOJ计时方式下skip掉剩�
 ## TODO List
 
 - [ ] 使用正则表达式匹配输入输出文件名
-- [ ] 跨Windows平台
+- [ ] 跨Windows平台、分离平台实现
 - [ ] 支持LOJ的SPJ
 - [x] 支持LOJ的data.yml
 - [x] 自动下载并解压数据，自动获取时限和内存限制

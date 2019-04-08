@@ -16,7 +16,7 @@
             "MIMode": "gdb",
             "windows": {
                 "externalConsole": true,
-                "miDebuggerPath": "C:\\cygwin64\\bin\\gdb.exe"
+                "miDebuggerPath": "C:/msys64/usr/bin/gdb.exe"
             },
             "linux": {
                 "externalConsole": false
@@ -42,7 +42,7 @@
             "MIMode": "gdb",
             "windows": {
                 "externalConsole": true,
-                "miDebuggerPath": "C:\\cygwin64\\bin\\gdb.exe"
+                "miDebuggerPath": "C:/msys64/usr/bin/gdb.exe"
             },
             "linux": {
                 "externalConsole": false
@@ -68,7 +68,7 @@
             "MIMode": "gdb",
             "windows": {
                 "externalConsole": true,
-                "miDebuggerPath": "C:\\cygwin64\\bin\\gdb.exe"
+                "miDebuggerPath": "C:/msys64/usr/bin/gdb.exe"
             },
             "linux": {
                 "externalConsole": false

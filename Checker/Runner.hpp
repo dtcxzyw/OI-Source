@@ -33,8 +33,7 @@ struct RunResult {
 };
 void initRunner();
 RunResult run(const Option& opt, const Timer& timer,
-              const std::string& in,
-              const std::string& out);
+              const fs::path& in, const fs::path& out);
 std::string toString(Status st);
 std::string toString(RuntimeError st);
 std::string getCallName(long callid);
