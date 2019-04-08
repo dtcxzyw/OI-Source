@@ -6,7 +6,7 @@ int main() {
     std::cout.precision(2);
     std::cout << std::fixed;
 
-    line("Checker 2.7.0", '*');
+    line("Checker 2.7.1", '*');
     std::cout << "Built at " << __TIME__ << " on "
               << __DATE__ << std::endl;
     fs::path exec = scanExec();

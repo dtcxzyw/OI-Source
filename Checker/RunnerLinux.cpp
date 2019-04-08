@@ -26,7 +26,8 @@ static void runTask(const Option& opt,
     {
         struct rlimit limit;
         flag &= getrlimit(RLIMIT_CPU, &limit) == 0;
-        limit.rlim_cur = timer.remainSeconds();
+        limit.rlim_cur =
+            timer.remain() / 1000000LL + 1;
         flag &= setrlimit(RLIMIT_CPU, &limit) == 0;
     }
     if(!flag)
@@ -66,18 +67,15 @@ static RunResult watchTask(const Option& opt,
         int status = 0;
         struct rusage use;
         wait4(id, &status, 0, &use);
-        res.usrTime = use.ru_utime.tv_sec * 1000000LL +
+        res.time = use.ru_utime.tv_sec * 1000000LL +
             use.ru_utime.tv_usec;
-        res.totTime = res.usrTime +
-            use.ru_stime.tv_sec * 1000000LL +
-            use.ru_stime.tv_usec;
         res.mem = std::max(res.mem, getVmPeak(id));
         if(res.mem >= maxMem) {
             res.st = Status::MLE;
             ptrace(PTRACE_KILL, id, NULL, NULL);
             break;
         }
-        if(timer.isTLE(res.usrTime, res.totTime)) {
+        if(timer.isTLE(res.time)) {
             res.st = Status::TLE;
             ptrace(PTRACE_KILL, id, NULL, NULL);
             break;

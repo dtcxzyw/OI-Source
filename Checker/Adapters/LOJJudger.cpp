@@ -61,7 +61,6 @@ static bool readOpt(Option& opt,
                       "Text");
     std::cout << "\033[0m" << std::endl;
     opt.insert("TimeMode", TimeMode::perTask);
-    opt.insert("TimeVal", TimeVal::totTime);
     opt.insert("TimeLimit", maxTime * 1000);
     opt.insert("MemoryLimit", maxMem << 10);
     opt.insert("CompareMode", compareMode);

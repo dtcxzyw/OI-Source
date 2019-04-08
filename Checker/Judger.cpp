@@ -79,10 +79,8 @@ RunResult test(const Option& opt, const Data& data,
     if(res.st == Status::SE || res.st == Status::UKE)
         std::cout << "(" << std::strerror(errno)
                   << ") ";
-    std::cout << timer.choose(res.usrTime,
-                              res.totTime) /
-            1000.0
-              << " ms " << res.mem / 1024.0 << " MB"
+    std::cout << res.time / 1000.0 << " ms "
+              << res.mem / 1024.0 << " MB"
               << std::endl;
     std::cout << "SyscallCount=" << res.syscallcnt
               << std::endl;

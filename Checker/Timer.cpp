@@ -2,20 +2,14 @@
 #include "Runner.hpp"
 #include <fstream>
 #include <iostream>
-int64_t Timer::choose(int64_t usr, int64_t tot) const {
-    return mVal == TimeVal::totTime ? tot : usr;
+void Timer::addTask(int64_t time) {
+    mTotTime += time;
+    mMaxTime = std::max(mMaxTime, time);
 }
-void Timer::addTask(int64_t usrTime, int64_t totTime) {
-    int64_t t = choose(usrTime, totTime);
-    mTotTime += t;
-    mMaxTime = std::max(mMaxTime, t);
-}
-bool Timer::isTLE(int64_t usrTime,
-                  int64_t totTime) const {
-    int64_t t = choose(usrTime, totTime);
+bool Timer::isTLE(int64_t time) const {
     return (mMode == TimeMode::perTask ?
-                t :
-                t + mTotTime) > mTimeLimit;
+                time :
+                time + mTotTime) > mTimeLimit;
 }
 Timer::Timer(const Option& opt)
     : mTotTime(0), mMaxTime(0),
@@ -23,21 +17,25 @@ Timer::Timer(const Option& opt)
           opt.get<int64_t>("TimeLimit", 1000000)),
       mLocalSamples(0), mRemoteSamples(0),
       mMode(opt.get("TimeMode", TimeMode::perTask)),
-      mVal(opt.get("TimeVal", TimeVal::totTime)),
       mSamples(opt.get<fs::path>("TimeSamples", "")) {
-    std::ifstream sam(mSamples);
-    while(sam) {
-        int64_t a, b;
-        sam >> a >> b;
-        mLocalSamples += a, mRemoteSamples += b;
-    }
-    if(mRemoteSamples) {
-        mTimeLimit = mTimeLimit * mLocalSamples /
-            mRemoteSamples;
-        std::cout << "time scaling factor="
-                  << static_cast<FT>(mLocalSamples) /
-                mRemoteSamples
-                  << std::endl;
+    if(fs::exists(mSamples)) {
+        std::ifstream sam(mSamples);
+        while(sam) {
+            int64_t a, b;
+            sam >> a >> b;
+            mLocalSamples += a, mRemoteSamples += b;
+        }
+        if(mRemoteSamples) {
+            mTimeLimit = mTimeLimit * mLocalSamples /
+                mRemoteSamples;
+            std::cout
+                << "time scaling factor="
+                << static_cast<FT>(mLocalSamples) /
+                    mRemoteSamples
+                << std::endl;
+        }
+    } else {
+        std::ofstream out(mSamples);
     }
 }
 bool Timer::isTLE() const {
@@ -65,11 +63,10 @@ void Timer::report() const {
         std::cout << std::endl;
     }
 }
-int64_t Timer::remainSeconds() const {
-    int64_t rm = mMode == TimeMode::perTask ?
+int64_t Timer::remain() const {
+    return mMode == TimeMode::perTask ?
         mTimeLimit :
         mTimeLimit - mTotTime;
-    return rm / 1000000LL + 1;
 }
 void Timer::addSample() {
     std::ofstream sam(mSamples, std::ios::app);
@@ -78,9 +75,13 @@ void Timer::addSample() {
     line("Add Time Sample");
     int64_t remote = 0,
             local = (mTotTime - 1) / 1000 + 1;
-    std::cout << "OJ's time(prediction = "
-              << local * mRemoteSamples / mLocalSamples
-              << " ms): " << std::flush;
+    if(mLocalSamples)
+        std::cout << "OJ's time(prediction = "
+                  << local * mRemoteSamples /
+                mLocalSamples
+                  << " ms): " << std::flush;
+    else
+        std::cout << "OJ's time: " << std::flush;
     std::cin >> remote;
     if(remote)
         sam << local << ' ' << remote << std::endl;

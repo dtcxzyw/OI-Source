@@ -214,7 +214,7 @@
 - [x] [国家集训队2]Tree I
 - [x] [八省联考2018]林克卡特树lct
 - [x] BZOJ5311贞鱼
-- [ ] [codeforces321E]Ciel and Gondolas
+- [x] [codeforces321E]Ciel and Gondolas
 # 单调队列
 - [x] P2254 [NOI2005]瑰丽华尔兹
 - [x] P3572 [POI2014]PTA-Little Bird
@@ -540,7 +540,7 @@
 # 整体二分
 - [ ] CF603E Pastoral Oddities
 - [ ] bzoj2527
-- [ ] bzoj2738
+- [x] bzoj2738
 - [x] BZOJ3110
 # 博弈论
 - [ ] LOJ#524. 「LibreOJ β Round #4」游戏

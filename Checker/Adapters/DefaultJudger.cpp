@@ -19,7 +19,7 @@ bool runAll(const Option& opt,
         ++cnt[res.st];
         if(res.st == Status::AC ||
            res.st == Status::WA) {
-            timer.addTask(res.usrTime, res.totTime);
+            timer.addTask(res.time);
             mem = std::max(mem, res.mem);
             maxErr = std::max(maxErr, res.maxErr);
             for(auto call : res.callCnt) {
@@ -27,7 +27,7 @@ bool runAll(const Option& opt,
                 val = std::max(val, call.second);
             }
         } else if(res.st == Status::TLE)
-            timer.addTask(res.usrTime, res.totTime);
+            timer.addTask(res.time);
         if(res.st != Status::AC) {
             if(!first.count(res.st) ||
                file_size(first[res.st]) >

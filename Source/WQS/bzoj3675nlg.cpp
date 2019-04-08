@@ -46,7 +46,7 @@ int main() {
     int k = read() + 1;
     for(int i = 1; i <= n; ++i)
         sum[i] = sum[i - 1] + read();
-    const Int64 inf = 1LL << 60;
+    const Int64 inf = sum[n] * sum[n];
     Int64 l = 0, r = inf, ans = 0;
     while(l <= r) {
         Int64 m = (l + r) >> 1;

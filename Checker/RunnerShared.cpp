@@ -1,8 +1,8 @@
 #include "Runner.hpp"
 RunResult::RunResult()
-    : usrTime(0), totTime(0), mem(0), syscallcnt(0),
-      st(Status::UKE), ret(RuntimeError::Unknown),
-      sig(-1), maxErr(0.0) {}
+    : time(0), mem(0), syscallcnt(0), st(Status::UKE),
+      ret(RuntimeError::Unknown), sig(-1),
+      maxErr(0.0) {}
 std::string toString(Status st) {
     switch(st) {
         case Status::AC:
