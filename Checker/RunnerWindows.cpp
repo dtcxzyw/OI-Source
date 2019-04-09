@@ -44,7 +44,8 @@ private:
 
 public:
     Handle(HANDLE handle) : mHandle(handle) {
-        if(handle == NULL)
+        if(handle == INVALID_HANDLE_VALUE ||
+           handle == NULL)
             reportError();
     }
     HANDLE get() const {
@@ -86,7 +87,7 @@ static RunResult runImpl(const Option& opt,
                          const Timer& timer,
                          const fs::path& in,
                          const fs::path& out) {
-    Handle hjob = CreateJobObjectA(NULL, NULL);
+    Handle hjob = CreateJobObjectW(NULL, NULL);
     JOBOBJECT_EXTENDED_LIMIT_INFORMATION limit;
     limit.BasicLimitInformation.PerProcessUserTimeLimit
         .QuadPart = timer.remain() * 10;
@@ -106,7 +107,16 @@ static RunResult runImpl(const Option& opt,
     assert(SetInformationJobObject(
         hjob.get(), JobObjectEndOfJobTimeInformation,
         &action, sizeof(action)));
-    std::pair<HANDLE, HANDLE> phnd = launch(opt, );
+    Handle ihnd = CreateFileW(
+        in.c_str(), GENERIC_READ, 0, NULL,
+        OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL |
+            FILE_FLAG_SEQUENTIAL_SCAN,
+        NULL);
+    Handle ohnd = CreateFileW(
+        out.c_str(), GENERIC_WRITE, 0, NULL,
+        CREATE_NEW, FILE_ATTRIBUTE_TEMPORARY, NULL);
+    std::pair<HANDLE, HANDLE> phnd =
+        launch(opt, ihnd, ohnd);
 }
 RunResult run(const Option& opt, const Timer& timer,
               const fs::path& in,
