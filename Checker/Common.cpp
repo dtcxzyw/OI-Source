@@ -67,7 +67,8 @@ fs::path TempFile::path() const {
     return mFile;
 }
 TempFile::~TempFile() {
-    fs::remove(mFile);
+    if(fs::exists(mFile))
+        fs::remove(mFile);
 }
 static void clearCache() {
     if(fs::exists("Cache")) {
@@ -121,11 +122,13 @@ fs::path downloadFile(const std::string& url,
                               "--no-use-server-"
                               "timestamps -O Cache/" +
                 pid + " " + url;
+            std::cout << cmd << std::endl;
             int res = system(cmd.c_str());
             line("");
             if(res != 0 ||
                (verify && !verifyZip(cacheFile))) {
-                fs::remove(cacheFile);
+                if(fs::exists(cacheFile))
+                    fs::remove(cacheFile);
                 return fs::path();
             }
         } else

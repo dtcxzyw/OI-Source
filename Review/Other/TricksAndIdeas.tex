@@ -503,6 +503,9 @@ cdq分治用来解决偏序问题（支持动态偏序问题，但仍然要求�
 	使用单调栈维护位置作为答案的区间，二分查询回答询问。
 	\item 对于复制数据结构的问题，考虑复制的每个元素中待统计信息的占比，修改时大部分的转移
 	是相同的。
+	\item 方差计算的转化：\begin{displaymath}
+		\sum{(x_i-\bar{x})^2}=\sum{x_i^2}-n\bar{x}^2
+	\end{displaymath}
 \end{itemize}
 \subsection{比赛注意事项}
 \subsubsection{Linux/GCC工具}

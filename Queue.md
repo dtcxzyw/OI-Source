@@ -484,7 +484,6 @@
 - [ ] LOJ#2981. 「THUSCH 2017」如果奇迹有颜色
 # 概率期望
 - [ ] LOJ#2267. 「SDOI2017」龙与地下城
-- [ ] bzoj3534
 - [ ] bzoj3811
 # 构造
 - [ ] LOJ Round#11 Misaka Network
@@ -535,7 +534,7 @@
 - [x] bzoj2288
 # 整体二分
 - [ ] CF603E Pastoral Oddities
-- [ ] bzoj2527
+- [x] bzoj2527
 - [x] bzoj2738
 - [x] BZOJ3110
 - [x] LOJ#2049. 「HNOI2016」网络
@@ -572,7 +571,7 @@
 # 模拟退火
 - [x] 「BZOJ 3680」吊打 XXX
 - [ ] 「JSOI 2016」炸弹攻击
-- [ ] 「HAOI 2006」均分数据
+- [x] 「HAOI 2006」均分数据
 - [ ] bzoj2336
 # 交互题
 - [ ] 「APIO2017」考拉的游戏

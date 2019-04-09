@@ -196,3 +196,6 @@ std::string getCallName(long callid) {
         return match[1].str();
     return "Unknown";
 }
+void platformInfo() {
+    system("cat /proc/version");
+}

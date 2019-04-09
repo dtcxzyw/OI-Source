@@ -7,9 +7,8 @@ void Timer::addTask(int64_t time) {
     mMaxTime = std::max(mMaxTime, time);
 }
 bool Timer::isTLE(int64_t time) const {
-    return (mMode == TimeMode::perTask ?
-                time :
-                time + mTotTime) > mTimeLimit;
+    return (mMode == TimeMode::perTask ? time : time +
+                    mTotTime) > mTimeLimit;
 }
 Timer::Timer(const Option& opt)
     : mTotTime(0), mMaxTime(0),
@@ -21,7 +20,7 @@ Timer::Timer(const Option& opt)
     if(fs::exists(mSamples)) {
         std::ifstream sam(mSamples);
         while(sam) {
-            int64_t a, b;
+            int64_t a = 0, b = 0;
             sam >> a >> b;
             mLocalSamples += a, mRemoteSamples += b;
         }

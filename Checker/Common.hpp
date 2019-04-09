@@ -43,6 +43,8 @@ struct Data final {
     bool operator<(const Data& rhs) const;
 };
 struct Unmovable {
+    Unmovable() = default;
+    ~Unmovable() = default;
     Unmovable(const Unmovable&) = delete;
     Unmovable(Unmovable&&) = delete;
     Unmovable& operator=(const Unmovable&) = delete;

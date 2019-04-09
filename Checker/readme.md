@@ -113,10 +113,12 @@ AC后询问OJ上的时间并加入samples中，在BZOJ计时方式下skip掉剩�
 2.7.1(4.8)
 准备跨Windows平台，Timer全部使用用户态计时以避免计算syscall钩子的开销
 
+2.8.0(4.9)
+初步跨Windows平台
+
 ## TODO List
 
-- [ ] 使用正则表达式匹配输入输出文件名
-- [ ] 跨Windows平台、分离平台实现
+- [x] 跨Windows平台、分离平台实现
 - [ ] 支持LOJ的SPJ
 - [x] 支持LOJ的data.yml
 - [x] 自动下载并解压数据，自动获取时限和内存限制
@@ -128,3 +130,4 @@ AC后询问OJ上的时间并加入samples中，在BZOJ计时方式下skip掉剩�
 - [ ] 支持文件输入输出
 - [ ] 支持提交答案题
 - [ ] 支持Event Tracing for Windows[ETW](https://docs.microsoft.com/zh-cn/windows/desktop/ETW/event-tracing-portal)
+- [ ] 支持子任务

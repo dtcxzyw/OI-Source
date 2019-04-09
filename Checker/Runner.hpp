@@ -32,6 +32,7 @@ struct RunResult {
     RunResult();
 };
 void initRunner();
+void platformInfo();
 RunResult run(const Option& opt, const Timer& timer,
               const fs::path& in, const fs::path& out);
 std::string toString(Status st);
