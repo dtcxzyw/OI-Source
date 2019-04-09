@@ -114,7 +114,7 @@ AC后询问OJ上的时间并加入samples中，在BZOJ计时方式下skip掉剩�
 准备跨Windows平台，Timer全部使用用户态计时以避免计算syscall钩子的开销
 
 2.8.0(4.9)
-初步跨Windows平台
+初步跨Windows平台，并且将评测有关文件移至临时文件夹
 
 ## TODO List
 
@@ -126,8 +126,11 @@ AC后询问OJ上的时间并加入samples中，在BZOJ计时方式下skip掉剩�
 - [ ] 自动更新
 - [ ] 本地性能比较（从LOJ上扒代码）
 - [ ] 序列化配置OJ
+- [ ] 功能模块化
 - [x] 评测机与本机时间缩放
 - [ ] 支持文件输入输出
 - [ ] 支持提交答案题
+- [ ] 支持Hardware Counter Profiling[HCP](https://docs.microsoft.com/en-us/windows/desktop/api/_hcp/)
 - [ ] 支持Event Tracing for Windows[ETW](https://docs.microsoft.com/zh-cn/windows/desktop/ETW/event-tracing-portal)
-- [ ] 支持子任务
+- [ ] 支持SubTask
+- [ ] 将平台依赖文件移动到Platforms中去

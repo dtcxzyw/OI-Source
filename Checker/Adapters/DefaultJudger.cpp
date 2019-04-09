@@ -38,6 +38,7 @@ bool runAll(const Option& opt,
     bool flag = cnt[Status::AC] ==
             static_cast<int>(data.size()) &&
         !timer.isTLE();
+#if !defined(__WIN32)
     PerformanceInfo pinfo;
     if(flag) {
         line("PerfAnalyzer");
@@ -46,6 +47,7 @@ bool runAll(const Option& opt,
         showLine("\033[34m",
                  "All analysis has been performed.");
     }
+#endif
     line("Summary");
     std::cout << "Score "
               << cnt[Status::AC] * 100 / data.size()
@@ -76,6 +78,7 @@ bool runAll(const Option& opt,
                           << ")";
             std::cout << std::endl;
         }
+#if !defined(__WIN32)
     if(flag) {
         pinfo.report();
         line("Hot System Call");
@@ -94,13 +97,14 @@ bool runAll(const Option& opt,
                       << std::endl;
         timer.addSample();
     }
+#endif
     return flag;
 }
 #define Input(name)                          \
     std::cout << #name << ":" << std::flush; \
     std::cin >> name
 bool runDefault(const fs::path& exec) {
-    std::vector<Data> data = scanData("data");
+    std::vector<Data> data = scanData();
     if(data.size()) {
         line("Arguments");
         int64_t maxTime, maxMem;

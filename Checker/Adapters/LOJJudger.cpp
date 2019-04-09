@@ -137,7 +137,7 @@ static bool runLOJ(const fs::path& exec) {
         return callSYZOJTools(exec);
     }
 #endif
-    runAll(opt, scanData("data"));
+    runAll(opt, scanData());
     return true;
 }
 static OJAdapterInfo

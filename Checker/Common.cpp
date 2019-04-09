@@ -56,11 +56,12 @@ bool Data::operator<(const Data& rhs) const {
     return input < rhs.input;
 }
 static fs::path uniqueTempFileName() {
-    char name[] = "TMP_XXXXXX";
-    if(mkstemp(name) == -1)
+    std::string temp =
+        fs::temp_directory_path() / "TMP_XXXXXX";
+    if(mkstemp(temp.data()) == -1)
         throw std::runtime_error(
             "Failed to create temp file.");
-    return name;
+    return temp;
 }
 TempFile::TempFile() : mFile(uniqueTempFileName()) {}
 fs::path TempFile::path() const {
@@ -138,11 +139,12 @@ fs::path downloadFile(const std::string& url,
     }
 }
 bool unzip(const fs::path& path) {
-    fs::remove_all("data");
-    if(!fs::create_directory("data"))
+    fs::path dst = fs::temp_directory_path() / "data";
+    fs::remove_all(dst);
+    if(!fs::create_directory(dst))
         return false;
-    std::string cmd =
-        "unzip -q -j -d data " + path.string();
+    std::string cmd = "unzip -q -j -d " +
+        dst.string() + " " + path.string();
     int res = system(cmd.c_str());
     return res == 0;
 }

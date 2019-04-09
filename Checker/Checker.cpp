@@ -1,11 +1,10 @@
 #include "OJAdapter.hpp"
+#include "Platforms/Platform.hpp"
 #include "Runner.hpp"
 #include "Scanner.hpp"
 #include <iostream>
-#include <locale>
 int main() {
-    initRunner();
-    std::locale::global(std::locale("C.UTF-8"));
+    initPlatform();
     std::cout.precision(2);
     std::cout << std::fixed;
 
@@ -13,6 +12,10 @@ int main() {
     std::cout << "Built at " << __TIME__ << " on "
               << __DATE__ << std::endl;
     platformInfo();
+    if(needUpdate())
+        std::cout << "\033[33mThe checker is "
+                     "out-of-date.\033[0m"
+                  << std::endl;
     fs::path exec = scanExec();
     std::cout << "found program:" << exec << std::endl;
     autoRun(exec);

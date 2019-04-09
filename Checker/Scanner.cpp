@@ -1,10 +1,12 @@
 #include "Scanner.hpp"
+#include "Platforms/Platform.hpp"
 #include <algorithm>
 #include <iostream>
 #include <map>
 #include <set>
 using DirIter = fs::directory_iterator;
-std::vector<Data> scanData(const fs::path& dir) {
+std::vector<Data> scanData() {
+    fs::path dir = fs::temp_directory_path() / "data";
     std::map<fs::path, fs::path> in, out;
     std::vector<Data> res;
     for(auto it : DirIter(dir)) {
@@ -65,4 +67,17 @@ fs::path scanExec() {
             mft = cft, res = cp;
     }
     return fs::relative(res);
+}
+bool needUpdate() {
+    fs::path self = selfPath();
+    auto selfTime = fs::last_write_time(self);
+    auto srcDir = readConfig("CheckerSrcDir");
+    for(auto p :
+        fs::recursive_directory_iterator(srcDir)) {
+        p.refresh();
+        if(p.is_regular_file() &&
+           p.last_write_time() > selfTime)
+            return true;
+    }
+    return false;
 }

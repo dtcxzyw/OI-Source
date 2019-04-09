@@ -467,9 +467,7 @@
 - [x] LOJ2032 [SDOI2016]游戏
 - [ ] BZOJ4700: 适者
 - [x] 「Heoi2013」Segment
-- [ ] bzoj1568
-- [ ] bzoj4515
-- [ ] bzoj3585
+- [x] bzoj3585
 # 分治
 - [x] UVA1608 Non-boring sequences
 - [x] P4755 Beautiful Pair

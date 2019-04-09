@@ -159,19 +159,6 @@ RunResult run(const Option& opt, const Timer& timer,
         return watchTask(opt, timer, id);
     throw;
 }
-void initRunner() {
-    struct rlimit limit;
-    getrlimit(RLIMIT_STACK, &limit);
-    limit.rlim_cur = limit.rlim_max;
-    std::cout << "Max stack size="
-              << (limit.rlim_max == RLIM_INFINITY ?
-                      std::string("unlimit") :
-                      std::to_string(limit.rlim_max >>
-                                     10) +
-                          " MB")
-              << std::endl;
-    setrlimit(RLIMIT_STACK, &limit);
-}
 static std::string getCallTableName() {
 #ifdef __i386__
 #define FileName "unistd_32.h"
@@ -195,7 +182,4 @@ std::string getCallName(long callid) {
     if(match.size() == 2)
         return match[1].str();
     return "Unknown";
-}
-void platformInfo() {
-    system("cat /proc/version");
 }

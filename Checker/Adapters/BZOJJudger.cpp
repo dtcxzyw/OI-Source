@@ -70,7 +70,7 @@ static bool runBZOJ(const fs::path& exec) {
         return false;
     if(!readOpt(opt, problem))
         return false;
-    auto data = scanData("data");
+    auto data = scanData();
     runAll(opt, data);
     return true;
 }
