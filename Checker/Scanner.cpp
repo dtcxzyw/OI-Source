@@ -72,6 +72,13 @@ bool needUpdate() {
     fs::path self = selfPath();
     auto selfTime = fs::last_write_time(self);
     auto srcDir = readConfig("CheckerSrcDir");
+    if(srcDir.empty()) {
+        std::cout << "\033[33mPlease specify the "
+                     "source code's path in "
+                     "checker.config\033[0m"
+                  << std::endl;
+        return false;
+    }
     for(auto p :
         fs::recursive_directory_iterator(srcDir)) {
         p.refresh();

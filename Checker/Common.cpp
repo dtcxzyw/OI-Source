@@ -57,7 +57,8 @@ bool Data::operator<(const Data& rhs) const {
 }
 static fs::path uniqueTempFileName() {
     std::string temp =
-        fs::temp_directory_path() / "TMP_XXXXXX";
+        (fs::temp_directory_path() / "TMP_XXXXXX")
+            .string();
     if(mkstemp(temp.data()) == -1)
         throw std::runtime_error(
             "Failed to create temp file.");

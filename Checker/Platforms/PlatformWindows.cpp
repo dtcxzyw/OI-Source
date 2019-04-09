@@ -9,10 +9,11 @@ static std::string winerr2String(int cond) {
 }
 Win32APIError::Win32APIError(const SourceLocation& loc)
     : mLoc(loc) {}
-const char* name() const noexcept override {
+const char* Win32APIError::name() const noexcept {
     return "Win32API";
 }
-std::string message(int cond) const noexcept override {
+std::string
+Win32APIError::message(int cond) const noexcept {
     return "\033[35mSystem Error:\nError Code: " +
         std::to_string(cond) + "\nError Message: " +
         winerr2String(cond) + "\nFunction: " +
@@ -60,7 +61,6 @@ fs::path selfPath() {
     WCHAR buf[256];
     DWORD size = sizeof(buf);
     winAssert(QueryFullProcessImageNameW(
-        GetCurrentProcess(), PROCESS_NAME_NATIVE, buf,
-        &size));
+        GetCurrentProcess(), 0, buf, &size));
     return buf;
 }
