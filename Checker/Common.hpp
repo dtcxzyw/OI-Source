@@ -42,16 +42,18 @@ struct Data final {
     Data(const fs::path& in, const fs::path& out);
     bool operator<(const Data& rhs) const;
 };
-class TempFile final {
+struct Unmovable {
+    Unmovable(const Unmovable&) = delete;
+    Unmovable(Unmovable&&) = delete;
+    Unmovable& operator=(const Unmovable&) = delete;
+    Unmovable& operator=(Unmovable&&) = delete;
+};
+class TempFile final : private Unmovable {
 private:
     fs::path mFile;
 
 public:
     TempFile();
-    TempFile(const TempFile&) = delete;
-    TempFile(TempFile&&) = delete;
-    TempFile& operator=(const TempFile&) = delete;
-    TempFile& operator=(TempFile&&) = delete;
     fs::path path() const;
     ~TempFile();
 };

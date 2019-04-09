@@ -237,15 +237,11 @@
 - [x] SP16580 QTREE7
 - [x] P4299 首都
 - [ ] UOJ#274. 【清华集训2016】温暖会指引我们前行
-- [ ] BZOJ 3514
-- [ ] BZOJ 2555
-- [ ] P2056 [ZJOI2007]捉迷藏
-- [ ] bzoj2759
+- [x] BZOJ 3514
+- [ ] bzoj2759（LCT维护基环树，做完加总结）
 # 平衡树
 - [x] LOJ#516. 「LibreOJ β Round #2」DP 一般看规律
-- [ ] bzoj3545
-- [ ] bzoj2733
-- [ ] bzoj3551
+- [x] bzoj3545
 # 容斥/反演/筛法/计数（顺便加入readme中常见套路）
 - [x] LOJ#153. 集合覆盖计数
 - [ ] LOJ#154. 集合划分计数
@@ -301,6 +297,7 @@
 - [ ] bzoj2813
 - [ ] bzoj4428
 - [ ] UOJ450
+- [ ] LOJ6072
 # 扩展欧几里得
 - [ ] LOJ#6440
 - [ ] CF868G
@@ -361,7 +358,6 @@
 - [ ] LOJ#2372. 「CEOI2002」臭虫集成电路公司
 - [ ] ZOJ 2125 Rocket Mania
 # CDQ分治
-- [ ] LOJ#2049. 「HNOI2016」网络
 - [ ] LOJ#2056. 「TJOI / HEOI2016」序列
 - [x] Luogu P3206
 - [x] bzoj2989 数列
@@ -542,6 +538,7 @@
 - [ ] bzoj2527
 - [x] bzoj2738
 - [x] BZOJ3110
+- [x] LOJ#2049. 「HNOI2016」网络
 # 博弈论
 - [ ] LOJ#524. 「LibreOJ β Round #4」游戏
 - [ ] LOJ#531. 「LibreOJ β Round #5」游戏
