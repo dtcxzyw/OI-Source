@@ -12,8 +12,8 @@ Win32APIError::Win32APIError(const SourceLocation& loc)
 const char* Win32APIError::name() const noexcept {
     return "Win32API";
 }
-std::string
-Win32APIError::message(int cond) const noexcept {
+std::string Win32APIError::message(int cond) const
+    noexcept {
     return "\033[35mSystem Error:\nError Code: " +
         std::to_string(cond) + "\nError Message: " +
         winerr2String(cond) + "\nFunction: " +
@@ -43,6 +43,10 @@ void winAssert(WINBOOL res,
     if(res == FALSE)
         reportError(loc);
 }
+void setCodePage(int codePage) {
+    winAssert(SetConsoleCP(codePage));
+    winAssert(SetConsoleOutputCP(codePage));
+}
 void initPlatform() {
     HANDLE ohnd = GetStdHandle(STD_OUTPUT_HANDLE);
     if(ohnd == INVALID_HANDLE_VALUE)
@@ -52,7 +56,7 @@ void initPlatform() {
     winAssert(SetConsoleMode(
         ohnd,
         old | ENABLE_VIRTUAL_TERMINAL_PROCESSING));
-    winAssert(SetConsoleCP(65001));
+    setCodePage(65001);
 }
 void platformInfo() {
     system("ver");

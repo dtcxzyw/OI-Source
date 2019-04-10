@@ -140,3 +140,34 @@ int gcdX(int a,int b) {
     return a|b;
 }
 \end{lstlisting}
+\subsection{O(n)-O(1)gcd}
+例题：BZOJ4454 C Language Practice
+
+该算法依赖于这个定理：
+\begin{theorem}
+	任意正整数$x$都可以分解为$x_1x_2x_3$的形式，其中$x_i$要么$\leq\sqrt{x}$，要么是素数。
+\end{theorem}
+
+在计算$gcd(x,y)$时，如果我们知道了$x$的分解$x_1x_2x_3$，那么答案可以表示为
+$gcd(x_1,y)gcd(x_2,y')gcd(x_3,y'')$，其中$y'$为$y$消去因子$gcd(x_1,y)$后的值，$y''$类似。
+
+接下来分类讨论计算（记$n=max\left\{x\right\}$）：
+\begin{itemize}
+	\item 若$x_i\leq \sqrt{n}$，那么可以$O(n)$预处理$1\sim \sqrt{n}$两两之间的gcd
+	（利用$gcd(x,y)=gcd(x-y,y)$递推）,然后$O(1)$查询$gcd(x_i,y\%x_i)$。
+	\item 否则$x_i$是素数，判断$x_i$是否整除$y$。
+\end{itemize}
+
+至于计算$x$的因式分解，可以使用线性筛筛出最小质因子$d$，然后使用$x/d$的因子分解递推出
+$x$的分解，选取最小的因子乘以$d$。
+
+参考代码：
+\lstinputlisting{Source/Source/'Number Theory'/bzoj4454.cpp}
+
+该方法参考了wzj\footnote{
+	BZOJ4454: C Language Practice
+	\url{https://www.cnblogs.com/wzj-is-a-juruo/p/5316963.html}
+}和fjzzq2002\footnote{
+	O(1) 查询gcd
+	\url{https://www.cnblogs.com/zzqsblog/p/5436775.html}
+}的博客。

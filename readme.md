@@ -270,7 +270,7 @@
 - [ ] 约数函数前缀和 IOI2018 zzt
 - [ ] 轨道-稳定集定理
 - [ ] zkw线段树常用模板
-- [ ] O(1)gcd
+- [x] O(1)gcd[By fjzzq2002](https://www.cnblogs.com/zzqsblog/p/5436775.html)
 - [ ] Ukkonen线性构造后缀树[By permui](https://www.cnblogs.com/owenyu/p/6875887.html?utm_source=itdadao&utm_medium=referral)
 - [ ] Q-learning
 - [ ] FFT优化[By zjt](http://zjt-blog.cc/articles/154)

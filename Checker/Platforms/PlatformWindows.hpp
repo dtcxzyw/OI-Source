@@ -10,8 +10,8 @@ private:
 public:
     Win32APIError(const SourceLocation& loc);
     const char* name() const noexcept override;
-    std::string
-    message(int cond) const noexcept override;
+    std::string message(int cond) const
+        noexcept override;
     ~Win32APIError() override = default;
 };
 [[noreturn]] void
@@ -31,3 +31,4 @@ public:
 void winAssert(WINBOOL res,
                const SourceLocation& loc =
                    SourceLocation::current());
+void setCodePage(int codePage);

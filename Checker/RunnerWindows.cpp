@@ -69,7 +69,7 @@ static RunResult runImpl(const Option& opt,
         NULL);
     Handle ohnd = CreateFileW(
         out.c_str(), GENERIC_WRITE, 0, NULL,
-        CREATE_ALWAYS, FILE_ATTRIBUTE_TEMPORARY, NULL);
+        CREATE_NEW, FILE_ATTRIBUTE_TEMPORARY, NULL);
     std::pair<HANDLE, HANDLE> phnd =
         launch(opt, ihnd, ohnd);
     Handle process(phnd.first);
@@ -131,7 +131,9 @@ RunResult run(const Option& opt, const Timer& timer,
     try {
         return runImpl(opt, timer, in, out);
     } catch(const std::system_error& err) {
+        setCodePage(936);
         std::cout << err.what() << std::endl;
+        setCodePage(65001);
         RunResult res;
         res.st = Status::SE;
         return res;

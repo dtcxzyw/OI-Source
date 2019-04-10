@@ -10,9 +10,9 @@ static bool readOpt(Option& opt,
                     const std::string& str) {
     std::string title;
     {
-        std::regex pattern(
-            "<h1class=\"uiheader\">(\\S+)</h1>",
-            regexFlag4Search);
+        std::regex pattern("<h1class=\"uiheader\">\\s*"
+                           "([ \\S]+)\\s*</h1>",
+                           regexFlag4Search);
         std::smatch match;
         std::regex_search(str, match, pattern);
         if(match.size() == 2)
@@ -22,7 +22,7 @@ static bool readOpt(Option& opt,
     }
     int64_t maxTime = 0;
     {
-        std::regex pattern("([0-9]+)ms</span>",
+        std::regex pattern("([0-9]+) ms</span>",
                            regexFlag4Search);
         std::smatch match;
         std::regex_search(str, match, pattern);
@@ -33,7 +33,7 @@ static bool readOpt(Option& opt,
     }
     int64_t maxMem = 0;
     {
-        std::regex pattern("([0-9]+)MiB</span>",
+        std::regex pattern("([0-9]+) MiB</span>",
                            regexFlag4Search);
         std::smatch match;
         std::regex_search(str, match, pattern);

@@ -116,6 +116,9 @@ AC后询问OJ上的时间并加入samples中，在BZOJ计时方式下skip掉剩�
 2.8.0(4.9)
 初步跨Windows平台，并且将评测有关文件移至临时文件夹
 
+2.8.1(4.10)
+解决Windows平台下控制台输出乱码问题
+
 ## TODO List
 
 - [x] 跨Windows平台、分离平台实现

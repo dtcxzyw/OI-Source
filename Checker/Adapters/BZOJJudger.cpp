@@ -8,8 +8,9 @@ static bool readOpt(Option& opt,
                     const std::string& str) {
     std::string title;
     {
-        std::regex pattern("<title>(\\S+)</title>",
-                           regexFlag4Search);
+        std::regex pattern(
+            "<title>\\s*([ \\S]+)\\s*</title>",
+            regexFlag4Search);
         std::smatch match;
         std::regex_search(str, match, pattern);
         if(match.size() == 2)
@@ -20,7 +21,7 @@ static bool readOpt(Option& opt,
     int64_t maxTime = 0;
     {
         std::regex pattern(
-            "[：|</span>]([0-9]+)[s|Sec]",
+            "[：|</span>]([0-9]+)[s| ?Sec]",
             regexFlag4Search);
         std::smatch match;
         std::regex_search(str, match, pattern);
@@ -31,7 +32,7 @@ static bool readOpt(Option& opt,
     }
     int64_t maxMem = 0;
     {
-        std::regex pattern("([0-9]+)MB",
+        std::regex pattern("([0-9]+) ?MB",
                            regexFlag4Search);
         std::smatch match;
         std::regex_search(str, match, pattern);

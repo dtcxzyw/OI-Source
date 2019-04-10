@@ -5,6 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include <iterator>
+#include <random>
 #ifdef __WIN32
 #include <windows.h>
 #else
@@ -16,8 +17,12 @@
 #include <vector>
 std::string file2Str(const fs::path& path) {
     std::ifstream in(path);
-    using Iter = std::istream_iterator<char>;
-    return { Iter(in), Iter() };
+    in.seekg(0, std::ios::end);
+    auto siz = in.tellg();
+    in.seekg(0, std::ios::beg);
+    std::vector<char> data(siz);
+    in.read(data.data(), siz);
+    return std::string(data.data(), data.data() + siz);
 }
 static int getConsoleWidth() {
 #ifdef __WIN32
@@ -56,21 +61,22 @@ bool Data::operator<(const Data& rhs) const {
     return input < rhs.input;
 }
 static fs::path uniqueTempFileName() {
-    std::string temp =
-        (fs::temp_directory_path() / "TMP_XXXXXX")
-            .string();
-    if(mkstemp(temp.data()) == -1)
-        throw std::runtime_error(
-            "Failed to create temp file.");
-    return temp;
+    static std::mt19937_64 dev(
+        std::chrono::high_resolution_clock::now()
+            .time_since_epoch()
+            .count());
+    return fs::temp_directory_path() /
+        std::to_string(dev());
 }
 TempFile::TempFile() : mFile(uniqueTempFileName()) {}
 fs::path TempFile::path() const {
     return mFile;
 }
 TempFile::~TempFile() {
-    if(fs::exists(mFile))
+    try {
         fs::remove(mFile);
+    } catch(...) {
+    }
 }
 static void clearCache() {
     if(fs::exists("Cache")) {
