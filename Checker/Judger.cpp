@@ -1,4 +1,5 @@
 #include "Judger.hpp"
+#include "Platforms/Platform.hpp"
 #include <algorithm>
 #include <cmath>
 #include <cstring>
@@ -14,11 +15,11 @@ static std::string newline(std::string str) {
     return str;
 }
 template <typename T>
-static bool
-compareImpl(const fs::path& out, const fs::path& stdi,
-            const fs::path& stdo,
-            const std::function<bool(const T&,
-                                     const T&)>& cmp) {
+static bool compareImpl(
+    const fs::path& out, const fs::path& stdi,
+    const fs::path& stdo,
+    const std::function<bool(const T&, const T&)>&
+        cmp) {
     std::ifstream outf(out), stdof(stdo);
     using Iter = std::istream_iterator<T>;
     if(std::equal(Iter(outf), Iter(), Iter(stdof),
@@ -89,24 +90,10 @@ RunResult test(const Option& opt, const Data& data,
                 tmpOutput.path(), data.input,
                 data.output, res.maxErr))
         res.st = Status::WA;
-    std::cout << "Result " << toString(res.st) << " ";
-    if(res.st == Status::RE) {
-        if(res.ret == RuntimeError::NonzeroExitCode)
-            std::cout << "[Exited with code "
-                      << res.sig << "]";
-        else if(res.sig != -1)
-            std::cout << "[SIG=" << res.sig
-#if !defined(__WIN32)
-                      << ":" << strsignal(res.sig)
-#endif
-                      << "]";
-        std::cout << "(" << toString(res.ret) << ") ";
-    }
-    if(res.st == Status::SE || res.st == Status::UKE)
-        std::cout << "(" << std::strerror(errno)
-                  << ") ";
-    std::cout << res.time / 1000.0 << " ms "
+    std::cout << "Result " << toString(res.st) << " "
+              << res.time / 1000.0 << " ms "
               << res.mem / 1024.0 << " MB"
               << std::endl;
+    reportJudgeError(res);
     return res;
 }

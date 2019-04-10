@@ -20,8 +20,7 @@ launch(const Option& opt, const Handle& in,
     winAssert(CreateProcessW(
         opt.get<fs::path>("Exec", "").c_str(), NULL,
         &sa, &sa, TRUE, CREATE_NO_WINDOW |
-            CREATE_SUSPENDED  //| DEBUG_PROCESS
-        ,
+            CREATE_SUSPENDED | DEBUG_PROCESS,
         NULL, NULL, &start, &info));
     return std::make_pair(info.hProcess, info.hThread);
 }
@@ -51,7 +50,7 @@ static RunResult runImpl(const Option& opt,
     {
         JOBOBJECT_END_OF_JOB_TIME_INFORMATION action;
         action.EndOfJobTimeAction =
-            JOB_OBJECT_TERMINATE_AT_END_OF_JOB;
+            JOB_OBJECT_POST_AT_END_OF_JOB;
         winAssert(SetInformationJobObject(
             hjob.get(),
             JobObjectEndOfJobTimeInformation, &action,
@@ -94,87 +93,100 @@ static RunResult runImpl(const Option& opt,
         DWORD MSG;
         ULONG_PTR unusedA;
         LPOVERLAPPED unusedB;
-        winAssert(GetQueuedCompletionStatus(
-            port.get(), &MSG, &unusedA, &unusedB,
-            INFINITE));
-        RunResult res;
-        /*
-        {
-            FILETIME ct, et, kt, ut;
-            winAssert(GetProcessTimes(
-                process.get(), &ct, &et, &kt, &ut));
-            ULARGE_INTEGER user;
-            user.LowPart = ut.dwLowDateTime;
-            user.HighPart = ut.dwHighDateTime;
-            res.time = user.QuadPart / 10;
-        }
-        {
-            PROCESS_MEMORY_COUNTERS info;
-            winAssert(K32GetProcessMemoryInfo(
-                process.get(), &info, sizeof(info)));
-            res.mem = info.PeakPagefileUsage >> 10;
-        }
-        */
-        {
-            JOBOBJECT_EXTENDED_LIMIT_INFORMATION info;
-            winAssert(QueryInformationJobObject(
-                hjob.get(),
-                JobObjectExtendedLimitInformation,
-                &info, sizeof(info), NULL));
-            res.mem = info.PeakProcessMemoryUsed >> 10;
-        }
-        {
-            JOBOBJECT_BASIC_ACCOUNTING_INFORMATION
-            info;
-            winAssert(QueryInformationJobObject(
-                hjob.get(),
-                JobObjectBasicAccountingInformation,
-                &info, sizeof(info), NULL));
-            res.time =
-                info.TotalUserTime.QuadPart / 10;
-        }
-        if(res.time > tlim) {
-            res.st = Status::TLE;
-            return res;
-        }
-        if(res.mem > mlim) {
-            res.st = Status::MLE;
-            return res;
-        }
-        bool ret = true;
-        switch(MSG) {
-            case JOB_OBJECT_MSG_ABNORMAL_EXIT_PROCESS: {
-                res.st = Status::RE;
-            } break;
-            case JOB_OBJECT_MSG_EXIT_PROCESS: {
-                res.st = Status::AC;
-                if(res.mem > mlim)
-                    res.st = Status::MLE;
-                if(res.time > tlim)
-                    res.st = Status::TLE;
-                DWORD exitCode;
-                winAssert(GetExitCodeProcess(
-                    process.get(), &exitCode));
-                if(exitCode != 0) {
-                    res.st = Status::RE;
-                    res.ret =
-                        RuntimeError::NonzeroExitCode;
-                    res.sig = exitCode;
-                }
-            } break;
-            case JOB_OBJECT_MSG_END_OF_PROCESS_TIME: {
+        if(GetQueuedCompletionStatus(port.get(), &MSG,
+                                     &unusedA,
+                                     &unusedB, 0)) {
+            RunResult res;
+            {
+                FILETIME ct, et, kt, ut;
+                winAssert(
+                    GetProcessTimes(process.get(), &ct,
+                                    &et, &kt, &ut));
+                ULARGE_INTEGER user;
+                user.LowPart = ut.dwLowDateTime;
+                user.HighPart = ut.dwHighDateTime;
+                res.time = user.QuadPart / 10;
+            }
+            {
+                PROCESS_MEMORY_COUNTERS info;
+                winAssert(K32GetProcessMemoryInfo(
+                    process.get(), &info,
+                    sizeof(info)));
+                res.mem = info.PeakPagefileUsage >> 10;
+            }
+            if(res.time > tlim) {
                 res.st = Status::TLE;
-            } break;
-            case JOB_OBJECT_MSG_PROCESS_MEMORY_LIMIT: {
+                return res;
+            }
+            if(res.mem > mlim) {
                 res.st = Status::MLE;
-            } break;
-            default:
-                ret = false;
-                break;
+                return res;
+            }
+            DWORD exitCode;
+            winAssert(GetExitCodeProcess(process.get(),
+                                         &exitCode));
+            bool ret = true;
+            switch(MSG) {
+                case JOB_OBJECT_MSG_ABNORMAL_EXIT_PROCESS: {
+                    res.st = Status::RE;
+                    res.sig = exitCode;
+                } break;
+                case JOB_OBJECT_MSG_EXIT_PROCESS: {
+                    res.st = Status::AC;
+                    if(res.mem > mlim)
+                        res.st = Status::MLE;
+                    if(res.time > tlim)
+                        res.st = Status::TLE;
+                    if(exitCode != 0) {
+                        res.st = Status::RE;
+                        res.ret = RuntimeError::
+                            NonzeroExitCode;
+                        res.sig = exitCode;
+                    }
+                } break;
+                case JOB_OBJECT_MSG_END_OF_PROCESS_TIME: {
+                    res.st = Status::TLE;
+                } break;
+                case JOB_OBJECT_MSG_PROCESS_MEMORY_LIMIT: {
+                    res.st = Status::MLE;
+                } break;
+                default:
+                    ret = false;
+                    break;
+            }
+            if(ret) {
+            }
         }
-        if(ret) {
-            TerminateJobObject(hjob.get(), 0);
-            return res;
+        DEBUG_EVENT event;
+        if(WaitForDebugEvent(&event, 0)) {
+            switch(event.dwDebugEventCode) {
+                case CREATE_PROCESS_DEBUG_EVENT:
+                    winAssert(CloseHandle(
+                        event.u.CreateProcessInfo
+                            .hFile));
+                    break;
+                case EXCEPTION_DEBUG_EVENT: {
+                    res.st = Status::RE;
+                    res.sig = event.u.Exception
+                                  .ExceptionRecord
+                                  .ExceptionCode;
+                    TerminateJobObject(hjob.get(), 0);
+                    return res;
+                } break;
+                case LOAD_DLL_DEBUG_EVENT:
+                    winAssert(CloseHandle(
+                        event.u.LoadDll.hFile));
+                    break;
+                case RIP_EVENT:
+                    throw std::system_error(
+                        event.u.RipInfo.dwError,
+                        Win32APIError(SourceLocation::
+                                          current()));
+                    break;
+            }
+            winAssert(ContinueDebugEvent(
+                event.dwProcessId, event.dwThreadId,
+                DBG_CONTINUE));
         }
     }
 }

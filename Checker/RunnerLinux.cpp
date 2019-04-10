@@ -155,27 +155,3 @@ RunResult run(const Option& opt, const Timer& timer,
         return watchTask(opt, timer, id);
     throw;
 }
-static std::string getCallTableName() {
-#ifdef __i386__
-#define FileName "unistd_32.h"
-#elif defined(__ILP32__)
-#define FileName "unistd_x32.h"
-#else
-#define FileName "unistd_64.h"
-#endif
-    return "/usr/include/i386-linux-gnu/asm/" FileName;
-#undef FileName
-}
-std::string getCallName(long callid) {
-    static std::string LUT =
-        file2Str(getCallTableName());
-    std::regex pattern(
-        "#define\\s*__NR_([a-z0-9_]*)\\s*" +
-            std::to_string(callid) + "\\s*#",
-        regexFlag4Search);
-    std::smatch match;
-    std::regex_search(LUT, match, pattern);
-    if(match.size() == 2)
-        return match[1].str();
-    return "Unknown";
-}

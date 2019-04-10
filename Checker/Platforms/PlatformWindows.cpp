@@ -1,9 +1,9 @@
 #include "PlatformWindows.hpp"
 #include "../Common.hpp"
-static std::string winerr2String(int cond) {
+static std::string winerr2String(int code) {
     char buf[1024];
     if(FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL,
-                      cond, 0, buf, sizeof(buf), 0))
+                      code, 0, buf, sizeof(buf), 0))
         return buf;
     return "Unknown Error";
 }
@@ -30,12 +30,8 @@ Handle::Handle(HANDLE handle,
                const SourceLocation& loc)
     : mHandle(handle) {
     if(handle == INVALID_HANDLE_VALUE ||
-       handle == NULL) {
-        std::cout << loc.file_name() << std::endl;
-        std::cout << loc.function_name() << std::endl;
-        std::cout << loc.line() << std::endl;
+       handle == NULL)
         reportError(loc);
-    }
 }
 HANDLE Handle::get() const noexcept {
     return mHandle;
@@ -45,12 +41,8 @@ Handle::~Handle() {
 }
 void winAssert(WINBOOL res,
                const SourceLocation& loc) {
-    if(res == FALSE) {
-        std::cout << loc.file_name() << std::endl;
-        std::cout << loc.function_name() << std::endl;
-        std::cout << loc.line() << std::endl;
+    if(res == FALSE)
         reportError(loc);
-    }
 }
 void setCodePage(int codePage) noexcept {
     SetConsoleCP(codePage);
@@ -76,4 +68,19 @@ fs::path selfPath() {
     winAssert(QueryFullProcessImageNameW(
         GetCurrentProcess(), 0, buf, &size));
     return buf;
+}
+void reportJudgeError(const RunResult& res) {
+    if(res.st == Status::RE) {
+        if(res.ret == RuntimeError::NonzeroExitCode)
+            std::cout << toString(res.ret)
+                      << ":code=" << res.sig
+                      << std::endl;
+        else {
+            setCodePage(936);
+            std::cout << "Win32 Error:"
+                      << winerr2String(res.sig)
+                      << std::endl;
+            setCodePage(65001);
+        }
+    }
 }
