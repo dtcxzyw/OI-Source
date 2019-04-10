@@ -1,6 +1,6 @@
 #include "Runner.hpp"
 RunResult::RunResult()
-    : time(0), mem(0), syscallcnt(0), st(Status::UKE),
+    : time(0), mem(0), st(Status::UKE),
       ret(RuntimeError::Unknown), sig(-1),
       maxErr(0.0) {}
 std::string toString(Status st) {

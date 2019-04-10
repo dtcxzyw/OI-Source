@@ -23,7 +23,7 @@ enum class RuntimeError {
 };
 // Time:us Memory:KB
 struct RunResult {
-    int64_t time, mem, syscallcnt;
+    int64_t time, mem;
     Status st;
     RuntimeError ret;
     int sig;

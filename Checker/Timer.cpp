@@ -69,7 +69,7 @@ int64_t Timer::remain() const {
 }
 void Timer::addSample() {
     std::ofstream sam(mSamples, std::ios::app);
-    if(!sam)
+    if(!sam.is_open())
         return;
     line("Add Time Sample");
     int64_t remote = 0,

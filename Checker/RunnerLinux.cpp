@@ -132,14 +132,10 @@ static RunResult watchTask(const Option& opt,
 #else
             long callid = reg.orig_eax;
 #endif
-            if(callid != -1) {
-                ++res.syscallcnt;
+            if(callid != -1)
                 ++res.callCnt[callid];
-            }
-            if(callid == __NR_execve) {
-                res.syscallcnt = 0;
+            if(callid == __NR_execve)
                 res.callCnt.clear();
-            }
             ptrace(PTRACE_SYSCALL, id, NULL, NULL);
         }
     }

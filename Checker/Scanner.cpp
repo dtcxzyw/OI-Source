@@ -5,11 +5,12 @@
 #include <map>
 #include <set>
 using DirIter = fs::directory_iterator;
-std::vector<Data> scanData() {
-    fs::path dir = fs::temp_directory_path() / "data";
+std::vector<Data> scanData(const fs::path& dataPath) {
+    if(!fs::exists(dataPath))
+        return {};
     std::map<fs::path, fs::path> in, out;
     std::vector<Data> res;
-    for(auto it : DirIter(dir)) {
+    for(auto it : DirIter(dataPath)) {
         it.refresh();
         if(!it.is_regular_file())
             continue;

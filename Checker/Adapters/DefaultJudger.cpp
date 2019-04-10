@@ -78,8 +78,8 @@ bool runAll(const Option& opt,
                           << ")";
             std::cout << std::endl;
         }
-#if !defined(__WIN32)
     if(flag) {
+#if !defined(__WIN32)
         pinfo.report();
         line("Hot System Call");
         std::vector<std::pair<int, long>> info;
@@ -95,16 +95,17 @@ bool runAll(const Option& opt,
                       << "\033[0m(id=" << call.second
                       << "):" << call.first
                       << std::endl;
+#endif
         timer.addSample();
     }
-#endif
+
     return flag;
 }
 #define Input(name)                          \
     std::cout << #name << ":" << std::flush; \
     std::cin >> name
 bool runDefault(const fs::path& exec) {
-    std::vector<Data> data = scanData();
+    std::vector<Data> data = scanData("data");
     if(data.size()) {
         line("Arguments");
         int64_t maxTime, maxMem;

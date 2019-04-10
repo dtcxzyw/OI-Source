@@ -31,4 +31,4 @@ public:
 void winAssert(WINBOOL res,
                const SourceLocation& loc =
                    SourceLocation::current());
-void setCodePage(int codePage);
+void setCodePage(int codePage) noexcept;

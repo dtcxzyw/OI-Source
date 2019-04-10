@@ -10,9 +10,10 @@ static bool readOpt(Option& opt,
                     const std::string& str) {
     std::string title;
     {
-        std::regex pattern("<h1class=\"uiheader\">\\s*"
-                           "([ \\S]+)\\s*</h1>",
-                           regexFlag4Search);
+        std::regex pattern(
+            "<h1 class=\"ui header\">\\s*"
+            "([ \\S]+)\\s*</h1>",
+            regexFlag4Search);
         std::smatch match;
         std::regex_search(str, match, pattern);
         if(match.size() == 2)

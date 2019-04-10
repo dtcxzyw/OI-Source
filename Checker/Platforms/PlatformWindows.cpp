@@ -16,7 +16,8 @@ std::string Win32APIError::message(int cond) const
     noexcept {
     return "\033[35mSystem Error:\nError Code: " +
         std::to_string(cond) + "\nError Message: " +
-        winerr2String(cond) + "\nFunction: " +
+        winerr2String(cond) + "\nFile: " +
+        mLoc.file_name() + "\nFunction: " +
         mLoc.function_name() + "\nLine: " +
         std::to_string(mLoc.line()) + "\n\033[0m";
 }
@@ -29,8 +30,12 @@ Handle::Handle(HANDLE handle,
                const SourceLocation& loc)
     : mHandle(handle) {
     if(handle == INVALID_HANDLE_VALUE ||
-       handle == NULL)
+       handle == NULL) {
+        std::cout << loc.file_name() << std::endl;
+        std::cout << loc.function_name() << std::endl;
+        std::cout << loc.line() << std::endl;
         reportError(loc);
+    }
 }
 HANDLE Handle::get() const noexcept {
     return mHandle;
@@ -40,12 +45,16 @@ Handle::~Handle() {
 }
 void winAssert(WINBOOL res,
                const SourceLocation& loc) {
-    if(res == FALSE)
+    if(res == FALSE) {
+        std::cout << loc.file_name() << std::endl;
+        std::cout << loc.function_name() << std::endl;
+        std::cout << loc.line() << std::endl;
         reportError(loc);
+    }
 }
-void setCodePage(int codePage) {
-    winAssert(SetConsoleCP(codePage));
-    winAssert(SetConsoleOutputCP(codePage));
+void setCodePage(int codePage) noexcept {
+    SetConsoleCP(codePage);
+    SetConsoleOutputCP(codePage);
 }
 void initPlatform() {
     HANDLE ohnd = GetStdHandle(STD_OUTPUT_HANDLE);

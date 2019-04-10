@@ -6,23 +6,48 @@
 #include <functional>
 #include <iostream>
 #include <iterator>
+static std::string newline(std::string str) {
+    while(str.size() &&
+          (str.back() == '\n' || str.back() == '\r'))
+        str.pop_back();
+    str.push_back('\n');
+    return str;
+}
 template <typename T>
-static bool compareImpl(
-    const fs::path& out, const fs::path& stdo,
-    const std::function<bool(const T&, const T&)>&
-        cmp) {
+static bool
+compareImpl(const fs::path& out, const fs::path& stdi,
+            const fs::path& stdo,
+            const std::function<bool(const T&,
+                                     const T&)>& cmp) {
     std::ifstream outf(out), stdof(stdo);
     using Iter = std::istream_iterator<T>;
-    return std::equal(Iter(outf), Iter(), Iter(stdof),
-                      Iter(), cmp);
+    if(std::equal(Iter(outf), Iter(), Iter(stdof),
+                  Iter(), cmp))
+        return true;
+    if(std::max(fs::file_size(out),
+                fs::file_size(stdo)) <= 100) {
+        auto ins = file2Str(stdi);
+        if(ins.size() > 97) {
+            ins.resize(97);
+            ins += "...";
+        }
+        std::cout << "input: " << newline(ins);
+        std::cout << "std: "
+                  << newline(file2Str(stdo));
+        std::cout << "user: "
+                  << newline(file2Str(out));
+        std::cout.flush();
+    }
+    return false;
 }
 static bool compare(CompareMode mode,
                     const fs::path& out,
+                    const fs::path& stdi,
                     const fs::path& stdo, FT& maxErr) {
     switch(mode) {
         case CompareMode::Text: {
             return compareImpl<std::string>(
-                out, stdo,
+                out, stdi, stdo,
                 std::equal_to<std::string>());
         } break;
         case CompareMode::FloatingPoint: {
@@ -35,7 +60,8 @@ static bool compare(CompareMode mode,
                 maxErr = std::max(maxErr, err);
                 return err < eps;
             };
-            return compareImpl<FT>(out, stdo, cmp);
+            return compareImpl<FT>(out, stdi, stdo,
+                                   cmp);
         }
         default:
             std::cout << "Unknown Comparer"
@@ -60,8 +86,8 @@ RunResult test(const Option& opt, const Data& data,
     if(res.st == Status::AC &&
        !compare(opt.get<CompareMode>(
                     "CompareMode", CompareMode::Text),
-                tmpOutput.path(), data.output,
-                res.maxErr))
+                tmpOutput.path(), data.input,
+                data.output, res.maxErr))
         res.st = Status::WA;
     std::cout << "Result " << toString(res.st) << " ";
     if(res.st == Status::RE) {
@@ -81,8 +107,6 @@ RunResult test(const Option& opt, const Data& data,
                   << ") ";
     std::cout << res.time / 1000.0 << " ms "
               << res.mem / 1024.0 << " MB"
-              << std::endl;
-    std::cout << "SyscallCount=" << res.syscallcnt
               << std::endl;
     return res;
 }

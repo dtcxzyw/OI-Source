@@ -1,4 +1,5 @@
 #include "Common.hpp"
+#include <algorithm>
 #include <chrono>
 #include <cstdlib>
 #include <exception>

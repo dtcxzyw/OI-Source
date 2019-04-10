@@ -117,7 +117,7 @@ AC后询问OJ上的时间并加入samples中，在BZOJ计时方式下skip掉剩�
 初步跨Windows平台，并且将评测有关文件移至临时文件夹
 
 2.8.1(4.10)
-解决Windows平台下控制台输出乱码问题
+解决Windows平台下控制台输出乱码问题，支持基本评测功能
 
 ## TODO List
 
@@ -134,6 +134,4 @@ AC后询问OJ上的时间并加入samples中，在BZOJ计时方式下skip掉剩�
 - [ ] 支持文件输入输出
 - [ ] 支持提交答案题
 - [ ] 支持Hardware Counter Profiling[HCP](https://docs.microsoft.com/en-us/windows/desktop/api/_hcp/)
-- [ ] 支持Event Tracing for Windows[ETW](https://docs.microsoft.com/zh-cn/windows/desktop/ETW/event-tracing-portal)
 - [ ] 支持SubTask
-- [ ] 将平台依赖文件移动到Platforms中去
