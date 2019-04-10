@@ -17,12 +17,22 @@
 #include <vector>
 std::string file2Str(const fs::path& path) {
     std::ifstream in(path);
-    in.seekg(0, std::ios::end);
-    auto siz = in.tellg();
-    in.seekg(0, std::ios::beg);
-    std::vector<char> data(siz);
-    in.read(data.data(), siz);
-    return std::string(data.data(), data.data() + siz);
+    if(fs::is_regular_file(path)) {
+        in.seekg(0, std::ios::end);
+        auto siz = in.tellg();
+        if(siz <= 0)
+            return "";
+        in.seekg(0, std::ios::beg);
+        std::vector<char> data(siz);
+        in.read(data.data(), siz);
+        return std::string(data.data(),
+                           data.data() + siz);
+    } else {
+        std::string res;
+        while(in)
+            res.push_back(in.get());
+        return res;
+    }
 }
 static int getConsoleWidth() {
 #ifdef __WIN32

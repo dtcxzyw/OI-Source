@@ -82,7 +82,7 @@ bool runAll(const Option& opt,
     if(flag) {
         pinfo.report();
         line("Hot System Call");
-        std::vector<std::pair<int, long> > info;
+        std::vector<std::pair<int, long>> info;
         for(auto call : sysCall) {
             if(call.second >= 50)
                 info.emplace_back(call.second,

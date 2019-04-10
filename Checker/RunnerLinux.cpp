@@ -39,7 +39,7 @@ static void runTask(const Option& opt,
 }
 static int64_t getStatusVal(const std::string& str,
                             const std::string& val) {
-    std::regex pattern(val + ":([0-9]*)kB",
+    std::regex pattern(val + "\\s*:\\s*([0-9]*)\\s*kB",
                        regexFlag4Search);
     std::smatch match;
     std::regex_search(str, match, pattern);
@@ -173,10 +173,10 @@ static std::string getCallTableName() {
 std::string getCallName(long callid) {
     static std::string LUT =
         file2Str(getCallTableName());
-    std::regex pattern("#define__NR_([a-z0-9_]*)" +
-                           std::to_string(callid) +
-                           "#",
-                       regexFlag4Search);
+    std::regex pattern(
+        "#define\\s*__NR_([a-z0-9_]*)\\s*" +
+            std::to_string(callid) + "\\s*#",
+        regexFlag4Search);
     std::smatch match;
     std::regex_search(LUT, match, pattern);
     if(match.size() == 2)

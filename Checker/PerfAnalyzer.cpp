@@ -6,7 +6,7 @@ const int64_t invalid =
     std::numeric_limits<int64_t>::max();
 static int64_t getPerfVal(const std::string& str,
                           const std::string& val) {
-    std::regex pattern("([0-9,]+)" + val,
+    std::regex pattern("([0-9,]+)\\s*" + val,
                        regexFlag4Search);
     std::smatch match;
     std::regex_search(str, match, pattern);
