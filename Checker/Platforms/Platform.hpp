@@ -9,6 +9,5 @@
 #endif
 void initPlatform();
 void platformInfo();
-fs::path selfPath();
 void reportJudgeError(const RunResult& res);
 int getConsoleWidth();

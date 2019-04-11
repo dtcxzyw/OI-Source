@@ -120,7 +120,7 @@ AC后询问OJ上的时间并加入samples中，在BZOJ计时方式下skip掉剩�
 解决Windows平台下控制台输出乱码问题，支持基本评测功能
 
 2.8.2(4.11)
-支持Windows下异常捕捉
+支持Windows下异常捕捉，使用Cmake支持自动更新
 
 ## TODO List
 
@@ -129,7 +129,7 @@ AC后询问OJ上的时间并加入samples中，在BZOJ计时方式下skip掉剩�
 - [x] 支持LOJ的data.yml
 - [x] 自动下载并解压数据，自动获取时限和内存限制
 - [ ] 全部AC时自动提交代码
-- [ ] 自动更新（使用CMake）
+- [x] 自动更新（使用CMake）
 - [ ] 本地性能比较（从LOJ上扒代码）
 - [ ] 序列化配置OJ
 - [ ] 功能模块化

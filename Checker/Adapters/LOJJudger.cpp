@@ -66,7 +66,7 @@ static bool readOpt(Option& opt,
     opt.insert("MemoryLimit", maxMem << 10);
     opt.insert("CompareMode", compareMode);
     opt.insert("TimeSamples",
-               fs::path("Checker/LOJ-Samples"));
+               fs::path("CheckerDir/LOJ-Samples"));
     return true;
 }
 #ifdef USE_SYZOJTOOLS
@@ -74,12 +74,14 @@ static bool testSYZOJTools(const Option& opt) {
     std::string testCmd = "which syzoj";
     if(system(testCmd.c_str()))
         return false;
-    if(fs::exists("data/data.yml"))
-        fs::copy_file("data/data.yml", "problem.yml");
+    auto base = fs::temp_directory_path();
+    if(fs::exists(base / "data/data.yml"))
+        fs::copy_file(base / "data/data.yml",
+                      base / "problem.yml");
     else {
         std::cout << "Using default data.yml"
                   << std::endl;
-        std::ofstream out("problem.yml");
+        std::ofstream out(base / "problem.yml");
         out << "type: traditional" << std::endl;
         out << "cases: auto" << std::endl;
         out << "cases-global:" << std::endl;
@@ -112,8 +114,10 @@ static std::string findSource(const fs::path& exec) {
     return fs::relative(src);
 }
 static bool callSYZOJTools(const fs::path& exec) {
-    std::string cmd = "syzoj judge " +
-        findSource(exec) + " --show-testcases";
+    auto base = fs::temp_directory_path();
+    std::string cmd = "syzoj --path " + base.string() +
+        " judge " + findSource(exec) +
+        " --show-testcases";
     int res = system(cmd.c_str());
     std::cout << "syzoj-tools exited with code=" << res
               << std::endl;

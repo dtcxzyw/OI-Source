@@ -23,9 +23,6 @@ void initPlatform() {
               << std::endl;
     setrlimit(RLIMIT_STACK, &limit);
 }
-fs::path selfPath() {
-    return fs::read_symlink("/proc/self/exe");
-}
 void reportJudgeError(const RunResult& res) {
     if(res.st == Status::RE) {
         if(res.ret == RuntimeError::NonzeroExitCode)

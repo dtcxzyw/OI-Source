@@ -69,15 +69,3 @@ fs::path scanExec() {
     }
     return fs::relative(res);
 }
-bool needUpdate() {
-    fs::path self = selfPath();
-    auto selfTime = fs::last_write_time(self);
-    for(auto p :
-        fs::recursive_directory_iterator(SOURCE_DIR)) {
-        p.refresh();
-        if(p.is_regular_file() &&
-           p.last_write_time() > selfTime)
-            return true;
-    }
-    return false;
-}

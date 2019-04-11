@@ -22,7 +22,6 @@ endif(NOT HAS_UNZIP)
 set (CHECKER_VERSION_MAJOR 2)
 set (CHECKER_VERSION_MINOR 8)
 set (CHECKER_VERSION_PATCH 2)
-set (CHECKER_SRC_DIR "${PROJECT_SOURCE_DIR}")
 
 option(BZOJ_JUDGER "bzoj-judger" ON)
 option(LOJ_JUDGER "loj-judger" ON)
@@ -53,7 +52,7 @@ if(LOJ_JUDGER)
 set (JudgerSrc ${JudgerSrc} Adapters/LOJJudger.cpp)
 endif(LOJ_JUDGER)
 
-set (SharedSrc Checker.cpp Common.cpp Judger.cpp OJAdapter.cpp OJAPI.cpp 
+set (SharedSrc Checker.cpp Common.cpp Judger.cpp OJAdapter.cpp OJAPI.cpp
 RunnerShared.cpp Scanner.cpp Timer.cpp)
 
 link_libraries(stdc++fs)

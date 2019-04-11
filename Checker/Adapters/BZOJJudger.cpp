@@ -56,7 +56,7 @@ static bool readOpt(Option& opt,
     opt.insert("MemoryLimit", maxMem << 10);
     opt.insert("CompareMode", CompareMode::Text);
     opt.insert("TimeSamples",
-               fs::path("Checker/BZOJ-Samples"));
+               fs::path("CheckerDir/BZOJ-Samples"));
     return true;
 }
 static bool runBZOJ(const fs::path& exec) {

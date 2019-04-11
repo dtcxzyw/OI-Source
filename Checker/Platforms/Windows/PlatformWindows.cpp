@@ -64,13 +64,6 @@ void initPlatform() {
 void platformInfo() {
     system("ver");
 }
-fs::path selfPath() {
-    WCHAR buf[256];
-    DWORD size = sizeof(buf);
-    winAssert(QueryFullProcessImageNameW(
-        GetCurrentProcess(), 0, buf, &size));
-    return buf;
-}
 static const std::string& getWinntHeader() {
     static std::string str =
         file2Str(readConfig("WinntHeader"));

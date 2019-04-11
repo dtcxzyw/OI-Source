@@ -75,13 +75,13 @@ TempFile::~TempFile() {
     }
 }
 static void clearCache() {
-    if(fs::exists("Checker/Cache")) {
+    if(fs::exists("CheckerDir/Cache")) {
         using DirIter = fs::directory_iterator;
         std::vector<fs::path> deferred;
         using Clock = fs::file_time_type::clock;
         using namespace std::chrono;
         auto ct = Clock::now();
-        for(auto it : DirIter("Checker/Cache")) {
+        for(auto it : DirIter("CheckerDir/Cache")) {
             it.refresh();
             if(!it.is_regular_file())
                 continue;
@@ -96,7 +96,7 @@ static void clearCache() {
         for(auto p : deferred)
             fs::remove(p);
     } else
-        fs::create_directory("Checker/Cache");
+        fs::create_directory("CheckerDir/Cache");
 }
 static bool verifyZip(const fs::path& file) {
     std::string cmd = "unzip -t -q " + file.string();
@@ -110,7 +110,7 @@ fs::path downloadFile(const std::string& url,
     if(fs::exists(url))
         return url;
     else {
-        fs::path cacheFile = "Checker/Cache/" + pid;
+        fs::path cacheFile = "CheckerDir/Cache/" + pid;
         if(verify && fs::exists(cacheFile) &&
            !verifyZip(cacheFile))
             fs::remove(cacheFile);
@@ -152,7 +152,7 @@ bool unzip(const fs::path& path) {
     return res == 0;
 }
 std::string readConfig(const std::string& optName) {
-    std::ifstream in("Checker/checker.config");
+    std::ifstream in("CheckerDir/checker.config");
     std::string line;
     while(std::getline(in, line)) {
         std::size_t pos = line.find('#');
