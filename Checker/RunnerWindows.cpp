@@ -166,6 +166,7 @@ static RunResult runImpl(const Option& opt,
                             .hFile));
                     break;
                 case EXCEPTION_DEBUG_EVENT: {
+                    RunResult res;
                     res.st = Status::RE;
                     res.sig = event.u.Exception
                                   .ExceptionRecord

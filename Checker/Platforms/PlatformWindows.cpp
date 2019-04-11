@@ -1,6 +1,7 @@
 #include "PlatformWindows.hpp"
 #include "../Common.hpp"
-static std::string winerr2String(int code) {
+#include "Platform.hpp"
+static std::string winerr2String(DWORD code) {
     char buf[1024];
     if(FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL,
                       code, 0, buf, sizeof(buf), 0))
@@ -15,11 +16,12 @@ const char* Win32APIError::name() const noexcept {
 std::string Win32APIError::message(int cond) const
     noexcept {
     return "\033[35mSystem Error:\nError Code: " +
-        std::to_string(cond) + "\nError Message: " +
-        winerr2String(cond) + "\nFile: " +
-        mLoc.file_name() + "\nFunction: " +
-        mLoc.function_name() + "\nLine: " +
-        std::to_string(mLoc.line()) + "\n\033[0m";
+        std::to_string(static_cast<DWORD>(cond)) +
+        "\nError Message: " + winerr2String(cond) +
+        "\nFile: " + mLoc.file_name() +
+        "\nFunction: " + mLoc.function_name() +
+        "\nLine: " + std::to_string(mLoc.line()) +
+        "\n\033[0m";
 }
 [[noreturn]] void
 reportError(const SourceLocation& loc) {
@@ -72,14 +74,16 @@ fs::path selfPath() {
 void reportJudgeError(const RunResult& res) {
     if(res.st == Status::RE) {
         if(res.ret == RuntimeError::NonzeroExitCode)
-            std::cout << toString(res.ret)
-                      << ":code=" << res.sig
+            std::cout << toString(res.ret) << ":code="
+                      << static_cast<DWORD>(res.sig)
                       << std::endl;
         else {
             setCodePage(936);
-            std::cout << "Win32 Error:"
-                      << winerr2String(res.sig)
-                      << std::endl;
+            std::cout
+                << "Win32 Error:[code="
+                << static_cast<DWORD>(res.sig)
+                << "]: " << winerr2String(res.sig)
+                << std::endl;
             setCodePage(65001);
         }
     }
