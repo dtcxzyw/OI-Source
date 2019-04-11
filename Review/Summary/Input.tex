@@ -1,15 +1,48 @@
 \section{基于输入}
 \subsection{单变量}
+\begin{itemize}
+    \item 矩阵快速幂
+    \item BM算法+线性递推
+    \item 生成函数+卷积/分治NTT
+\end{itemize}
 \subsection{元素序列}
 \subsubsection{有序序列}
+考虑相邻元素的关系。
 \subsubsection{无序序列}
-\subsection{操作序列}
-\subsubsection{添加}
-\subsubsection{添加/删除}
-\subsubsection{初始化/修改}
+\begin{itemize}
+    \item 贪心预排序
+    \item 归类一起转移
+\end{itemize}
+\subsection{时间/区间操作序列}
+\begin{itemize}
+    \item 添加：二进制分组
+    \item 添加/删除：扫描线/时间线段树
+    \item 初始化/修改：CDQ分治/整体二分/线段树
+\end{itemize}
 \subsection{树}
 \subsubsection{无根树}
+\begin{itemize}
+    \item 统计以某个点为根的信息：LCT
+    \item 统计所有路径信息：点分治/树形DP
+\end{itemize}
 \subsubsection{有根树}
+\begin{itemize}
+    \item 静态统计以某个点为根的子树信息：DsuOnTree
+    \item 动态统计以某个点为根的子树信息：动态DP/树链剖分后转序列问题
+    \item 统计与深度有关的问题：长链剖分
+\end{itemize}
 \subsection{图}
+\begin{itemize}
+    \item DAG：拓扑排序
+    \item 有向图：SCC缩点
+    \item 无向图：（广义）圆方树
+\end{itemize}
 \subsection{字符串}
-\subsection{坐标}
+\begin{itemize}
+    \item 满足条件的最长子串：二分+（Hash+插桩/SA+分组）
+    \item 与LCP长度有关：SA
+    \item 与子串个数有关：SAM（动态时使用LCT）
+    \item 与回文串有关：Manacher、PAM、后缀系列。
+    \item 与前缀匹配有关：KMP/Z algorithm
+    \item 与模式匹配有关：卷积
+\end{itemize}
