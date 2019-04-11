@@ -1,4 +1,5 @@
 #include "Common.hpp"
+#include "Platforms/Platform.hpp"
 #include <algorithm>
 #include <chrono>
 #include <cstdlib>
@@ -7,14 +8,6 @@
 #include <iostream>
 #include <iterator>
 #include <random>
-#ifdef __WIN32
-#include <windows.h>
-#else
-#include <sys/ioctl.h>
-#include <sys/types.h>
-#include <termios.h>
-#include <unistd.h>
-#endif
 #include <vector>
 std::string file2Str(const fs::path& path) {
     std::ifstream in(path);
@@ -24,8 +17,13 @@ std::string file2Str(const fs::path& path) {
     if(siz <= 0) {
         in.clear();
         std::string res;
-        while(in)
-            res.push_back(in.get());
+        while(in) {
+            int ch = in.get();
+            if(ch != EOF)
+                res.push_back(ch);
+            else
+                break;
+        }
         return res;
     } else {
         std::vector<char> data(siz);
@@ -33,18 +31,6 @@ std::string file2Str(const fs::path& path) {
         return std::string(data.data(),
                            data.data() + siz);
     }
-}
-static int getConsoleWidth() {
-#ifdef __WIN32
-    CONSOLE_SCREEN_BUFFER_INFO info;
-    GetConsoleScreenBufferInfo(
-        GetStdHandle(STD_OUTPUT_HANDLE), &info);
-    return info.dwSize.X;
-#else
-    struct winsize size;
-    ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
-    return size.ws_col;
-#endif
 }
 void showLine(const std::string& col,
               const std::string& str) {
@@ -89,13 +75,13 @@ TempFile::~TempFile() {
     }
 }
 static void clearCache() {
-    if(fs::exists("Cache")) {
+    if(fs::exists("Checker/Cache")) {
         using DirIter = fs::directory_iterator;
         std::vector<fs::path> deferred;
         using Clock = fs::file_time_type::clock;
         using namespace std::chrono;
         auto ct = Clock::now();
-        for(auto it : DirIter("Cache")) {
+        for(auto it : DirIter("Checker/Cache")) {
             it.refresh();
             if(!it.is_regular_file())
                 continue;
@@ -110,7 +96,7 @@ static void clearCache() {
         for(auto p : deferred)
             fs::remove(p);
     } else
-        fs::create_directory("Cache");
+        fs::create_directory("Checker/Cache");
 }
 static bool verifyZip(const fs::path& file) {
     std::string cmd = "unzip -t -q " + file.string();
@@ -124,7 +110,7 @@ fs::path downloadFile(const std::string& url,
     if(fs::exists(url))
         return url;
     else {
-        fs::path cacheFile = "Cache/" + pid;
+        fs::path cacheFile = "Checker/Cache/" + pid;
         if(verify && fs::exists(cacheFile) &&
            !verifyZip(cacheFile))
             fs::remove(cacheFile);
@@ -166,7 +152,7 @@ bool unzip(const fs::path& path) {
     return res == 0;
 }
 std::string readConfig(const std::string& optName) {
-    std::ifstream in("checker.config");
+    std::ifstream in("Checker/checker.config");
     std::string line;
     while(std::getline(in, line)) {
         std::size_t pos = line.find('#');

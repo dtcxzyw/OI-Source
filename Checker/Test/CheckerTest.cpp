@@ -1,5 +1,10 @@
 #include <cstdio>
 #include <vector>
+int cnt = 0;
+void DFS(int n) {
+    for(int i = 1; i <= n; ++i)
+        DFS(i), ++cnt;
+}
 int main() {
     int n;
     scanf("%d", &n);
@@ -36,7 +41,11 @@ int main() {
         case 7:
             printf("%d\n", 10 / (n - 7));
             break;
-        // RE Exception
+        // RE Stack Overflow
+        case 8: {
+            DFS(1);
+            printf("%d\n", cnt);
+        } break;
         default:
             throw;
             break;

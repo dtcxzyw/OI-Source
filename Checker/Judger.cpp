@@ -15,11 +15,11 @@ static std::string newline(std::string str) {
     return str;
 }
 template <typename T>
-static bool compareImpl(
-    const fs::path& out, const fs::path& stdi,
-    const fs::path& stdo,
-    const std::function<bool(const T&, const T&)>&
-        cmp) {
+static bool
+compareImpl(const fs::path& out, const fs::path& stdi,
+            const fs::path& stdo,
+            const std::function<bool(const T&,
+                                     const T&)>& cmp) {
     std::ifstream outf(out), stdof(stdo);
     using Iter = std::istream_iterator<T>;
     if(std::equal(Iter(outf), Iter(), Iter(stdof),

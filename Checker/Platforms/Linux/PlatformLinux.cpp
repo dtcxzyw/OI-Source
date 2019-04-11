@@ -1,8 +1,12 @@
-#include "../Common.hpp"
-#include "Platform.hpp"
+#include "../../Common.hpp"
+#include "../Platform.hpp"
 #include <cstdlib>
 #include <iostream>
+#include <sys/ioctl.h>
 #include <sys/resource.h>
+#include <sys/types.h>
+#include <termios.h>
+#include <unistd.h>
 void platformInfo() {
     system("lsb_release -d");
 }
@@ -61,4 +65,9 @@ std::string getCallName(long callid) {
     if(match.size() == 2)
         return match[1].str();
     return "Unknown";
+}
+int getConsoleWidth() {
+    struct winsize size;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
+    return size.ws_col;
 }

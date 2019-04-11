@@ -65,10 +65,11 @@ static bool readOpt(Option& opt,
     opt.insert("TimeLimit", maxTime * 1000);
     opt.insert("MemoryLimit", maxMem << 10);
     opt.insert("CompareMode", compareMode);
-    opt.insert("TimeSamples", fs::path("LOJ-Samples"));
+    opt.insert("TimeSamples",
+               fs::path("Checker/LOJ-Samples"));
     return true;
 }
-#ifdef SYZOJTOOLS
+#ifdef USE_SYZOJTOOLS
 static bool testSYZOJTools(const Option& opt) {
     std::string testCmd = "which syzoj";
     if(system(testCmd.c_str()))

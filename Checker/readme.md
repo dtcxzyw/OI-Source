@@ -119,6 +119,9 @@ AC后询问OJ上的时间并加入samples中，在BZOJ计时方式下skip掉剩�
 2.8.1(4.10)
 解决Windows平台下控制台输出乱码问题，支持基本评测功能
 
+2.8.2(4.11)
+支持Windows下异常捕捉
+
 ## TODO List
 
 - [x] 跨Windows平台、分离平台实现
@@ -135,3 +138,4 @@ AC后询问OJ上的时间并加入samples中，在BZOJ计时方式下skip掉剩�
 - [ ] 支持提交答案题
 - [ ] 支持Hardware Counter Profiling[HCP](https://docs.microsoft.com/en-us/windows/desktop/api/_hcp/)
 - [ ] 支持SubTask
+- [ ] 挂起运行

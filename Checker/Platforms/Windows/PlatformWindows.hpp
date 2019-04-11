@@ -1,7 +1,7 @@
 #pragma once
-#include "../Common.hpp"
-#include <Windows.h>
+#include "../../Common.hpp"
 #include <system_error>
+#include <windows.h>
 class Win32APIError final
     : public std::error_category {
 private:
@@ -32,3 +32,4 @@ void winAssert(WINBOOL res,
                const SourceLocation& loc =
                    SourceLocation::current());
 void setCodePage(int codePage) noexcept;
+bool isExceptionCode(DWORD code);

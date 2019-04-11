@@ -1,4 +1,5 @@
 #pragma once
+#include "CheckerConfig.hpp"
 #include <any>
 #include <charconv>
 #include <cstdint>

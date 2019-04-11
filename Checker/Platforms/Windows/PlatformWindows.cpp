@@ -1,6 +1,6 @@
 #include "PlatformWindows.hpp"
-#include "../Common.hpp"
-#include "Platform.hpp"
+#include "../../Common.hpp"
+#include "../Platform.hpp"
 static std::string winerr2String(DWORD code) {
     char buf[1024];
     if(FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL,
@@ -71,20 +71,77 @@ fs::path selfPath() {
         GetCurrentProcess(), 0, buf, &size));
     return buf;
 }
+static const std::string& getWinntHeader() {
+    static std::string str =
+        file2Str(readConfig("WinntHeader"));
+    return str;
+}
+static std::string getHexCode(DWORD code) {
+    std::stringstream ss;
+    ss << std::hex << std::uppercase
+       << std::setfill('0') << std::setw(8) << code;
+    return "0x" + ss.str();
+}
+bool isExceptionCode(DWORD code) {
+    auto hexCode = getHexCode(code);
+    std::regex pattern(
+        R"x(#define STATUS_(\S*) \(\(DWORD\))x" +
+            hexCode + R"x(\))x",
+        regexFlag4Match);
+    return std::regex_search(getWinntHeader(),
+                             pattern);
+}
+static std::string
+exceptionCode2String(const std::string& hexCode) {
+    std::regex pattern(
+        R"x(#define STATUS_(\S*) \(\(DWORD\))x" +
+            hexCode + R"x(\))x",
+        regexFlag4Search);
+    std::smatch match;
+    std::regex_search(getWinntHeader(), match,
+                      pattern);
+    if(match.size() == 2) {
+        std::string str = match[1].str();
+        bool keep = true;
+        for(auto& ch : str) {
+            if(isalpha(ch)) {
+                if(keep)
+                    keep = false;
+                else
+                    ch = tolower(ch);
+            } else {
+                ch = ' ';
+                keep = true;
+            }
+        }
+        return str;
+    }
+    return "Unknown Error";
+}
 void reportJudgeError(const RunResult& res) {
     if(res.st == Status::RE) {
-        if(res.ret == RuntimeError::NonzeroExitCode)
-            std::cout << toString(res.ret) << ":code="
-                      << static_cast<DWORD>(res.sig)
+        auto hexCode = getHexCode(res.sig);
+        if(res.ret == RuntimeError::NonzeroExitCode) {
+            std::cout << toString(res.ret)
+                      << ":code=" << hexCode
                       << std::endl;
-        else {
-            setCodePage(936);
+            if(res.sig == 3)
+                std::cout
+                    << toString(
+                           RuntimeError::Exception)
+                    << "???" << std::endl;
+        } else {
             std::cout
-                << "Win32 Error:[code="
-                << static_cast<DWORD>(res.sig)
-                << "]: " << winerr2String(res.sig)
+                << "Win32 Exception:[code=" << hexCode
+                << "]: "
+                << exceptionCode2String(hexCode)
                 << std::endl;
-            setCodePage(65001);
         }
     }
+}
+int getConsoleWidth() {
+    CONSOLE_SCREEN_BUFFER_INFO info;
+    winAssert(GetConsoleScreenBufferInfo(
+        GetStdHandle(STD_OUTPUT_HANDLE), &info));
+    return info.dwSize.X;
 }

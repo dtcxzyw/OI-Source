@@ -1,5 +1,5 @@
 #pragma once
-#include "Common.hpp"
+#include "../../Common.hpp"
 class PerformanceInfo {
 private:
     int64_t cacheRef, cacheMiss, branchCnt, branchMiss,

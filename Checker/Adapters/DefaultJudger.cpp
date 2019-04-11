@@ -1,6 +1,5 @@
 #include "../Judger.hpp"
 #include "../OJAdapter.hpp"
-#include "../PerfAnalyzer.hpp"
 #include "../Platforms/Platform.hpp"
 #include "../Scanner.hpp"
 #include "../Timer.hpp"
@@ -99,7 +98,6 @@ bool runAll(const Option& opt,
 #endif
         timer.addSample();
     }
-
     return flag;
 }
 #define Input(name)                          \

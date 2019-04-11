@@ -1,7 +1,8 @@
-#include "Platforms/PlatformWindows.hpp"
-#include "Runner.hpp"
+#include "PlatformWindows.hpp"
+#include "../../Runner.hpp"
 #include <memory>
 #include <psapi.h>
+#include <thread>
 static std::pair<HANDLE, HANDLE>
 launch(const Option& opt, const Handle& in,
        const Handle& out) {
@@ -90,38 +91,72 @@ static RunResult runImpl(const Option& opt,
         ResumeThread(thread.get());
     }
     while(true) {
+        RunResult res;
+        {
+            FILETIME ct, et, kt, ut;
+            winAssert(GetProcessTimes(
+                process.get(), &ct, &et, &kt, &ut));
+            ULARGE_INTEGER user;
+            user.LowPart = ut.dwLowDateTime;
+            user.HighPart = ut.dwHighDateTime;
+            res.time = user.QuadPart / 10;
+        }
+        {
+            PROCESS_MEMORY_COUNTERS info;
+            winAssert(K32GetProcessMemoryInfo(
+                process.get(), &info, sizeof(info)));
+            res.mem = info.PeakPagefileUsage >> 10;
+        }
+        if(res.time > tlim) {
+            res.st = Status::TLE;
+            return res;
+        }
+        if(res.mem > mlim) {
+            res.st = Status::MLE;
+            return res;
+        }
+        DEBUG_EVENT event;
+        if(WaitForDebugEvent(&event, 0)) {
+            switch(event.dwDebugEventCode) {
+                case CREATE_PROCESS_DEBUG_EVENT:
+                    winAssert(CloseHandle(
+                        event.u.CreateProcessInfo
+                            .hFile));
+                    break;
+                case EXCEPTION_DEBUG_EVENT: {
+                    DWORD code = event.u.Exception
+                                     .ExceptionRecord
+                                     .ExceptionCode;
+                    if(code != EXCEPTION_BREAKPOINT &&
+                       isExceptionCode(code)) {
+                        res.st = Status::RE;
+                        res.sig = code;
+                        TerminateJobObject(hjob.get(),
+                                           0);
+                        return res;
+                    }
+                } break;
+                case LOAD_DLL_DEBUG_EVENT:
+                    winAssert(CloseHandle(
+                        event.u.LoadDll.hFile));
+                    break;
+                case RIP_EVENT:
+                    throw std::system_error(
+                        event.u.RipInfo.dwError,
+                        Win32APIError(SourceLocation::
+                                          current()));
+                    break;
+            }
+            winAssert(ContinueDebugEvent(
+                event.dwProcessId, event.dwThreadId,
+                DBG_CONTINUE));
+        }
         DWORD MSG;
         ULONG_PTR unusedA;
         LPOVERLAPPED unusedB;
         if(GetQueuedCompletionStatus(port.get(), &MSG,
                                      &unusedA,
                                      &unusedB, 0)) {
-            RunResult res;
-            {
-                FILETIME ct, et, kt, ut;
-                winAssert(
-                    GetProcessTimes(process.get(), &ct,
-                                    &et, &kt, &ut));
-                ULARGE_INTEGER user;
-                user.LowPart = ut.dwLowDateTime;
-                user.HighPart = ut.dwHighDateTime;
-                res.time = user.QuadPart / 10;
-            }
-            {
-                PROCESS_MEMORY_COUNTERS info;
-                winAssert(K32GetProcessMemoryInfo(
-                    process.get(), &info,
-                    sizeof(info)));
-                res.mem = info.PeakPagefileUsage >> 10;
-            }
-            if(res.time > tlim) {
-                res.st = Status::TLE;
-                return res;
-            }
-            if(res.mem > mlim) {
-                res.st = Status::MLE;
-                return res;
-            }
             DWORD exitCode;
             winAssert(GetExitCodeProcess(process.get(),
                                          &exitCode));
@@ -130,6 +165,7 @@ static RunResult runImpl(const Option& opt,
                 case JOB_OBJECT_MSG_ABNORMAL_EXIT_PROCESS: {
                     res.st = Status::RE;
                     res.sig = exitCode;
+                    puts("REB");
                 } break;
                 case JOB_OBJECT_MSG_EXIT_PROCESS: {
                     res.st = Status::AC;
@@ -155,40 +191,11 @@ static RunResult runImpl(const Option& opt,
                     break;
             }
             if(ret) {
+                TerminateJobObject(hjob.get(), 0);
+                return res;
             }
         }
-        DEBUG_EVENT event;
-        if(WaitForDebugEvent(&event, 0)) {
-            switch(event.dwDebugEventCode) {
-                case CREATE_PROCESS_DEBUG_EVENT:
-                    winAssert(CloseHandle(
-                        event.u.CreateProcessInfo
-                            .hFile));
-                    break;
-                case EXCEPTION_DEBUG_EVENT: {
-                    RunResult res;
-                    res.st = Status::RE;
-                    res.sig = event.u.Exception
-                                  .ExceptionRecord
-                                  .ExceptionCode;
-                    TerminateJobObject(hjob.get(), 0);
-                    return res;
-                } break;
-                case LOAD_DLL_DEBUG_EVENT:
-                    winAssert(CloseHandle(
-                        event.u.LoadDll.hFile));
-                    break;
-                case RIP_EVENT:
-                    throw std::system_error(
-                        event.u.RipInfo.dwError,
-                        Win32APIError(SourceLocation::
-                                          current()));
-                    break;
-            }
-            winAssert(ContinueDebugEvent(
-                event.dwProcessId, event.dwThreadId,
-                DBG_CONTINUE));
-        }
+        std::this_thread::yield();
     }
 }
 RunResult run(const Option& opt, const Timer& timer,
