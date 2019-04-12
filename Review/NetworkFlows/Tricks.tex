@@ -33,12 +33,12 @@
     \index{*TODO!雅礼集训2018Day8B的乱搞做法证明}
     \item Codeforces739E Gosha is hunting：两种精灵球混合使用会多计算$p_iu_i$的期望，
     由于网络流并不支持流量缩放的功能，只能考虑最后减去这个值。那么精灵连两条边到汇点，一条
-    费用为0，另一条为$p_iu_i$。只使用一个精灵球时，MCMF将贪心选择费用为0的边。
+    费用为0，另一条为$-p_iu_i$。只使用一个精灵球时，MCMF将贪心选择费用为0的边。
     简单地说，用流量和费用+贪心性质诱导MCMF。
 \end{itemize}
 
 上述内容参考了胡伯涛的2007年国家集训队论文《最小割模型在信息学竞赛中的应用》
 \cite{MCIOI}和租酥雨的博客\footnote{
-    网络流总结\\
+    网络流总结
     \url{https://www.cnblogs.com/zhoushuyu/p/8137534.html}
 }。

@@ -114,7 +114,7 @@
 	可以考虑整除分块枚举相同的$G_d$再使用杜教筛求$\mu$的前缀和解决。
 
 	注意这里还有个条件$H-L\leq 1e5$，infinity\_edge的博客\footnote{
-		「BZOJ3930」「CQOI2015」选数\\
+		「BZOJ3930」「CQOI2015」选数
 		\url{https://blog.csdn.net/infinity\_edge/article/details/78829630}
 	}中提到存在一个性质：
 	{\bfseries 若所有数字不全相同，则数字的极差不小于它们的最大公约数。}
@@ -149,7 +149,7 @@
 	扩展为多个基。
 	\item
 	\begin{displaymath}
-		\sum_{d=1}^n{\sum_{k=1}^{\frac{n}{k}}{F(k)G(\frac{n}{kd})}}\Rightarrow kd=q \Rightarrow \sum_{q=1}^n{G(q)\sum_{k|q}F(k)}
+		\sum_{d=1}^n{\sum_{k=1}^{\frac{n}{d}}{F(k)G(\frac{n}{kd})}}\Rightarrow kd=q \Rightarrow \sum_{q=1}^n{G(q)\sum_{k|q}F(k)}
 	\end{displaymath}
 	\item SPOJ DIVCNT2：
 
@@ -178,7 +178,7 @@
 	$\displaystyle\sum_{j|a}{\mu(j)}$，因为$a\neq 1$，所以该式的值为0。
 
 	这些方法参考了Candy？的博客\footnote{
-		SPOJ DIVCNT2 [我也不知道是什么分类了反正是数论]\\
+		SPOJ DIVCNT2 [我也不知道是什么分类了反正是数论]
 		\url{https://www.cnblogs.com/candy99/p/6715013.html}
 	}。
 	\item SDOI2018 旧试题：

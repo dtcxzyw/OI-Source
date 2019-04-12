@@ -191,7 +191,7 @@ $\omega=\sqrt[3]{b^3-a}$，把域内所有数表示为$\omega^0,\omega^1,\omega^
 高次剩余仍然可以使用上文的随机化算法解决，即寻找
 $b$满足$(b^n-a)^\frac{p-1}{n}\not \equiv 1$，记$\omega=\sqrt[n]{b^n-a}$，
 把数域扩充为$\omega^0,\omega^1,\cdots,\omega^{n-1}$的线性组合，答案为
-$(b-\omega)^\frac{\displaystyle \sum_{i=0}^{n-1}{p^i}}{n}$。
+$(b-\omega)^{\frac{1}{n} \sum_{i=0}^{n-1}{p^i}}$。
 然后解可乘以单位$n$次根的幂以生成整个解集，单位$n$次根可以使用求原根得到。
 期望尝试次数$n^{n-1}\lg p$。
 

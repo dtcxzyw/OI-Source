@@ -339,6 +339,7 @@
 - [ ] 广义（有限域）DFT+数论算法
 - [ ] 采样相关
 - [ ] border_tree
+- [ ] Perfect Hash Function
 # 集训队论文/WC营员交流学习（省选后）
 ## 2019
 - [ ] 模拟费用流 laofu

@@ -267,7 +267,7 @@ Binomial Coefficient Modulo Prime $\ll$ Picks's Blog
 使用常用的基2NTT，必须把卷积规模开到$2n$，然后每次把溢出部分加回去。即使使用快速幂也
 带来$O(\lg n)$的复杂度。
 
-不过NTT可以使用混合积，例题有一个性质，即$n$是smooth number，可以分解为
+不过NTT可以使用混合基，例题有一个性质，即$n$是smooth number，可以分解为
 $2^a3^b5^c7^d$的形式。那么可以按照当时FFT的推导写出基2，基3，基5，基7的蝴蝶操作，
 然后使用递归形式求解。
 
