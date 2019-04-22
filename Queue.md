@@ -510,6 +510,7 @@
 # 置换
 - [ ] LOJ#2528. 「ZJOI2018」树
 - [ ] 【Luogu4916】魔力环
+- [ ] Codeforces93D Flags
 # 支配树
 - [x] Luogu 2597 ZJOI 灾难
 - [ ] bzoj2851

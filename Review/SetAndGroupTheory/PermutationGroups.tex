@@ -24,7 +24,7 @@
 
 \subsection{Burnside引理}
 \index{B!Burnside's Lemma}
-\begin{lemma}[Burnside's Lemma]
+\begin{lemma}[Burnside's Lemma]\label{burnside}
 	等价类数目为置换群$G$中所有置换的不动点数目的平均值。
 	\begin{displaymath}
 		|X/G|=\frac{1}{|G|}\sum_{g\in G}|X^g|
@@ -126,6 +126,16 @@ n*n正方形染色：
 \end{itemize}
 \paragraph{环形旋转且$n$较大}
 枚举循环数（即$d=(n,i)$），利用欧拉函数与容斥解决。
+
+考虑枚举$n$的因子$k=(n,i)$，记有$k$个循环的不动点个数为$f(k)$，那么根据定理
+~\ref{burnside}，等价类数目为
+
+\begin{displaymath}
+	\frac{1}{n}\sum_{k|n}{f(k)\sum_{k|i,i<n}{[(\frac{n}{k},\frac{i}{k})=1]}}=
+	\frac{1}{n}\sum_{k|n}{f(k)\varphi(\frac{n}{k})}
+\end{displaymath}
+
+该内容参考了国家集训队2013论文集高胜寒的《浅谈环状计数问题》。
 \paragraph{有染色限制}
 使用dp与矩阵快速幂解决。
 

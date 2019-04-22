@@ -20,14 +20,15 @@
 	\end{displaymath}
 \end{theorem}
 
+容斥原理用来求集合并的大小，为了求集合交的大小，可以使用补集转换思想，
 由定理~\ref{DML}与~\ref{IEP}可得
 
 \begin{theorem}\label{ExDML}
 	\begin{displaymath}
-		\left|\bigcap_{i=1}^n\overline{A_i}\right|=
-		\left|\overline{\bigcup_{i=1}^n{A_i}}\right|=
+		\left|\bigcap_{i=1}^n{A_i}\right|=
+		\left|\overline{\bigcup_{i=1}^n{\overline{A_i}}}\right|=
 		|U|+\sum_{\emptyset \neq J\subseteq \{1,2,\cdots,n\}}{(-1)^{|J|}
-			\left|\bigcap_{j\in J}{A_j}\right|}
+			\left|\bigcap_{j\in J}{\overline{A_j}}\right|}
 	\end{displaymath}
 \end{theorem}
 
@@ -35,7 +36,8 @@
 	\url{https://en.wikipedia.org/wiki/Inclusion\%E2\%80\%93exclusion\_principle}
 
 	De Morgan's laws - Wikipedia
-    \url{https://en.wikipedia.org/wiki/De\_Morgan\%27s\_laws}}。
+	\url{https://en.wikipedia.org/wiki/De\_Morgan\%27s\_laws}}以及
+国家集训队2013论文集《浅谈容斥原理》。
 \subsection{模意义统计方案}
 若要求恰好满足$k$个条件的方案数，且这些条件是等价的。考虑使用至少满足$k$个条件的方案数
 容斥求出，后者由于限制条件较松，很容易使用NTT等方法得到。

@@ -263,7 +263,7 @@
 - [ ] 图上博弈论[By 自为风月马前卒](https://www.cnblogs.com/zwfymqz/p/8470475.html,https://www.cnblogs.com/zwfymqz/p/8470624.html)
 - [ ] 莫比乌斯反演常见套路[By 自为风月马前卒](https://www.cnblogs.com/zwfymqz/p/10097376.html)
 - [ ] 组合数前缀和[By 自为风月马前卒](https://www.cnblogs.com/zwfymqz/p/9751173.html)
-- [ ] 球与盒子的组合计数[By 自为风月马前卒](https://www.cnblogs.com/zwfymqz/p/9724918.html)
+- [x] 球与盒子的组合计数[By 自为风月马前卒](https://www.cnblogs.com/zwfymqz/p/9724918.html)
 - [ ] Lyndon Word[By 自为风月马前卒](https://www.cnblogs.com/zwfymqz/p/10198690.html)
 - [ ] KMP算法优化
 - [ ] 素数的k次幂前缀和(Meissel-Lehmer) IOI2018 zzt
@@ -340,6 +340,7 @@
 - [ ] 采样相关
 - [ ] border_tree
 - [ ] Perfect Hash Function
+- [ ] 五边形数定理
 # 集训队论文/WC营员交流学习（省选后）
 ## 2019
 - [ ] 模拟费用流 laofu
@@ -384,9 +385,9 @@
 - [x] 搜索问题中的 meet in the middle 技巧 乔明达
 - [x] 浅析信息学竞赛中概率论的基础与应用 胡渊鸣
 - [x] 浅谈数据结构题的几个非经典解法 许昊然
-- [ ] 浅谈环状计数问题 高胜寒
-- [ ] 浅谈容斥原理 王迪
-- [ ] 浅谈一类分治算法 顾昱洲
+- [x] 浅谈环状计数问题 高胜寒
+- [x] 浅谈容斥原理 王迪
+- [x] 浅谈一类分治算法 顾昱洲
 # Other
 - [ ] 使用Vim或Emacs
 - [ ] 学习十指打字(目标：250cpm)

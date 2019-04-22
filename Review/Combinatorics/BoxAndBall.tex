@@ -1,0 +1,50 @@
+\section{盒子放球问题总结}
+\index{T!Twentyfold Way}
+该系列问题叫做``The twentyfold way''，以下内容参考Wikipedia-EN
+\footnote{
+    Twelvefold way - Wikipedia
+    \url{https://en.wikipedia.org/wiki/Twelvefold\_way}
+}、自为风月马前卒的博客
+\footnote{
+    浅谈"n个球"和"m个盒子"之间的乱伦关系
+    \url{https://www.cnblogs.com/zwfymqz/p/9724918.html}
+}以及洛谷日报chengni的文章\footnote{
+    当小球遇上盒子
+    \url{https://www.luogu.org/blog/chengni5673/dang-xiao-qiu-yu-shang-he-zi}
+}。这里仅摘取8种常见情况。
+
+假设将$n$个球放入$m$个盒子中。
+\subsubsection{球异，可空}
+\begin{itemize}
+    \item 盒异：视为染色问题，$m^n$
+    \item 盒同：枚举非空盒子数，转化为球异非空盒同问题，
+    $\displaystyle\sum_{i=0}^m{\stirlingB{n}{i}}$
+\end{itemize}
+\subsubsection{球异，非空}
+\begin{itemize}
+    \item 盒异：计算出盒同的所有情况后给每个盒子编号，$m!\stirlingB{n}{m}$
+    \item 盒同：即第二类斯特林数，$\stirlingB{n}{m}$
+\end{itemize}
+\subsubsection{球同，可空}
+\begin{itemize}
+    \item 盒异：使用隔板法，强制给每个盒子额外一个球，$\binomial{n+m-1}{m-1}$
+    \item 盒同：实际上要求的是长度为$m$的有序数列个数，数列的元素和为$n$。
+
+    记$dp[n][m]$为划分方案数，有
+    \begin{eqnarray*}
+        dp[0][k]&=&dp[k][1]=1\\
+        dp[i][j]&=&dp[i-j][j]+dp[i][j-1]
+    \end{eqnarray*}
+
+    状态转移方程解释：考虑$j$个盒子中是否有空盒
+
+    \begin{itemize}
+        \item 有空盒：新增一个空盒，贡献$dp[i][j-1]$
+        \item 无空盒：向每个盒子放入一个球使其非空，贡献$dp[i-j][j]$
+    \end{itemize}
+\end{itemize}
+\subsubsection{球同，非空}
+\begin{itemize}
+    \item 盒异：使用隔板法，$\binomial{n-1}{m-1}$
+    \item 盒同：强制给每个盒子一个球后转化为可空，$dp[n-m][m]$
+\end{itemize}
