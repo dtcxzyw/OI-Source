@@ -1,0 +1,21 @@
+\section{ETT}
+\index{E!Euler Tour Tree}
+
+ETT用来解决动态树结构+换根+维护子树信息的问题。
+\subsection{欧拉遍历序列}
+以任意一点为根DFS，将每条树边拆为两条有向边，欧拉遍历路径即遍历路径的有向边序列。
+
+事实上这是一个环，所以支持换根。
+\subsection{基本操作}
+使用平衡树来维护遍历序列。
+\subsubsection{link}
+将两棵树并为一棵树。
+\subsubsection{cut}
+将一棵树分为两棵树。
+
+该内容参考了国家集训队2014论文集黄志翱的《浅谈动态树的相关问题及简单扩展》。
+
+留坑待补，参见Memphis的博客\footnote{
+    动态树拓展相关
+    \url{http://memphis.is-programmer.com/2015/8/7/linkcutmemphis.99293.html}
+}。

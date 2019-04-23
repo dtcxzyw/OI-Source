@@ -1,5 +1,7 @@
 \section{动态树}
 \index{L!Link-Cut Tree}
+
+{\bfseries 警告：首先考虑使用DFS序解决！}
 \subsection{常规操作}
 动态树是一堆splay组成的森林，主要以$access$和$makeRoot$操作为基础，
 可以实现$link,cut,split,find$等功能。
@@ -288,3 +290,14 @@ $access(v)$时会与$access(u)$的链相交，交点即为LCA。在实现时可�
     bzoj3637: Query on a tree VI【LCT】\\
     \url{https://blog.csdn.net/cdsszjj/article/details/80332588}
 }。
+
+\subsubsection{LCT离线维护动态图连通性}
+给定加边与删边操作序列，期间多次询问两点的连通性。
+
+关键在于当连边后会出现环时如何将其变为树。考虑一种贪心的做法，将环上最早被删除的边删掉，
+这样做将不会影响到图的连通性。而删边时间可以离线预处理。
+
+该方法参考了国家集训队2014论文集黄志翱的《浅谈动态树的相关问题及简单扩展》。
+\subsubsection{链权翻转}
+给LCT的每条链再使用一个splay来维护链权。
+均摊复杂度仍为$O(\lg n)$。
