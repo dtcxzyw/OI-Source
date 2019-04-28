@@ -175,7 +175,18 @@ Wikipedia-EN\footnote{
 简单的解决方法是不存储随机优先级，而是维护子树大小，根据两棵子树的大小\CJKsout{建立离散分布}随机
 决定哪个节点在上方。
 
-该方法来自2018年IOI2018国家候选队论文集董炜隽的论文《浅谈Splay和Treap的性质及其应用》。
+该方法来自IOI2018国家候选队论文集董炜隽的论文《浅谈Splay和Treap的性质及其应用》。
+\subsubsection{Finger Search}
+\index{F!Finger Search}
+Finger Search的思路就是如果操作元素有序，那么可以从上一次操作位置开始移动，
+可以使时间复杂度降一个$\lg$。
+
+splay原生支持Finger Search，但是FHQTreap需要一些额外代码。
+
+具体做法是给每个节点一个管辖区间，从元素$x$移动到$y$时，若$y$在管辖区间中则递归下去，
+否则向上跳到父亲直至LCA处。
+
+该方法来自IOI2018国家候选队论文集董炜隽的论文《浅谈Splay和Treap的性质及其应用》。
 \subsection{splay}\label{splay}
 \index{S!Splay}
 
@@ -295,8 +306,9 @@ $join(T1,T2)$表示将树$T1$与$T2$合并为一棵树，其中$T1$的所有元�
 
 \paragraph{splay启发式合并}
 维护splay树的size，合并时将size小的拆开插入size大的，时间复杂度$O(n\lg^2n)$。
-据说拆树时使用中序遍历，插入复杂度均摊为O(1)，时间复杂度O(nlgn)。该说法已被证实，
-参见Cppreference\footnote{
+据说拆树时使用中序遍历，插入复杂度均摊为$O(1)$，时间复杂度$O(n\lg n)$。
+
+该说法是有依据的，参见Cppreference\footnote{
     std::set::insert - cppreference.com
     \url{https://en.cppreference.com/w/cpp/container/set/insert}
 }中带hint插入元素的复杂度说明。

@@ -192,7 +192,10 @@ $pivot(k,n_B)$，这样就得到了线性规划$B$的一个基本可行解。
 \paragraph{随机初始化}
 不断迭代，每次随机选一个$l$满足$A[l][0]<0$，再随机选择一个$e$满足$A[l][e]<0$，
 执行pivot后可以使$A[l][0]$为正。
-\paragraph{算法实现（UOJ179）}
+\paragraph{避免初始化}
+可以根据题目性质，松弛一些约束（比如将$=$松弛为$\leq$），使得初始线性规划就是合法
+的松弛形。
+\subsubsection{算法实现（UOJ179）}
 为了过掉UOJ的Extra Test，这里使用了两种初始化方法的混合（然而还是过不去，
 只能指望Mehrotra predictor–corrector method了）。
 \lstinputlisting{Source/Templates/SimplexSLP.cpp}
