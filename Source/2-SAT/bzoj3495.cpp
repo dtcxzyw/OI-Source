@@ -72,19 +72,19 @@ int main() {
         int v = read();
         addEdge(u, 0, v, 1);
     }
-    int pcnt = n;
     for(int t = 1; t <= k; ++t) {
-        int c = read();
+        int c = read(), last = 0;
         for(int i = 0; i < c; ++i) {
-            int u = read(), id = ++pcnt;
-            addEdge(u, 1, id, 1);
+            int u = read();
+            addEdge(u, 1, u + n, 1);
             if(i) {
-                addEdge(u, 1, id - 1, 0);
-                addEdge(id - 1, 1, id, 1);
+                addEdge(u, 1, last, 0);
+                addEdge(last, 1, u + n, 1);
             }
+            last = u + n;
         }
     }
-    int end = pcnt * 2 + 1;
+    int end = n * 4 + 1;
     for(int i = 2; i <= end; ++i) {
         if(!dfn[i])
             DFS(i);

@@ -224,6 +224,8 @@ $O(\sqrt{n})-O(1)$的复杂度绝对不会成为性能瓶颈。
 可以使用支持自定义buffer的std::strstream，不过要注意这个类在C++98中已被弃用。
 也可以考虑使用sprintf。
 
+{\bfseries 注意使用strtod/strtol时务必一次性读取完毕。}
+
 Update：经过单步调试追踪到strtod在glibc中实现。其具体实现在
 \_\_\_\_STRTOF\\\_INTERNAL(/stdlib/strtod\_l.c)中，其实现依赖GMP，性能。。。。
 不过scanf的调用链为\_\_scanf(/stdio-common/scanf.c)$\rightarrow$

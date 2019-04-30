@@ -170,7 +170,6 @@
 - [x] LOJ#2312. 「HAOI2017」八纵八横
 - [x] LOJ#114. k 大异或和
 - [ ] LOJ#6243. 关灯问题
-- [ ] [WC2011]最大XOR和路径
 - [x] bzoj4184
 - [x] bzoj4269
 # dp优化
@@ -203,7 +202,6 @@
 - [x] [NOI2014]购票（可持久化单调队列）
 - [ ] [NOI2016]国王饮水记
 - [ ] BZOJ1096 [ZJOI2007]仓库建设
-- [ ] [SDOI2016]征途
 - [ ] HDU5956 The Elder
 - [ ] P3994 Highway
 - [x] bzoj3675
@@ -301,6 +299,9 @@
 - [ ] LOJ6072
 - [x] bzoj2111
 - [ ] bzoj3501
+- [ ] LOJ#6608. 无意识的石子堆
+- [ ] LOJ#562. 「LibreOJ Round #9」Tangjz 的背包
+- [ ] LOJ#6358. 前夕
 # 扩展欧几里得
 - [ ] LOJ#6440
 - [ ] CF868G
@@ -345,6 +346,7 @@
 - [ ] bzoj3532
 - [ ] uoj77
 - [x] Codeforces 786E ALT
+- [ ] 【LOJ#3097】[SNOI2019]通信
 # 分块及按大小分类
 - [x] LOJ#6277-6285
 - [x] bzoj2741
@@ -404,17 +406,16 @@
 - [x] bzoj3589
 # kdtree
 - [x] LOJ#6016. 崂山白花蛇草水
-- [ ] P4357 [CQOI2016]K远点对
+- [x] P4357 [CQOI2016]K远点对
 - [ ] bzoj2378
-- [ ] bzoj2626
-- [ ] bzoj2648
-- [ ] bzoj2850
+- [x] bzoj2626
+- [x] bzoj2648
+- [x] bzoj2850
 - [ ] bzoj3616
 - [ ] bzoj3815
 - [ ] bzoj4066
 # 计算几何
 - [x] P4586
-- [ ] bzoj2961
 - [ ] bzoj2642
 - [ ] LOJ#6504. 「雅礼集训 2018 Day5」Convex
 - [x] LOJ#6360. 复燃「恋之埋火」
@@ -426,7 +427,7 @@
 - [ ] P4383
 # 左偏树
 - [ ] P2483
-- [ ] bzoj2809
+- [x] bzoj2809
 - [ ] bzoj2090
 # 数论
 - [x] PE484
@@ -469,6 +470,7 @@
 - [ ] BZOJ4700: 适者
 - [x] 「Heoi2013」Segment
 - [x] bzoj3585
+- [ ] bzoj3064 CPU监控
 # 分治
 - [x] UVA1608 Non-boring sequences
 - [x] P4755 Beautiful Pair
