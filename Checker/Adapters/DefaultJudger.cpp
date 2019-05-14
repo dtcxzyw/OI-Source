@@ -79,7 +79,7 @@ bool runAll(const Option& opt,
             std::cout << std::endl;
         }
     if(flag) {
-#if !defined(__WIN32)
+#ifdef USE_PERF
         pinfo.report();
         line("Hot System Call");
         std::vector<std::pair<int, long>> info;

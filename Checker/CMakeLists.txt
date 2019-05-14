@@ -19,13 +19,23 @@ if(NOT HAS_UNZIP)
 message(FATAL_ERROR "No unzip")
 endif(NOT HAS_UNZIP)
 
+find_program(HAS_PERF perf)
+find_program(HAS_SYZOJTOOLS syzoj)
+
 set (CHECKER_VERSION_MAJOR 2)
 set (CHECKER_VERSION_MINOR 8)
-set (CHECKER_VERSION_PATCH 2)
+set (CHECKER_VERSION_PATCH 3)
 
 option(BZOJ_JUDGER "bzoj-judger" ON)
 option(LOJ_JUDGER "loj-judger" ON)
-option(USE_SYZOJTOOLS "syzoj-tools for loj" OFF)
+
+if(HAS_SYZOJTOOLS)
+option(USE_SYZOJTOOLS "syzoj-tools for LibreOJ" OFF)
+endif(HAS_SYZOJTOOLS)
+
+if(HAS_PERF)
+option(USE_PERF "perf for linux" ON)
+endif(HAS_PERF)
 
 configure_file (
   "${PROJECT_SOURCE_DIR}/CheckerConfig.hpp.in"

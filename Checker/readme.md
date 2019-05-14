@@ -122,6 +122,9 @@ AC后询问OJ上的时间并加入samples中，在BZOJ计时方式下skip掉剩�
 2.8.2(4.11)
 支持Windows下异常捕捉，使用Cmake支持自动更新
 
+2.8.3(4.13)
+修复CheckerDir不一致的bug，扩大Adapters识别范围，增加perf开关
+
 ## TODO List
 
 - [x] 跨Windows平台、分离平台实现

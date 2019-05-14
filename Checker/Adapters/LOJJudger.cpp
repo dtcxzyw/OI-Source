@@ -147,6 +147,6 @@ static bool runLOJ(const fs::path& exec) {
     return true;
 }
 static OJAdapterInfo
-    reg("LOJ-Judger", std::regex("(LOJ|loj)[0-9]+\\w*",
+    reg("LOJ-Judger", std::regex("(LOJ|loj)[0-9]+\\S*",
                                  regexFlag4Match),
         runLOJ);

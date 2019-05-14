@@ -30,7 +30,7 @@
 - [ ] IOI2018
 - [ ] Project Euler（高三或大学时刷）
 - [ ] NEERC
-- [ ] THUPC2017/2018
+- [ ] THUPC2017/2018/2019
 - [ ] 2017山东一轮集训
 - [ ] THUSCH
 - [ ] Hash Killer
@@ -346,7 +346,7 @@
 - [ ] bzoj3532
 - [ ] uoj77
 - [x] Codeforces 786E ALT
-- [ ] 【LOJ#3097】[SNOI2019]通信
+- [x] 【LOJ#3097】[SNOI2019]通信
 # 分块及按大小分类
 - [x] LOJ#6277-6285
 - [x] bzoj2741

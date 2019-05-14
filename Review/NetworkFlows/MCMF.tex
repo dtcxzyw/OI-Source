@@ -52,3 +52,21 @@ $h'[u]=h[u]+dis[u]$。
 	网络流之 - 消圈定理（POJ 2175）\\
 	\url{https://blog.sengxian.com/algorithms/clearcircle}
 }。
+\subsection{zkw费用流}
+发现zkw费用流的实现比较短，在性能要求不高时使用该方法作为费用流模板。
+zkw费用流一般适用于流量大，费用范围小，增广路径短的图。
+
+zkw费用流同样使用多路增广思想，与上文的不同之处在于其最短路算法是连续执行的。
+正确性证明留坑待补。
+\index{*TODO!zkw费用流正确性证明}
+
+参考代码：
+\lstinputlisting{Source/Templates/LOJ102-zkwMCMF.cpp}
+
+该内容参考了Angel\_Kitty\footnote{
+    详解zkw算法解决最小费用流问题
+    \url{https://www.cnblogs.com/ECJTUACM-873284962/p/7744943.html}
+}和小蒟蒻yyb\footnote{
+    【LOJ\#3097】[SNOI2019]通信（费用流）
+    \url{https://www.cnblogs.com/cjyyb/p/10790579.html}
+}的博客。

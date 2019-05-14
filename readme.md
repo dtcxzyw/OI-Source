@@ -173,21 +173,16 @@
 - [x] ISAP
 - [x] IDA*
 - [x] DLX
-- [ ] 最小树型图
 - [x] 单纯形算法
 - [x] Johnson
-- [ ] 平面性算法
-- [ ] 点定位
 - [x] 二次剩余、三次剩余、高次剩余
 - [x] 拉格朗日乘数法
 - [x] 常系数齐次线性递推
 - [x] 拉格朗日反演
 - [x] 快速莫比乌斯变换
-- [ ] 支配树[By MoebiusMeow](https://www.cnblogs.com/meowww/archive/2017/02/27/6475952.html)
 - [x] zkw线段树
 - [x] Segment tree beats
 - [x] Lindström–Gessel–Viennot lemma
-- [ ] 边分治
 - [x] 最小割树
 - [x] 势能分析线段树
 - [x] 弦图、最大势算法
@@ -195,63 +190,39 @@
 - [x] Raney引理
 - [x] 快速凸包
 - [x] 康托展开
-- [ ] ETT(Euler Tour Tree)[By Memphis](http://memphis.is-programmer.com/2015/8/7/linkcutmemphis.99293.html)
-- [ ] Top-Tree[By Memphis](http://memphis.is-programmer.com/2015/8/7/linkcutmemphis.99293.html)[By negiizhao](http://negiizhao.blog.uoj.ac/blog/4912)
 - [x] Stoer-Wagner算法
 - [x] LCT维护子树信息和边权信息
 - [x] 共价大爷游长沙技巧
 - [x] FFT字符串通配[By yyb](https://www.cnblogs.com/cjyyb/p/10132855.html)
-- [ ] fractional cascading
 - [x] boruvka算法-CF888G
 - [x] 动态DP
 - [x] ExKMP(Z Algorithm)
 - [x] 二维FFT
-- [ ] 欧几里得距离MST[By zball](https://www.cnblogs.com/tmzbot/p/6203547.html)
 - [x] 类欧几里得算法
-- [ ] 最小方差生成树
-- [ ] 牛顿级数差分
-- [ ] 牛顿插值法[By 马同学](https://www.matongxue.com/madocs/126/)
-- [ ] 拟牛顿法BFGS
 - [x] 三元环[By tan90°](https://www.luogu.org/blog/KingSann/fou-chang-yong-di-hei-ke-ji-san-yuan-huan-post)
-- [ ] 闭包[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Closure.html)
-- [ ] b-Matching[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Matching2.html#2)
-- [ ] Stable Matching[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Matching2.html#3)
-- [ ] Chinese Postman Problem[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Circuit.html#4)
 - [x] 启发式分裂[By zsy](https://blog.csdn.net/DSL_HN_2002/article/details/81193576)
 - [x] minmax容斥
-- [ ] 有标号的DAG计数[By yyb](https://www.cnblogs.com/cjyyb/p/10134575.html)
 - [x] CZT[By myy 再探快速傅里叶变换](http://www.doc88.com/p-4912876232995.html)
 - [x] 优化形式幂级数计算的牛顿法的常数[By negiizhao](http://negiizhao.blog.uoj.ac/blog/4671)
 - [x] 回滚莫队
 - [x] 原根对1求离散对数[By Dance Of Faith](https://www.cnblogs.com/Dance-Of-Faith/p/9905786.html)
 - [x] 集合选数最值一类问题[By tkandi](https://www.cnblogs.com/tkandi/p/9375509.html)
 - [x] 子序列自动机
-- [ ] 行列式的几何意义
 - [x] Dilworth定理
 - [x] 杨氏矩阵
 - [x] 一个用SAM维护多个串的根号特技[By Mangoyang](https://www.cnblogs.com/mangoyang/p/10155185.html)
 - [x] IDDFS SPFA判负环[By 姜碧野](https://wenku.baidu.com/view/f22d0d36ee06eff9aef807e9.html)
 - [x] 单位根反演 [By czy](https://czyhe.me/algorithm/unit-root-inv/unit-root-inv/)
-- [ ] Bron–Kerbosch算法
 - [x] GarsiaWachs算法
 - [x] 猫树[By immortalCO](http://immortalco.blog.uoj.ac/blog/2102)
 - [x] Baillie–PSW素性测试
 - [x] pollardrho离散对数
 - [x] Pohlig–Hellman algorithm
-- [ ] TS剩余
 - [x] 利用powerful number求积性函数前缀和[By fjzzq2002](https://www.cnblogs.com/zzqsblog/p/9904271.html)
 - [ ] 模拟费用流
-- [ ] 笛卡尔树 O(n)-O(1) RMQ
-- [ ] 生成函数与图的计数
 - [x] 生成函数与背包问题
-- [ ] 马尔可夫链
-- [ ] 对角化
-- [ ] QR分解
-- [ ] SVD分解
-- [ ] 正交投影
-- [ ] 秩分解
 - [x] 多路增广费用流
-- [ ] 最小表示法
+- [x] 最小表示法
 - [ ] 构造问题总结
 - [x] 珂朵莉树详解[By yzhang](https://www.cnblogs.com/yzhang-rp-inf/p/9443659.html)
 - [x] DP的各种优化[By FlashHu](https://www.cnblogs.com/flashhu/p/9480669.html,https://www.cnblogs.com/flashhu/p/9521094.html)
@@ -262,20 +233,13 @@
 - [x] 配对堆[By WAAutoMaton](https://wa-am.com/2018/05/13/配对堆)
 - [ ] 图上博弈论[By 自为风月马前卒](https://www.cnblogs.com/zwfymqz/p/8470475.html,https://www.cnblogs.com/zwfymqz/p/8470624.html)
 - [ ] 莫比乌斯反演常见套路[By 自为风月马前卒](https://www.cnblogs.com/zwfymqz/p/10097376.html)
-- [ ] 组合数前缀和[By 自为风月马前卒](https://www.cnblogs.com/zwfymqz/p/9751173.html)
 - [x] 球与盒子的组合计数[By 自为风月马前卒](https://www.cnblogs.com/zwfymqz/p/9724918.html)
-- [ ] Lyndon Word[By 自为风月马前卒](https://www.cnblogs.com/zwfymqz/p/10198690.html)
 - [ ] KMP算法优化
-- [ ] 素数的k次幂前缀和(Meissel-Lehmer) IOI2018 zzt
-- [ ] 约数函数前缀和 IOI2018 zzt
-- [ ] 轨道-稳定集定理
 - [ ] zkw线段树常用模板
 - [x] O(1)gcd[By fjzzq2002](https://www.cnblogs.com/zzqsblog/p/5436775.html)
-- [ ] Ukkonen线性构造后缀树[By permui](https://www.cnblogs.com/owenyu/p/6875887.html?utm_source=itdadao&utm_medium=referral)
-- [ ] Q-learning
 - [ ] FFT优化[By zjt](http://zjt-blog.cc/articles/154)
 - [ ] 常见线性规划标准型
-- [ ] Karger算法
+- [x] zkw费用流
 # 标准库使用
 - [ ] valarray:std::valarray[by SarvaTathagata](https://www.luogu.org/blog/474D/qian-tan-valarray)
 - [ ] functional:std::plus/minus等Function Object
@@ -283,6 +247,36 @@
 - [ ] bitset:std::bitset
 - [ ] cmath:fma,tgamma
 # Research
+- [ ] 有标号的DAG计数[By yyb](https://www.cnblogs.com/cjyyb/p/10134575.html)
+- [ ] Bron–Kerbosch算法
+- [ ] 生成函数与图的计数
+- [ ] 最小树型图
+- [ ] 平面性算法
+- [ ] 点定位
+- [ ] 支配树[By MoebiusMeow](https://www.cnblogs.com/meowww/archive/2017/02/27/6475952.html)
+- [ ] 边分治
+- [ ] 欧几里得距离MST[By zball](https://www.cnblogs.com/tmzbot/p/6203547.html)
+- [ ] TS剩余
+- [ ] 组合数前缀和[By 自为风月马前卒](https://www.cnblogs.com/zwfymqz/p/9751173.html)
+- [ ] Lyndon Word[By 自为风月马前卒](https://www.cnblogs.com/zwfymqz/p/10198690.html)
+- [ ] 素数的k次幂前缀和(Meissel-Lehmer) IOI2018 zzt
+- [ ] 约数函数前缀和 IOI2018 zzt
+- [ ] 轨道-稳定集定理
+- [ ] Ukkonen线性构造后缀树[By permui](https://www.cnblogs.com/owenyu/p/6875887.html?utm_source=itdadao&utm_medium=referral)
+- [ ] Q-learning
+- [ ] Karger算法
+- [ ] ETT(Euler Tour Tree)[By Memphis](http://memphis.is-programmer.com/2015/8/7/linkcutmemphis.99293.html)
+- [ ] Top-Tree[By Memphis](http://memphis.is-programmer.com/2015/8/7/linkcutmemphis.99293.html)[By negiizhao](http://negiizhao.blog.uoj.ac/blog/4912)
+- [ ] fractional cascading
+- [ ] 闭包[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Closure.html)
+- [ ] b-Matching[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Matching2.html#2)
+- [ ] Stable Matching[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Matching2.html#3)
+- [ ] Chinese Postman Problem[演算法筆記](http://www.csie.ntnu.edu.tw/~u91029/Circuit.html#4)
+- [ ] 最小方差生成树
+- [ ] 牛顿级数差分
+- [ ] 牛顿插值法[By 马同学](https://www.matongxue.com/madocs/126/)
+- [ ] 拟牛顿法BFGS
+- [ ] 笛卡尔树 O(n)-O(1) RMQ
 - [ ] 三维凸包与Delaunay剖分的关系[By 刘汝佳](https://wenku.baidu.com/view/e2e2d86f58fafab069dc02f8.html)
 - [ ] Tutte 矩阵与一般图匹配
 - [ ] 特征多项式求法[By ftiasch](https://loj.ac/article/401)

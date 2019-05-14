@@ -118,13 +118,14 @@ fs::path downloadFile(const std::string& url,
             std::cout << "Downloading file " << url
                       << std::endl;
             line("wget");
-            std::string cmd = "wget --dns-timeout=10 "
-                              "--connect-timeout=10 "
-                              "--read-timeout=600 "
-                              "--tries=1 "
-                              "--https-only -v "
-                              "--no-use-server-"
-                              "timestamps -O Cache/" +
+            std::string cmd =
+                "wget --dns-timeout=20 "
+                "--connect-timeout=20 "
+                "--read-timeout=600 "
+                "--tries=5 "
+                "--https-only -v "
+                "--no-use-server-"
+                "timestamps -O CheckerDir/Cache/" +
                 pid + " " + url;
             std::cout << cmd << std::endl;
             int res = system(cmd.c_str());

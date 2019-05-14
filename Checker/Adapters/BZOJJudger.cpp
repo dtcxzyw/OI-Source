@@ -77,6 +77,6 @@ static bool runBZOJ(const fs::path& exec) {
 }
 static OJAdapterInfo
     reg("BZOJ-Judger",
-        std::regex("(BZOJ|bzoj)[0-9]+\\w*",
+        std::regex("(BZOJ|bzoj)[0-9]+\\S*",
                    regexFlag4Match),
         runBZOJ);
