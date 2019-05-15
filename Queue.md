@@ -37,6 +37,7 @@
 - [ ] Timus Online Judge专题
 - [ ] UOJ NOI Round
 - [ ] 九省联考 2018
+- [ ] CTS2019
 # 类欧几里得算法
 - [x] LOJ#138. 类欧几里得算法
 - [ ] UOJ#42. 【清华集训2014】Sum
@@ -157,7 +158,7 @@
 - [ ] bzoj4180
 - [x] bzoj4545
 - [ ] bzoj4310
-- [ ] bzoj4453
+- [x] bzoj4453
 - [ ] Codeforces 235C
 # AC自动机
 - [x] LOJ#2180. 「BJOI2017」魔法咒语
@@ -202,8 +203,8 @@
 - [x] [NOI2014]购票（可持久化单调队列）
 - [ ] [NOI2016]国王饮水记
 - [ ] BZOJ1096 [ZJOI2007]仓库建设
-- [ ] HDU5956 The Elder
-- [ ] P3994 Highway
+- [x] HDU5956 The Elder
+- [x] P3994 Highway
 - [x] bzoj3675
 - [ ] bzoj4367
 - [x] NOI2007货币兑换

@@ -84,7 +84,8 @@
 			"memory_resource": "cpp",
 			"string": "cpp",
 			"any": "cpp",
-			"source_location": "cpp"
+			"source_location": "cpp",
+			"*.idl": "cpp"
 		},
 		"latex-workshop.intellisense.citation.maxfilesizeMB": 128,
 		"latex-workshop.latex.recipes": [
