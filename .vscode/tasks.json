@@ -15,7 +15,7 @@
                     "-D_FORTIFY_SOURCE=2",
                     "-ggdb3",
                     "-Wextra",
-                    //"-ftrapv"
+                    "-ftrapv"
                 ]
             },
             "windows": {

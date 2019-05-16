@@ -122,8 +122,11 @@ AC后询问OJ上的时间并加入samples中，在BZOJ计时方式下skip掉剩�
 2.8.2(4.11)
 支持Windows下异常捕捉，使用Cmake支持自动更新
 
-2.8.3(4.13)
+2.8.3(5.13)
 修复CheckerDir不一致的bug，扩大Adapters识别范围，增加perf开关
+
+2.8.4(5.14)
+修复系统时间超时产生SIGXCPU信号，误判TLE的问题。
 
 ## TODO List
 

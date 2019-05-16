@@ -24,7 +24,7 @@ find_program(HAS_SYZOJTOOLS syzoj)
 
 set (CHECKER_VERSION_MAJOR 2)
 set (CHECKER_VERSION_MINOR 8)
-set (CHECKER_VERSION_PATCH 3)
+set (CHECKER_VERSION_PATCH 4)
 
 option(BZOJ_JUDGER "bzoj-judger" ON)
 option(LOJ_JUDGER "loj-judger" ON)

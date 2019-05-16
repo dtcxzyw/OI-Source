@@ -26,8 +26,7 @@ static void runTask(const Option& opt,
     {
         struct rlimit limit;
         flag &= getrlimit(RLIMIT_CPU, &limit) == 0;
-        limit.rlim_cur =
-            timer.remain() / 1000000LL + 1;
+        limit.rlim_cur = timer.remain() / 1000000LL;
         flag &= setrlimit(RLIMIT_CPU, &limit) == 0;
     }
     if(!flag)
@@ -93,7 +92,8 @@ static RunResult watchTask(const Option& opt,
             break;
         } else if(WIFSIGNALED(status) ||
                   (WIFSTOPPED(status) &&
-                   WSTOPSIG(status) != 5)) {
+                   WSTOPSIG(status) != SIGTRAP &&
+                   WSTOPSIG(status) != SIGXCPU)) {
             res.st = Status::RE;
             res.ret = RuntimeError::Unknown;
             res.sig = WIFSIGNALED(status) ?
@@ -106,9 +106,6 @@ static RunResult watchTask(const Option& opt,
                 case SIGFPE:
                     res.ret = RuntimeError::
                         FloatingPointError;
-                    break;
-                case SIGXCPU:
-                    res.st = Status::TLE;
                     break;
                 case SIGSEGV:
                     res.ret = RuntimeError::
