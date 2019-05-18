@@ -299,10 +299,10 @@
 - [ ] UOJ450
 - [ ] LOJ6072
 - [x] bzoj2111
-- [ ] bzoj3501
+- [x] bzoj3501
 - [ ] LOJ#6608. 无意识的石子堆
 - [ ] LOJ#562. 「LibreOJ Round #9」Tangjz 的背包
-- [ ] LOJ#6358. 前夕
+- [x] LOJ#6358. 前夕
 # 扩展欧几里得
 - [ ] LOJ#6440
 - [ ] CF868G

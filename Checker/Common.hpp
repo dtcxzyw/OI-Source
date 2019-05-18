@@ -8,6 +8,7 @@
 #include <iostream>
 #include <map>
 #include <regex>
+#include <sstream>
 #include <string>
 using std::int64_t;
 using SourceLocation =
@@ -69,9 +70,9 @@ fs::path downloadFile(const std::string& url,
 bool unzip(const fs::path& path);
 template <typename T>
 inline T scan(const std::string& str) {
-    T res = {};
-    std::from_chars(str.c_str(),
-                    str.c_str() + str.size(), res);
+    std::stringstream ss(str);
+    T res{};
+    ss >> res;
     return res;
 }
 constexpr auto regexFlag4Search =

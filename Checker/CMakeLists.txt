@@ -23,11 +23,12 @@ find_program(HAS_PERF perf)
 find_program(HAS_SYZOJTOOLS syzoj)
 
 set (CHECKER_VERSION_MAJOR 2)
-set (CHECKER_VERSION_MINOR 8)
-set (CHECKER_VERSION_PATCH 4)
+set (CHECKER_VERSION_MINOR 9)
+set (CHECKER_VERSION_PATCH 0)
 
 option(BZOJ_JUDGER "bzoj-judger" ON)
 option(LOJ_JUDGER "loj-judger" ON)
+option(UOJ_JUDGER "uoj-judger" ON)
 
 if(HAS_SYZOJTOOLS)
 option(USE_SYZOJTOOLS "syzoj-tools for LibreOJ" OFF)
@@ -62,8 +63,12 @@ if(LOJ_JUDGER)
 set (JudgerSrc ${JudgerSrc} Adapters/LOJJudger.cpp)
 endif(LOJ_JUDGER)
 
+if(UOJ_JUDGER)
+set (JudgerSrc ${JudgerSrc} Adapters/UOJJudger.cpp)
+endif(UOJ_JUDGER)
+
 set (SharedSrc Checker.cpp Common.cpp Judger.cpp OJAdapter.cpp OJAPI.cpp
-RunnerShared.cpp Scanner.cpp Timer.cpp)
+RunnerShared.cpp Scanner.cpp Timer.cpp Network.cpp)
 
 link_libraries(stdc++fs)
 add_executable(Checker ${SharedSrc} ${JudgerSrc} ${PlatformSrc})

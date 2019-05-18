@@ -1,0 +1,60 @@
+\section{贝尔数}
+贝尔数$B_n$是大小为$n$的集合的划分方案数。
+
+贝尔数的前几项为：$1, 1, 2, 5, 15, 52, 203, 877,\cdots$（参见OEIS-A000110\\
+\url{https://oeis.org/A000110}）
+
+$B_n$满足等式：
+\begin{eqnarray*}
+	B_0=B_1&=&1\\
+	B_{n+1}&=&\sum_{i=0}^n{\binomial{n}{i}B_i}\\
+	B_n&=&\sum_{i=1}^n{\stirlingB{n}{i}}
+\end{eqnarray*}
+
+\subsection{因子分解应用}
+若无平方因子的整数$\displaystyle n=\sum_{i=1}^k{p_i}$，
+则整数$n$可以分解为$B_k$种因子的乘积表达式。
+\subsection{贝尔数计算}
+\subsubsection{DFS}若要得到不同方案的状态表示，限制下阶段DFS的集合大小以避免重复计算。
+\subsubsection{贝尔三角形}
+与推杨辉三角形类似，递推方法如下：
+\begin{eqnarray*}
+	A[0][1]&=&1\\
+	A[n][1]&=&A[n-1][n]\\
+	A[n][m]&=&A[n][m-1]+A[n-1][m-1]\\
+	B_n&=&A[n][1]
+\end{eqnarray*}
+使用滚动数组优化空间。
+
+\index{*TODO!贝尔三角形的意义}
+\subsubsection{生成函数法}
+利用Bell数的生成函数$e^{e^x-1}$，计算多项式exp。
+\subsubsection{贝尔数模质数}
+\index{T!Touchard's Congruence}
+\begin{theorem}{Touchard's Congruence}
+    \begin{eqnarray*}
+        B_{p+n}&\equiv& B_n+B_{n+1}\pmod{p}\\
+        B_{p^m+n}&\equiv& mB_n+B_{n+1}\pmod{p}\\
+    \end{eqnarray*}
+\end{theorem}
+
+首先$O(p^2)$使用贝尔三角形预处理出$p$以内的贝尔数模$p$的值。
+
+若要求$B_n$，则对$n$进行$p$进制分解，记$n_i$为$n$在权为$p^i$时的位。
+
+以最低位作为下标，从$B_{0\ldots p}$开始递推，逐步加$p^i$递推直至次数等于$n_i$。
+最后取数组第$n_0$项。
+
+参考代码（PA2008 Cliquers Strike Back）：
+\lstinputlisting{Source/Source/Count/bzoj3501.cpp}
+
+时间复杂度$O(p^2lg_pn)$。
+
+该内容参考了Claris的博客\footnote{
+    BZOJ3501 : PA2008 Cliquers Strike Back
+    \url{https://www.cnblogs.com/clrs97/p/4714467.html}
+}和Wikipedia-EN\footnote{
+    Bell number - Wikipedia:Modular arithmetic\\
+    \url{https://en.wikipedia.org/wiki/Bell\_number\#Modular\_arithmetic}
+}。
+{\bfseries 令人失望的是维基百科已全面被封。}

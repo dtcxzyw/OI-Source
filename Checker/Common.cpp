@@ -1,4 +1,5 @@
 #include "Common.hpp"
+#include "Network.hpp"
 #include "Platforms/Platform.hpp"
 #include <algorithm>
 #include <chrono>
@@ -115,22 +116,8 @@ fs::path downloadFile(const std::string& url,
            !verifyZip(cacheFile))
             fs::remove(cacheFile);
         if(!fs::exists(cacheFile)) {
-            std::cout << "Downloading file " << url
-                      << std::endl;
-            line("wget");
-            std::string cmd =
-                "wget --dns-timeout=20 "
-                "--connect-timeout=20 "
-                "--read-timeout=600 "
-                "--tries=5 "
-                "--https-only -v "
-                "--no-use-server-"
-                "timestamps -O CheckerDir/Cache/" +
-                pid + " " + url;
-            std::cout << cmd << std::endl;
-            int res = system(cmd.c_str());
-            line("");
-            if(res != 0 ||
+            bool res = download(url, cacheFile);
+            if(!res ||
                (verify && !verifyZip(cacheFile))) {
                 if(fs::exists(cacheFile))
                     fs::remove(cacheFile);

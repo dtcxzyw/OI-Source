@@ -85,7 +85,9 @@
 			"string": "cpp",
 			"any": "cpp",
 			"source_location": "cpp",
-			"*.idl": "cpp"
+			"*.idl": "cpp",
+			"hash_map": "cpp",
+			"hash_set": "cpp"
 		},
 		"latex-workshop.intellisense.citation.maxfilesizeMB": 128,
 		"latex-workshop.latex.recipes": [
