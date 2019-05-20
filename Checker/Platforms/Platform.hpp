@@ -8,6 +8,5 @@
 #include "Linux/PlatformLinux.hpp"
 #endif
 void initPlatform();
-void platformInfo();
 void reportJudgeError(const RunResult& res);
 int getConsoleWidth();

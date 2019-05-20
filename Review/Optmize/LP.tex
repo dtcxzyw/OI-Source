@@ -198,6 +198,9 @@ $pivot(k,n_B)$，这样就得到了线性规划$B$的一个基本可行解。
 \subsubsection{算法实现（UOJ179）}
 为了过掉UOJ的Extra Test，这里使用了两种初始化方法的混合（然而还是过不去，
 只能指望Mehrotra predictor–corrector method了）。
+
+Update：事实上应该是浮点数精度不够。
+
 \lstinputlisting{Source/Templates/SimplexSLP.cpp}
 
 \subsubsection{稀疏矩阵优化}

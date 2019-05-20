@@ -22,10 +22,6 @@ endif(NOT HAS_UNZIP)
 find_program(HAS_PERF perf)
 find_program(HAS_SYZOJTOOLS syzoj)
 
-set (CHECKER_VERSION_MAJOR 2)
-set (CHECKER_VERSION_MINOR 9)
-set (CHECKER_VERSION_PATCH 0)
-
 option(BZOJ_JUDGER "bzoj-judger" ON)
 option(LOJ_JUDGER "loj-judger" ON)
 option(UOJ_JUDGER "uoj-judger" ON)

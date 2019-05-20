@@ -61,9 +61,6 @@ void initPlatform() {
         old | ENABLE_VIRTUAL_TERMINAL_PROCESSING));
     setCodePage(65001);
 }
-void platformInfo() {
-    system("ver");
-}
 static const std::string& getWinntHeader() {
     static std::string str =
         file2Str(readConfig("WinntHeader"));

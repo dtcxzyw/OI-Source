@@ -59,8 +59,6 @@ static bool readOpt(Option& opt,
                                 maxTime * 1000000));
     opt.insert("MemoryLimit", maxMem << 10);
     opt.insert("CompareMode", CompareMode::Text);
-    opt.insert("TimeSamples",
-               fs::path("CheckerDir/UOJ-Samples"));
     return true;
 }
 static bool runUOJ(const fs::path& exec) {

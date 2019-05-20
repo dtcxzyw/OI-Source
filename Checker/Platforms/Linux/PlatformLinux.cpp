@@ -7,9 +7,6 @@
 #include <sys/types.h>
 #include <termios.h>
 #include <unistd.h>
-void platformInfo() {
-    system("lsb_release -d");
-}
 void initPlatform() {
     struct rlimit limit;
     getrlimit(RLIMIT_STACK, &limit);

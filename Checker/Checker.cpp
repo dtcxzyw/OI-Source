@@ -8,10 +8,10 @@ int main() {
     std::cout.precision(2);
     std::cout << std::fixed;
 
-    line("Checker " VERSION, '*');
+    line("Checker for " CHECKER_PLATFORM " 2.9.1",
+         '*');
     std::cout << "Built at " << __TIME__ << " on "
               << __DATE__ << std::endl;
-    platformInfo();
     fs::path exec = scanExec();
     std::cout << "found program:" << exec << std::endl;
     autoRun(exec);

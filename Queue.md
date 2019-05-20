@@ -86,6 +86,7 @@
 # minmax容斥
 - [x] LOJ#2542. 「PKUWC2018」随机游走
 - [x] LOJ#2127. 「HAOI2015」按位或（做完后作为minmax容斥的例题）
+- [ ] UOJ#449
 # FFT/NTT/FWT/生成函数
 - [x] LOJ#151. 多项式求立方根
 - [x] LOJ#2527. 「HAOI2018」染色

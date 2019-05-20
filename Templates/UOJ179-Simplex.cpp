@@ -1,49 +1,46 @@
 #include <algorithm>
 #include <cmath>
 #include <iostream>
-int getRandom() {
-    static int seed = 2354;
-    return seed = seed * 48271LL % 2147483647;
+typedef float FT __attribute__((mode(TF)));
+const FT epsA = 1e-10, epsB = 1e-20, epsC = 1e-30,
+         zero = 0, one = 1;
+FT mabs(FT val) {
+    return val >= zero ? val : -val;
 }
-typedef long double FT;
-const FT eps = 1e-10;
 const int size = 25;
 FT A[size][size];
-int id[size * 2], n, m;
+int idn[size], idm[size], n, m;
 void pivot(int l, int e) {
-    std::swap(id[n + l], id[e]);
+    std::swap(idm[l], idn[e]);
     FT fac = A[l][e];
-    A[l][e] = 1.0;
+    A[l][e] = one;
     for(int i = 0; i <= n; ++i)
         A[l][i] /= fac;
     for(int i = 0; i <= m; ++i)
         if(i != l) {
             FT k = A[i][e];
-            A[i][e] = 0.0;
+            A[i][e] = zero;
             for(int j = 0; j <= n; ++j)
                 A[i][j] -= k * A[l][j];
         }
 }
-int q[size];
 bool init() {
+    idm[0] = idn[0] = 1 << 30;
     while(true) {
-        int qcnt = 0;
+        int l = 0;
         for(int i = 1; i <= m; ++i)
-            if(A[i][0] < -eps)
-                q[qcnt++] = i;
-        if(qcnt == 0)
-            break;
-        int l = q[getRandom() % qcnt];
-        qcnt = 0;
+            if(A[i][0] < -epsA && idm[i] < idm[l])
+                l = i;
+        if(l == 0)
+            return true;
+        int e = 0;
         for(int i = 1; i <= n; ++i)
-            if(A[l][i] < -eps)
-                q[qcnt++] = i;
-        if(qcnt == 0)
+            if(A[l][i] < -epsA && idn[i] < idn[e])
+                e = i;
+        if(e == 0)
             return false;
-        int e = q[getRandom() % qcnt];
         pivot(l, e);
     }
-    return true;
 }
 bool simplex() {
     if(!init()) {
@@ -53,21 +50,19 @@ bool simplex() {
     while(true) {
         int e = 0;
         for(int i = 1; i <= n; ++i)
-            if(A[0][i] > eps) {
+            if(A[0][i] > epsB && idn[i] < idn[e])
                 e = i;
-                break;
-            }
         if(e == 0)
             break;
-        FT minv = 1e20;
+        FT minv = 1e200;
         int l = 0;
         for(int i = 1; i <= m; ++i)
-            if(A[i][e] > eps) {
+            if(A[i][e] > epsB) {
                 FT val = A[i][0] / A[i][e];
-                if(val < minv) {
-                    minv = val;
-                    l = i;
-                }
+                if(l == 0 || val < minv ||
+                   (mabs(val - minv) < epsC &&
+                    idm[i] < idm[l]))
+                    minv = val, l = i;
             }
         if(l == 0) {
             std::cout << "Unbounded" << std::endl;
@@ -77,7 +72,20 @@ bool simplex() {
     }
     return true;
 }
-FT ans[size];
+FT ans[size * 2];
+typedef long long Int64;
+std::istream& operator>>(std::istream& in, FT& val) {
+    Int64 tmp;
+    in >> tmp;
+    val = tmp;
+    // if(static_cast<Int64>(val) != tmp)
+    //    throw;
+    return in;
+}
+typedef long double IOFT;
+std::ostream& operator<<(std::ostream& out, FT val) {
+    return out << static_cast<IOFT>(val);
+}
 int main() {
     int t;
     std::cin >> n >> m >> t;
@@ -89,14 +97,16 @@ int main() {
         std::cin >> A[i][0];
     }
     for(int i = 1; i <= n; ++i)
-        id[i] = i;
+        idn[i] = i;
+    for(int i = 1; i <= m; ++i)
+        idm[i] = n + i;
     std::cout.precision(14);
     if(simplex()) {
         std::cout << std::fixed << -A[0][0]
                   << std::endl;
         if(t) {
             for(int i = 1; i <= m; ++i)
-                ans[id[n + i]] = A[i][0];
+                ans[idm[i]] = A[i][0];
             for(int i = 1; i <= n; ++i)
                 std::cout << std::fixed << ans[i]
                           << ' ';
