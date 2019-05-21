@@ -135,6 +135,7 @@
 - [ ] bzoj3605
 - [x] LOJ#161. 子集卷积
 - [ ] LOJ#6570. 毛毛虫计数
+- [ ] LOJ#570. 「LibreOJ Round #11」Misaka Network 与任务
 # 后缀数组/后缀自动机/序列自动机
 - [x] LOJ#111. 后缀排序
 - [x] LOJ#2033. 「SDOI2016」生成魔咒
@@ -320,7 +321,7 @@
 - [ ] LOJ#2146. 「SHOI2017」寿司餐厅
 - [ ] [CTSC2010]星际旅行
 - [ ] UOJ#UER8B
-- [ ] POJ 2175 Evacuation Plan
+- [x] POJ 2175 Evacuation Plan
 - [x] 方伯伯运椰子
 - [ ] THUPC2017 Airport（题目不完整）
 - [x] UOJ 无限之环
@@ -328,8 +329,8 @@
 - [x] 星际竞速
 - [x] LOJ#6014. 「网络流 24 题」最长 k 可重区间集
 - [x] LOJ#6008. 「网络流 24 题」餐巾计划（做完补技巧总结）
-- [ ] P2472 [SCOI2007]蜥蜴
-- [ ] P3191 [HNOI2007]紧急疏散EVACUATE
+- [x] P2472 [SCOI2007]蜥蜴
+- [x] P3191 [HNOI2007]紧急疏散EVACUATE
 - [ ] bzoj3218: a + b Problem
 - [ ] bzoj3681 Arietta
 - [ ] Cf172 k-Maximum Subsequence Sum
@@ -349,6 +350,7 @@
 - [ ] uoj77
 - [x] Codeforces 786E ALT
 - [x] 【LOJ#3097】[SNOI2019]通信
+- [ ] LOJ#569. 「LibreOJ Round #11」Misaka Network 与测试
 # 分块及按大小分类
 - [x] LOJ#6277-6285
 - [x] bzoj2741
@@ -489,10 +491,9 @@
 - [ ] LOJ#2267. 「SDOI2017」龙与地下城
 - [ ] bzoj3811
 # 构造
-- [ ] LOJ Round#11 Misaka Network
 - [ ] LOJ Beta Round #3 绯色IOI
 - [ ] UOJ Goodbye Wuxu 新年的拯救计划
-- [ ] CF1060H Sophisticated Device
+- [x] CF1060H Sophisticated Device
 - [ ] CF522 Negative Time Summation
 - [ ] LOJ#544. 「LibreOJ β Round #7」Array Poisonous Suffix Problem
 - [ ] LOJ#525. 「LibreOJ β Round #4」多项式
