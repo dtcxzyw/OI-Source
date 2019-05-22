@@ -283,7 +283,8 @@ $access(v)$时会与$access(u)$的链相交，交点即为LCA。在实现时可�
     连接$fa[u]=f_u$、贡献$isiz[f_u]+=siz[u]$、更新$update(f_u)$。
     \item $cut(u,f_u)$：$access(u)$后要$splay(f_u)$而不是$splay(u)$，然后
     按照普通$cut$操作。若使用$splay(u)$，$f_u$并不一定是$u$的左儿子，不能令
-    $fa[f_u]=0$，而是要令$fa[lson[u]]=0$。
+    $fa[f_u]=0$，而是要令$fa[lson[u]]=0$。无根LCT中不需要这样做是因为在此之前$u$已经
+    成为LCT的根，$v$的左子树只有一个$u$。
 \end{itemize}
 
 该方法参考了cdsszjj的博客\footnote{
