@@ -350,7 +350,7 @@
 - [ ] uoj77
 - [x] Codeforces 786E ALT
 - [x] 【LOJ#3097】[SNOI2019]通信
-- [ ] LOJ#569. 「LibreOJ Round #11」Misaka Network 与测试
+- [x] LOJ#569. 「LibreOJ Round #11」Misaka Network 与测试
 # 分块及按大小分类
 - [x] LOJ#6277-6285
 - [x] bzoj2741
@@ -513,7 +513,7 @@
 - [ ] CF979E
 - [ ] AGC022F
 - [ ] 「POI2012」衣帽间 Cloakroom
-- [ ] 「HAOI 2015」树上染色（树形DP+01背包+复杂度分析）
+- [x] 「HAOI 2015」树上染色（树形DP+01背包+复杂度分析）
 - [ ] 完美的集合
 # 置换
 - [ ] LOJ#2528. 「ZJOI2018」树
