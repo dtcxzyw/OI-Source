@@ -62,11 +62,17 @@ bool witness(int x, int base) {
     只用2,7,61为基数判断。
     \item 如果数据范围在$10^{16}$内，使用2,3,7,61,24251作为基数，
     唯一的强伪素数为46856248255981。
+    \item 如果数据范围在$10^{18}$内，使用23以内素数足矣。
+    \item 如果数据范围在$2^{64}$内，使用37以内素数足矣。
 \end{itemize}
 
 以上内容参考了Matrix67的博客\footnote{
 	数论部分第一节：素数与素性测试 | Matrix67: The Aha Moments
-	\url{http://www.matrix67.com/blog/archives/234}}。
+    \url{http://www.matrix67.com/blog/archives/234}}与Wikipedia-EN
+    \footnote{
+        Miller–Rabin primality test - Wikipedia——Testing against small sets of bases\\
+        {\scriptsize\url{https://en.wikipedia.org/wiki/Miller–Rabin\_primality\_test\#Testing\_against\_small\_sets\_of\_bases}}
+    }。
 \subsection{Baillie–PSW素性测试}
 \index{L!Baillie–PSW Primality Test}
 这个方法在WC2019朱震霆的讲课课件《\CJKsout{简单}数论算法》中被提及。它在$2^{64}$次方内的
