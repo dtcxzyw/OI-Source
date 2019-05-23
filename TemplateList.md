@@ -6,7 +6,7 @@ LCT：LOJ558
 可并堆：LuoguP3377
 线段树分治：LOJ534
 Miller-Rabin：LOJ143
-ExCRT：LuoguP4477
+ExCRT：LuoguP4777
 ExLucas：LuoguP4720
 杜教筛：LOJ6491
 Min25筛：LOJ6053
