@@ -19,6 +19,7 @@
 - [ ] [USACO09FEB]改造路Revamping Trails
 - [ ] [USACO15JAN]草鉴定Grass Cownoisseur
 - [ ] [SHOI2014]神奇化合物
+- [ ] LOJ#6231. GCD&XOR
 # 题集
 - [ ] PKUWC2018
 - [ ] Ynoi2019模拟赛[By OldDriverTree](http://olddrivertree.blog.uoj.ac/blog/4656)
