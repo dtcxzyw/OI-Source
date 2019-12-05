@@ -1,6 +1,18 @@
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/dtcxzyw/OI-Source.svg?style=popout-square)
 ![GitHub All Releases](https://img.shields.io/github/downloads/dtcxzyw/OI-Source/total.svg?style=popout-square)
 
+# 此仓库是我的OI代码仓库。
+
+## 该仓库包括：
+- Source/Unclassified：源代码
+- Review：[复习笔记](https://github.com/dtcxzyw/OI-Source/releases/download/Fourth/Main.pdf)
+- Checker：Windows/Linux本地Judger
+- Templates：代码模板
+
+希望有一天学弟们可以看到我给他们留下的东西。
+
+高考加油吧。
+
 # Review
 ## 博弈论
 - [x] nim系列游戏
