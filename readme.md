@@ -5,7 +5,7 @@
 ## 该仓库包括：
 - Source/Unclassified：源代码
 - Review：[复习笔记](https://github.com/dtcxzyw/OI-Source/releases/download/Fourth/Main.pdf)![GitHub All Releases](https://img.shields.io/github/downloads/dtcxzyw/OI-Source/total.svg?style=popout-square)
-- Checker：Windows/Linux本地Judger
+- [Checker](/Checker)：Windows/Linux本地Judger
 - Templates：代码模板
 
 希望有一天学弟们可以看到我给他们留下的东西。
