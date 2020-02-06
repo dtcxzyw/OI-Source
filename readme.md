@@ -1,11 +1,10 @@
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/dtcxzyw/OI-Source.svg?style=popout-square)
-![GitHub All Releases](https://img.shields.io/github/downloads/dtcxzyw/OI-Source/total.svg?style=popout-square)
 
 # 此仓库是我的OI代码仓库。
 
 ## 该仓库包括：
 - Source/Unclassified：源代码
-- Review：[复习笔记](https://github.com/dtcxzyw/OI-Source/releases/download/Fourth/Main.pdf)
+- Review：[复习笔记](https://github.com/dtcxzyw/OI-Source/releases/download/Fourth/Main.pdf)![GitHub All Releases](https://img.shields.io/github/downloads/dtcxzyw/OI-Source/total.svg?style=popout-square)
 - Checker：Windows/Linux本地Judger
 - Templates：代码模板
 
