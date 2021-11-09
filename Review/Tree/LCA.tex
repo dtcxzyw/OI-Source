@@ -10,7 +10,7 @@
 int d[size],p[size][20];
 void DFS(int u) {
     for(int i=1;i<20;++i)
-        p[u][i]=p[u][i-1][i-1];
+        p[u][i]=p[p[u][i-1]][i-1];
     for(int i=last[u];i;i=E[i].next) {
         int v=E[i].to;
         if(p[u][0]!=v) {
