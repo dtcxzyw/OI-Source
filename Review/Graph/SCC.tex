@@ -24,7 +24,7 @@ Tarjan算法求SCC的步骤如下：
 \begin{lstlisting}
 int dfn[size],low[size],st[size],top=0,col[size],ccnt=0;
 bool flag[size];
-void tarjan(int u) {
+void DFS(int u) {
     static int icnt=0;
     dfn[u]=low[u]=++icnt;
     flag[u]=true;
