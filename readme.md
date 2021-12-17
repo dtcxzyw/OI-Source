@@ -416,3 +416,20 @@
 - [ ] 三元环
 - [ ] FWT
 - [ ] CDF与PDF
+# 退役后看到的新东西
+- [ ] Hopcroft-Karp
+- [ ] [无标号图编码](https://mcfxmcfx.blog.uoj.ac/blog/7279)
+- [ ] [多项式计算](https://fjzzq2002.blog.uoj.ac/blog/7281) 怎么还有CDQ分治和半在线卷积啊
+- [ ] [在线卷积](https://hly1204.blog.uoj.ac/blog/7319)
+- [ ] [双极定向](https://zx2003.blog.uoj.ac/blog/7299)
+- [ ] [数论函数求和](https://negiizhao.blog.uoj.ac/blog/7165)
+- [ ] Barrett Reduction
+- [ ] [LA问题线性预处理O(1)查询](https://yurzhang.blog.uoj.ac/blog/6589)
+- [ ] [zkw线段树上无修改rmq](https://return20071007.blog.uoj.ac/blog/6554)
+- [ ] [三叶虫树](https://return20071007.blog.uoj.ac/blog/6556) 四毛子又是啥？
+- [ ] [多元拉格朗日反演](https://x-yi-x.blog.uoj.ac/blog/6511)
+- [ ] [质因数分解](https://computerkiller.blog.uoj.ac/blog/6520) 怎么整上椭圆曲线了
+- [ ] [莫队二次离线](https://matkave.blog.uoj.ac/blog/6445)
+- [ ] [任意模数二项卷积](https://entropyincreaser.blog.uoj.ac/blog/6285)
+- [ ] [多点求值优化](https://_rqy.blog.uoj.ac/blog/6202)
+
